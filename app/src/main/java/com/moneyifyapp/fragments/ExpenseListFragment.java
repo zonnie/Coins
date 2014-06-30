@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -13,8 +14,9 @@ import android.widget.Toast;
 import com.moneyifyapp.R;
 import com.moneyifyapp.adapters.ExpenseItemAdapter;
 import com.moneyifyapp.dialogs.NewExpenseDialog;
-import com.moneyifyapp.model.SingleExpense;
 import com.moneyifyapp.model.MonthExpenses;
+import com.moneyifyapp.model.SingleExpense;
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -43,6 +45,7 @@ public class ExpenseListFragment extends ListFragment
     private MonthExpenses mExpenses;
     private ExpenseItemAdapter mAdapter;
     private OnFragmentInteractionListener mListener;
+    private ListView mList;
 
     /********************************************************************/
     /**                          Methods                               **/
@@ -100,6 +103,7 @@ public class ExpenseListFragment extends ListFragment
             }
         });
 
+
         if (getArguments() != null)
         {
             mParam1 = getArguments().getString(SHOW_EMPTY);
@@ -146,6 +150,77 @@ public class ExpenseListFragment extends ListFragment
         });
 
         return view;
+    }
+
+    /**
+     *
+     * @param savedState
+     */
+    @Override
+    public void onActivityCreated(Bundle savedState)
+    {
+        super.onActivityCreated(savedState);
+
+        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+        {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> av, View v, int position, long id)
+            {
+                int itemPosition;
+                List<SingleExpense> expenses = mAdapter.getItems();
+
+                for(int i = 0; i < expenses.size(); ++i)
+                {
+                    if(i == position)
+                    {
+                        removeItemWithId(Integer.valueOf(expenses.get(i).mId));
+                        mAdapter.remove(expenses.get(i));
+
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
+    /**
+     *
+     * @param id
+     */
+    private void removeItemWithId(int id)
+    {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(SingleExpense.EXPENSE_CLASS_NAME);
+        query.whereEqualTo(SingleExpense.EXPENSE_KEY_ID,id);
+        query.findInBackground(new FindCallback<ParseObject>()
+        {
+            @Override
+            public void done(List<ParseObject> list, ParseException e)
+            {
+
+                // TODO Auto-generated method stub
+                if (list.size() != 0)
+                {
+                    list.get(0).deleteInBackground(new DeleteCallback()
+                    {
+                        @Override
+                        public void done(ParseException e)
+                        {
+                            // TODO Auto-generated method stub
+                            if (e == null)
+                            {
+                                Toast.makeText(getActivity(), "Deleted Successfully!", Toast.LENGTH_LONG).show();
+                            } else
+                            {
+                                Toast.makeText(getActivity(), "Cant Delete Expense!" + e.toString(), Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+                    });
+                }
+            }
+        });
     }
 
     /**

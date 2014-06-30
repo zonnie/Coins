@@ -109,6 +109,16 @@ public class ExpenseItemAdapter extends ArrayAdapter<SingleExpense>
         notifyDataSetChanged();
     }
 
+    public void remove(SingleExpense singleExpense)
+    {
+        if(singleExpense != null)
+        {
+            mExpenses.getItems().remove(singleExpense);
+        }
+
+        notifyDataSetChanged();
+    }
+
     /**
      *
      * Get the expense items.

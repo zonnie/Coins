@@ -10,7 +10,8 @@ public class SingleExpense
     public String mValue;
     public String mCurrency;
 
-    public static final String EXPENSE_KEY_ID = "id";
+    public static final String EXPENSE_CLASS_NAME = "expense";
+    public static final String EXPENSE_KEY_ID = "keyId";
     public static final String EXPENSE_KEY_DESCRIPTION = "description";
     public static final String EXPENSE_KEY_VALUE = "value";
     public static final String EXPENSE_KEY_CURRENCY = "currency";
