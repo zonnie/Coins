@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_vertical_margin"
+    android:gravity="center">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addExpenseDescription"
+        android:layout_gravity="center_horizontal"
+        android:hint="What did you purchase"
+        android:singleLine="true"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:id="@+id/addExpenseSum"
+        android:singleLine="true"
+        android:hint="How much did it cost ?"
+        />
+
+    <ImageButton android:src="@drawable/accept"
+        style="?android:attr/buttonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Done !"
+        android:id="@+id/submitButton"
+        android:background="@android:color/transparent"
+        android:singleLine="false"
+        />
+</LinearLayout>
