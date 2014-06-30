@@ -160,6 +160,8 @@ public class ExpensesActivity extends Activity
          * Determines the number of pages the view pages holds.
          *
          * @return int - the number of pages.
+         *
+         *
          */
         @Override
         public int getCount()
