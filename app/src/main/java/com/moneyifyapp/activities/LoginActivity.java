@@ -31,7 +31,9 @@ public class LoginActivity extends Activity
 {
     /********************************************************************/
     /**                          Members                               **/
-    /********************************************************************/
+    /**
+     * ****************************************************************
+     */
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -46,7 +48,6 @@ public class LoginActivity extends Activity
     /********************************************************************/
 
     /**
-     *
      * @param savedInstanceState
      */
     @Override
@@ -137,8 +138,7 @@ public class LoginActivity extends Activity
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
-        }
-        else if (!isEmailValid(email))
+        } else if (!isEmailValid(email))
         {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
@@ -150,8 +150,7 @@ public class LoginActivity extends Activity
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
-        }
-        else
+        } else
         {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
@@ -207,9 +206,7 @@ public class LoginActivity extends Activity
     }
 
     /**
-     *
      * Launches the main activity.
-     *
      */
     private void goToMainActivity()
     {
@@ -218,10 +215,8 @@ public class LoginActivity extends Activity
     }
 
     /**
-     *
      * A callback for when the sign in failed.
      * This is mostly on Parse for now.
-     *
      */
     private void signInFailed()
     {

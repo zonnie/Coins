@@ -19,7 +19,9 @@ public class SignUpActivity extends Activity
 
     /********************************************************************/
     /**                          Members                               **/
-    /********************************************************************/
+    /**
+     * ****************************************************************
+     */
 
     EditText mUserEditText;
     EditText mPassEditText;
@@ -29,7 +31,6 @@ public class SignUpActivity extends Activity
     /********************************************************************/
 
     /**
-     *
      * @param savedInstanceState
      */
     @Override
@@ -41,9 +42,9 @@ public class SignUpActivity extends Activity
 
         setContentView(R.layout.activity_sign_up);
 
-        mUserEditText = (EditText)findViewById(R.id.usernameEditText);
-        mPassEditText = (EditText)findViewById(R.id.passEditText);
-        Button signUpButton = (Button)findViewById(R.id.confirm_signup);
+        mUserEditText = (EditText) findViewById(R.id.usernameEditText);
+        mPassEditText = (EditText) findViewById(R.id.passEditText);
+        Button signUpButton = (Button) findViewById(R.id.confirm_signup);
 
         // Bind sign up button.
         signUpButton.setOnClickListener(new View.OnClickListener()
@@ -51,7 +52,7 @@ public class SignUpActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                if(validate())
+                if (validate())
                 {
                     signUp();
                 }
@@ -62,7 +63,6 @@ public class SignUpActivity extends Activity
     }
 
     /**
-     *
      * Validate the sign up info.
      *
      * @return 'true' if valid, 'false' otherwise.
@@ -71,7 +71,7 @@ public class SignUpActivity extends Activity
     {
         boolean valid = true;
 
-        if(mUserEditText.getText().length() <= 0
+        if (mUserEditText.getText().length() <= 0
                 || mPassEditText.getText().length() <= 0
                 || mPassEditText.getText().length() < 4)
         {
@@ -82,9 +82,7 @@ public class SignUpActivity extends Activity
     }
 
     /**
-     *
      * Sign up using Parse API.
-     *
      */
     private void signUp()
     {
@@ -100,8 +98,7 @@ public class SignUpActivity extends Activity
                 {
                     goToLogin();
                     finish();
-                }
-                else
+                } else
                 {
                     singUpFailed();
                 }
@@ -110,9 +107,7 @@ public class SignUpActivity extends Activity
     }
 
     /**
-     *
      * Go to sign in activity, this occurs when sign up was successful.
-     *
      */
     private void goToLogin()
     {
@@ -121,9 +116,7 @@ public class SignUpActivity extends Activity
     }
 
     /**
-     *
      * Sign up failed, let the user know.
-     *
      */
     private void singUpFailed()
     {

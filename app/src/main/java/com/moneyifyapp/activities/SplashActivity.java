@@ -16,7 +16,9 @@ public class SplashActivity extends Activity
 {
     /********************************************************************/
     /**                          Members                               **/
-    /********************************************************************/
+    /**
+     * ****************************************************************
+     */
 
     private final int SPLASH_DISPLAY_LENGTH = 3000;
 
@@ -50,8 +52,7 @@ public class SplashActivity extends Activity
                 if (currentUser != null)
                 {
                     mainIntent = new Intent(SplashActivity.this, ExpensesActivity.class);
-                }
-                else
+                } else
                 {
                     mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
                 }

@@ -17,8 +17,7 @@
         <activity
             android:name=".activities.LoginActivity"
             android:label="@string/action_sign_in"
-            android:windowSoftInputMode="stateHidden"
-            >
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".activities.SignUpActivity"
@@ -26,12 +25,17 @@
         </activity>
         <activity
             android:name=".activities.SplashActivity"
-            android:theme="@style/Theme.CustomizedAppTheme"
-            android:label="@string/title_activity_splash" >
+            android:label="@string/main_title"
+            android:theme="@style/Theme.CustomizedAppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.CreateExpenseActivity"
+            android:label="@string/title_activity_create_expense">
         </activity>
     </application>
 

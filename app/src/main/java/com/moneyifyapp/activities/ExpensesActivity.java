@@ -48,6 +48,8 @@ public class ExpensesActivity extends Activity
      */
     Calendar mCalender;
 
+    public static int EXPENSE_RESULT_OK = 222;
+
     /**
      * Called once every life cycle.
      *
@@ -75,7 +77,6 @@ public class ExpensesActivity extends Activity
     }
 
     /**
-     *
      * @param menu
      * @return
      */
@@ -89,7 +90,6 @@ public class ExpensesActivity extends Activity
     }
 
     /**
-     *
      * @param item
      * @return
      */
@@ -104,8 +104,7 @@ public class ExpensesActivity extends Activity
         if (id == R.id.jump_today)
         {
             mViewPager.setCurrentItem(mCalender.get(Calendar.MONTH));
-        }
-        else if(id == R.id.logout)
+        } else if (id == R.id.logout)
         {
             // Logout user - this clears the disk from any user remains
             ParseUser currentUser = ParseUser.getCurrentUser();
@@ -121,7 +120,6 @@ public class ExpensesActivity extends Activity
     }
 
     /**
-     *
      * Called by the contained fragment after an item within it was clicked.
      *
      * @param singleExpense the id of the item that was clicked.
@@ -133,6 +131,17 @@ public class ExpensesActivity extends Activity
         toast.show();
     }
 
+    /**
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     /**
      * Inner class
@@ -148,7 +157,6 @@ public class ExpensesActivity extends Activity
         }
 
         /**
-         *
          * Returns an fragment according to the position the
          * user is viewing.
          *
@@ -162,21 +170,18 @@ public class ExpensesActivity extends Activity
             // Return a PlaceholderFragment (defined as a static inner class below).
             if (position != 0)
             {
-                return ExpenseListFragment.newInstance("true");
+                return ExpenseListFragment.newInstance("true", String.valueOf(position));
             }
             else
             {
-                return ExpenseListFragment.newInstance("stam");
+                return ExpenseListFragment.newInstance("stam", String.valueOf(position));
             }
         }
 
         /**
-         *
          * Determines the number of pages the view pages holds.
          *
          * @return int - the number of pages.
-         *
-         *
          */
         @Override
         public int getCount()
@@ -186,18 +191,16 @@ public class ExpensesActivity extends Activity
         }
 
         /**
-         *
          * Responsible for the naming of the pages.
          *
          * @param position the position for which to get the title.
-         *
          * @return string - the name of the page.
          */
         @Override
         public CharSequence getPageTitle(int position)
         {
             Locale l = Locale.getDefault();
-            return Months.getMonthNameByNumber(position+1) + " " + mCalender.get(Calendar.YEAR);
+            return Months.getMonthNameByNumber(position + 1) + " " + mCalender.get(Calendar.YEAR);
         }
     }
 }

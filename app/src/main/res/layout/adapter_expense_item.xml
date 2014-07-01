@@ -3,8 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:paddingTop="@dimen/padding_start_currency"
-    android:paddingBottom="@dimen/padding_start_currency">
+    android:paddingTop="@dimen/expense_drawable_left_pad"
+    android:paddingBottom="@dimen/expense_drawable_left_pad">
 
     <TextView
         android:layout_width="wrap_content"
@@ -12,6 +12,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
         android:id="@+id/expenseDesc"
+        android:drawableLeft="@drawable/email"
+        android:drawablePadding="@dimen/expense_drawable_left_pad"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingEnd="@dimen/activity_vertical_margin"
         />

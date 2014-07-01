@@ -1,8 +1,8 @@
 package com.moneyifyapp.fragments;
 
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.app.ListFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,8 +16,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.moneyifyapp.R;
+import com.moneyifyapp.activities.CreateExpenseActivity;
+import com.moneyifyapp.activities.ExpensesActivity;
 import com.moneyifyapp.adapters.ExpenseItemAdapter;
-import com.moneyifyapp.dialogs.NewExpenseDialog;
 import com.moneyifyapp.model.MonthExpenses;
 import com.moneyifyapp.model.SingleExpense;
 import com.moneyifyapp.utils.Utils;
@@ -35,7 +36,6 @@ import java.util.UUID;
  * A fragment representing a list of Items.
  */
 public class ExpenseListFragment extends ListFragment
-        implements NewExpenseDialog.onSubmitListener
 {
 
     /********************************************************************/
@@ -46,6 +46,8 @@ public class ExpenseListFragment extends ListFragment
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static final String SHOW_EMPTY = "empty";
+    public static final String FRAG_ID  = "frag_id";
+    private String mFragmentId;
     private String mParam1;
     private Button mAddNewExpenseButton;
     private MonthExpenses mExpenses;
@@ -63,11 +65,12 @@ public class ExpenseListFragment extends ListFragment
      * @param showEmpty
      * @return
      */
-    public static ExpenseListFragment newInstance(String showEmpty)
+    public static ExpenseListFragment newInstance(String showEmpty, String id)
     {
         ExpenseListFragment fragment = new ExpenseListFragment();
         Bundle args = new Bundle();
         args.putString(SHOW_EMPTY, showEmpty);
+        args.putString(FRAG_ID, id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -97,6 +100,7 @@ public class ExpenseListFragment extends ListFragment
         if (getArguments() != null)
         {
             mParam1 = getArguments().getString(SHOW_EMPTY);
+            mFragmentId = getArguments().getString(FRAG_ID);
         }
 
         if (!mParam1.equals("true"))
@@ -187,14 +191,34 @@ public class ExpenseListFragment extends ListFragment
             @Override
             public void onClick(View v)
             {
-                NewExpenseDialog dialog = new NewExpenseDialog();
-                dialog.mListener = ExpenseListFragment.this;
-                dialog.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.AppTheme);
-                dialog.show(getFragmentManager(), "tag");
+                Intent intent = new Intent(getActivity(), CreateExpenseActivity.class);
+                startActivityForResult(intent, ExpensesActivity.EXPENSE_RESULT_OK);
             }
         });
 
         return view;
+    }
+
+    /**
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        Toast.makeText(getActivity(), "DEBUG : Got the result FRAGMENT", Toast.LENGTH_SHORT).show();
+
+        String desc = data.getExtras().getString(SingleExpense.EXPENSE_KEY_DESCRIPTION);
+        String sum = data.getExtras().getString(SingleExpense.EXPENSE_KEY_VALUE);
+
+        if(!desc.isEmpty() && !sum.isEmpty())
+        {
+            addNewExpense(desc, sum);
+        }
+
     }
 
     /**
@@ -319,8 +343,7 @@ public class ExpenseListFragment extends ListFragment
      * @param addDescription
      * @param addSum
      */
-    @Override
-    public void onAddExpenseInDialog(String addDescription, String addSum)
+    public void addNewExpense(String addDescription, String addSum)
     {
         String currency = "$";
         String newId = generateId(addDescription, addSum, currency);
@@ -382,5 +405,14 @@ public class ExpenseListFragment extends ListFragment
         output = output.replaceAll("\\s+", "-");
 
         return output;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getFragId()
+    {
+        return  mFragmentId;
     }
 }
