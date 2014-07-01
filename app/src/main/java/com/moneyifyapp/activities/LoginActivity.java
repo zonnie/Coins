@@ -174,6 +174,7 @@ public class LoginActivity extends Activity
                         if (user != null)
                         {
                             goToMainActivity();
+                            finish();
                         } else
                         {
                             signInFailed();

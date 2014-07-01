@@ -109,8 +109,14 @@ public class ExpenseItemAdapter extends ArrayAdapter<SingleExpense>
         notifyDataSetChanged();
     }
 
-    public void remove(SingleExpense singleExpense)
+    /**
+     *
+     * @param position
+     */
+    public void remove(int position)
     {
+        SingleExpense singleExpense = mExpenses.getItems().get(position);
+
         if(singleExpense != null)
         {
             mExpenses.getItems().remove(singleExpense);
@@ -127,5 +133,21 @@ public class ExpenseItemAdapter extends ArrayAdapter<SingleExpense>
     public List<SingleExpense> getItems()
     {
         return mExpenses.getItems();
+    }
+
+    /**
+     *
+     * Removes all items from list and updates the observer
+     * that the list has changed.
+     *
+     */
+    public void removeAll()
+    {
+        for(SingleExpense expense : mExpenses.getItems())
+        {
+            remove(expense);
+        }
+
+        notifyDataSetChanged();
     }
 }

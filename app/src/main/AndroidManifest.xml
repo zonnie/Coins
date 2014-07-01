@@ -7,36 +7,31 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/logo"
+        android:icon="@drawable/bank"
         android:label="@string/main_title"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".activities.ExpensesActivity"
-            android:label="@string/main_title" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:label="" >
         </activity>
-
         <activity
             android:name=".activities.LoginActivity"
             android:label="@string/action_sign_in"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
-        <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:windowSoftInputMode="stateHidden"
+            >
         </activity>
         <activity
             android:name=".activities.SignUpActivity"
             android:label="@string/action_sing_up" >
+        </activity>
+        <activity
+            android:name=".activities.SplashActivity"
+            android:theme="@style/Theme.CustomizedAppTheme"
+            android:label="@string/title_activity_splash" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

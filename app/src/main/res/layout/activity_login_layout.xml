@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
@@ -8,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="app.com.flat.flat.activities.LoginActivity">
+    >
 
     <!-- Login progress -->
     <ProgressBar
@@ -36,8 +35,10 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/imageView"
-                    android:src="@drawable/logo"/>
+                    android:id="@+id/signUpMainImage"
+                    android:src="@drawable/contact"
+                    android:contentDescription="Main image"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
                 <AutoCompleteTextView
                     android:id="@+id/email"
@@ -46,6 +47,8 @@
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
+                    android:drawableLeft="@drawable/email"
+                    android:drawablePadding="@dimen/drawable_left_pad"
                     android:singleLine="true"/>
 
                 <EditText
@@ -58,6 +61,8 @@
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
+                    android:drawableLeft="@drawable/pass_login"
+                    android:drawablePadding="@dimen/drawable_left_pad"
                     android:singleLine="true"/>
 
                 <Button
@@ -65,14 +70,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:background="@drawable/button_regular"
                     android:text="@string/action_sign_in"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    />
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/action_sing_up"
-                    android:id="@+id/sign_up_button"/>
+                    android:layout_marginTop="16dp"
+                    android:textStyle="bold"
+                    android:background="@drawable/button_regular"
+                    android:id="@+id/sign_up_button
+                    "/>
 
             </LinearLayout>
     </ScrollView>

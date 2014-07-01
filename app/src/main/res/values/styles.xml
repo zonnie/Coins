@@ -4,6 +4,8 @@
         <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
         <item name="android:buttonStyle">@style/RobotoButtonStyle</item>
         <item name="android:datePickerStyle">@style/RobotoDatePickerStyle</item>
+        <item name="android:actionBarStyle">@style/myActionBar</item>
+        <item name="android:action">@style/myActionBar</item>
     </style>
 
     <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
@@ -16,6 +18,15 @@
 
     <style name="RobotoDatePickerStyle" parent="android:Widget.DatePicker">
         <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="Theme.CustomizedAppTheme" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="myActionBar" parent="android:style/Widget.Holo.ActionBar">
+        <item name="android:background">@drawable/back_regualr</item>
     </style>
 
 </resources>

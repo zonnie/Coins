@@ -1,9 +1,13 @@
 package com.moneyifyapp.fragments;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,19 +20,19 @@ import com.moneyifyapp.adapters.ExpenseItemAdapter;
 import com.moneyifyapp.dialogs.NewExpenseDialog;
 import com.moneyifyapp.model.MonthExpenses;
 import com.moneyifyapp.model.SingleExpense;
+import com.moneyifyapp.utils.Utils;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 /**
- *
  * A fragment representing a list of Items.
- *
  */
 public class ExpenseListFragment extends ListFragment
         implements NewExpenseDialog.onSubmitListener
@@ -36,7 +40,9 @@ public class ExpenseListFragment extends ListFragment
 
     /********************************************************************/
     /**                          Members                               **/
-    /********************************************************************/
+    /**
+     * ****************************************************************
+     */
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static final String SHOW_EMPTY = "empty";
@@ -75,33 +81,17 @@ public class ExpenseListFragment extends ListFragment
     }
 
     /**
-     *
      * @param savedInstanceState
      */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mExpenses = new MonthExpenses();
 
         // Init Parse for data storing
-        Parse.initialize(getActivity(), "7BjKxmwKAG3nVfaDHWxWusowkJJ4kGNyMlwjrbT8", "c6uhzWLV5SPmCx259cPjHhW8qvw5VUCvDwpVVjFD");
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("expense");
-        query.findInBackground(new FindCallback<ParseObject>()
-        {
-            public void done(List<ParseObject> expenseList, ParseException e)
-            {
-                if (e == null)
-                {
-                    initFromList(expenseList);
-                }
-                else
-                {
-                    Toast toast = Toast.makeText(getActivity(), "We have some DB issues... :(", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-            }
-        });
+        initializeExpenses();
 
 
         if (getArguments() != null)
@@ -109,12 +99,11 @@ public class ExpenseListFragment extends ListFragment
             mParam1 = getArguments().getString(SHOW_EMPTY);
         }
 
-        if(!mParam1.equals("true"))
+        if (!mParam1.equals("true"))
         {
             mAdapter = new ExpenseItemAdapter(getActivity(), R.layout.adapter_expense_item, mExpenses);
             // Load from static model
-        }
-        else
+        } else
         {
             // Load from static model
             mAdapter = new ExpenseItemAdapter(getActivity(), R.layout.adapter_expense_item, mExpenses);
@@ -125,6 +114,61 @@ public class ExpenseListFragment extends ListFragment
 
     /**
      *
+     */
+    private void initializeExpenses()
+    {
+        // Init Parse for data storing
+        Utils.initializeParse(getActivity());
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("expense");
+        query.findInBackground(new FindCallback<ParseObject>()
+        {
+            public void done(List<ParseObject> expenseList, ParseException e)
+            {
+                if (e == null)
+                {
+                    buildExpenseListFromParse(expenseList);
+                } else
+                {
+                    Toast toast = Toast.makeText(getActivity(), "We have some DB issues... :(", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            }
+        });
+    }
+
+    /**
+     * @param menu
+     * @return
+     */
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        // TODO Add your menu entries here
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.expense_actions, menu);
+    }
+
+    /**
+     *
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+
+        if (id == R.id.refresh_list)
+        {
+            initializeExpenses();
+            Toast.makeText(getActivity(), "Refreshing...", Toast.LENGTH_SHORT);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
      * Needed in order to use the custom layout.
      *
      * @param inflater
@@ -137,7 +181,7 @@ public class ExpenseListFragment extends ListFragment
     {
         View view = inflater.inflate(R.layout.fragment_expenses, container, false);
 
-        mAddNewExpenseButton = (Button)view.findViewById(R.id.addNewExpenseButton);
+        mAddNewExpenseButton = (Button) view.findViewById(R.id.addNewExpenseButton);
         mAddNewExpenseButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -145,6 +189,7 @@ public class ExpenseListFragment extends ListFragment
             {
                 NewExpenseDialog dialog = new NewExpenseDialog();
                 dialog.mListener = ExpenseListFragment.this;
+                dialog.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.AppTheme);
                 dialog.show(getFragmentManager(), "tag");
             }
         });
@@ -153,7 +198,6 @@ public class ExpenseListFragment extends ListFragment
     }
 
     /**
-     *
      * @param savedState
      */
     @Override
@@ -170,12 +214,12 @@ public class ExpenseListFragment extends ListFragment
                 int itemPosition;
                 List<SingleExpense> expenses = mAdapter.getItems();
 
-                for(int i = 0; i < expenses.size(); ++i)
+                for (int i = 0; i < expenses.size(); ++i)
                 {
-                    if(i == position)
+                    if (i == position)
                     {
-                        removeItemWithId(Integer.valueOf(expenses.get(i).mId));
-                        mAdapter.remove(expenses.get(i));
+                        removeItemWithId(position);
+                        mAdapter.remove(position);
 
                         return true;
                     }
@@ -186,20 +230,21 @@ public class ExpenseListFragment extends ListFragment
     }
 
     /**
-     *
-     * @param id
+     * @param position
      */
-    private void removeItemWithId(int id)
+    private void removeItemWithId(int position)
     {
+        SingleExpense expenseToRemove = mAdapter.getItems().get(position);
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery(SingleExpense.EXPENSE_CLASS_NAME);
-        query.whereEqualTo(SingleExpense.EXPENSE_KEY_ID,id);
+        query.whereEqualTo(SingleExpense.EXPENSE_KEY_ID, expenseToRemove.mId);
+
         query.findInBackground(new FindCallback<ParseObject>()
         {
             @Override
             public void done(List<ParseObject> list, ParseException e)
             {
 
-                // TODO Auto-generated method stub
                 if (list.size() != 0)
                 {
                     list.get(0).deleteInBackground(new DeleteCallback()
@@ -210,10 +255,10 @@ public class ExpenseListFragment extends ListFragment
                             // TODO Auto-generated method stub
                             if (e == null)
                             {
-                                Toast.makeText(getActivity(), "Deleted Successfully!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "DEBUG : Deleted Successfully!", Toast.LENGTH_LONG).show();
                             } else
                             {
-                                Toast.makeText(getActivity(), "Cant Delete Expense!" + e.toString(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "DEBUG : Cant Delete Expense!" + e.toString(), Toast.LENGTH_LONG).show();
                             }
 
                         }
@@ -224,7 +269,6 @@ public class ExpenseListFragment extends ListFragment
     }
 
     /**
-     *
      * @param activity
      */
     @Override
@@ -253,7 +297,6 @@ public class ExpenseListFragment extends ListFragment
     }
 
     /**
-     *
      * Propagate the click to the containing activity.
      *
      * @param l
@@ -273,15 +316,16 @@ public class ExpenseListFragment extends ListFragment
     }
 
     /**
-     *
      * @param addDescription
      * @param addSum
      */
     @Override
     public void onAddExpenseInDialog(String addDescription, String addSum)
     {
-        String newId = String.valueOf(mAdapter.getItems().size());
-        SingleExpense newSingleExpense = new SingleExpense(newId, addDescription, addSum, "$");
+        String currency = "$";
+        String newId = generateId(addDescription, addSum, currency);
+
+        SingleExpense newSingleExpense = new SingleExpense(newId, addDescription, addSum, currency);
 
         ParseObject expenseObject = new ParseObject("expense");
         expenseObject.put(SingleExpense.EXPENSE_KEY_ID, newSingleExpense.mId);
@@ -291,6 +335,8 @@ public class ExpenseListFragment extends ListFragment
         expenseObject.saveInBackground();
 
         mAdapter.add(newSingleExpense);
+        Toast.makeText(getActivity(), "DEBUG : Created an item with " + SingleExpense.EXPENSE_KEY_ID +
+                " of " + newId, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -305,16 +351,17 @@ public class ExpenseListFragment extends ListFragment
 
 
     /**
-     *
      * Initializes the expenses from the remote DB.
      *
      * @param list
      */
-    public void initFromList(List<ParseObject> list)
+    public void buildExpenseListFromParse(List<ParseObject> list)
     {
-        if(list != null)
+        if (list != null)
         {
-            for(ParseObject curExpense : list)
+            mAdapter.clear();
+
+            for (ParseObject curExpense : list)
             {
                 mAdapter.add(new SingleExpense(curExpense.getString(SingleExpense.EXPENSE_KEY_ID),
                         curExpense.getString(SingleExpense.EXPENSE_KEY_DESCRIPTION),
@@ -322,5 +369,18 @@ public class ExpenseListFragment extends ListFragment
                         curExpense.getString(SingleExpense.EXPENSE_KEY_CURRENCY)));
             }
         }
+    }
+
+    /**
+     * @return
+     */
+    private String generateId(String description, String sum, String currency)
+    {
+        String output;
+
+        output = (description + sum + currency + Calendar.getInstance().get(Calendar.MINUTE) + UUID.randomUUID());
+        output = output.replaceAll("\\s+", "-");
+
+        return output;
     }
 }

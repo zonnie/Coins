@@ -3,6 +3,7 @@ package com.moneyifyapp.activities;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -14,7 +15,8 @@ import com.moneyifyapp.R;
 import com.moneyifyapp.fragments.ExpenseListFragment;
 import com.moneyifyapp.model.SingleExpense;
 import com.moneyifyapp.model.enums.Months;
-import com.parse.Parse;
+import com.moneyifyapp.utils.Utils;
+import com.parse.ParseUser;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -59,8 +61,7 @@ public class ExpensesActivity extends Activity
         mCalender = Calendar.getInstance();
 
         // Init Parse for data storing
-        Parse.initialize(this, "7BjKxmwKAG3nVfaDHWxWusowkJJ4kGNyMlwjrbT8", "c6uhzWLV5SPmCx259cPjHhW8qvw5VUCvDwpVVjFD");
-
+        Utils.initializeParse(this);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -83,6 +84,7 @@ public class ExpensesActivity extends Activity
     {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.expenses, menu);
+        getMenuInflater().inflate(R.menu.logout_action, menu);
         return true;
     }
 
@@ -98,10 +100,23 @@ public class ExpensesActivity extends Activity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings)
+
+        if (id == R.id.jump_today)
         {
-            return true;
+            mViewPager.setCurrentItem(mCalender.get(Calendar.MONTH));
         }
+        else if(id == R.id.logout)
+        {
+            // Logout user - this clears the disk from any user remains
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            currentUser.logOut();
+
+            // Got to login now
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -182,7 +197,7 @@ public class ExpensesActivity extends Activity
         public CharSequence getPageTitle(int position)
         {
             Locale l = Locale.getDefault();
-            return Months.getMonthNameByNumber(position+1) + "/" + mCalender.get(Calendar.YEAR);
+            return Months.getMonthNameByNumber(position+1) + " " + mCalender.get(Calendar.YEAR);
         }
     }
 }

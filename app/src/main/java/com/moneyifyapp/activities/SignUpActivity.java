@@ -43,7 +43,7 @@ public class SignUpActivity extends Activity
 
         mUserEditText = (EditText)findViewById(R.id.usernameEditText);
         mPassEditText = (EditText)findViewById(R.id.passEditText);
-        Button signUpButton = (Button)findViewById(R.id.signUpButton);
+        Button signUpButton = (Button)findViewById(R.id.confirm_signup);
 
         // Bind sign up button.
         signUpButton.setOnClickListener(new View.OnClickListener()
@@ -99,6 +99,7 @@ public class SignUpActivity extends Activity
                 if (e == null)
                 {
                     goToLogin();
+                    finish();
                 }
                 else
                 {

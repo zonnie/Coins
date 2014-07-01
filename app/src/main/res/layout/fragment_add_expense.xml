@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/activity_vertical_margin"
+    android:padding="@dimen/max_add_height"
     android:gravity="center">
 
     <EditText
@@ -24,13 +24,32 @@
         android:hint="How much did it cost ?"
         />
 
-    <ImageButton android:src="@drawable/accept"
-        style="?android:attr/buttonStyle"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Done !"
-        android:id="@+id/submitButton"
-        android:background="@android:color/transparent"
-        android:singleLine="false"
-        />
+        android:gravity="center"
+        android:weightSum="2">
+
+        <Button android:src="@drawable/ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Done !"
+            android:id="@+id/submitButton"
+            android:background="@drawable/button_regular"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/max_add_width"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:background="@drawable/button_regular"
+            android:id="@+id/cancelAddButton"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/max_add_width"/>
+
+    </LinearLayout>
+
 </LinearLayout>

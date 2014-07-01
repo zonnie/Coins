@@ -4,8 +4,8 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 
 import com.moneyifyapp.R;
 
@@ -18,7 +18,8 @@ public class NewExpenseDialog extends DialogFragment
     /**                          Members                               **/
     /********************************************************************/
 
-    ImageButton mButton;
+    Button mSubmitButton;
+    Button mCancelButton;
     EditText mExpenseDescription;
     EditText mExpenseValue;
     public onSubmitListener mListener;
@@ -44,6 +45,7 @@ public class NewExpenseDialog extends DialogFragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        this.setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme);
     }
 
     /**
@@ -62,18 +64,29 @@ public class NewExpenseDialog extends DialogFragment
         dialog.show();
 
         // Save the views
-        mButton = (ImageButton) dialog.findViewById(R.id.submitButton);
+        mSubmitButton = (Button) dialog.findViewById(R.id.submitButton);
+        mCancelButton = (Button) dialog.findViewById(R.id.cancelAddButton);
         mExpenseDescription = (EditText) dialog.findViewById(R.id.addExpenseDescription);
         mExpenseValue = (EditText) dialog.findViewById(R.id.addExpenseSum);
 
         // Bind the submit button to the containing fragment so
         // that it will add a new item to the list view
-        mButton.setOnClickListener(new View.OnClickListener()
+        mSubmitButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 mListener.onAddExpenseInDialog(mExpenseDescription.getText().toString(), mExpenseValue.getText().toString());
+                dismiss();
+            }
+        });
+
+        // Simple dismiss..
+        mCancelButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
                 dismiss();
             }
         });

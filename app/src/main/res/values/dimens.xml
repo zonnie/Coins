@@ -3,4 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="padding_start_currency">5dp</dimen>
+    <dimen name="drawable_left_pad">10dp</dimen>
+    <dimen name="splash_top_margin">150dp</dimen>
+    <dimen name="max_add_height">10dp</dimen>
+    <dimen name="max_add_width">10dp</dimen>
 </resources>

@@ -11,7 +11,7 @@ public class SingleExpense
     public String mCurrency;
 
     public static final String EXPENSE_CLASS_NAME = "expense";
-    public static final String EXPENSE_KEY_ID = "keyId";
+    public static final String EXPENSE_KEY_ID = "code";
     public static final String EXPENSE_KEY_DESCRIPTION = "description";
     public static final String EXPENSE_KEY_VALUE = "value";
     public static final String EXPENSE_KEY_CURRENCY = "currency";

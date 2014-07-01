@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".ExpensesActivity"
+    >
+
+    <item android:id="@+id/logout"
+          android:title="@string/logout_caption"
+          android:icon="@drawable/logout"
+          android:showAsAction="always" />
+</menu>
