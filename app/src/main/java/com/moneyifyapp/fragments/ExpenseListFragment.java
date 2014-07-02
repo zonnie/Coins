@@ -27,6 +27,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.Calendar;
 import java.util.List;
@@ -214,10 +215,12 @@ public class ExpenseListFragment extends ListFragment
         {
             String desc = data.getExtras().getString(SingleExpense.EXPENSE_KEY_DESCRIPTION);
             String sum = data.getExtras().getString(SingleExpense.EXPENSE_KEY_VALUE);
+            String image = data.getExtras().getString(SingleExpense.EXPENSE_KEY_IMAGE_NAME);
+            String note = data.getExtras().getString(SingleExpense.EXPENSE_KEY_NOTES);
 
             if (!desc.isEmpty() && !sum.isEmpty())
             {
-                addNewExpense(desc, sum);
+                addNewExpense(desc, sum, image, note);
             }
         }
 
@@ -347,20 +350,28 @@ public class ExpenseListFragment extends ListFragment
      * @param addDescription
      * @param addSum
      */
-    public void addNewExpense(String addDescription, String addSum)
+    public void addNewExpense(String addDescription, String addSum, String image, String note)
     {
         String currency = "$";
         String newId = generateId(addDescription, addSum, currency);
 
-        SingleExpense newSingleExpense = new SingleExpense(newId, addDescription, addSum, currency);
+        ParseUser user = ParseUser.getCurrentUser();
+
+        // Create a new expense model
+        SingleExpense newSingleExpense = new SingleExpense(newId, addDescription, addSum, currency, image, note);
 
         ParseObject expenseObject = new ParseObject("expense");
         expenseObject.put(SingleExpense.EXPENSE_KEY_ID, newSingleExpense.mId);
         expenseObject.put(SingleExpense.EXPENSE_KEY_DESCRIPTION, newSingleExpense.mDescription);
         expenseObject.put(SingleExpense.EXPENSE_KEY_VALUE, newSingleExpense.mValue);
         expenseObject.put(SingleExpense.EXPENSE_KEY_CURRENCY, newSingleExpense.mCurrency);
+        expenseObject.put(SingleExpense.EXPENSE_KEY_IMAGE_NAME, newSingleExpense.mImageName);
+        expenseObject.put(SingleExpense.EXPENSE_KEY_NOTES, newSingleExpense.mNotes);
+        expenseObject.put(ExpensesActivity.PARSE_USER_KEY, user);
         expenseObject.saveInBackground();
 
+        // The adapter will add the expense to the model collection so it can update observer
+        // as well.
         mAdapter.add(newSingleExpense);
         Toast.makeText(getActivity(), "DEBUG : Created an item with " + SingleExpense.EXPENSE_KEY_ID +
                 " of " + newId, Toast.LENGTH_SHORT).show();
@@ -393,7 +404,9 @@ public class ExpenseListFragment extends ListFragment
                 mAdapter.add(new SingleExpense(curExpense.getString(SingleExpense.EXPENSE_KEY_ID),
                         curExpense.getString(SingleExpense.EXPENSE_KEY_DESCRIPTION),
                         curExpense.getString(SingleExpense.EXPENSE_KEY_VALUE),
-                        curExpense.getString(SingleExpense.EXPENSE_KEY_CURRENCY)));
+                        curExpense.getString(SingleExpense.EXPENSE_KEY_CURRENCY),
+                        curExpense.getString(SingleExpense.EXPENSE_KEY_IMAGE_NAME),
+                        curExpense.getString(SingleExpense.EXPENSE_KEY_NOTES)));
             }
         }
     }

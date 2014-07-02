@@ -67,11 +67,13 @@ public class CreateExpenseActivity extends Activity implements CreateExpenseFrag
      * @param addSum
      */
     @Override
-    public void onAddExpense(String addDescription, String addSum)
+    public void onAddExpense(String addDescription, String addSum, String addImage, String addNote)
     {
         Intent data = getIntent();
         data.putExtra(SingleExpense.EXPENSE_KEY_DESCRIPTION, addDescription);
         data.putExtra(SingleExpense.EXPENSE_KEY_VALUE, addSum);
+        data.putExtra(SingleExpense.EXPENSE_KEY_IMAGE_NAME, addImage);
+        data.putExtra(SingleExpense.EXPENSE_KEY_NOTES, addNote);
 
         setResult(ExpensesActivity.EXPENSE_RESULT_OK, data);
 

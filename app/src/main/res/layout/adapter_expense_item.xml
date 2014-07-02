@@ -3,54 +3,87 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:weightSum="1"
-    android:showDividers="none">
+    android:showDividers="none"
+    android:weightSum="1">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:background="@drawable/expense_item_card"
-        android:paddingBottom="@dimen/big_padding"
-        android:paddingTop="@dimen/big_padding"
-        android:showDividers="none"
         android:layout_marginLeft="@dimen/expense_drawable_left_pad"
         android:layout_marginRight="@dimen/expense_drawable_left_pad"
         android:layout_marginTop="@dimen/expense_drawable_left_pad"
-    >
-        
-        <TextView
-            android:id="@+id/expenseDesc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/email"
-            android:drawablePadding="@dimen/expense_drawable_left_pad"
-            android:paddingEnd="@dimen/activity_vertical_margin"
-            android:paddingStart="@dimen/activity_horizontal_margin"
-            android:text="Large Text"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            />
+        android:layout_marginBottom="@dimen/expense_card_margin"
+        android:background="@drawable/expense_item_card"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/drawable_left_pad"
+        android:paddingTop="@dimen/big_padding"
+        android:showDividers="none"
+        >
 
-        <TextView
-            android:id="@+id/expenseValue"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.4"
-            android:gravity="right"
-            android:text="50"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            />
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:orientation="horizontal"
+            android:paddingEnd="@dimen/activity_vertical_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            >
+
+
+            <TextView
+                android:id="@+id/expenseDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/email"
+                android:drawablePadding="@dimen/expense_drawable_left_pad"
+                android:text="Large Text"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                />
+
+            <TextView
+                android:id="@+id/currency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:gravity="right"
+                android:text="$"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                />
+
+            <TextView
+                android:id="@+id/expenseValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="50"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/big_padding"
+            android:layout_marginRight="@dimen/big_padding"
+            android:background="@color/gray"
+            android:fadingEdge="horizontal"/>
 
         <TextView
-            android:id="@+id/currency"
-            android:layout_width="wrap_content"
+            android:id="@+id/notes"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/notes"
+            android:drawablePadding="@dimen/expense_drawable_left_pad"
+            android:gravity="center_vertical"
             android:paddingEnd="@dimen/activity_vertical_margin"
-            android:paddingStart="@dimen/padding_start_currency"
-            android:text="$"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/drawable_left_pad"
+            android:paddingBottom="@dimen/drawable_left_pad"
+            android:text="Notes on stuff"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/darker_gray"
             />
 
     </LinearLayout>
-
 </LinearLayout>

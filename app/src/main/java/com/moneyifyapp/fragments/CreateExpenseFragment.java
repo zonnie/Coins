@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.moneyifyapp.R;
@@ -30,6 +31,8 @@ public class CreateExpenseFragment extends Fragment
     Button mCancelButton;
     EditText mExpenseDescription;
     EditText mExpenseValue;
+    ImageView mExpenseIcon;
+    EditText mExpenseNotes;
     private OnFragmentInteractionListener mListener;
 
 
@@ -85,6 +88,9 @@ public class CreateExpenseFragment extends Fragment
         mCancelButton = (Button)view.findViewById(R.id.cancelAddButton);
         mExpenseDescription = (EditText)view.findViewById(R.id.addExpenseDescription);
         mExpenseValue = (EditText)view.findViewById(R.id.addExpenseSum);
+        //TODO need to rectify this
+        //mExpenseIcon = (ImageView)view.
+        mExpenseNotes = (EditText)view.findViewById(R.id.addExpenseNotes);
 
         // Bind listener
         mSubmitButton.setOnClickListener(new View.OnClickListener()
@@ -117,6 +123,8 @@ public class CreateExpenseFragment extends Fragment
         if (mListener != null)
         {
             String description = mExpenseDescription.getText().toString();
+            String imageName = "";
+            String note = mExpenseNotes.getText().toString();
             String sum = mExpenseValue.getText().toString();
 
             if(description.isEmpty() || sum.isEmpty())
@@ -125,7 +133,7 @@ public class CreateExpenseFragment extends Fragment
             }
             else
             {
-                mListener.onAddExpense(description, sum);
+                mListener.onAddExpense(description, sum, imageName, note);
             }
         }
     }
@@ -164,7 +172,7 @@ public class CreateExpenseFragment extends Fragment
      */
     public interface OnFragmentInteractionListener
     {
-        public void onAddExpense(String addDescription, String addSum);
+        public void onAddExpense(String addDescription, String addSum, String addImage, String addNote);
 
         public void cancel();
     }

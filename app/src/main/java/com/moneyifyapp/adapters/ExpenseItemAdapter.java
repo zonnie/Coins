@@ -76,6 +76,11 @@ public class ExpenseItemAdapter extends ArrayAdapter<SingleExpense>
             TextView expenseDescription = (TextView) view.findViewById(R.id.expenseDesc);
             TextView expenseValue = (TextView) view.findViewById(R.id.expenseValue);
             TextView expenseCurrency = (TextView) view.findViewById(R.id.currency);
+            TextView expenseNote = (TextView) view.findViewById(R.id.notes);
+            // TODO this will be the image
+            //Drawable img = getContext().getResources().getDrawable( R.drawable.smiley );
+            //img.setBounds( 0, 0, 60, 60 );
+            //txtVw.setCompoundDrawables( img, null, null, null );
 
             if (expenseDescription != null)
             {
@@ -89,6 +94,10 @@ public class ExpenseItemAdapter extends ArrayAdapter<SingleExpense>
             if (expenseCurrency != null)
             {
                 expenseCurrency.setText(p.mCurrency);
+            }
+            if (expenseNote != null)
+            {
+                expenseNote.setText(p.mNotes);
             }
         }
         return view;

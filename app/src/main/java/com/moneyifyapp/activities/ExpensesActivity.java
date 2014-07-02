@@ -19,7 +19,6 @@ import com.moneyifyapp.utils.Utils;
 import com.parse.ParseUser;
 
 import java.util.Calendar;
-import java.util.Locale;
 
 /**
  *
@@ -50,6 +49,7 @@ public class ExpensesActivity extends Activity
 
     public static int EXPENSE_RESULT_OK = 222;
     public static int EXPENSE_RESULT_CANCELED = 333;
+    public static String PARSE_USER_KEY = "parseUser";
 
 
     /**
@@ -201,7 +201,6 @@ public class ExpensesActivity extends Activity
         @Override
         public CharSequence getPageTitle(int position)
         {
-            Locale l = Locale.getDefault();
             return Months.getMonthNameByNumber(position + 1) + " " + mCalender.get(Calendar.YEAR);
         }
     }

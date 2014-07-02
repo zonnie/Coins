@@ -20,7 +20,7 @@ public class SplashActivity extends Activity
      * ****************************************************************
      */
 
-    private final int SPLASH_DISPLAY_LENGTH = 1800;
+    private final int SPLASH_DISPLAY_LENGTH = 1200;
 
     /********************************************************************/
     /**                          Methods                               **/
