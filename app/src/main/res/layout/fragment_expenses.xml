@@ -12,7 +12,7 @@
         style="?android:attr/buttonStyle"
         android:id="@+id/addNewExpenseButton"
         android:adjustViewBounds="false"
-        android:background="@drawable/button_alternate"
+        android:background="@drawable/back_regualr"
         />
 
     <ListView android:id="@id/android:list"
@@ -25,6 +25,7 @@
               android:textAppearance="?android:attr/textAppearanceLarge"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:textColor="@android:color/darker_gray"
               android:gravity="center"
               android:text="@string/list_empty_message"
         />

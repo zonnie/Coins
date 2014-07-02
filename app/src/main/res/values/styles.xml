@@ -8,6 +8,7 @@
         <item name="android:actionBarStyle">@style/myActionBar</item>
         <item name="android:action">@style/myActionBar</item>
         <item name="android:dialogTheme">@style/DialogTheme</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
@@ -32,7 +33,7 @@
     </style>
 
     <style name="myActionBar" parent="android:style/Widget.Holo.ActionBar">
-        <item name="android:background">@drawable/back_regualr</item>
+        <item name="android:background">@drawable/button_alternate</item>
     </style>
 
     <style name="DialogTheme" parent="@android:style/Theme.Holo.Light.Dialog">

@@ -49,6 +49,8 @@ public class ExpensesActivity extends Activity
     Calendar mCalender;
 
     public static int EXPENSE_RESULT_OK = 222;
+    public static int EXPENSE_RESULT_CANCELED = 333;
+
 
     /**
      * Called once every life cycle.

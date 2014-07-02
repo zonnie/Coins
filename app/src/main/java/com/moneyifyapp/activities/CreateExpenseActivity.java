@@ -81,6 +81,9 @@ public class CreateExpenseActivity extends Activity implements CreateExpenseFrag
     @Override
     public void cancel()
     {
+        Intent data = getIntent();
+        setResult(ExpensesActivity.EXPENSE_RESULT_CANCELED, null);
+
         finish();
     }
 }

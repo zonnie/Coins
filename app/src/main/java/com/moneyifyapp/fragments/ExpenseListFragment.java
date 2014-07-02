@@ -209,14 +209,16 @@ public class ExpenseListFragment extends ListFragment
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        Toast.makeText(getActivity(), "DEBUG : Got the result FRAGMENT", Toast.LENGTH_SHORT).show();
 
-        String desc = data.getExtras().getString(SingleExpense.EXPENSE_KEY_DESCRIPTION);
-        String sum = data.getExtras().getString(SingleExpense.EXPENSE_KEY_VALUE);
-
-        if(!desc.isEmpty() && !sum.isEmpty())
+        if(resultCode == ExpensesActivity.EXPENSE_RESULT_OK)
         {
-            addNewExpense(desc, sum);
+            String desc = data.getExtras().getString(SingleExpense.EXPENSE_KEY_DESCRIPTION);
+            String sum = data.getExtras().getString(SingleExpense.EXPENSE_KEY_VALUE);
+
+            if (!desc.isEmpty() && !sum.isEmpty())
+            {
+                addNewExpense(desc, sum);
+            }
         }
 
     }

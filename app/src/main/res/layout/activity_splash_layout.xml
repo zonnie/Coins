@@ -3,27 +3,23 @@
               android:layout_height="fill_parent"
               android:background="@drawable/back"
               android:orientation="vertical"
-              android:paddingTop="@dimen/splash_top_margin"
-              android:weightSum="5">
+              android:weightSum="4"
+              android:gravity="center">
 
     <ImageView
         android:id="@+id/splashImage"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@drawable/bank"
-        android:layout_weight="2"
+        android:src="@drawable/coin"
         />
 
     <TextView
         android:id="@+id/splashSlogan"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:paddingTop="@dimen/activity_vertical_margin"
         android:text="Moneyify Your Life"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_weight="3"
-        />
+        android:gravity="center"
+        android:paddingTop="@dimen/big_padding"/>
 
 </LinearLayout>

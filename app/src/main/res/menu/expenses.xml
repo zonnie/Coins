@@ -5,6 +5,5 @@
 
     <item android:id="@+id/jump_today"
         android:title="@string/jump_today_caption"
-        android:icon="@drawable/down"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="withText" />
 </menu>
