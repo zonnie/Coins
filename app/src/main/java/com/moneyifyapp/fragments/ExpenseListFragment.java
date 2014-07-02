@@ -48,7 +48,7 @@ public class ExpenseListFragment extends ListFragment
     public static final String SHOW_EMPTY = "empty";
     public static final String FRAG_ID  = "frag_id";
     private String mFragmentId;
-    private String mParam1;
+    private String mIsEmptyList;
     private Button mAddNewExpenseButton;
     private MonthExpenses mExpenses;
     private ExpenseItemAdapter mAdapter;
@@ -99,11 +99,11 @@ public class ExpenseListFragment extends ListFragment
 
         if (getArguments() != null)
         {
-            mParam1 = getArguments().getString(SHOW_EMPTY);
+            mIsEmptyList = getArguments().getString(SHOW_EMPTY);
             mFragmentId = getArguments().getString(FRAG_ID);
         }
 
-        if (!mParam1.equals("true"))
+        if (!mIsEmptyList.equals("true"))
         {
             mAdapter = new ExpenseItemAdapter(getActivity(), R.layout.adapter_expense_item, mExpenses);
             // Load from static model
@@ -231,6 +231,8 @@ public class ExpenseListFragment extends ListFragment
     {
         super.onActivityCreated(savedState);
 
+        //Remove dividers
+        getListView().setDivider(null);
         getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
         {
 
