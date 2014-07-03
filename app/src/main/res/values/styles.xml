@@ -7,6 +7,7 @@
         <item name="android:editTextStyle">@style/RobotoEditTextStyle</item>
         <item name="android:actionBarStyle">@style/myActionBar</item>
         <item name="android:action">@style/myActionBar</item>
+        <item name="android:buttonStyleToggle">@style/RobotoToggleStyle</item>
         <item name="android:dialogTheme">@style/DialogTheme</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
@@ -24,6 +25,10 @@
     </style>
 
     <style name="RobotoDatePickerStyle" parent="android:Widget.DatePicker">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="RobotoToggleStyle" parent="android:Widget.Button.Toggle">
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 

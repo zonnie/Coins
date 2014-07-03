@@ -1,4 +1,4 @@
-package com.moneyifyapp.activities;
+package com.moneyifyapp.activities.login;
 
 import android.app.Activity;
 import android.content.Intent;

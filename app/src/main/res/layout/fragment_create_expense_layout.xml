@@ -7,6 +7,27 @@
               android:padding="@dimen/big_padding"
     >
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:id="@+id/imageView"
+        android:src="@drawable/shop"
+        android:layout_marginBottom="@dimen/big_padding"/>
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/isExpenseToggle"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/big_padding"
+        android:textOff="Expense"
+        android:background="@drawable/expense_toggle"
+        android:textOn="Income"
+        android:paddingTop="@dimen/drawable_left_pad"
+        android:paddingBottom="@dimen/drawable_left_pad"
+        android:paddingStart="@dimen/big_padding"
+        android:paddingEnd="@dimen/big_padding"/>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,16 +39,37 @@
         android:singleLine="true"
         />
 
-    <EditText
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:id="@+id/addExpenseSum"
-        android:drawableLeft="@drawable/sum"
-        android:drawablePadding="@dimen/expense_drawable_left_pad"
-        android:singleLine="true"
-        android:hint="How much did it cost ?"
-        />
+        android:weightSum="10"
+        >
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="9"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:id="@+id/addExpenseSum"
+            android:drawableLeft="@drawable/sum"
+            android:drawablePadding="@dimen/expense_drawable_left_pad"
+            android:singleLine="true"
+            android:hint="How much did it cost ?"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:gravity="center"
+            android:text="$"
+            android:textColor="@android:color/darker_gray"
+            android:id="@+id/addExpenseCurrency"
+            android:layout_gravity="center_vertical|right"/>
+
+    </LinearLayout>
 
     <EditText
         android:layout_width="match_parent"

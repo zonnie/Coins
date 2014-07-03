@@ -1,4 +1,4 @@
-package com.moneyifyapp.activities;
+package com.moneyifyapp.activities.expenses;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -9,11 +9,11 @@ import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.moneyifyapp.R;
-import com.moneyifyapp.fragments.ExpenseListFragment;
-import com.moneyifyapp.model.SingleExpense;
+import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
+import com.moneyifyapp.activities.login.LoginActivity;
+import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.model.enums.Months;
 import com.moneyifyapp.utils.Utils;
 import com.parse.ParseUser;
@@ -47,9 +47,11 @@ public class ExpensesActivity extends Activity
      */
     Calendar mCalender;
 
-    public static int EXPENSE_RESULT_OK = 222;
-    public static int EXPENSE_RESULT_CANCELED = 333;
-    public static String PARSE_USER_KEY = "parseUser";
+    public static final int EXPENSE_RESULT_OK = 222;
+    public static final int EXPENSE_RESULT_CANCELED = 333;
+    public static final int REQ_NEW_ITEM = 42;
+    public static final int REQ_EDIT_ITEM = 92;
+    public static String PARSE_USER_KEY = "user";
 
 
     /**
@@ -124,13 +126,13 @@ public class ExpensesActivity extends Activity
     /**
      * Called by the contained fragment after an item within it was clicked.
      *
-     * @param singleExpense the id of the item that was clicked.
+     * @param transaction the id of the item that was clicked.
      */
     @Override
-    public void expenseItemClickedInFragment(SingleExpense singleExpense)
+    public void expenseItemClickedInFragment(Transaction transaction)
     {
-        Toast toast = Toast.makeText(this, "Clicked \"" + singleExpense.mDescription + "\"", Toast.LENGTH_SHORT);
-        toast.show();
+        //Toast toast = Toast.makeText(this, "Clicked \"" + transaction.mDescription + "\"", Toast.LENGTH_SHORT);
+        //toast.show();
     }
 
     /**

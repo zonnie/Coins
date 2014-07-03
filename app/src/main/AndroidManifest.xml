@@ -11,16 +11,16 @@
         android:label="@string/main_title"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activities.ExpensesActivity"
+            android:name=".activities.expenses.ExpensesActivity"
             android:label="" >
         </activity>
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".activities.login.LoginActivity"
             android:label="@string/action_sign_in"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name=".activities.SignUpActivity"
+            android:name=".activities.login.SignUpActivity"
             android:label="@string/action_sing_up" >
         </activity>
         <activity
@@ -29,12 +29,11 @@
             android:theme="@style/Theme.CustomizedAppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.CreateExpenseActivity"
+            android:name=".activities.expenseDetail.ExpenseDetailActivity"
             android:label="@string/title_activity_create_expense">
         </activity>
     </application>

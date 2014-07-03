@@ -1,7 +1,9 @@
-package com.moneyifyapp.fragments;
+package com.moneyifyapp.activities.expenses.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ListFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,11 +18,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.moneyifyapp.R;
-import com.moneyifyapp.activities.CreateExpenseActivity;
-import com.moneyifyapp.activities.ExpensesActivity;
-import com.moneyifyapp.adapters.ExpenseItemAdapter;
+import com.moneyifyapp.activities.expenseDetail.ExpenseDetailActivity;
+import com.moneyifyapp.activities.expenses.ExpensesActivity;
+import com.moneyifyapp.activities.expenses.adapters.ExpenseItemAdapter;
 import com.moneyifyapp.model.MonthExpenses;
-import com.moneyifyapp.model.SingleExpense;
+import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.utils.Utils;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
@@ -47,7 +49,9 @@ public class ExpenseListFragment extends ListFragment
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static final String SHOW_EMPTY = "empty";
-    public static final String FRAG_ID  = "frag_id";
+    public static final String FRAG_ID = "frag_id";
+    public static final String ITEM_CLICKED_POS = "position";
+    public static final String REQ_CODE_KEY = "req";
     private String mFragmentId;
     private String mIsEmptyList;
     private Button mAddNewExpenseButton;
@@ -125,7 +129,9 @@ public class ExpenseListFragment extends ListFragment
         // Init Parse for data storing
         Utils.initializeParse(getActivity());
 
+        ParseUser user = ParseUser.getCurrentUser();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("expense");
+        query.whereEqualTo("user", user);
         query.findInBackground(new FindCallback<ParseObject>()
         {
             public void done(List<ParseObject> expenseList, ParseException e)
@@ -155,7 +161,6 @@ public class ExpenseListFragment extends ListFragment
     }
 
     /**
-     *
      * @param item
      * @return
      */
@@ -192,39 +197,15 @@ public class ExpenseListFragment extends ListFragment
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(getActivity(), CreateExpenseActivity.class);
-                startActivityForResult(intent, ExpensesActivity.EXPENSE_RESULT_OK);
+                Intent intent = new Intent(getActivity(), ExpenseDetailActivity.class);
+                intent.putExtra(REQ_CODE_KEY, ExpensesActivity.REQ_NEW_ITEM);
+                startActivityForResult(intent, ExpensesActivity.REQ_NEW_ITEM);
             }
         });
 
         return view;
     }
 
-    /**
-     *
-     * @param requestCode
-     * @param resultCode
-     * @param data
-     */
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(resultCode == ExpensesActivity.EXPENSE_RESULT_OK)
-        {
-            String desc = data.getExtras().getString(SingleExpense.EXPENSE_KEY_DESCRIPTION);
-            String sum = data.getExtras().getString(SingleExpense.EXPENSE_KEY_VALUE);
-            String image = data.getExtras().getString(SingleExpense.EXPENSE_KEY_IMAGE_NAME);
-            String note = data.getExtras().getString(SingleExpense.EXPENSE_KEY_NOTES);
-
-            if (!desc.isEmpty() && !sum.isEmpty())
-            {
-                addNewExpense(desc, sum, image, note);
-            }
-        }
-
-    }
 
     /**
      * @param savedState
@@ -243,15 +224,13 @@ public class ExpenseListFragment extends ListFragment
             public boolean onItemLongClick(AdapterView<?> av, View v, int position, long id)
             {
                 int itemPosition;
-                List<SingleExpense> expenses = mAdapter.getItems();
+                List<Transaction> expenses = mAdapter.getItems();
 
                 for (int i = 0; i < expenses.size(); ++i)
                 {
                     if (i == position)
                     {
-                        removeItemWithId(position);
-                        mAdapter.remove(position);
-
+                        verifyRemoveDialog(position);
                         return true;
                     }
                 }
@@ -265,10 +244,10 @@ public class ExpenseListFragment extends ListFragment
      */
     private void removeItemWithId(int position)
     {
-        SingleExpense expenseToRemove = mAdapter.getItems().get(position);
+        Transaction expenseToRemove = mAdapter.getItems().get(position);
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery(SingleExpense.EXPENSE_CLASS_NAME);
-        query.whereEqualTo(SingleExpense.EXPENSE_KEY_ID, expenseToRemove.mId);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(Transaction.CLASS_NAME);
+        query.whereEqualTo(Transaction.KEY_ID, expenseToRemove.mId);
 
         query.findInBackground(new FindCallback<ParseObject>()
         {
@@ -297,6 +276,43 @@ public class ExpenseListFragment extends ListFragment
                 }
             }
         });
+    }
+
+    /**
+     * @param position
+     */
+    private void verifyRemoveDialog(final int position)
+    {
+        String expenseDescription = mAdapter.getItems().get(position).mDescription;
+
+        new AlertDialog.Builder(getActivity())
+                .setMessage("You selected to remove " + "\"" + expenseDescription +
+                        "\"" + ".\nAre you sure you want to remove this expense ?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        removeItemFromList(position);
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        dialog.cancel();
+                    }
+                }).show();
+    }
+
+    /**
+     * @param position
+     */
+    private void removeItemFromList(int position)
+    {
+        removeItemWithId(position);
+        mAdapter.remove(position);
     }
 
     /**
@@ -343,38 +359,86 @@ public class ExpenseListFragment extends ListFragment
         if (null != mListener)
         {
             mListener.expenseItemClickedInFragment(mAdapter.getItems().get(position));
+
+            final Transaction expense = mAdapter.getItems().get(position);
+
+            Intent intent = new Intent(getActivity(), ExpenseDetailActivity.class);
+            intent.putExtra(ITEM_CLICKED_POS, position);
+            intent.putExtra(Transaction.KEY_DESCRIPTION, expense.mDescription);
+            intent.putExtra(Transaction.KEY_VALUE, expense.mValue);
+            intent.putExtra(Transaction.KEY_CURRENCY, expense.mCurrency);
+            intent.putExtra(Transaction.KEY_NOTES, expense.mNotes);
+            intent.putExtra(Transaction.KEY_TYPE, expense.mIsExpense);
+            intent.putExtra(REQ_CODE_KEY, ExpensesActivity.REQ_EDIT_ITEM);
+            startActivityForResult(intent, ExpensesActivity.REQ_EDIT_ITEM);
+
         }
+    }
+
+    /**
+     * Occurs when activity started from fragments finishes with result.
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == ExpensesActivity.EXPENSE_RESULT_OK)
+        {
+            String desc = data.getExtras().getString(Transaction.KEY_DESCRIPTION);
+            String sum = data.getExtras().getString(Transaction.KEY_VALUE);
+            String image = data.getExtras().getString(Transaction.KEY_IMAGE_NAME);
+            String currency = data.getExtras().getString(Transaction.KEY_CURRENCY);
+            String note = data.getExtras().getString(Transaction.KEY_NOTES);
+            Boolean isExpense = data.getExtras().getBoolean(Transaction.KEY_TYPE);
+
+            //TODO: image when its done
+            //String imageName = data.getExtras().getString(SingleExpense.KEY_NOTES);
+            int position = data.getExtras().getInt(ITEM_CLICKED_POS);
+
+            if (!desc.isEmpty() && !sum.isEmpty())
+            {
+                if (requestCode == ExpensesActivity.REQ_NEW_ITEM)
+                {
+                    // TODO: This needs to be dynamic
+                    currency = "$";
+                    addNewTransaction(desc, sum, currency, note, image, isExpense);
+                } else if (requestCode == ExpensesActivity.REQ_EDIT_ITEM)
+                {
+                    Transaction tempExpense = new Transaction("0", desc, sum, currency, note, image, isExpense);
+                    mAdapter.update(position, tempExpense);
+                    // We now MUST pass the item from the collection to preserver
+                    // the ID, the tempExpense object has an 'empty' ID.
+                    updateDataInBackground(mAdapter.getItems().get(position));
+                }
+            }
+        }
+
     }
 
     /**
      * @param addDescription
      * @param addSum
      */
-    public void addNewExpense(String addDescription, String addSum, String image, String note)
+    public void addNewTransaction(String addDescription, String addSum, String currency, String note, String image, boolean isExpense)
     {
-        String currency = "$";
         String newId = generateId(addDescription, addSum, currency);
 
-        ParseUser user = ParseUser.getCurrentUser();
-
         // Create a new expense model
-        SingleExpense newSingleExpense = new SingleExpense(newId, addDescription, addSum, currency, image, note);
+        Transaction newTransaction = new Transaction(newId, addDescription, addSum, currency, note, image, isExpense);
 
-        ParseObject expenseObject = new ParseObject("expense");
-        expenseObject.put(SingleExpense.EXPENSE_KEY_ID, newSingleExpense.mId);
-        expenseObject.put(SingleExpense.EXPENSE_KEY_DESCRIPTION, newSingleExpense.mDescription);
-        expenseObject.put(SingleExpense.EXPENSE_KEY_VALUE, newSingleExpense.mValue);
-        expenseObject.put(SingleExpense.EXPENSE_KEY_CURRENCY, newSingleExpense.mCurrency);
-        expenseObject.put(SingleExpense.EXPENSE_KEY_IMAGE_NAME, newSingleExpense.mImageName);
-        expenseObject.put(SingleExpense.EXPENSE_KEY_NOTES, newSingleExpense.mNotes);
-        expenseObject.put(ExpensesActivity.PARSE_USER_KEY, user);
-        expenseObject.saveInBackground();
+        // Save to Parse
+        ParseObject expenseObject = new ParseObject(Transaction.CLASS_NAME);
+        saveDataInBackground(newTransaction, expenseObject);
 
         // The adapter will add the expense to the model collection so it can update observer
         // as well.
-        mAdapter.add(newSingleExpense);
-        Toast.makeText(getActivity(), "DEBUG : Created an item with " + SingleExpense.EXPENSE_KEY_ID +
-                " of " + newId, Toast.LENGTH_SHORT).show();
+        //mAdapter.insert(newTransaction, 0);
+        mAdapter.add(newTransaction);
     }
 
     /**
@@ -384,9 +448,56 @@ public class ExpenseListFragment extends ListFragment
     public interface OnFragmentInteractionListener
     {
         // TODO: Update argument type and name
-        public void expenseItemClickedInFragment(SingleExpense singleExpense);
+        public void expenseItemClickedInFragment(Transaction transaction);
     }
 
+    /**
+     * This encapsulates the saving of date using Parse.
+     *
+     * @param newTransaction
+     */
+    private void saveDataInBackground(Transaction newTransaction, ParseObject expenseObject)
+    {
+        ParseUser user = ParseUser.getCurrentUser();
+
+        expenseObject.put(Transaction.KEY_ID, newTransaction.mId);
+        expenseObject.put(Transaction.KEY_DESCRIPTION, newTransaction.mDescription);
+        expenseObject.put(Transaction.KEY_VALUE, newTransaction.mValue);
+        expenseObject.put(Transaction.KEY_CURRENCY, newTransaction.mCurrency);
+        expenseObject.put(Transaction.KEY_IMAGE_NAME, newTransaction.mImageName);
+        expenseObject.put(Transaction.KEY_NOTES, newTransaction.mNotes);
+        expenseObject.put(Transaction.KEY_TYPE, newTransaction.mIsExpense);
+        expenseObject.put(ExpensesActivity.PARSE_USER_KEY, user);
+        expenseObject.saveInBackground();
+
+    }
+
+    /**
+     * Updates the matching object in the database.
+     *
+     * @param updatedExpense
+     */
+    private void updateDataInBackground(final Transaction updatedExpense)
+    {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(Transaction.CLASS_NAME);
+        query.whereEqualTo(Transaction.KEY_ID, updatedExpense.mId);
+
+        query.findInBackground(new FindCallback<ParseObject>()
+        {
+            @Override
+            public void done(List<ParseObject> list, ParseException e)
+            {
+
+                if (list.size() != 0)
+                {
+                    ParseObject expenseObjectInDb = list.get(0);
+                    // Save the updated expense in Parse
+                    saveDataInBackground(updatedExpense, expenseObjectInDb);
+                }
+            }
+        });
+
+    }
 
     /**
      * Initializes the expenses from the remote DB.
@@ -401,12 +512,20 @@ public class ExpenseListFragment extends ListFragment
 
             for (ParseObject curExpense : list)
             {
-                mAdapter.add(new SingleExpense(curExpense.getString(SingleExpense.EXPENSE_KEY_ID),
-                        curExpense.getString(SingleExpense.EXPENSE_KEY_DESCRIPTION),
-                        curExpense.getString(SingleExpense.EXPENSE_KEY_VALUE),
-                        curExpense.getString(SingleExpense.EXPENSE_KEY_CURRENCY),
-                        curExpense.getString(SingleExpense.EXPENSE_KEY_IMAGE_NAME),
-                        curExpense.getString(SingleExpense.EXPENSE_KEY_NOTES)));
+                /*mAdapter.insert(new Transaction(curExpense.getString(Transaction.KEY_ID),
+                        curExpense.getString(Transaction.KEY_DESCRIPTION),
+                        curExpense.getString(Transaction.KEY_VALUE),
+                        curExpense.getString(Transaction.KEY_CURRENCY),
+                        curExpense.getString(Transaction.KEY_NOTES),
+                        curExpense.getString(Transaction.KEY_IMAGE_NAME),
+                        curExpense.getBoolean(Transaction.KEY_TYPE)),0);*/
+                mAdapter.add(new Transaction(curExpense.getString(Transaction.KEY_ID),
+                        curExpense.getString(Transaction.KEY_DESCRIPTION),
+                        curExpense.getString(Transaction.KEY_VALUE),
+                        curExpense.getString(Transaction.KEY_CURRENCY),
+                        curExpense.getString(Transaction.KEY_NOTES),
+                        curExpense.getString(Transaction.KEY_IMAGE_NAME),
+                        curExpense.getBoolean(Transaction.KEY_TYPE)));
             }
         }
     }
@@ -425,11 +544,10 @@ public class ExpenseListFragment extends ListFragment
     }
 
     /**
-     *
      * @return
      */
     public String getFragId()
     {
-        return  mFragmentId;
+        return mFragmentId;
     }
 }

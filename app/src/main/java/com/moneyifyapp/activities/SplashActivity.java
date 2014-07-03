@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.moneyifyapp.R;
+import com.moneyifyapp.activities.expenses.ExpensesActivity;
+import com.moneyifyapp.activities.login.LoginActivity;
 import com.moneyifyapp.utils.Utils;
 import com.parse.ParseUser;
 

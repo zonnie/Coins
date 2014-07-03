@@ -25,7 +25,7 @@
     <string name="Email">Email</string>
     <string name="password_hint">Password</string>
     <string name="verify_pass_hint">Verify Password</string>
-    <string name="title_activity_create_expense">New Expense</string>
+    <string name="title_activity_create_expense">Expense Details</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

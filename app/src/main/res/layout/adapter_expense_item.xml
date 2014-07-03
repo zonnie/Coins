@@ -4,6 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:showDividers="none"
+    android:background="@drawable/background"
     android:weightSum="1">
 
     <LinearLayout
@@ -13,12 +14,27 @@
         android:layout_marginRight="@dimen/expense_drawable_left_pad"
         android:layout_marginTop="@dimen/expense_drawable_left_pad"
         android:layout_marginBottom="@dimen/expense_card_margin"
+        android:id="@+id/transaction_card_layout"
         android:background="@drawable/expense_item_card"
         android:orientation="vertical"
         android:paddingBottom="@dimen/drawable_left_pad"
         android:paddingTop="@dimen/big_padding"
         android:showDividers="none"
         >
+
+        <!--<View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@drawable/income_item_card"
+            android:layout_marginTop="@dimen/expense_drawable_left_pad"
+            android:layout_marginLeft="@dimen/expense_drawable_left_pad"
+            android:layout_marginRight="@dimen/expense_drawable_left_pad"
+            android:layout_marginBottom="@dimen/expense_card_margin"
+            android:paddingBottom="@dimen/drawable_left_pad"
+            android:paddingTop="@dimen/big_padding"
+            >
+
+            </View>-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,11 +82,12 @@
             android:layout_height="1dp"
             android:layout_marginLeft="@dimen/big_padding"
             android:layout_marginRight="@dimen/big_padding"
-            android:background="@color/gray"
+            android:background="@android:color/darker_gray"
+            android:id="@+id/expenseItemSeperator"
             android:fadingEdge="horizontal"/>
 
         <TextView
-            android:id="@+id/notes"
+            android:id="@+id/expenseItemNote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/notes"
@@ -80,7 +97,7 @@
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/drawable_left_pad"
             android:paddingBottom="@dimen/drawable_left_pad"
-            android:text="Notes on stuff"
+            android:text="Please enter a note..."
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/darker_gray"
             />

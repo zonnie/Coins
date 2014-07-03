@@ -1,4 +1,4 @@
-package com.moneyifyapp.adapters;
+package com.moneyifyapp.activities.expenses.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,19 +9,21 @@ import android.widget.TextView;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.model.MonthExpenses;
-import com.moneyifyapp.model.SingleExpense;
+import com.moneyifyapp.model.Transaction;
 
 import java.util.List;
 
 /**
  * An expense item adapter.
  */
-public class ExpenseItemAdapter extends ArrayAdapter<SingleExpense>
+public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
 {
 
     /********************************************************************/
     /**                          Members                               **/
-    /********************************************************************/
+    /**
+     * ****************************************************************
+     */
 
 
     private int mLayoutResourceId;
@@ -63,11 +65,18 @@ public class ExpenseItemAdapter extends ArrayAdapter<SingleExpense>
 
             LayoutInflater viewInflator;
             viewInflator = LayoutInflater.from(getContext());
+
             view = viewInflator.inflate(mLayoutResourceId, null);
+
+            // Update ht look of the the view accordingly
+            if(mExpenses.getItems().get(position).mIsExpense == false)
+            {
+                updateViewToIncome(view);
+            }
 
         }
 
-        SingleExpense p = mExpenses.getItems().get(position);
+        Transaction p = mExpenses.getItems().get(position);
 
         // Populate the current view according to collection item.
         if (p != null)
@@ -76,7 +85,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<SingleExpense>
             TextView expenseDescription = (TextView) view.findViewById(R.id.expenseDesc);
             TextView expenseValue = (TextView) view.findViewById(R.id.expenseValue);
             TextView expenseCurrency = (TextView) view.findViewById(R.id.currency);
-            TextView expenseNote = (TextView) view.findViewById(R.id.notes);
+            TextView expenseNote = (TextView) view.findViewById(R.id.expenseItemNote);
             // TODO this will be the image
             //Drawable img = getContext().getResources().getDrawable( R.drawable.smiley );
             //img.setBounds( 0, 0, 60, 60 );
@@ -97,22 +106,81 @@ public class ExpenseItemAdapter extends ArrayAdapter<SingleExpense>
             }
             if (expenseNote != null)
             {
-                expenseNote.setText(p.mNotes);
+                if (!p.mNotes.isEmpty())
+                {
+                    expenseNote.setText(p.mNotes);
+                }
             }
         }
         return view;
     }
 
     /**
+     *
+     * @param view
+     */
+    private void updateViewToIncome(View view)
+    {
+        /*
+        LinearLayout cardLayout = (LinearLayout)view.findViewById(R.id.transaction_card_layout);
+        cardLayout.setBackgroundResource(R.drawable.income_item_card);
+
+        View divider = view.findViewById(R.id.expenseItemSeperator);
+        divider.setBackgroundColor(view.getResources().getColor(android.R.color.darker_gray));
+
+        TextView noteText = (TextView)view.findViewById(R.id.expenseItemNote);
+        noteText.setTextColor(view.getResources().getColor(android.R.color.darker_gray));
+        */
+    }
+
+    /**
      * Adds a new item to the data set and notifies the data set observer on change.
      *
-     * @param singleExpense
+     * @param transaction
      */
-    public void add(SingleExpense singleExpense)
+    /*
+    public void add(Transaction transaction)
     {
-        if (singleExpense != null)
+        if (transaction != null)
         {
-            mExpenses.getItems().add(0, singleExpense);
+            mExpenses.getItems().add(0, transaction);
+        }
+
+        notifyDataSetChanged();
+    }*/
+
+    /**
+     * @param position
+     */
+    public void remove(int position)
+    {
+        Transaction transaction = mExpenses.getItems().get(position);
+
+        if (transaction != null)
+        {
+            mExpenses.getItems().remove(transaction);
+        }
+
+        notifyDataSetChanged();
+    }
+
+    /**
+     * Get the expense items.
+     */
+    public List<Transaction> getItems()
+    {
+        return mExpenses.getItems();
+    }
+
+    /**
+     * Removes all items from list and updates the observer
+     * that the list has changed.
+     */
+    public void removeAll()
+    {
+        for (Transaction expense : mExpenses.getItems())
+        {
+            remove(expense);
         }
 
         notifyDataSetChanged();
@@ -121,40 +189,20 @@ public class ExpenseItemAdapter extends ArrayAdapter<SingleExpense>
     /**
      *
      * @param position
+     * @param expense
      */
-    public void remove(int position)
+    public void update(int position, Transaction expense)
     {
-        SingleExpense singleExpense = mExpenses.getItems().get(position);
+        Transaction updatedExpense = mExpenses.getItems().get(position);
 
-        if(singleExpense != null)
+        if(expense != null)
         {
-            mExpenses.getItems().remove(singleExpense);
-        }
-
-        notifyDataSetChanged();
-    }
-
-    /**
-     *
-     * Get the expense items.
-     *
-     */
-    public List<SingleExpense> getItems()
-    {
-        return mExpenses.getItems();
-    }
-
-    /**
-     *
-     * Removes all items from list and updates the observer
-     * that the list has changed.
-     *
-     */
-    public void removeAll()
-    {
-        for(SingleExpense expense : mExpenses.getItems())
-        {
-            remove(expense);
+            updatedExpense.mDescription = expense.mDescription;
+            updatedExpense.mValue = expense.mValue;
+            updatedExpense.mCurrency = expense.mCurrency;
+            updatedExpense.mNotes = expense.mNotes;
+            updatedExpense.mImageName = expense.mImageName;
+            updatedExpense.mIsExpense = expense.mIsExpense;
         }
 
         notifyDataSetChanged();

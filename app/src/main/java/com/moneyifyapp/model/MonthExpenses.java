@@ -15,13 +15,13 @@ public class MonthExpenses
     /**
      * An array of sample (dummy) items.
      */
-    public List<SingleExpense> mSingleExpenses = new ArrayList<SingleExpense>();
-    public List<SingleExpense> mEmptyList = new ArrayList<SingleExpense>();
+    public List<Transaction> mTransactions = new ArrayList<Transaction>();
+    public List<Transaction> mEmptyList = new ArrayList<Transaction>();
 
     public MonthExpenses()
     {
-        mSingleExpenses = new ArrayList<SingleExpense>();
-        mEmptyList = new ArrayList<SingleExpense>();
+        mTransactions = new ArrayList<Transaction>();
+        mEmptyList = new ArrayList<Transaction>();
     }
 
     /*
@@ -40,13 +40,13 @@ public class MonthExpenses
     /**
      * @param item
      */
-    public void addItem(SingleExpense item)
+    public void addItem(Transaction item)
     {
-        mSingleExpenses.add(item);
+        mTransactions.add(item);
     }
 
-    public List<SingleExpense> getItems()
+    public List<Transaction> getItems()
     {
-        return mSingleExpenses;
+        return mTransactions;
     }
 }

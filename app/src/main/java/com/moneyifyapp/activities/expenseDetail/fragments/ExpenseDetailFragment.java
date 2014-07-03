@@ -1,4 +1,4 @@
-package com.moneyifyapp.fragments;
+package com.moneyifyapp.activities.expenseDetail.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -9,19 +9,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.moneyifyapp.R;
+import com.moneyifyapp.model.Transaction;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link CreateExpenseFragment.OnFragmentInteractionListener} interface
+ * {@link ExpenseDetailFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link CreateExpenseFragment#newInstance} factory method to
+ * Use the {@link ExpenseDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CreateExpenseFragment extends Fragment
+public class ExpenseDetailFragment extends Fragment
 {
     /********************************************************************/
     /**                          Members                               **/
@@ -32,8 +35,13 @@ public class CreateExpenseFragment extends Fragment
     EditText mExpenseDescription;
     EditText mExpenseValue;
     ImageView mExpenseIcon;
+    TextView mExpenseCurrency;
     EditText mExpenseNotes;
+    ToggleButton mToggleIsExpense;
     private OnFragmentInteractionListener mListener;
+    private Transaction mTempExpenseObject;
+    boolean mIsEdit;
+    public static final String EXPENSE_EDIT_KEY = "edit";
 
 
     /********************************************************************/
@@ -44,15 +52,25 @@ public class CreateExpenseFragment extends Fragment
      *
      *
      */
-    public static CreateExpenseFragment newInstance()
+    public static ExpenseDetailFragment newInstance(boolean isEdit, Transaction expense)
     {
-        CreateExpenseFragment fragment = new CreateExpenseFragment();
+        ExpenseDetailFragment fragment = new ExpenseDetailFragment();
         Bundle args = new Bundle();
+        if(expense != null)
+        {
+            args.putBoolean(EXPENSE_EDIT_KEY, isEdit);
+            args.putString(Transaction.KEY_DESCRIPTION, expense.mDescription);
+            args.putString(Transaction.KEY_VALUE, expense.mValue);
+            args.putString(Transaction.KEY_CURRENCY, expense.mCurrency);
+            args.putString(Transaction.KEY_NOTES, expense.mNotes);
+            args.putString(Transaction.KEY_IMAGE_NAME, expense.mImageName);
+            args.putBoolean(Transaction.KEY_TYPE, expense.mIsExpense);
+        }
         fragment.setArguments(args);
         return fragment;
     }
 
-    public CreateExpenseFragment()
+    public ExpenseDetailFragment()
     {
         // Required empty public constructor
     }
@@ -67,6 +85,15 @@ public class CreateExpenseFragment extends Fragment
         super.onCreate(savedInstanceState);
         if (getArguments() != null)
         {
+            mIsEdit = getArguments().getBoolean(EXPENSE_EDIT_KEY);
+            String description = getArguments().getString(Transaction.KEY_DESCRIPTION);
+            String value = getArguments().getString(Transaction.KEY_VALUE);
+            String currency = getArguments().getString(Transaction.KEY_CURRENCY);
+            String note = getArguments().getString(Transaction.KEY_NOTES);
+            String image = getArguments().getString(Transaction.KEY_IMAGE_NAME);
+            boolean isExpense = getArguments().getBoolean(Transaction.KEY_TYPE);
+
+            mTempExpenseObject = new Transaction("", description, value, currency, note, image,isExpense);
         }
     }
 
@@ -87,10 +114,12 @@ public class CreateExpenseFragment extends Fragment
         mSubmitButton = (Button)view.findViewById(R.id.submitButton);
         mCancelButton = (Button)view.findViewById(R.id.cancelAddButton);
         mExpenseDescription = (EditText)view.findViewById(R.id.addExpenseDescription);
+        mExpenseCurrency = (TextView)view.findViewById(R.id.addExpenseCurrency);
         mExpenseValue = (EditText)view.findViewById(R.id.addExpenseSum);
         //TODO need to rectify this
         //mExpenseIcon = (ImageView)view.
         mExpenseNotes = (EditText)view.findViewById(R.id.addExpenseNotes);
+        mToggleIsExpense = (ToggleButton)view.findViewById(R.id.isExpenseToggle);
 
         // Bind listener
         mSubmitButton.setOnClickListener(new View.OnClickListener()
@@ -111,6 +140,17 @@ public class CreateExpenseFragment extends Fragment
             }
         });
 
+        if(mIsEdit)
+        {
+            mExpenseDescription.setText(mTempExpenseObject.mDescription);
+            mExpenseValue.setText(mTempExpenseObject.mValue);
+            mExpenseCurrency.setText(mTempExpenseObject.mCurrency);
+            mExpenseNotes.setText(mTempExpenseObject.mNotes);
+            //TODO for image need to do
+            //mExpenseIcon.setText(mTempExpenseObject.mDescription);
+            mToggleIsExpense.setChecked(!mTempExpenseObject.mIsExpense);
+        }
+
         return view;
     }
 
@@ -126,14 +166,16 @@ public class CreateExpenseFragment extends Fragment
             String imageName = "";
             String note = mExpenseNotes.getText().toString();
             String sum = mExpenseValue.getText().toString();
+            String currency = mExpenseCurrency.getText().toString();
+            boolean isExpense = !mToggleIsExpense.isChecked();  // If it's un-toggled this means this is an expense
 
             if(description.isEmpty() || sum.isEmpty())
             {
-                Toast.makeText(getActivity(), "Please fill all required info", Toast.LENGTH_SHORT);
+                Toast.makeText(getActivity(), "Please fill all required info", Toast.LENGTH_SHORT).show();
             }
             else
             {
-                mListener.onAddExpense(description, sum, imageName, note);
+                mListener.onAddExpense(description, sum, currency, note, imageName, isExpense);
             }
         }
     }
@@ -172,7 +214,7 @@ public class CreateExpenseFragment extends Fragment
      */
     public interface OnFragmentInteractionListener
     {
-        public void onAddExpense(String addDescription, String addSum, String addImage, String addNote);
+        public void onAddExpense(String addDescription, String addSum, String currency, String addNote, String addImage, boolean isExpense);
 
         public void cancel();
     }

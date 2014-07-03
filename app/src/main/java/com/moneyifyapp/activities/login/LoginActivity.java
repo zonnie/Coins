@@ -1,4 +1,4 @@
-package com.moneyifyapp.activities;
+package com.moneyifyapp.activities.login;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.moneyifyapp.R;
+import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
