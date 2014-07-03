@@ -9,6 +9,8 @@
         <item name="android:action">@style/myActionBar</item>
         <item name="android:buttonStyleToggle">@style/RobotoToggleStyle</item>
         <item name="android:dialogTheme">@style/DialogTheme</item>
+        <item name="android:popupMenuStyle">@style/MyPopupMenu</item>
+        <item name="android:itemTextAppearance">@style/myCustomMenuTextApearance</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
@@ -45,5 +47,14 @@
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
+    <!-- Popup Menu Background Color styles -->
+    <style name="MyPopupMenu" parent="@android:style/Widget.Holo.Light.ListPopupWindow">
+        <item name="android:popupBackground">@color/green</item>
+    </style>
+
+    <style name="myCustomMenuTextApearance" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
 
 </resources>

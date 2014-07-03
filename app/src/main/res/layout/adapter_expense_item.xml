@@ -22,20 +22,6 @@
         android:showDividers="none"
         >
 
-        <!--<View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="@drawable/income_item_card"
-            android:layout_marginTop="@dimen/expense_drawable_left_pad"
-            android:layout_marginLeft="@dimen/expense_drawable_left_pad"
-            android:layout_marginRight="@dimen/expense_drawable_left_pad"
-            android:layout_marginBottom="@dimen/expense_card_margin"
-            android:paddingBottom="@dimen/drawable_left_pad"
-            android:paddingTop="@dimen/big_padding"
-            >
-
-            </View>-->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

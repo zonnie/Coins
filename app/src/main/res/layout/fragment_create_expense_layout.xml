@@ -9,7 +9,7 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_height="90dp"
         android:id="@+id/imageView"
         android:src="@drawable/shop"
         android:layout_marginBottom="@dimen/big_padding"/>
@@ -82,7 +82,7 @@
         android:layout_marginBottom="@dimen/big_padding"
         android:drawableLeft="@drawable/notes"
         android:drawablePadding="@dimen/expense_drawable_left_pad"
-        android:maxLength="40"
+        android:maxLength="80"
         android:lines="@integer/notes_lines"/>
 
     <LinearLayout
@@ -92,15 +92,16 @@
         android:gravity="center"
         >
 
-        <Button android:src="@drawable/ok"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Done !"
-                android:id="@+id/submitButton"
-                android:background="@drawable/button_regular"
-                android:scaleType="fitCenter"
-                android:layout_weight="1"
-                android:layout_margin="@dimen/max_add_width"/>
+        <Button
+            android:src="@drawable/ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Done !"
+            android:id="@+id/submitButton"
+            android:background="@drawable/button_regular"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/max_add_width"/>
 
         <Button
             android:layout_width="match_parent"

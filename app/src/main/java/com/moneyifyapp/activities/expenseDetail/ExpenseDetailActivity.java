@@ -17,7 +17,9 @@ public class ExpenseDetailActivity extends Activity
 {
     /********************************************************************/
     /**                          Section                               **/
-    /********************************************************************/
+    /**
+     * ****************************************************************
+     */
 
     private int mRequestCode;
     private int mItemPosition;
@@ -45,22 +47,21 @@ public class ExpenseDetailActivity extends Activity
         mRequestCode = getIntent().getExtras().getInt(ExpenseListFragment.REQ_CODE_KEY);
         boolean isEdit = false;
 
-        if(mRequestCode == ExpensesActivity.REQ_EDIT_ITEM)
+        if (mRequestCode == ExpensesActivity.REQ_EDIT_ITEM)
         {
             isEdit = true;
         }
 
         if (savedInstanceState == null)
         {
-            if(!isEdit)
+            if (!isEdit)
             {
                 getFragmentManager().beginTransaction()
                         .add(R.id.container, ExpenseDetailFragment.newInstance(isEdit, null))
                         .commit();
-            }
-            else
+            } else
             {
-                mItemPosition = getIntent().getExtras().getInt(ExpenseListFragment.ITEM_CLICKED_POS);
+                mItemPosition = getIntent().getExtras().getInt(ExpenseListFragment.MONTH_KEY);
                 mDescription = getIntent().getExtras().getString(Transaction.KEY_DESCRIPTION);
                 mValue = getIntent().getExtras().getString(Transaction.KEY_VALUE);
                 mCurrency = getIntent().getExtras().getString(Transaction.KEY_CURRENCY);
@@ -106,7 +107,6 @@ public class ExpenseDetailActivity extends Activity
     }
 
     /**
-     *
      * @param addDescription
      * @param addSum
      */
@@ -119,7 +119,7 @@ public class ExpenseDetailActivity extends Activity
         data.putExtra(Transaction.KEY_IMAGE_NAME, addImage);
         data.putExtra(Transaction.KEY_CURRENCY, addCurrency);
         data.putExtra(Transaction.KEY_NOTES, addNote);
-        data.putExtra(ExpenseListFragment.ITEM_CLICKED_POS, mItemPosition);
+        data.putExtra(ExpenseListFragment.MONTH_KEY, mItemPosition);
         data.putExtra(Transaction.KEY_TYPE, isExpense);
         setResult(ExpensesActivity.EXPENSE_RESULT_OK, data);
 

@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
-import com.moneyifyapp.model.MonthExpenses;
+import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.Transaction;
 
 import java.util.List;
@@ -27,7 +27,8 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
 
 
     private int mLayoutResourceId;
-    private MonthExpenses mExpenses;
+    private MonthTransactions mTransactions;
+    private View mMyView;
 
 
     /********************************************************************/
@@ -39,10 +40,10 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
      * @param context
      * @param resource
      */
-    public ExpenseItemAdapter(Context context, int resource, MonthExpenses expenses)
+    public ExpenseItemAdapter(Context context, int resource, MonthTransactions expenses)
     {
         super(context, resource, expenses.getItems());
-        mExpenses = expenses;
+        mTransactions = expenses;
         mLayoutResourceId = resource;
     }
 
@@ -59,6 +60,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     {
 
         View view = convertView;
+        mMyView = view;
 
         if (view == null)
         {
@@ -69,14 +71,14 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             view = viewInflator.inflate(mLayoutResourceId, null);
 
             // Update ht look of the the view accordingly
-            if(mExpenses.getItems().get(position).mIsExpense == false)
+            if (mTransactions.getItems().get(position).mIsExpense == false)
             {
                 updateViewToIncome(view);
             }
 
         }
 
-        Transaction p = mExpenses.getItems().get(position);
+        Transaction p = mTransactions.getItems().get(position);
 
         // Populate the current view according to collection item.
         if (p != null)
@@ -116,49 +118,42 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     }
 
     /**
-     *
      * @param view
      */
     private void updateViewToIncome(View view)
     {
-        /*
-        LinearLayout cardLayout = (LinearLayout)view.findViewById(R.id.transaction_card_layout);
-        cardLayout.setBackgroundResource(R.drawable.income_item_card);
+        TextView amount = (TextView)view.findViewById(R.id.expenseValue);
+        amount.setTextColor(view.getResources().getColor(android.R.color.holo_green_dark));
 
-        View divider = view.findViewById(R.id.expenseItemSeperator);
-        divider.setBackgroundColor(view.getResources().getColor(android.R.color.darker_gray));
+        TextView currency = (TextView)view.findViewById(R.id.currency);
+        currency.setTextColor(view.getResources().getColor(android.R.color.holo_green_dark));
 
-        TextView noteText = (TextView)view.findViewById(R.id.expenseItemNote);
-        noteText.setTextColor(view.getResources().getColor(android.R.color.darker_gray));
-        */
     }
 
     /**
-     * Adds a new item to the data set and notifies the data set observer on change.
      *
-     * @param transaction
+     * @param view
      */
-    /*
-    public void add(Transaction transaction)
+    private void updateViewToExpense(View view)
     {
-        if (transaction != null)
-        {
-            mExpenses.getItems().add(0, transaction);
-        }
+        TextView amount = (TextView)view.findViewById(R.id.expenseValue);
+        amount.setTextColor(view.getResources().getColor(android.R.color.black));
 
-        notifyDataSetChanged();
-    }*/
+        TextView currency = (TextView)view.findViewById(R.id.currency);
+        currency.setTextColor(view.getResources().getColor(android.R.color.black));
+
+    }
 
     /**
      * @param position
      */
     public void remove(int position)
     {
-        Transaction transaction = mExpenses.getItems().get(position);
+        Transaction transaction = mTransactions.getItems().get(position);
 
         if (transaction != null)
         {
-            mExpenses.getItems().remove(transaction);
+            mTransactions.getItems().remove(transaction);
         }
 
         notifyDataSetChanged();
@@ -169,7 +164,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
      */
     public List<Transaction> getItems()
     {
-        return mExpenses.getItems();
+        return mTransactions.getItems();
     }
 
     /**
@@ -178,7 +173,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
      */
     public void removeAll()
     {
-        for (Transaction expense : mExpenses.getItems())
+        for (Transaction expense : mTransactions.getItems())
         {
             remove(expense);
         }
@@ -187,22 +182,44 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     }
 
     /**
-     *
      * @param position
      * @param expense
      */
     public void update(int position, Transaction expense)
     {
-        Transaction updatedExpense = mExpenses.getItems().get(position);
+        Transaction updatedExpense = mTransactions.getItems().get(position);
+        boolean changeTextColor = false;
 
-        if(expense != null)
+        if (expense != null)
         {
             updatedExpense.mDescription = expense.mDescription;
             updatedExpense.mValue = expense.mValue;
             updatedExpense.mCurrency = expense.mCurrency;
             updatedExpense.mNotes = expense.mNotes;
             updatedExpense.mImageName = expense.mImageName;
+
+            if(updatedExpense.mIsExpense != expense.mIsExpense)
+            {
+                changeTextColor = true;
+            }
+
             updatedExpense.mIsExpense = expense.mIsExpense;
+
+            // Update the amount color according to transaction type
+            if(expense.mIsExpense && changeTextColor)
+            {
+                if(mMyView != null)
+                {
+                    updateViewToIncome(mMyView);
+                }
+            }
+            else if(!expense.mIsExpense && changeTextColor)
+            {
+                if(mMyView != null)
+                {
+                    updateViewToExpense(mMyView);
+                }
+            }
         }
 
         notifyDataSetChanged();

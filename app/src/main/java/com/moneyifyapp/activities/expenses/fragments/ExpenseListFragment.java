@@ -21,8 +21,9 @@ import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenseDetail.ExpenseDetailActivity;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.activities.expenses.adapters.ExpenseItemAdapter;
-import com.moneyifyapp.model.MonthExpenses;
+import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.Transaction;
+import com.moneyifyapp.model.YearTransactions;
 import com.moneyifyapp.utils.Utils;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
@@ -48,14 +49,12 @@ public class ExpenseListFragment extends ListFragment
      */
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    public static final String SHOW_EMPTY = "empty";
-    public static final String FRAG_ID = "frag_id";
-    public static final String ITEM_CLICKED_POS = "position";
+    public static final String PAGE_ID_KEY = "frag_id";
+    public static final String MONTH_KEY = "month";
     public static final String REQ_CODE_KEY = "req";
-    private String mFragmentId;
-    private String mIsEmptyList;
-    private Button mAddNewExpenseButton;
-    private MonthExpenses mExpenses;
+    private Button mNewTransactionButton;
+    private MonthTransactions mTransactions;
+    private YearTransactions mYearTransactions;
     private ExpenseItemAdapter mAdapter;
     private OnFragmentInteractionListener mListener;
     private ListView mList;
@@ -67,15 +66,15 @@ public class ExpenseListFragment extends ListFragment
     /**
      * Factory to pass some data for different fragments creation.
      *
-     * @param showEmpty
+     * @param pageId
+     *
      * @return
      */
-    public static ExpenseListFragment newInstance(String showEmpty, String id)
+    public static ExpenseListFragment newInstance(int pageId)
     {
         ExpenseListFragment fragment = new ExpenseListFragment();
         Bundle args = new Bundle();
-        args.putString(SHOW_EMPTY, showEmpty);
-        args.putString(FRAG_ID, id);
+        args.putInt(PAGE_ID_KEY, pageId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -96,27 +95,23 @@ public class ExpenseListFragment extends ListFragment
     {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mExpenses = new MonthExpenses();
 
-        // Init Parse for data storing
-        initializeExpenses();
-
+        if(mYearTransactions == null)
+        {
+            mYearTransactions = new YearTransactions();
+        }
 
         if (getArguments() != null)
         {
-            mIsEmptyList = getArguments().getString(SHOW_EMPTY);
-            mFragmentId = getArguments().getString(FRAG_ID);
+            // Create a new month
+            mYearTransactions.addMonth(getArguments().getInt(PAGE_ID_KEY));
+            mTransactions = mYearTransactions.get(getArguments().getInt(PAGE_ID_KEY));
         }
 
-        if (!mIsEmptyList.equals("true"))
-        {
-            mAdapter = new ExpenseItemAdapter(getActivity(), R.layout.adapter_expense_item, mExpenses);
-            // Load from static model
-        } else
-        {
-            // Load from static model
-            mAdapter = new ExpenseItemAdapter(getActivity(), R.layout.adapter_expense_item, mExpenses);
-        }
+        mAdapter = new ExpenseItemAdapter(getActivity(), R.layout.adapter_expense_item, mTransactions);
+
+        // Init Parse for data storing
+        initializeExpenses();
 
         setListAdapter(mAdapter);
     }
@@ -131,7 +126,8 @@ public class ExpenseListFragment extends ListFragment
 
         ParseUser user = ParseUser.getCurrentUser();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("expense");
-        query.whereEqualTo("user", user);
+        query.whereEqualTo(ExpensesActivity.PARSE_USER_KEY, user);
+        query.whereEqualTo(MONTH_KEY, mTransactions.mMonthNumber);
         query.findInBackground(new FindCallback<ParseObject>()
         {
             public void done(List<ParseObject> expenseList, ParseException e)
@@ -191,8 +187,8 @@ public class ExpenseListFragment extends ListFragment
     {
         View view = inflater.inflate(R.layout.fragment_expenses, container, false);
 
-        mAddNewExpenseButton = (Button) view.findViewById(R.id.addNewExpenseButton);
-        mAddNewExpenseButton.setOnClickListener(new View.OnClickListener()
+        mNewTransactionButton = (Button) view.findViewById(R.id.addNewExpenseButton);
+        mNewTransactionButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -363,7 +359,7 @@ public class ExpenseListFragment extends ListFragment
             final Transaction expense = mAdapter.getItems().get(position);
 
             Intent intent = new Intent(getActivity(), ExpenseDetailActivity.class);
-            intent.putExtra(ITEM_CLICKED_POS, position);
+            intent.putExtra(MONTH_KEY, position);
             intent.putExtra(Transaction.KEY_DESCRIPTION, expense.mDescription);
             intent.putExtra(Transaction.KEY_VALUE, expense.mValue);
             intent.putExtra(Transaction.KEY_CURRENCY, expense.mCurrency);
@@ -395,10 +391,9 @@ public class ExpenseListFragment extends ListFragment
             String currency = data.getExtras().getString(Transaction.KEY_CURRENCY);
             String note = data.getExtras().getString(Transaction.KEY_NOTES);
             Boolean isExpense = data.getExtras().getBoolean(Transaction.KEY_TYPE);
-
             //TODO: image when its done
             //String imageName = data.getExtras().getString(SingleExpense.KEY_NOTES);
-            int position = data.getExtras().getInt(ITEM_CLICKED_POS);
+            int position = data.getExtras().getInt(MONTH_KEY);
 
             if (!desc.isEmpty() && !sum.isEmpty())
             {
@@ -411,7 +406,7 @@ public class ExpenseListFragment extends ListFragment
                 {
                     Transaction tempExpense = new Transaction("0", desc, sum, currency, note, image, isExpense);
                     mAdapter.update(position, tempExpense);
-                    // We now MUST pass the item from the collection to preserver
+                    // ! We now MUST pass the item from the collection to preserver
                     // the ID, the tempExpense object has an 'empty' ID.
                     updateDataInBackground(mAdapter.getItems().get(position));
                 }
@@ -468,6 +463,7 @@ public class ExpenseListFragment extends ListFragment
         expenseObject.put(Transaction.KEY_NOTES, newTransaction.mNotes);
         expenseObject.put(Transaction.KEY_TYPE, newTransaction.mIsExpense);
         expenseObject.put(ExpensesActivity.PARSE_USER_KEY, user);
+        expenseObject.put(MONTH_KEY, mTransactions.mMonthNumber);
         expenseObject.saveInBackground();
 
     }
@@ -512,13 +508,6 @@ public class ExpenseListFragment extends ListFragment
 
             for (ParseObject curExpense : list)
             {
-                /*mAdapter.insert(new Transaction(curExpense.getString(Transaction.KEY_ID),
-                        curExpense.getString(Transaction.KEY_DESCRIPTION),
-                        curExpense.getString(Transaction.KEY_VALUE),
-                        curExpense.getString(Transaction.KEY_CURRENCY),
-                        curExpense.getString(Transaction.KEY_NOTES),
-                        curExpense.getString(Transaction.KEY_IMAGE_NAME),
-                        curExpense.getBoolean(Transaction.KEY_TYPE)),0);*/
                 mAdapter.add(new Transaction(curExpense.getString(Transaction.KEY_ID),
                         curExpense.getString(Transaction.KEY_DESCRIPTION),
                         curExpense.getString(Transaction.KEY_VALUE),
@@ -541,13 +530,5 @@ public class ExpenseListFragment extends ListFragment
         output = output.replaceAll("\\s+", "-");
 
         return output;
-    }
-
-    /**
-     * @return
-     */
-    public String getFragId()
-    {
-        return mFragmentId;
     }
 }

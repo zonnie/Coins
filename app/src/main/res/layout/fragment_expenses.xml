@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/background"
+              android:orientation="vertical">
 
     <!-- This is a must for a custom list in fragment listview -->
     <Button
@@ -16,22 +16,24 @@
         android:background="@drawable/back_regualr"
         />
 
-    <ListView android:id="@id/android:list"
-              android:layout_width="match_parent"
-              android:layout_height="0dp"
-              android:layout_weight="1"
-              android:clipToPadding="false"
-              android:paddingTop="@dimen/drawable_left_pad"
-              android:paddingBottom="@dimen/big_padding"
-              android:drawSelectorOnTop="false"/>
+    <ListView
+        android:id="@id/android:list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/drawable_left_pad"
+        android:paddingBottom="@dimen/big_padding"
+        android:drawSelectorOnTop="false"/>
 
-    <TextView android:id="@id/android:empty"
-              android:textAppearance="?android:attr/textAppearanceLarge"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:textColor="@android:color/black"
-              android:gravity="center"
-              android:text="@string/list_empty_message"
+    <TextView
+        android:id="@id/android:empty"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:text="@string/list_empty_message"
         />
 
 </LinearLayout>

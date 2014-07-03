@@ -28,7 +28,9 @@ public class ExpenseDetailFragment extends Fragment
 {
     /********************************************************************/
     /**                          Members                               **/
-    /********************************************************************/
+    /**
+     * ****************************************************************
+     */
 
     Button mSubmitButton;
     Button mCancelButton;
@@ -56,7 +58,7 @@ public class ExpenseDetailFragment extends Fragment
     {
         ExpenseDetailFragment fragment = new ExpenseDetailFragment();
         Bundle args = new Bundle();
-        if(expense != null)
+        if (expense != null)
         {
             args.putBoolean(EXPENSE_EDIT_KEY, isEdit);
             args.putString(Transaction.KEY_DESCRIPTION, expense.mDescription);
@@ -76,7 +78,6 @@ public class ExpenseDetailFragment extends Fragment
     }
 
     /**
-     *
      * @param savedInstanceState
      */
     @Override
@@ -93,12 +94,11 @@ public class ExpenseDetailFragment extends Fragment
             String image = getArguments().getString(Transaction.KEY_IMAGE_NAME);
             boolean isExpense = getArguments().getBoolean(Transaction.KEY_TYPE);
 
-            mTempExpenseObject = new Transaction("", description, value, currency, note, image,isExpense);
+            mTempExpenseObject = new Transaction("", description, value, currency, note, image, isExpense);
         }
     }
 
     /**
-     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -111,15 +111,15 @@ public class ExpenseDetailFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_create_expense_layout, container, false);
 
         // Save the views
-        mSubmitButton = (Button)view.findViewById(R.id.submitButton);
-        mCancelButton = (Button)view.findViewById(R.id.cancelAddButton);
-        mExpenseDescription = (EditText)view.findViewById(R.id.addExpenseDescription);
-        mExpenseCurrency = (TextView)view.findViewById(R.id.addExpenseCurrency);
-        mExpenseValue = (EditText)view.findViewById(R.id.addExpenseSum);
+        mSubmitButton = (Button) view.findViewById(R.id.submitButton);
+        mCancelButton = (Button) view.findViewById(R.id.cancelAddButton);
+        mExpenseDescription = (EditText) view.findViewById(R.id.addExpenseDescription);
+        mExpenseCurrency = (TextView) view.findViewById(R.id.addExpenseCurrency);
+        mExpenseValue = (EditText) view.findViewById(R.id.addExpenseSum);
         //TODO need to rectify this
         //mExpenseIcon = (ImageView)view.
-        mExpenseNotes = (EditText)view.findViewById(R.id.addExpenseNotes);
-        mToggleIsExpense = (ToggleButton)view.findViewById(R.id.isExpenseToggle);
+        mExpenseNotes = (EditText) view.findViewById(R.id.addExpenseNotes);
+        mToggleIsExpense = (ToggleButton) view.findViewById(R.id.isExpenseToggle);
 
         // Bind listener
         mSubmitButton.setOnClickListener(new View.OnClickListener()
@@ -140,7 +140,7 @@ public class ExpenseDetailFragment extends Fragment
             }
         });
 
-        if(mIsEdit)
+        if (mIsEdit)
         {
             mExpenseDescription.setText(mTempExpenseObject.mDescription);
             mExpenseValue.setText(mTempExpenseObject.mValue);
@@ -169,11 +169,10 @@ public class ExpenseDetailFragment extends Fragment
             String currency = mExpenseCurrency.getText().toString();
             boolean isExpense = !mToggleIsExpense.isChecked();  // If it's un-toggled this means this is an expense
 
-            if(description.isEmpty() || sum.isEmpty())
+            if (description.isEmpty() || sum.isEmpty())
             {
                 Toast.makeText(getActivity(), "Please fill all required info", Toast.LENGTH_SHORT).show();
-            }
-            else
+            } else
             {
                 mListener.onAddExpense(description, sum, currency, note, imageName, isExpense);
             }
@@ -181,7 +180,6 @@ public class ExpenseDetailFragment extends Fragment
     }
 
     /**
-     *
      * @param activity
      */
     @Override

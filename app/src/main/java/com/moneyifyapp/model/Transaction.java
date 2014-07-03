@@ -7,7 +7,9 @@ public class Transaction
 {
     /********************************************************************/
     /**                          Members                               **/
-    /********************************************************************/
+    /**
+     * ****************************************************************
+     */
 
     public String mId;
     public String mDescription;
@@ -19,7 +21,9 @@ public class Transaction
 
     /********************************************************************/
     /**                          Methods                               **/
-    /********************************************************************/
+    /**
+     * ****************************************************************
+     */
 
     public static final String CLASS_NAME = "expense";
     public static final String KEY_ID = "code";
@@ -60,7 +64,6 @@ public class Transaction
     }
 
     /**
-     *
      * @param mImageName
      */
     public void setmImageName(String mImageName)
@@ -69,7 +72,6 @@ public class Transaction
     }
 
     /**
-     *
      * @param mNotes
      */
     public void setmNotes(String mNotes)

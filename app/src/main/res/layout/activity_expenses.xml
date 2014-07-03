@@ -1,19 +1,19 @@
 <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/pager"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ExpensesActivity">
+                                   xmlns:tools="http://schemas.android.com/tools"
+                                   android:id="@+id/pager"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="match_parent"
+                                   tools:context=".ExpensesActivity">
 
     <android.support.v4.view.PagerTitleStrip
-    android:id="@+id/pager_title_strip"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="top"
-    android:background="@drawable/back_regualr"
-    android:textColor="#fff"
-    android:paddingTop="8dp"
-    android:paddingBottom="4dp" />
+        android:id="@+id/pager_title_strip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="@drawable/back_regualr"
+        android:textColor="#fff"
+        android:paddingTop="8dp"
+        android:paddingBottom="4dp"/>
 
 </android.support.v4.view.ViewPager>
     <!-- Fragments are created on run-time -->

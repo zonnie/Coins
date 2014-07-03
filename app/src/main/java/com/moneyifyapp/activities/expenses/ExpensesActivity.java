@@ -47,6 +47,7 @@ public class ExpensesActivity extends Activity
      */
     Calendar mCalender;
 
+
     public static final int EXPENSE_RESULT_OK = 222;
     public static final int EXPENSE_RESULT_CANCELED = 333;
     public static final int REQ_NEW_ITEM = 42;
@@ -136,7 +137,6 @@ public class ExpensesActivity extends Activity
     }
 
     /**
-     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -172,14 +172,8 @@ public class ExpensesActivity extends Activity
         {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            if (position != 0)
-            {
-                return ExpenseListFragment.newInstance("true", String.valueOf(position));
-            }
-            else
-            {
-                return ExpenseListFragment.newInstance("stam", String.valueOf(position));
-            }
+            return ExpenseListFragment.newInstance(position);
+
         }
 
         /**

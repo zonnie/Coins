@@ -11,9 +11,7 @@ public class Utils
 {
 
     /**
-     *
      * Initialized the Parse API.
-     *
      */
     public static void initializeParse(Context context)
     {
