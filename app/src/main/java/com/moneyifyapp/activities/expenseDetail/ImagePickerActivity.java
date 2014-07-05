@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.widget.GridView;
 
 import com.moneyifyapp.R;
-import com.moneyifyapp.activities.expenseDetail.adapters.ImageAdapter;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.Transaction;
