@@ -365,7 +365,7 @@ public class ExpenseListFragment extends ListFragment
             intent.putExtra(Transaction.KEY_CURRENCY, expense.mCurrency);
             intent.putExtra(Transaction.KEY_NOTES, expense.mNotes);
             intent.putExtra(Transaction.KEY_TYPE, expense.mIsExpense);
-            intent.putExtra(Transaction.KEY_IMAGE_NAME, expense.mImageName);
+            intent.putExtra(Transaction.KEY_IMAGE_NAME, expense.mImageResourceIndex);
             intent.putExtra(REQ_CODE_KEY, ExpensesActivity.REQ_EDIT_ITEM);
             startActivityForResult(intent, ExpensesActivity.REQ_EDIT_ITEM);
 
@@ -460,7 +460,7 @@ public class ExpenseListFragment extends ListFragment
         expenseObject.put(Transaction.KEY_DESCRIPTION, newTransaction.mDescription);
         expenseObject.put(Transaction.KEY_VALUE, newTransaction.mValue);
         expenseObject.put(Transaction.KEY_CURRENCY, newTransaction.mCurrency);
-        expenseObject.put(Transaction.KEY_IMAGE_NAME, newTransaction.mImageName);
+        expenseObject.put(Transaction.KEY_IMAGE_NAME, newTransaction.mImageResourceIndex);
         expenseObject.put(Transaction.KEY_NOTES, newTransaction.mNotes);
         expenseObject.put(Transaction.KEY_TYPE, newTransaction.mIsExpense);
         expenseObject.put(ExpensesActivity.PARSE_USER_KEY, user);

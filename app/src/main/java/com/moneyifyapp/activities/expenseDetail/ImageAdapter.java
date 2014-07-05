@@ -17,7 +17,6 @@ public class ImageAdapter extends BaseAdapter
 
     // Container context
     private ImagePickerActivity mContext;
-    private int a;
 
     /********************************************************************/
     /**                          Methods                               **/

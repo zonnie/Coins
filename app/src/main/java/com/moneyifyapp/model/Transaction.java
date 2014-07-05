@@ -15,7 +15,7 @@ public class Transaction
     public String mDescription;
     public String mValue;
     public String mCurrency;
-    public int mImageName;
+    public int mImageResourceIndex;
     public String mNotes;
     public boolean mIsExpense;
 
@@ -49,7 +49,7 @@ public class Transaction
         this.mDescription = description;
         this.mValue = value;
         this.mCurrency = currency;
-        this.mImageName = imageName;
+        this.mImageResourceIndex = imageName;
         this.mNotes = note;
         this.mIsExpense = isExpense;
     }
@@ -64,7 +64,7 @@ public class Transaction
         this.mDescription = "";
         this.mValue = "";
         this.mCurrency = "$";
-        this.mImageName = Images.get(0);
+        this.mImageResourceIndex = Images.get(0);
         this.mNotes = "";
         this.mIsExpense = true;
     }
@@ -79,11 +79,11 @@ public class Transaction
     }
 
     /**
-     * @param mImageName
+     * @param mImageResourceIndex
      */
-    public void setmImageName(int mImageName)
+    public void setmImageResourceIndex(int mImageResourceIndex)
     {
-        this.mImageName = mImageName;
+        this.mImageResourceIndex = mImageResourceIndex;
     }
 
     /**

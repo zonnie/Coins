@@ -7,7 +7,6 @@ import android.widget.GridView;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
-import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.Transaction;
 
 public class ImagePickerActivity extends Activity
@@ -34,7 +33,7 @@ public class ImagePickerActivity extends Activity
     public void onItemClick(int position)
     {
         Intent data = getIntent();
-        data.putExtra(Transaction.KEY_IMAGE_NAME, Images.get(position));
+        data.putExtra(Transaction.KEY_IMAGE_NAME, position);
         setResult(ExpensesActivity.IMAGE_PICK_OK, data);
         finish();
     }

@@ -17,6 +17,7 @@ import android.widget.ToggleButton;
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenseDetail.ImagePickerActivity;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
+import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.Transaction;
 
 /**
@@ -69,7 +70,7 @@ public class ExpenseDetailFragment extends Fragment
             args.putString(Transaction.KEY_VALUE, expense.mValue);
             args.putString(Transaction.KEY_CURRENCY, expense.mCurrency);
             args.putString(Transaction.KEY_NOTES, expense.mNotes);
-            args.putInt(Transaction.KEY_IMAGE_NAME, expense.mImageName);
+            args.putInt(Transaction.KEY_IMAGE_NAME, expense.mImageResourceIndex);
             args.putBoolean(Transaction.KEY_TYPE, expense.mIsExpense);
         }
         fragment.setArguments(args);
@@ -145,7 +146,7 @@ public class ExpenseDetailFragment extends Fragment
             }
         });
         // Set default image
-        mExpenseIcon.setImageResource(mTempExpenseObject.mImageName);
+        mExpenseIcon.setImageResource(Images.get(mTempExpenseObject.mImageResourceIndex));
         mExpenseIcon.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -163,7 +164,7 @@ public class ExpenseDetailFragment extends Fragment
             mExpenseCurrency.setText(mTempExpenseObject.mCurrency);
             mExpenseNotes.setText(mTempExpenseObject.mNotes);
             //TODO for image need to do
-            mExpenseIcon.setImageResource(mTempExpenseObject.mImageName);
+            mExpenseIcon.setImageResource(Images.get(mTempExpenseObject.mImageResourceIndex));
             mToggleIsExpense.setChecked(!mTempExpenseObject.mIsExpense);
         }
 
@@ -185,7 +186,7 @@ public class ExpenseDetailFragment extends Fragment
         {
 
             mCurrentImage = data.getExtras().getInt(Transaction.KEY_IMAGE_NAME);
-            mExpenseIcon.setImageResource(mCurrentImage);
+            mExpenseIcon.setImageResource(Images.get(mCurrentImage));
         }
         else if(resultCode == ExpensesActivity.IMAGE_PICK_CANCEL)
         {

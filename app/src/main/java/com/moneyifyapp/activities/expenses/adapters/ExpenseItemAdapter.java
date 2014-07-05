@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
+import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.Transaction;
 
@@ -70,13 +71,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             viewInflator = LayoutInflater.from(getContext());
 
             view = viewInflator.inflate(mLayoutResourceId, null);
-
-            // Update ht look of the the view accordingly
-            if (mTransactions.getItems().get(position).mIsExpense == false)
-            {
-                updateViewToIncome(view);
-            }
-
         }
 
         Transaction p = mTransactions.getItems().get(position);
@@ -84,20 +78,23 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         // Populate the current view according to collection item.
         if (p != null)
         {
+            // Update ht look of the the view accordingly
+            if (mTransactions.getItems().get(position).mIsExpense == false)
+            {
+                updateViewToIncome(view);
+            }
+            else
+            {
+                updateViewToExpense(view);
+            }
 
             mExpenseDescription = (TextView) view.findViewById(R.id.expenseDesc);
             TextView expenseValue = (TextView) view.findViewById(R.id.expenseValue);
             TextView expenseCurrency = (TextView) view.findViewById(R.id.currency);
             TextView expenseNote = (TextView) view.findViewById(R.id.expenseItemNote);
 
-            // TODO this will be replaced withd dynamic stuff
-            /*Drawable img = getContext().getResources().getDrawable(Images.get(position % (Images.getCount())));
-            img.setBounds( 0, 0, 128, 128 );
-            mExpenseDescription.setCompoundDrawables( img, null, null, null );*/
-            //p.mImageName = Images.get(position % (Images.getCount()));
-
             //Update image from object
-            updateImage(p.mImageName);
+            updateImage(Images.get(p.mImageResourceIndex));
 
             if (mExpenseDescription != null)
             {
@@ -124,6 +121,8 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     }
 
     /**
+     * Updates the item to be income item.
+     *
      * @param view
      */
     private void updateViewToIncome(View view)
@@ -133,10 +132,11 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
 
         TextView currency = (TextView)view.findViewById(R.id.currency);
         currency.setTextColor(view.getResources().getColor(android.R.color.holo_green_dark));
-
     }
 
     /**
+     *
+     * Updates the item to be expense item.
      *
      * @param view
      */
@@ -202,7 +202,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             updatedExpense.mValue = expense.mValue;
             updatedExpense.mCurrency = expense.mCurrency;
             updatedExpense.mNotes = expense.mNotes;
-            updatedExpense.mImageName = expense.mImageName;
+            updatedExpense.mImageResourceIndex = expense.mImageResourceIndex;
 
             if(updatedExpense.mIsExpense != expense.mIsExpense)
             {
@@ -210,7 +210,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             }
 
             // Update image
-            updateImage(updatedExpense.mImageName);
+            updateImage(Images.get(updatedExpense.mImageResourceIndex));
 
             updatedExpense.mIsExpense = expense.mIsExpense;
 
@@ -237,11 +237,11 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     /**
      * Update the description's left drawable
      *
-     * @param newResource
+     * @param resourceIndex
      */
-    private void updateImage(int newResource)
+    private void updateImage(int resourceIndex)
     {
-        Drawable img = getContext().getResources().getDrawable(newResource);
+        Drawable img = getContext().getResources().getDrawable(resourceIndex);
         img.setBounds( 0, 0, 128, 128 );
         mExpenseDescription.setCompoundDrawables(img, null, null, null);
 

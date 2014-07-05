@@ -89,7 +89,7 @@
         android:id="@+id/addExpenseNotes"
         android:hint="Notes..."
         android:layout_marginBottom="@dimen/big_padding"
-        android:drawableLeft="@drawable/notes"
+        android:drawableLeft="@drawable/notes_2"
         android:drawablePadding="@dimen/expense_drawable_left_pad"
         android:maxLength="@integer/max_note_len"
         android:lines="@integer/notes_lines"/>

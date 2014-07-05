@@ -43,7 +43,18 @@ public class Images
      */
     public static int get(int position)
     {
-        return mImages.get(position);
+        int resource = 0;
+
+        try
+        {
+            resource = mImages.get(position);
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            resource = mImages.get(0);
+        }
+
+        return  resource;
     }
 
     /**

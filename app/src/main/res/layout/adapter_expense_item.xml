@@ -76,7 +76,7 @@
             android:id="@+id/expenseItemNote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/notes"
+            android:drawableLeft="@drawable/notes_2"
             android:drawablePadding="@dimen/expense_drawable_left_pad"
             android:gravity="center_vertical"
             android:paddingEnd="@dimen/activity_vertical_margin"
