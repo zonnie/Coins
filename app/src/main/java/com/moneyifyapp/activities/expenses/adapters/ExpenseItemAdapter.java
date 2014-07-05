@@ -1,6 +1,7 @@
 package com.moneyifyapp.activities.expenses.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
      * ****************************************************************
      */
 
-
+    private TextView mExpenseDescription;
     private int mLayoutResourceId;
     private MonthTransactions mTransactions;
     private View mMyView;
@@ -84,18 +85,23 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         if (p != null)
         {
 
-            TextView expenseDescription = (TextView) view.findViewById(R.id.expenseDesc);
+            mExpenseDescription = (TextView) view.findViewById(R.id.expenseDesc);
             TextView expenseValue = (TextView) view.findViewById(R.id.expenseValue);
             TextView expenseCurrency = (TextView) view.findViewById(R.id.currency);
             TextView expenseNote = (TextView) view.findViewById(R.id.expenseItemNote);
-            // TODO this will be the image
-            //Drawable img = getContext().getResources().getDrawable( R.drawable.smiley );
-            //img.setBounds( 0, 0, 60, 60 );
-            //txtVw.setCompoundDrawables( img, null, null, null );
 
-            if (expenseDescription != null)
+            // TODO this will be replaced withd dynamic stuff
+            /*Drawable img = getContext().getResources().getDrawable(Images.get(position % (Images.getCount())));
+            img.setBounds( 0, 0, 128, 128 );
+            mExpenseDescription.setCompoundDrawables( img, null, null, null );*/
+            //p.mImageName = Images.get(position % (Images.getCount()));
+
+            //Update image from object
+            updateImage(p.mImageName);
+
+            if (mExpenseDescription != null)
             {
-                expenseDescription.setText(p.mDescription);
+                mExpenseDescription.setText(p.mDescription);
             }
             if (expenseValue != null)
             {
@@ -203,6 +209,9 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
                 changeTextColor = true;
             }
 
+            // Update image
+            updateImage(updatedExpense.mImageName);
+
             updatedExpense.mIsExpense = expense.mIsExpense;
 
             // Update the amount color according to transaction type
@@ -223,5 +232,18 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         }
 
         notifyDataSetChanged();
+    }
+
+    /**
+     * Update the description's left drawable
+     *
+     * @param newResource
+     */
+    private void updateImage(int newResource)
+    {
+        Drawable img = getContext().getResources().getDrawable(newResource);
+        img.setBounds( 0, 0, 128, 128 );
+        mExpenseDescription.setCompoundDrawables(img, null, null, null);
+
     }
 }

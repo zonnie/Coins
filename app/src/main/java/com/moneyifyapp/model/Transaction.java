@@ -15,7 +15,7 @@ public class Transaction
     public String mDescription;
     public String mValue;
     public String mCurrency;
-    public String mImageName;
+    public int mImageName;
     public String mNotes;
     public boolean mIsExpense;
 
@@ -43,7 +43,7 @@ public class Transaction
      * @param currency
      */
     public Transaction(String id, String description, String value,
-                       String currency, String note, String imageName, boolean isExpense)
+                       String currency, String note, int imageName, boolean isExpense)
     {
         this.mId = id;
         this.mDescription = description;
@@ -52,6 +52,21 @@ public class Transaction
         this.mImageName = imageName;
         this.mNotes = note;
         this.mIsExpense = isExpense;
+    }
+
+    /**
+     *
+     * @param id
+     */
+    public Transaction(String id)
+    {
+        this.mId = id;
+        this.mDescription = "";
+        this.mValue = "";
+        this.mCurrency = "$";
+        this.mImageName = Images.get(0);
+        this.mNotes = "";
+        this.mIsExpense = true;
     }
 
     /**
@@ -66,7 +81,7 @@ public class Transaction
     /**
      * @param mImageName
      */
-    public void setmImageName(String mImageName)
+    public void setmImageName(int mImageName)
     {
         this.mImageName = mImageName;
     }

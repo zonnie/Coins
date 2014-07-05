@@ -365,6 +365,7 @@ public class ExpenseListFragment extends ListFragment
             intent.putExtra(Transaction.KEY_CURRENCY, expense.mCurrency);
             intent.putExtra(Transaction.KEY_NOTES, expense.mNotes);
             intent.putExtra(Transaction.KEY_TYPE, expense.mIsExpense);
+            intent.putExtra(Transaction.KEY_IMAGE_NAME, expense.mImageName);
             intent.putExtra(REQ_CODE_KEY, ExpensesActivity.REQ_EDIT_ITEM);
             startActivityForResult(intent, ExpensesActivity.REQ_EDIT_ITEM);
 
@@ -387,12 +388,11 @@ public class ExpenseListFragment extends ListFragment
         {
             String desc = data.getExtras().getString(Transaction.KEY_DESCRIPTION);
             String sum = data.getExtras().getString(Transaction.KEY_VALUE);
-            String image = data.getExtras().getString(Transaction.KEY_IMAGE_NAME);
+            int image = data.getExtras().getInt(Transaction.KEY_IMAGE_NAME);
             String currency = data.getExtras().getString(Transaction.KEY_CURRENCY);
             String note = data.getExtras().getString(Transaction.KEY_NOTES);
             Boolean isExpense = data.getExtras().getBoolean(Transaction.KEY_TYPE);
-            //TODO: image when its done
-            //String imageName = data.getExtras().getString(SingleExpense.KEY_NOTES);
+
             int position = data.getExtras().getInt(MONTH_KEY);
 
             if (!desc.isEmpty() && !sum.isEmpty())
@@ -402,7 +402,8 @@ public class ExpenseListFragment extends ListFragment
                     // TODO: This needs to be dynamic
                     currency = "$";
                     addNewTransaction(desc, sum, currency, note, image, isExpense);
-                } else if (requestCode == ExpensesActivity.REQ_EDIT_ITEM)
+                }
+                else if (requestCode == ExpensesActivity.REQ_EDIT_ITEM)
                 {
                     Transaction tempExpense = new Transaction("0", desc, sum, currency, note, image, isExpense);
                     mAdapter.update(position, tempExpense);
@@ -419,7 +420,7 @@ public class ExpenseListFragment extends ListFragment
      * @param addDescription
      * @param addSum
      */
-    public void addNewTransaction(String addDescription, String addSum, String currency, String note, String image, boolean isExpense)
+    public void addNewTransaction(String addDescription, String addSum, String currency, String note, int image, boolean isExpense)
     {
         String newId = generateId(addDescription, addSum, currency);
 
@@ -513,7 +514,7 @@ public class ExpenseListFragment extends ListFragment
                         curExpense.getString(Transaction.KEY_VALUE),
                         curExpense.getString(Transaction.KEY_CURRENCY),
                         curExpense.getString(Transaction.KEY_NOTES),
-                        curExpense.getString(Transaction.KEY_IMAGE_NAME),
+                        curExpense.getInt(Transaction.KEY_IMAGE_NAME),
                         curExpense.getBoolean(Transaction.KEY_TYPE)));
             }
         }

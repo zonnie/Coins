@@ -2,18 +2,21 @@ package com.moneyifyapp.activities.expenseDetail.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.moneyifyapp.R;
+import com.moneyifyapp.activities.expenseDetail.ImagePickerActivity;
+import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.model.Transaction;
 
 /**
@@ -36,13 +39,14 @@ public class ExpenseDetailFragment extends Fragment
     Button mCancelButton;
     EditText mExpenseDescription;
     EditText mExpenseValue;
-    ImageView mExpenseIcon;
+    ImageButton mExpenseIcon;
     TextView mExpenseCurrency;
     EditText mExpenseNotes;
     ToggleButton mToggleIsExpense;
     private OnFragmentInteractionListener mListener;
     private Transaction mTempExpenseObject;
     boolean mIsEdit;
+    private int mCurrentImage;
     public static final String EXPENSE_EDIT_KEY = "edit";
 
 
@@ -65,7 +69,7 @@ public class ExpenseDetailFragment extends Fragment
             args.putString(Transaction.KEY_VALUE, expense.mValue);
             args.putString(Transaction.KEY_CURRENCY, expense.mCurrency);
             args.putString(Transaction.KEY_NOTES, expense.mNotes);
-            args.putString(Transaction.KEY_IMAGE_NAME, expense.mImageName);
+            args.putInt(Transaction.KEY_IMAGE_NAME, expense.mImageName);
             args.putBoolean(Transaction.KEY_TYPE, expense.mIsExpense);
         }
         fragment.setArguments(args);
@@ -91,10 +95,12 @@ public class ExpenseDetailFragment extends Fragment
             String value = getArguments().getString(Transaction.KEY_VALUE);
             String currency = getArguments().getString(Transaction.KEY_CURRENCY);
             String note = getArguments().getString(Transaction.KEY_NOTES);
-            String image = getArguments().getString(Transaction.KEY_IMAGE_NAME);
+            int image = getArguments().getInt(Transaction.KEY_IMAGE_NAME);
             boolean isExpense = getArguments().getBoolean(Transaction.KEY_TYPE);
 
             mTempExpenseObject = new Transaction("", description, value, currency, note, image, isExpense);
+
+            mCurrentImage = image;
         }
     }
 
@@ -117,7 +123,7 @@ public class ExpenseDetailFragment extends Fragment
         mExpenseCurrency = (TextView) view.findViewById(R.id.addExpenseCurrency);
         mExpenseValue = (EditText) view.findViewById(R.id.addExpenseSum);
         //TODO need to rectify this
-        //mExpenseIcon = (ImageView)view.
+        mExpenseIcon = (ImageButton)view.findViewById(R.id.addExpenseImage);
         mExpenseNotes = (EditText) view.findViewById(R.id.addExpenseNotes);
         mToggleIsExpense = (ToggleButton) view.findViewById(R.id.isExpenseToggle);
 
@@ -130,13 +136,23 @@ public class ExpenseDetailFragment extends Fragment
                 onSumbitPressed();
             }
         });
-
         mCancelButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 onCancelPressed();
+            }
+        });
+        // Set default image
+        mExpenseIcon.setImageResource(mTempExpenseObject.mImageName);
+        mExpenseIcon.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getActivity(), ImagePickerActivity.class);
+                startActivityForResult(intent, ExpensesActivity.IMAGE_PICK_REQ);
             }
         });
 
@@ -147,12 +163,36 @@ public class ExpenseDetailFragment extends Fragment
             mExpenseCurrency.setText(mTempExpenseObject.mCurrency);
             mExpenseNotes.setText(mTempExpenseObject.mNotes);
             //TODO for image need to do
-            //mExpenseIcon.setText(mTempExpenseObject.mDescription);
+            mExpenseIcon.setImageResource(mTempExpenseObject.mImageName);
             mToggleIsExpense.setChecked(!mTempExpenseObject.mIsExpense);
         }
 
         return view;
     }
+
+    /**
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == ExpensesActivity.IMAGE_PICK_OK)
+        {
+
+            mCurrentImage = data.getExtras().getInt(Transaction.KEY_IMAGE_NAME);
+            mExpenseIcon.setImageResource(mCurrentImage);
+        }
+        else if(resultCode == ExpensesActivity.IMAGE_PICK_CANCEL)
+        {
+            //Nothing yet
+        }
+    }
+
 
     /**
      *
@@ -163,7 +203,7 @@ public class ExpenseDetailFragment extends Fragment
         if (mListener != null)
         {
             String description = mExpenseDescription.getText().toString();
-            String imageName = "";
+            int imageName = mCurrentImage;
             String note = mExpenseNotes.getText().toString();
             String sum = mExpenseValue.getText().toString();
             String currency = mExpenseCurrency.getText().toString();
@@ -212,7 +252,7 @@ public class ExpenseDetailFragment extends Fragment
      */
     public interface OnFragmentInteractionListener
     {
-        public void onAddExpense(String addDescription, String addSum, String currency, String addNote, String addImage, boolean isExpense);
+        public void onAddExpense(String addDescription, String addSum, String currency, String addNote, int addImage, boolean isExpense);
 
         public void cancel();
     }

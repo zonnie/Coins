@@ -27,7 +27,7 @@ public class ExpenseDetailActivity extends Activity
     private String mValue;
     private String mCurrency;
     private String mNotes;
-    private String mImageName;
+    private int mImageName;
     private boolean mIsExpense;
 
     /********************************************************************/
@@ -56,18 +56,19 @@ public class ExpenseDetailActivity extends Activity
         {
             if (!isEdit)
             {
+                Transaction tempExpense = new Transaction("0");
                 getFragmentManager().beginTransaction()
-                        .add(R.id.container, ExpenseDetailFragment.newInstance(isEdit, null))
+                        .add(R.id.container, ExpenseDetailFragment.newInstance(isEdit, tempExpense))
                         .commit();
-            } else
+            }
+            else
             {
                 mItemPosition = getIntent().getExtras().getInt(ExpenseListFragment.MONTH_KEY);
                 mDescription = getIntent().getExtras().getString(Transaction.KEY_DESCRIPTION);
                 mValue = getIntent().getExtras().getString(Transaction.KEY_VALUE);
                 mCurrency = getIntent().getExtras().getString(Transaction.KEY_CURRENCY);
                 mNotes = getIntent().getExtras().getString(Transaction.KEY_NOTES);
-                //TODO this is for the image
-                //mImageName = getIntent().getExtras().getString(SingleExpense.KEY_NOTES);
+                mImageName = getIntent().getExtras().getInt(Transaction.KEY_IMAGE_NAME);
                 mIsExpense = getIntent().getExtras().getBoolean(Transaction.KEY_TYPE);
 
                 Transaction tempExpense = new Transaction("0", mDescription, mValue, mCurrency, mNotes, mImageName, mIsExpense);
@@ -111,7 +112,7 @@ public class ExpenseDetailActivity extends Activity
      * @param addSum
      */
     @Override
-    public void onAddExpense(String addDescription, String addSum, String addCurrency, String addNote, String addImage, boolean isExpense)
+    public void onAddExpense(String addDescription, String addSum, String addCurrency, String addNote, int addImage, boolean isExpense)
     {
         Intent data = getIntent();
         data.putExtra(Transaction.KEY_DESCRIPTION, addDescription);

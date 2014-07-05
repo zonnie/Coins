@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
@@ -47,12 +49,18 @@ public class ExpensesActivity extends Activity
      */
     Calendar mCalender;
 
-
+    public static final int IMAGE_PICK_REQ = 90;
+    public static final int IMAGE_PICK_OK = 423;
+    public static final int IMAGE_PICK_CANCEL = 563;
     public static final int EXPENSE_RESULT_OK = 222;
     public static final int EXPENSE_RESULT_CANCELED = 333;
     public static final int REQ_NEW_ITEM = 42;
     public static final int REQ_EDIT_ITEM = 92;
     public static String PARSE_USER_KEY = "user";
+
+    private String[] mPlanetTitles;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
 
 
     /**

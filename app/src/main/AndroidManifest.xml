@@ -1,40 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.moneyifyapp">
+    package="com.moneyifyapp" >
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/coin"
         android:label="@string/main_title"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".activities.expenses.ExpensesActivity"
-            android:label="">
+            android:label="" >
         </activity>
         <activity
             android:name=".activities.login.LoginActivity"
             android:label="@string/action_sign_in"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".activities.login.SignUpActivity"
-            android:label="@string/action_sing_up">
+            android:label="@string/action_sing_up" >
         </activity>
         <activity
             android:name=".activities.SplashActivity"
             android:label="@string/main_title"
-            android:theme="@style/Theme.CustomizedAppTheme">
+            android:theme="@style/Theme.CustomizedAppTheme" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activities.expenseDetail.ExpenseDetailActivity"
-            android:label="@string/title_activity_create_expense">
+            android:label="@string/title_activity_create_expense"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name=".activities.expenseDetail.ImagePickerActivity"
+            android:label="@string/title_activity_image_picker" >
         </activity>
     </application>
 

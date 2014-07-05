@@ -27,5 +27,6 @@
     <string name="verify_pass_hint">Verify Password</string>
     <string name="title_activity_create_expense">Expense Details</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_image_picker"></string>
 
 </resources>
