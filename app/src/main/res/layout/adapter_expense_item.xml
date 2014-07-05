@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/expense_drawable_left_pad"
         android:layout_marginRight="@dimen/expense_drawable_left_pad"
         android:layout_marginTop="@dimen/expense_drawable_left_pad"
@@ -17,15 +17,14 @@
         android:id="@+id/transaction_card_layout"
         android:background="@drawable/expense_item_card"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/drawable_left_pad"
-        android:paddingTop="@dimen/big_padding"
+        android:paddingBottom="@dimen/padding_start_currency"
+        android:paddingTop="@dimen/drawable_left_pad"
         android:showDividers="none"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:orientation="horizontal"
             android:paddingEnd="@dimen/activity_vertical_margin"
             android:paddingStart="@dimen/activity_horizontal_margin"
@@ -49,6 +48,7 @@
                 android:layout_weight="0.4"
                 android:gravity="right"
                 android:text="$"
+                android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 />
 
@@ -58,26 +58,16 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:text="50"
+                android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 />
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="@dimen/big_padding"
-            android:layout_marginRight="@dimen/big_padding"
-            android:background="@android:color/darker_gray"
-            android:id="@+id/expenseItemSeperator"
-            android:fadingEdge="horizontal"/>
-
         <TextView
             android:id="@+id/expenseItemNote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/notes_2"
-            android:drawablePadding="@dimen/expense_drawable_left_pad"
             android:gravity="center_vertical"
             android:paddingEnd="@dimen/activity_vertical_margin"
             android:paddingStart="@dimen/activity_horizontal_margin"

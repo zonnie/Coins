@@ -60,7 +60,7 @@
             android:layout_width="0dp"
             android:layout_weight="9"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:id="@+id/addExpenseSum"
             android:drawableLeft="@drawable/sum"
             android:drawablePadding="@dimen/expense_drawable_left_pad"

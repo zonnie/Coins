@@ -236,6 +236,8 @@ public class ExpenseListFragment extends ListFragment
     }
 
     /**
+     * Remove an item given it's list position.
+     *
      * @param position
      */
     private void removeItemWithId(int position)
@@ -264,7 +266,7 @@ public class ExpenseListFragment extends ListFragment
                                 Toast.makeText(getActivity(), "DEBUG : Deleted Successfully!", Toast.LENGTH_LONG).show();
                             } else
                             {
-                                Toast.makeText(getActivity(), "DEBUG : Cant Delete Expense!" + e.toString(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "Something went wrong :(" + e.toString(), Toast.LENGTH_LONG).show();
                             }
 
                         }

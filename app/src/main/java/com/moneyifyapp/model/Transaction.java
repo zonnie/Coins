@@ -64,7 +64,7 @@ public class Transaction
         this.mDescription = "";
         this.mValue = "";
         this.mCurrency = "$";
-        this.mImageResourceIndex = Images.get(0);
+        this.mImageResourceIndex = Images.getImageByPosition(0);
         this.mNotes = "";
         this.mIsExpense = true;
     }

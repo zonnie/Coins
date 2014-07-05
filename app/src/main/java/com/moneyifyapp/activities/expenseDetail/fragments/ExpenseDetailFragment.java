@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -21,12 +22,8 @@ import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.Transaction;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ExpenseDetailFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ExpenseDetailFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * A fragment for detail transaction view.
+ * This is used for both creation and edition.
  */
 public class ExpenseDetailFragment extends Fragment
 {
@@ -41,6 +38,7 @@ public class ExpenseDetailFragment extends Fragment
     EditText mExpenseDescription;
     EditText mExpenseValue;
     ImageButton mExpenseIcon;
+    Spinner mCurrencySpinner;
     TextView mExpenseCurrency;
     EditText mExpenseNotes;
     ToggleButton mToggleIsExpense;
@@ -128,6 +126,15 @@ public class ExpenseDetailFragment extends Fragment
         mExpenseNotes = (EditText) view.findViewById(R.id.addExpenseNotes);
         mToggleIsExpense = (ToggleButton) view.findViewById(R.id.isExpenseToggle);
 
+        // Currency spinner
+        /*mCurrencySpinner = (Spinner)view.findViewById(R.id.spinner);
+        ArrayAdapter<String> adapter_state = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, Utils.state);
+        adapter_state
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mCurrencySpinner.setAdapter(adapter_state);
+        mCurrencySpinner.setSelection(1);*/
+
         // Bind listener
         mSubmitButton.setOnClickListener(new View.OnClickListener()
         {
@@ -146,7 +153,7 @@ public class ExpenseDetailFragment extends Fragment
             }
         });
         // Set default image
-        mExpenseIcon.setImageResource(Images.get(mTempExpenseObject.mImageResourceIndex));
+        mExpenseIcon.setImageResource(Images.getImageByPosition(mTempExpenseObject.mImageResourceIndex));
         mExpenseIcon.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -154,17 +161,19 @@ public class ExpenseDetailFragment extends Fragment
             {
                 Intent intent = new Intent(getActivity(), ImagePickerActivity.class);
                 startActivityForResult(intent, ExpensesActivity.IMAGE_PICK_REQ);
+                getActivity().overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             }
         });
 
         if (mIsEdit)
         {
+            //mCurrencySpinner.setSelection(Utils.findIndextByString(mTempExpenseObject.mCurrency));
             mExpenseDescription.setText(mTempExpenseObject.mDescription);
             mExpenseValue.setText(mTempExpenseObject.mValue);
             mExpenseCurrency.setText(mTempExpenseObject.mCurrency);
             mExpenseNotes.setText(mTempExpenseObject.mNotes);
             //TODO for image need to do
-            mExpenseIcon.setImageResource(Images.get(mTempExpenseObject.mImageResourceIndex));
+            mExpenseIcon.setImageResource(Images.getImageByPosition(mTempExpenseObject.mImageResourceIndex));
             mToggleIsExpense.setChecked(!mTempExpenseObject.mIsExpense);
         }
 
@@ -186,7 +195,7 @@ public class ExpenseDetailFragment extends Fragment
         {
 
             mCurrentImage = data.getExtras().getInt(Transaction.KEY_IMAGE_NAME);
-            mExpenseIcon.setImageResource(Images.get(mCurrentImage));
+            mExpenseIcon.setImageResource(Images.getImageByPosition(mCurrentImage));
         }
         else if(resultCode == ExpensesActivity.IMAGE_PICK_CANCEL)
         {
@@ -208,6 +217,7 @@ public class ExpenseDetailFragment extends Fragment
             String note = mExpenseNotes.getText().toString();
             String sum = mExpenseValue.getText().toString();
             String currency = mExpenseCurrency.getText().toString();
+            //String currency = mCurrencySpinner.getSelectedItem().toString();
             boolean isExpense = !mToggleIsExpense.isChecked();  // If it's un-toggled this means this is an expense
 
             if (description.isEmpty() || sum.isEmpty())

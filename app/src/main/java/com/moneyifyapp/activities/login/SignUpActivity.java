@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.moneyifyapp.R;
-import com.parse.Parse;
+import com.moneyifyapp.utils.Utils;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -38,7 +38,9 @@ public class SignUpActivity extends Activity
     {
         super.onCreate(savedInstanceState);
 
-        Parse.initialize(this, "7BjKxmwKAG3nVfaDHWxWusowkJJ4kGNyMlwjrbT8", "c6uhzWLV5SPmCx259cPjHhW8qvw5VUCvDwpVVjFD");
+        Utils.initializeActionBar(this);
+        Utils.initializeParse(this);
+        Utils.removeLogo(this);
 
         setContentView(R.layout.activity_sign_up);
 

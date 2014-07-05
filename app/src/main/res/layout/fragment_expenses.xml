@@ -7,14 +7,14 @@
 
     <!-- This is a must for a custom list in fragment listview -->
     <Button
-        android:id="@+id/addNewExpenseButton"
-        style="?android:attr/buttonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="false"
-        android:background="@drawable/back_regualr"
-        android:text="@string/new_expense_button_caption"
-        />
+    android:id="@+id/addNewExpenseButton"
+    style="?android:attr/buttonStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:adjustViewBounds="false"
+    android:background="@drawable/back_regualr"
+    android:text="@string/new_expense_button_caption"
+    android:textColor="@android:color/white"/>
 
     <ListView
         android:id="@id/android:list"
@@ -31,28 +31,43 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background"
-        android:weightSum="2"
+        android:weightSum="3.5"
         android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/emptyListHint"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center_horizontal"
+            android:text="@string/list_empty_hint"
+            android:paddingTop="@dimen/expense_drawable_left_pad"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/dark_green"
+            android:layout_weight="1"
+            android:layout_gravity="top"/>
 
         <ImageView
             android:id="@+id/empty_image"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingTop="@dimen/big_padding"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:src="@drawable/empty_2"
             />
 
         <TextView
-            android:id="@+id/empty_text"
+            android:id="@+id/emptyListText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:gravity="center_horizontal"
             android:text="@string/list_empty_message"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:paddingTop="@dimen/expense_drawable_left_pad"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/dark_green"
             android:layout_weight="1"
             android:layout_gravity="top"/>
+
     </LinearLayout>
 
 </LinearLayout>

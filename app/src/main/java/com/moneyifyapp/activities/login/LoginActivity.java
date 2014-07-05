@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -20,8 +21,8 @@ import android.widget.Toast;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
+import com.moneyifyapp.utils.Utils;
 import com.parse.LogInCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
@@ -56,8 +57,13 @@ public class LoginActivity extends Activity
     {
         super.onCreate(savedInstanceState);
 
-        Parse.initialize(this, "7BjKxmwKAG3nVfaDHWxWusowkJJ4kGNyMlwjrbT8", "c6uhzWLV5SPmCx259cPjHhW8qvw5VUCvDwpVVjFD");
+        Utils.initializeActionBar(this);
+        Utils.initializeParse(this);
+        Utils.removeLogo(this);
+        // Remove logo for this activity
+        getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
 
+        // Set the content
         setContentView(R.layout.activity_login_layout);
 
         // Set up the login form.

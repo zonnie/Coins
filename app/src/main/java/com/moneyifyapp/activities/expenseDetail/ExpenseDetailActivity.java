@@ -11,6 +11,7 @@ import com.moneyifyapp.activities.expenseDetail.fragments.ExpenseDetailFragment;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.model.Transaction;
+import com.moneyifyapp.utils.Utils;
 
 public class ExpenseDetailActivity extends Activity
         implements ExpenseDetailFragment.OnFragmentInteractionListener
@@ -42,7 +43,12 @@ public class ExpenseDetailActivity extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+
         setContentView(R.layout.activity_create_expense_layout);
+        Utils.initializeActionBar(this);
+        Utils.removeLogo(this);
 
         mRequestCode = getIntent().getExtras().getInt(ExpenseListFragment.REQ_CODE_KEY);
         boolean isEdit = false;
@@ -54,6 +60,7 @@ public class ExpenseDetailActivity extends Activity
 
         if (savedInstanceState == null)
         {
+            // This is a new item to create
             if (!isEdit)
             {
                 Transaction tempExpense = new Transaction("0");
@@ -61,6 +68,7 @@ public class ExpenseDetailActivity extends Activity
                         .add(R.id.container, ExpenseDetailFragment.newInstance(isEdit, tempExpense))
                         .commit();
             }
+            // We are editing an existing item
             else
             {
                 mItemPosition = getIntent().getExtras().getInt(ExpenseListFragment.MONTH_KEY);
@@ -92,9 +100,7 @@ public class ExpenseDetailActivity extends Activity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // The action resource id
         int id = item.getItemId();
 
         /*
@@ -125,6 +131,7 @@ public class ExpenseDetailActivity extends Activity
         setResult(ExpensesActivity.EXPENSE_RESULT_OK, data);
 
         finish();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
     @Override
@@ -134,5 +141,16 @@ public class ExpenseDetailActivity extends Activity
         setResult(ExpensesActivity.EXPENSE_RESULT_CANCELED, null);
 
         finish();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 }

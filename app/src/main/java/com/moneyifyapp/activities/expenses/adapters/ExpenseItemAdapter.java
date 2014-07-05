@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
@@ -30,8 +31,9 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private TextView mExpenseDescription;
     private int mLayoutResourceId;
     private MonthTransactions mTransactions;
+    private ImageView mImage;
     private View mMyView;
-
+    public static int PICK_IMAGE_DIMENSIONS = 100;
 
     /********************************************************************/
     /**                          Methods                               **/
@@ -73,10 +75,21 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             view = viewInflator.inflate(mLayoutResourceId, null);
         }
 
-        Transaction p = mTransactions.getItems().get(position);
+        return getRegularView(position, view);
+    }
+
+    /**
+     *
+     * @param position
+     * @param view
+     * @return
+     */
+    private View getRegularView(int position, View view)
+    {
+        Transaction currentTransactionView = mTransactions.getItems().get(position);
 
         // Populate the current view according to collection item.
-        if (p != null)
+        if (currentTransactionView != null)
         {
             // Update ht look of the the view accordingly
             if (mTransactions.getItems().get(position).mIsExpense == false)
@@ -89,31 +102,32 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             }
 
             mExpenseDescription = (TextView) view.findViewById(R.id.expenseDesc);
+            mImage = (ImageView)view.findViewById(R.id.image_container);
             TextView expenseValue = (TextView) view.findViewById(R.id.expenseValue);
             TextView expenseCurrency = (TextView) view.findViewById(R.id.currency);
             TextView expenseNote = (TextView) view.findViewById(R.id.expenseItemNote);
 
             //Update image from object
-            updateImage(Images.get(p.mImageResourceIndex));
+            updateImage(Images.getImageByPosition(currentTransactionView.mImageResourceIndex));
 
             if (mExpenseDescription != null)
             {
-                mExpenseDescription.setText(p.mDescription);
+                mExpenseDescription.setText(currentTransactionView.mDescription);
             }
             if (expenseValue != null)
             {
 
-                expenseValue.setText(p.mValue);
+                expenseValue.setText(currentTransactionView.mValue);
             }
             if (expenseCurrency != null)
             {
-                expenseCurrency.setText(p.mCurrency);
+                expenseCurrency.setText(currentTransactionView.mCurrency);
             }
             if (expenseNote != null)
             {
-                if (!p.mNotes.isEmpty())
+                if (!currentTransactionView.mNotes.isEmpty())
                 {
-                    expenseNote.setText(p.mNotes);
+                    expenseNote.setText(currentTransactionView.mNotes);
                 }
             }
         }
@@ -193,8 +207,21 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
      */
     public void update(int position, Transaction expense)
     {
+        // Update a single transaction
+        updateTransaction(position, expense);
+
+        // Reflect on display
+        notifyDataSetChanged();
+    }
+
+    /**
+     *
+     * @param position
+     * @param expense
+     */
+    private void updateTransaction(int position, Transaction expense)
+    {
         Transaction updatedExpense = mTransactions.getItems().get(position);
-        boolean changeTextColor = false;
 
         if (expense != null)
         {
@@ -203,35 +230,47 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             updatedExpense.mCurrency = expense.mCurrency;
             updatedExpense.mNotes = expense.mNotes;
             updatedExpense.mImageResourceIndex = expense.mImageResourceIndex;
-
-            if(updatedExpense.mIsExpense != expense.mIsExpense)
-            {
-                changeTextColor = true;
-            }
-
             // Update image
-            updateImage(Images.get(updatedExpense.mImageResourceIndex));
+            updateImage(Images.getImageByPosition(updatedExpense.mImageResourceIndex));
 
-            updatedExpense.mIsExpense = expense.mIsExpense;
+            // Update the transaction look according to type
+            updateViewType(updatedExpense, expense);
+        }
+    }
 
-            // Update the amount color according to transaction type
-            if(expense.mIsExpense && changeTextColor)
-            {
-                if(mMyView != null)
-                {
-                    updateViewToIncome(mMyView);
-                }
-            }
-            else if(!expense.mIsExpense && changeTextColor)
-            {
-                if(mMyView != null)
-                {
-                    updateViewToExpense(mMyView);
-                }
-            }
+    /**
+     *
+     * Update the view look according to it's type.
+     *
+     * @param updatedExpense
+     * @param expense
+     */
+    private void updateViewType(Transaction updatedExpense, Transaction expense)
+    {
+        boolean changeTextColor = false;
+
+        if(updatedExpense.mIsExpense != expense.mIsExpense)
+        {
+            changeTextColor = true;
         }
 
-        notifyDataSetChanged();
+        updatedExpense.mIsExpense = expense.mIsExpense;
+
+        // Update the amount color according to transaction type
+        if(expense.mIsExpense && changeTextColor)
+        {
+            if(mMyView != null)
+            {
+                updateViewToIncome(mMyView);
+            }
+        }
+        else if(!expense.mIsExpense && changeTextColor)
+        {
+            if(mMyView != null)
+            {
+                updateViewToExpense(mMyView);
+            }
+        }
     }
 
     /**
@@ -242,8 +281,9 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private void updateImage(int resourceIndex)
     {
         Drawable img = getContext().getResources().getDrawable(resourceIndex);
-        img.setBounds( 0, 0, 128, 128 );
+        img.setBounds( 0, 0, PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
         mExpenseDescription.setCompoundDrawables(img, null, null, null);
 
+        //Image.setImageResource(resourceIndex);
     }
 }

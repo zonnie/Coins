@@ -1,7 +1,13 @@
 package com.moneyifyapp.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
+import com.moneyifyapp.R;
 import com.parse.Parse;
 
 /**
@@ -10,6 +16,28 @@ import com.parse.Parse;
 public class Utils
 {
 
+    public static String state[] = {"$", "₪"};
+
+    /**
+     *
+     * @param str
+     * @return
+     */
+    public static int findIndextByString(String str)
+    {
+        int res = 0;
+
+        for(int i = 0; i < state.length; ++i)
+        {
+            if(str.equals(state[i]))
+            {
+                res = i;
+            }
+        }
+
+        return  res;
+    }
+
     /**
      * Initialized the Parse API.
      */
@@ -17,5 +45,35 @@ public class Utils
     {
         // Init Parse for data storing
         Parse.initialize(context, "7BjKxmwKAG3nVfaDHWxWusowkJJ4kGNyMlwjrbT8", "c6uhzWLV5SPmCx259cPjHhW8qvw5VUCvDwpVVjFD");
+    }
+
+    /**
+     * Initializes the action bar to be custom made.
+     *
+     * @param context
+     */
+    public static void initializeActionBar(Activity context)
+    {
+        context.getActionBar().setDisplayShowCustomEnabled(true);
+        context.getActionBar().setDisplayShowTitleEnabled(false);
+
+        LayoutInflater inflator = LayoutInflater.from(context);
+        View v = inflator.inflate(R.layout.custom_actionbar, null);
+
+        //if you need to customize anything else about the text, do it here.
+        //I'm using a custom TextView with a custom font in my layout xml so all I need to do is set title
+        ((TextView) v.findViewById(R.id.title)).setText(context.getTitle());
+
+        //assign the view to the actionbar
+        context.getActionBar().setCustomView(v);
+    }
+
+    /**
+     *
+     * @param context
+     */
+    public static void removeLogo(Activity context)
+    {
+        context.getActionBar().setIcon(new ColorDrawable(context.getResources().getColor(android.R.color.transparent)));
     }
 }

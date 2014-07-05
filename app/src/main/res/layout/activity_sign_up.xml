@@ -22,9 +22,19 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:id="@+id/signUpMainImage"
-            android:src="@drawable/paper"
+            android:src="@drawable/sign_up"
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/signup_welcome"
+            android:id="@+id/sign_up_welcome"
+            android:layout_gravity="center"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginBottom="@dimen/expense_drawable_left_pad"/>
 
         <EditText
             android:id="@+id/usernameEditText"
@@ -32,7 +42,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:hint="@string/Email"
-            android:drawableLeft="@drawable/mail"
+            android:drawableLeft="@drawable/email"
             android:drawablePadding="@dimen/drawable_left_pad"
             android:textColorHint="#bbbbbb"/>
 
@@ -43,7 +53,7 @@
             android:layout_marginTop="-2dp"
             android:padding="10dp"
             android:hint="@string/password_hint"
-            android:drawableLeft="@drawable/pass"
+            android:drawableLeft="@drawable/lock_min"
             android:drawablePadding="@dimen/drawable_left_pad"
             android:textColorHint="#bbbbbb"
             android:password="true"/>
@@ -55,7 +65,7 @@
             android:layout_marginTop="-2dp"
             android:padding="10dp"
             android:hint="@string/verify_pass_hint"
-            android:drawableLeft="@drawable/pass"
+            android:drawableLeft="@drawable/lock_min"
             android:drawablePadding="@dimen/drawable_left_pad"
             android:textColorHint="#bbbbbb"
             android:password="true"/>

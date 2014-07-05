@@ -8,6 +8,7 @@ import android.widget.GridView;
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.model.Transaction;
+import com.moneyifyapp.utils.Utils;
 
 public class ImagePickerActivity extends Activity
 {
@@ -19,6 +20,8 @@ public class ImagePickerActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_picker);
+        Utils.initializeActionBar(this);
+        Utils.removeLogo(this);
 
         GridView gridView = (GridView) findViewById(R.id.image_grid);
 
@@ -36,6 +39,7 @@ public class ImagePickerActivity extends Activity
         data.putExtra(Transaction.KEY_IMAGE_NAME, position);
         setResult(ExpensesActivity.IMAGE_PICK_OK, data);
         finish();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
     /**
@@ -47,5 +51,6 @@ public class ImagePickerActivity extends Activity
         Intent mIntent = getIntent();
         setResult(ExpensesActivity.IMAGE_PICK_CANCEL, mIntent);
         super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 }
