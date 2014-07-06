@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@drawable/background"
+              android:background="@color/background"
               android:orientation="vertical">
 
     <!-- This is a must for a custom list in fragment listview -->
@@ -19,7 +19,7 @@
     <ListView
         android:id="@id/android:list"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:clipToPadding="false"
         android:drawSelectorOnTop="false"
@@ -30,7 +30,7 @@
         android:id="@id/android:empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background"
+        android:background="@color/background"
         android:weightSum="3.5"
         android:orientation="vertical">
 
@@ -42,7 +42,7 @@
             android:text="@string/list_empty_hint"
             android:paddingTop="@dimen/expense_drawable_left_pad"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/dark_green"
+            android:textColor="@android:color/darker_gray"
             android:layout_weight="1"
             android:layout_gravity="top"/>
 
@@ -64,7 +64,7 @@
             android:text="@string/list_empty_message"
             android:paddingTop="@dimen/expense_drawable_left_pad"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/dark_green"
+            android:textColor="@android:color/darker_gray"
             android:layout_weight="1"
             android:layout_gravity="top"/>
 

@@ -100,7 +100,7 @@ public class ExpenseDetailActivity extends Activity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // The action resource id
+        // The action
         int id = item.getItemId();
 
         /*

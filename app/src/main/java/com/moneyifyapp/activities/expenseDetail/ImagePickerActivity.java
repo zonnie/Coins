@@ -3,6 +3,8 @@ package com.moneyifyapp.activities.expenseDetail;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.GridView;
 
 import com.moneyifyapp.R;
@@ -12,6 +14,16 @@ import com.moneyifyapp.utils.Utils;
 
 public class ImagePickerActivity extends Activity
 {
+    /********************************************************************/
+    /**                          Members                               **/
+    /********************************************************************/
+
+    private Animation mItemsLoadAnimation;
+
+    /********************************************************************/
+    /**                          Methods                               **/
+    /********************************************************************/
+
     /**
      * @param savedInstanceState
      */
@@ -27,6 +39,14 @@ public class ImagePickerActivity extends Activity
 
         // Instance of ImageAdapter Class
         gridView.setAdapter(new ImageAdapter(this));
+
+        // Load animation lazy
+        if(mItemsLoadAnimation == null)
+        {
+            mItemsLoadAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        }
+        gridView.startAnimation(mItemsLoadAnimation);
+
     }
 
     /**

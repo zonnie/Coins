@@ -5,6 +5,8 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,11 +31,16 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
      */
 
     private TextView mExpenseDescription;
+    private TextView mExpenseValue;
+    private TextView mExpenseCurrency;
+    private TextView mExpenseNote;
     private int mLayoutResourceId;
     private MonthTransactions mTransactions;
     private ImageView mImage;
     private View mMyView;
-    public static int PICK_IMAGE_DIMENSIONS = 100;
+    public static int PICK_IMAGE_DIMENSIONS = 80;
+    private final String EMPTY_NOTE_HINT = "Please enter a note...";
+    private Animation mItemsLoadAnimation;
 
     /********************************************************************/
     /**                          Methods                               **/
@@ -73,6 +80,14 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             viewInflator = LayoutInflater.from(getContext());
 
             view = viewInflator.inflate(mLayoutResourceId, null);
+
+            // Load animation lazy
+            if(mItemsLoadAnimation == null)
+            {
+                mItemsLoadAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+            }
+
+            view.startAnimation(mItemsLoadAnimation);
         }
 
         return getRegularView(position, view);
@@ -103,35 +118,81 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
 
             mExpenseDescription = (TextView) view.findViewById(R.id.expenseDesc);
             mImage = (ImageView)view.findViewById(R.id.image_container);
-            TextView expenseValue = (TextView) view.findViewById(R.id.expenseValue);
-            TextView expenseCurrency = (TextView) view.findViewById(R.id.currency);
-            TextView expenseNote = (TextView) view.findViewById(R.id.expenseItemNote);
+            mExpenseValue = (TextView) view.findViewById(R.id.expenseValue);
+            mExpenseCurrency = (TextView) view.findViewById(R.id.currency);
+            mExpenseNote = (TextView) view.findViewById(R.id.expenseItemNote);
+
+            /**     Build the view **/
 
             //Update image from object
             updateImage(Images.getImageByPosition(currentTransactionView.mImageResourceIndex));
-
-            if (mExpenseDescription != null)
-            {
-                mExpenseDescription.setText(currentTransactionView.mDescription);
-            }
-            if (expenseValue != null)
-            {
-
-                expenseValue.setText(currentTransactionView.mValue);
-            }
-            if (expenseCurrency != null)
-            {
-                expenseCurrency.setText(currentTransactionView.mCurrency);
-            }
-            if (expenseNote != null)
-            {
-                if (!currentTransactionView.mNotes.isEmpty())
-                {
-                    expenseNote.setText(currentTransactionView.mNotes);
-                }
-            }
+            // Handle view's description
+            handleViewDescription(currentTransactionView);
+            // Handle view's value amount
+            handleViewValue(currentTransactionView);
+            // Handle view's currency
+            handleViewCurrency(currentTransactionView);
+            // Handle view's note
+            handleViewNote(currentTransactionView);
         }
         return view;
+    }
+
+    /**
+     *
+     * @param currentTransactionView
+     */
+    private void handleViewDescription(Transaction currentTransactionView)
+    {
+        if (mExpenseDescription != null)
+        {
+            mExpenseDescription.setText(currentTransactionView.mDescription);
+        }
+
+    }
+
+    /**
+     *
+     * @param currentTransactionView
+     */
+    private void handleViewValue(Transaction currentTransactionView)
+    {
+        if (mExpenseValue != null)
+        {
+
+            mExpenseValue.setText(currentTransactionView.mValue);
+        }
+    }
+
+    /**
+     *
+     * @param currentTransactionView
+     */
+    private void handleViewCurrency(Transaction currentTransactionView)
+    {
+        if (mExpenseCurrency != null)
+        {
+            mExpenseCurrency.setText(currentTransactionView.mCurrency);
+        }
+    }
+
+    /**
+     *
+     * @param currentTransactionView
+     */
+    private void handleViewNote(Transaction currentTransactionView)
+    {
+        if (mExpenseNote != null)
+        {
+            if (!currentTransactionView.mNotes.isEmpty())
+            {
+                mExpenseNote.setText(currentTransactionView.mNotes);
+            }
+            else
+            {
+                mExpenseNote.setText(EMPTY_NOTE_HINT);
+            }
+        }
     }
 
     /**
@@ -171,12 +232,9 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     {
         Transaction transaction = mTransactions.getItems().get(position);
 
-        if (transaction != null)
-        {
-            mTransactions.getItems().remove(transaction);
-        }
 
-        notifyDataSetChanged();
+
+        super.remove(transaction);
     }
 
     /**
@@ -271,6 +329,20 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
                 updateViewToExpense(mMyView);
             }
         }
+    }
+
+    /**
+     *
+     * @param transaction
+     * @param position
+     */
+    @Override
+    public void insert(Transaction transaction, int position)
+    {
+        super.insert(transaction, position);
+        //Animation animation = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in);
+        //View view = getView(position, null, null);
+        //view.startAnimation(animation);
     }
 
     /**

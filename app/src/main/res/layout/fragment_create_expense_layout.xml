@@ -15,6 +15,15 @@
               android:padding="@dimen/big_padding"
     >
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/image_picker_hint_text"
+        android:id="@+id/image_picker_hint"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginBottom="@dimen/expense_card_margin"/>
+
     <ImageButton
         android:layout_width="match_parent"
         android:layout_height="128dp"
@@ -28,20 +37,30 @@
         android:layout_height="wrap_content"
         android:id="@+id/isExpenseToggle"
         android:gravity="center"
-        android:layout_marginBottom="@dimen/big_padding"
         android:textOff="Expense"
         android:background="@drawable/expense_toggle"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textOn="Income"
         android:paddingTop="@dimen/drawable_left_pad"
         android:paddingBottom="@dimen/drawable_left_pad"
         android:paddingStart="@dimen/big_padding"
         android:paddingEnd="@dimen/big_padding"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/toggle_hint_text"
+        android:id="@+id/toggle_expense_hint"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginBottom="@dimen/drawable_left_pad"/>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/addExpenseDescription"
         android:layout_gravity="center_horizontal"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:hint="What did you purchase"
         android:drawableLeft="@drawable/desc"
         android:drawablePadding="@dimen/expense_drawable_left_pad"
@@ -74,7 +93,7 @@
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:gravity="center"
-            android:text="$"
+            android:text="₪"
             android:textColor="@android:color/darker_gray"
             android:id="@+id/addExpenseCurrency"
             android:layout_gravity="center_vertical|right"/>
@@ -88,7 +107,7 @@
         android:ems="10"
         android:id="@+id/addExpenseNotes"
         android:hint="Notes..."
-        android:layout_marginBottom="@dimen/big_padding"
+        android:layout_marginBottom="@dimen/expense_card_margin"
         android:drawableLeft="@drawable/notes_2"
         android:drawablePadding="@dimen/expense_drawable_left_pad"
         android:maxLength="@integer/max_note_len"

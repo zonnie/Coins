@@ -18,6 +18,7 @@ public class Transaction
     public int mImageResourceIndex;
     public String mNotes;
     public boolean mIsExpense;
+    public int mOrderIndex;
 
     /********************************************************************/
     /**                          Methods                               **/
@@ -34,6 +35,8 @@ public class Transaction
     public static final String KEY_NOTES = "note";
     public static final String KEY_TYPE = "type";
     public static final boolean IS_EXPENSE_DEFAULT = true;
+    public static final String CURRENCY_DEFAULT = "₪";
+    public static final int KEY_ORDER = 0;
 
 
     /**

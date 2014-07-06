@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:showDividers="none"
-    android:background="@drawable/background"
+    android:background="@color/background"
     android:weightSum="1">
 
     <LinearLayout
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/expense_drawable_left_pad"
         android:layout_marginRight="@dimen/expense_drawable_left_pad"
-        android:layout_marginTop="@dimen/expense_drawable_left_pad"
+        android:layout_marginTop="@dimen/expense_card_margin"
         android:layout_marginBottom="@dimen/expense_card_margin"
         android:id="@+id/transaction_card_layout"
         android:background="@drawable/expense_item_card"
@@ -38,31 +38,41 @@
                 android:drawableLeft="@drawable/email"
                 android:drawablePadding="@dimen/expense_drawable_left_pad"
                 android:text="Large Text"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/currency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:gravity="right"
+                android:gravity="center|right"
                 android:text="$"
                 android:textStyle="bold"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 />
 
             <TextView
                 android:id="@+id/expenseValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="center|right"
                 android:text="50"
                 android:textStyle="bold"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 />
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/big_padding"
+            android:layout_marginRight="@dimen/big_padding"
+            android:background="@color/lighter_gray"
+            android:id="@+id/expenseItemSeperator"
+            android:fadingEdge="horizontal"
+            android:layout_marginTop="@dimen/drawable_left_pad"/>
 
         <TextView
             android:id="@+id/expenseItemNote"

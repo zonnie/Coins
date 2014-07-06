@@ -51,6 +51,7 @@ public class ExpenseListFragment extends ListFragment
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static final String PAGE_ID_KEY = "frag_id";
     public static final String MONTH_KEY = "month";
+    public static final String PARSE_DATE_KEY = "createdAt";
     public static final String REQ_CODE_KEY = "req";
     private Button mNewTransactionButton;
     private MonthTransactions mTransactions;
@@ -128,6 +129,7 @@ public class ExpenseListFragment extends ListFragment
         ParseQuery<ParseObject> query = ParseQuery.getQuery("expense");
         query.whereEqualTo(ExpensesActivity.PARSE_USER_KEY, user);
         query.whereEqualTo(MONTH_KEY, mTransactions.mMonthNumber);
+        query.addAscendingOrder(PARSE_DATE_KEY);
         query.findInBackground(new FindCallback<ParseObject>()
         {
             public void done(List<ParseObject> expenseList, ParseException e)
@@ -402,7 +404,7 @@ public class ExpenseListFragment extends ListFragment
                 if (requestCode == ExpensesActivity.REQ_NEW_ITEM)
                 {
                     // TODO: This needs to be dynamic
-                    currency = "$";
+                    currency = Transaction.CURRENCY_DEFAULT;
                     addNewTransaction(desc, sum, currency, note, image, isExpense);
                 }
                 else if (requestCode == ExpensesActivity.REQ_EDIT_ITEM)
@@ -435,8 +437,8 @@ public class ExpenseListFragment extends ListFragment
 
         // The adapter will add the expense to the model collection so it can update observer
         // as well.
-        //mAdapter.insert(newTransaction, 0);
-        mAdapter.add(newTransaction);
+        mAdapter.insert(newTransaction, 0);
+        //mAdapter.add(newTransaction);
     }
 
     /**
@@ -511,13 +513,13 @@ public class ExpenseListFragment extends ListFragment
 
             for (ParseObject curExpense : list)
             {
-                mAdapter.add(new Transaction(curExpense.getString(Transaction.KEY_ID),
+                mAdapter.insert(new Transaction(curExpense.getString(Transaction.KEY_ID),
                         curExpense.getString(Transaction.KEY_DESCRIPTION),
                         curExpense.getString(Transaction.KEY_VALUE),
                         curExpense.getString(Transaction.KEY_CURRENCY),
                         curExpense.getString(Transaction.KEY_NOTES),
                         curExpense.getInt(Transaction.KEY_IMAGE_NAME),
-                        curExpense.getBoolean(Transaction.KEY_TYPE)));
+                        curExpense.getBoolean(Transaction.KEY_TYPE)), 0);
             }
         }
     }

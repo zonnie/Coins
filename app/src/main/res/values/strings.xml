@@ -32,5 +32,7 @@
     <string name="login_welcome">Welcome!</string>
     <string name="login_welcome_2nd_line">Sign in and start Moneyifing your life</string>
     <string name="signup_welcome">Some info that we\'ll know you in the future</string>
+    <string name="image_picker_hint_text">Touch the image to select category</string>
+    <string name="toggle_hint_text">Choose between expense and income</string>
 
 </resources>
