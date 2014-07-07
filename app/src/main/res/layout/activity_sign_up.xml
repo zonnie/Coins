@@ -67,6 +67,7 @@
             android:hint="@string/verify_pass_hint"
             android:drawableLeft="@drawable/lock_min"
             android:drawablePadding="@dimen/drawable_left_pad"
+            android:layout_marginBottom="@dimen/drawable_left_pad"
             android:textColorHint="#bbbbbb"
             android:password="true"/>
 
@@ -76,7 +77,8 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:layout_margin="4dp"
-            android:background="@drawable/button_regular"
+            android:textColor="@android:color/white"
+            android:background="@drawable/new_button"
             android:text="@string/action_sing_up"
             />
     </LinearLayout>

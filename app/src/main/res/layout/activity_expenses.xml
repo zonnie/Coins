@@ -1,3 +1,10 @@
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
                                    xmlns:tools="http://schemas.android.com/tools"
                                    android:id="@+id/pager"
@@ -15,4 +22,16 @@
         android:paddingBottom="4dp"/>
 
 </android.support.v4.view.ViewPager>
+
+    <ListView
+        android:id="@+id/left_drawer"
+        android:layout_width="220dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="0dp"
+        android:background="@drawable/drawer_item_card"
+        />
     <!-- Fragments are created on run-time -->
+</android.support.v4.widget.DrawerLayout>

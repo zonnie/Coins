@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:background="@drawable/back"
+              android:background="@drawable/splash"
               android:orientation="vertical"
               android:weightSum="4"
               android:gravity="center">
@@ -10,16 +10,17 @@
         android:id="@+id/splashImage"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/coin"
+        android:src="@drawable/coin_large"
         />
 
     <TextView
         android:id="@+id/splashSlogan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Moneyify Your Life"
+        android:text="Save some coins"
+        android:textColor="@color/lighter_gray"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:gravity="center"
-        android:paddingTop="@dimen/big_padding"/>
+        />
 
 </LinearLayout>

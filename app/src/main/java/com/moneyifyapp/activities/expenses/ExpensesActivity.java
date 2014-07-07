@@ -1,18 +1,25 @@
 package com.moneyifyapp.activities.expenses;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.moneyifyapp.R;
+import com.moneyifyapp.activities.expenses.drawer.DrawerItemAdapter;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.activities.login.LoginActivity;
 import com.moneyifyapp.model.Transaction;
@@ -61,10 +68,11 @@ public class ExpensesActivity extends Activity
     public static final int REQ_EDIT_ITEM = 92;
     public static String PARSE_USER_KEY = "user";
 
-    private String[] mPlanetTitles;
+    // Drawer
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-
+    private CharSequence mTitle;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     /********************************************************************/
     /**                          Methods                               **/
@@ -95,6 +103,96 @@ public class ExpensesActivity extends Activity
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setCurrentItem(mCalender.get(Calendar.MONTH));
+
+        /** Drawer **/
+
+        mTitle = "Stuff to Do";
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+        // Set the adapter for the list view
+        //mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mPlanetTitles));
+        mDrawerList.setAdapter(new DrawerItemAdapter(this, R.layout.drawer_list_item));
+        // Set the list's click listener
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        mDrawerToggle = createDrawerToggle();
+
+        // Add shadow
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        // Set the drawer toggle as the DrawerListener
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP);
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setHomeButtonEnabled(true);
+    }
+
+    /**
+     *
+     * @return
+     */
+    private ActionBarDrawerToggle createDrawerToggle()
+    {
+        ActionBarDrawerToggle result = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description */
+                R.string.drawer_close  /* "close drawer" description */
+        )
+        {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view)
+            {
+                getActionBar().setTitle(mTitle);
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView)
+            {
+                getActionBar().setTitle(mTitle);
+            }
+        };
+
+        return result;
+    }
+
+    /**
+     * @param savedInstanceState
+     */
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState)
+    {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    /**
+     * @param newConfig
+     */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    /**
+     *
+     */
+    private class DrawerItemClickListener implements ListView.OnItemClickListener
+    {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id)
+        {
+            // Highlight the selected item, update the title, and close the drawer
+            mDrawerList.setItemChecked(position, true);
+            mDrawerLayout.closeDrawer(mDrawerList);
+        }
     }
 
     /**
@@ -136,6 +234,12 @@ public class ExpensesActivity extends Activity
             startActivity(intent);
             finish();
         }
+        else if (mDrawerToggle.onOptionsItemSelected(item))
+        {
+            // Do stuff
+
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -148,8 +252,7 @@ public class ExpensesActivity extends Activity
     @Override
     public void expenseItemClickedInFragment(Transaction transaction)
     {
-        //Toast toast = Toast.makeText(this, "Clicked \"" + transaction.mDescription + "\"", Toast.LENGTH_SHORT);
-        //toast.show();
+        // Call back called from inside the fragment
     }
 
     /**

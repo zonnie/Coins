@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">MoneyifyApp</string>
-    <string name="main_title">Moneyify</string>
+    <string name="app_name">Coins</string>
+    <string name="main_title">Coins</string>
     <string name="expenses">Expenses</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
@@ -10,9 +10,10 @@
     <string name="action_settings">Settings</string>
     <string name="jump_today_caption">Jump to today</string>
     <string name="logout_caption">Logout</string>
-    <string name="list_empty_hint">touch the button above to add some</string>.
+    <string name="list_empty_hint">touch the "+" button above to add some</string>
+    <string name="totals_hint_string">You save...</string>
     <string name="list_empty_message">Nothing here...so lonely</string>
-    <string name="new_expense_button_caption">New expense or income</string>
+    <string name="new_expense_button_caption">Add</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
@@ -34,5 +35,6 @@
     <string name="signup_welcome">Some info that we\'ll know you in the future</string>
     <string name="image_picker_hint_text">Touch the image to select category</string>
     <string name="toggle_hint_text">Choose between expense and income</string>
-
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
 </resources>

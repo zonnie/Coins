@@ -7,4 +7,11 @@
         android:id="@+id/jump_today"
         android:title="@string/jump_today_caption"
         android:showAsAction="withText"/>
+
+    <item
+        android:id="@+id/add_expense"
+        android:title="@string/new_expense_button_caption"
+        android:showAsAction="always"
+        android:icon="@drawable/add_2"
+        />
 </menu>

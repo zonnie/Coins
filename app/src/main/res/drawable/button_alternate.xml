@@ -4,9 +4,6 @@
        android:layout_width="0dp"
        android:layout_height="0dp"
     >
-    <corners
-        android:radius="0dp"
-        />
     <solid
         android:color="#0FA85C"
         />

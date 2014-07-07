@@ -7,12 +7,5 @@
         android:id="@+id/refresh_list"
         android:showAsAction="withText"
         android:title="Refresh"/>
-    <item
-        android:id="@+id/change_year"
-        android:showAsAction="always"
-        android:icon="@drawable/cal"
-        android:title="Change Year">
-
-    </item>
 
 </menu>

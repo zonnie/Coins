@@ -14,7 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.moneyifyapp.R;
@@ -51,6 +53,8 @@ public class ExpenseListFragment extends ListFragment
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static final String PAGE_ID_KEY = "frag_id";
     public static final String MONTH_KEY = "month";
+    public static final String DAY_KEY = "day";
+    public static final String YEAR_KEY = "year";
     public static final String PARSE_DATE_KEY = "createdAt";
     public static final String REQ_CODE_KEY = "req";
     private Button mNewTransactionButton;
@@ -58,7 +62,13 @@ public class ExpenseListFragment extends ListFragment
     private YearTransactions mYearTransactions;
     private ExpenseItemAdapter mAdapter;
     private OnFragmentInteractionListener mListener;
+    private LinearLayout mTotalLayout;
+    private TextView mTotalIncome;
+    private TextView mTotalExpense;
+    private TextView mTotalSavings;
+    private TextView mTotalSavingsSign;
     private ListView mList;
+    public static boolean DONE_LOADING = false;
 
     /********************************************************************/
     /**                          Methods                               **/
@@ -172,6 +182,12 @@ public class ExpenseListFragment extends ListFragment
             initializeExpenses();
             Toast.makeText(getActivity(), "Refreshing...", Toast.LENGTH_SHORT);
         }
+        else if(id == R.id.add_expense)
+        {
+            Intent intent = new Intent(getActivity(), ExpenseDetailActivity.class);
+            intent.putExtra(REQ_CODE_KEY, ExpensesActivity.REQ_NEW_ITEM);
+            startActivityForResult(intent, ExpensesActivity.REQ_NEW_ITEM);
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -200,6 +216,17 @@ public class ExpenseListFragment extends ListFragment
                 startActivityForResult(intent, ExpensesActivity.REQ_NEW_ITEM);
             }
         });
+
+        mTotalLayout = (LinearLayout)view.findViewById(R.id.totalLayout);
+        mTotalIncome = (TextView)view.findViewById(R.id.plusAmount);
+        mTotalExpense = (TextView)view.findViewById(R.id.minusAmount);
+        mTotalSavings = (TextView)view.findViewById(R.id.totalAmount);
+        mTotalSavingsSign = (TextView)view.findViewById(R.id.totalCurrency);
+
+        for(Transaction transaction : mTransactions.getItems())
+        {
+            updateTotals(transaction, false);
+        }
 
         return view;
     }
@@ -311,6 +338,7 @@ public class ExpenseListFragment extends ListFragment
      */
     private void removeItemFromList(int position)
     {
+        updateTotals(mAdapter.getItem(position), true);
         removeItemWithId(position);
         mAdapter.remove(position);
     }
@@ -409,11 +437,18 @@ public class ExpenseListFragment extends ListFragment
                 }
                 else if (requestCode == ExpensesActivity.REQ_EDIT_ITEM)
                 {
+                    // Remove the old transaction from the totals
+                    updateTotals(mTransactions.getItems().get(position), true);
+
+                    // Update adapter
                     Transaction tempExpense = new Transaction("0", desc, sum, currency, note, image, isExpense);
                     mAdapter.update(position, tempExpense);
                     // ! We now MUST pass the item from the collection to preserver
                     // the ID, the tempExpense object has an 'empty' ID.
                     updateDataInBackground(mAdapter.getItems().get(position));
+
+                    // Add the updated transaction
+                    updateTotals(tempExpense, false);
                 }
             }
         }
@@ -438,7 +473,7 @@ public class ExpenseListFragment extends ListFragment
         // The adapter will add the expense to the model collection so it can update observer
         // as well.
         mAdapter.insert(newTransaction, 0);
-        //mAdapter.add(newTransaction);
+        updateTotals(newTransaction, false);
     }
 
     /**
@@ -469,6 +504,7 @@ public class ExpenseListFragment extends ListFragment
         expenseObject.put(Transaction.KEY_TYPE, newTransaction.mIsExpense);
         expenseObject.put(ExpensesActivity.PARSE_USER_KEY, user);
         expenseObject.put(MONTH_KEY, mTransactions.mMonthNumber);
+        expenseObject.put(DAY_KEY, newTransaction.mTransactionDay);
         expenseObject.saveInBackground();
 
     }
@@ -511,15 +547,26 @@ public class ExpenseListFragment extends ListFragment
         {
             mAdapter.clear();
 
+            // Clear the total bar's data
+            mTotalSavings.setText(String.valueOf(0));
+            mTotalIncome.setText(String.valueOf(0));
+            mTotalExpense.setText(String.valueOf(0));
+
+
             for (ParseObject curExpense : list)
             {
-                mAdapter.insert(new Transaction(curExpense.getString(Transaction.KEY_ID),
+                Transaction transaction = new Transaction(curExpense.getString(Transaction.KEY_ID),
                         curExpense.getString(Transaction.KEY_DESCRIPTION),
                         curExpense.getString(Transaction.KEY_VALUE),
                         curExpense.getString(Transaction.KEY_CURRENCY),
                         curExpense.getString(Transaction.KEY_NOTES),
                         curExpense.getInt(Transaction.KEY_IMAGE_NAME),
-                        curExpense.getBoolean(Transaction.KEY_TYPE)), 0);
+                        curExpense.getBoolean(Transaction.KEY_TYPE),
+                        curExpense.getString(DAY_KEY)
+                );
+
+                mAdapter.insert(transaction, 0);
+                updateTotals(transaction, false);
             }
         }
     }
@@ -535,5 +582,56 @@ public class ExpenseListFragment extends ListFragment
         output = output.replaceAll("\\s+", "-");
 
         return output;
+    }
+
+    /**
+     *
+     * @param newTransaction
+     * @param isRemoval
+     */
+    private void updateTotals(Transaction newTransaction, boolean isRemoval)
+    {
+        boolean isExpense = newTransaction.mIsExpense;
+        int initIncome = Integer.valueOf(mTotalIncome.getText().toString());
+        int initExpense = Integer.valueOf(mTotalExpense.getText().toString());
+        int curTransValue = Integer.valueOf(newTransaction.mValue);
+
+        // Collect info
+        if(isExpense)
+        {
+            if(isRemoval)
+                initExpense -= curTransValue;
+            else
+                initExpense += curTransValue;
+        }
+        else
+        {
+            if(isRemoval)
+                initIncome -= curTransValue;
+            else
+                initIncome += curTransValue;
+        }
+
+        int initTotal = initIncome - initExpense;
+
+        int color;
+
+        // Set the total and it's colors
+        if(initTotal < 0 )
+        {
+            color = getResources().getColor(R.color.expense_color);
+            initTotal = (-initTotal);
+        }
+        else
+        {
+            color = getResources().getColor(R.color.income_color);
+        }
+
+        // Update UI
+        mTotalSavings.setTextColor(color);
+        mTotalSavingsSign.setTextColor(color);
+        mTotalSavings.setText(String.valueOf(initTotal));
+        mTotalIncome.setText(String.valueOf(initIncome));
+        mTotalExpense.setText(String.valueOf(initExpense));
     }
 }

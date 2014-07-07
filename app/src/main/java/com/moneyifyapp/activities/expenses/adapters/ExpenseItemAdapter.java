@@ -34,9 +34,11 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private TextView mExpenseValue;
     private TextView mExpenseCurrency;
     private TextView mExpenseNote;
+    private TextView mExpenseDayOfMonth;
     private int mLayoutResourceId;
     private MonthTransactions mTransactions;
     private ImageView mImage;
+    private int mItemsLoaded;
     private View mMyView;
     public static int PICK_IMAGE_DIMENSIONS = 80;
     private final String EMPTY_NOTE_HINT = "Please enter a note...";
@@ -56,6 +58,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         super(context, resource, expenses.getItems());
         mTransactions = expenses;
         mLayoutResourceId = resource;
+        mItemsLoaded = 0;
     }
 
     /**
@@ -121,10 +124,13 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             mExpenseValue = (TextView) view.findViewById(R.id.expenseValue);
             mExpenseCurrency = (TextView) view.findViewById(R.id.currency);
             mExpenseNote = (TextView) view.findViewById(R.id.expenseItemNote);
+            mExpenseDayOfMonth = (TextView)view.findViewById(R.id.expense_item_date_text);
 
             /**     Build the view **/
 
-            //Update image from object
+            // Handle the view's creation date
+            handleViewDate(currentTransactionView);
+            // Update image from object
             updateImage(Images.getImageByPosition(currentTransactionView.mImageResourceIndex));
             // Handle view's description
             handleViewDescription(currentTransactionView);
@@ -147,6 +153,26 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         if (mExpenseDescription != null)
         {
             mExpenseDescription.setText(currentTransactionView.mDescription);
+        }
+
+    }
+
+    /**
+     *
+     * @param currentTransactionView
+     */
+    private void handleViewDate(Transaction currentTransactionView)
+    {
+        if (mExpenseDescription != null)
+        {
+            String date = currentTransactionView.mTransactionDay;
+
+            if(date.endsWith("1")){date += "st";}
+            else if(date.endsWith("2")){date += "nd";}
+            else if(date.endsWith("3")){date += "rd";}
+            else {date += "th";}
+
+            mExpenseDayOfMonth.setText(date);
         }
 
     }
@@ -355,7 +381,5 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         Drawable img = getContext().getResources().getDrawable(resourceIndex);
         img.setBounds( 0, 0, PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
         mExpenseDescription.setCompoundDrawables(img, null, null, null);
-
-        //Image.setImageResource(resourceIndex);
     }
 }

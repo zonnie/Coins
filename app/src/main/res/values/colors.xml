@@ -6,4 +6,6 @@
     <color name="green">#3A8C52</color>
     <color name="background">#E1E3E3</color>
     <color name="lighter_gray">#ddd</color>
+    <color name="income_color">#ff44bf4c</color>
+    <color name="expense_color">#ffa50026</color>
 </resources>

@@ -104,14 +104,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
-        android:ems="10"
         android:id="@+id/addExpenseNotes"
         android:hint="Notes..."
         android:layout_marginBottom="@dimen/expense_card_margin"
         android:drawableLeft="@drawable/notes_2"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:drawablePadding="@dimen/expense_drawable_left_pad"
         android:maxLength="@integer/max_note_len"
-        android:lines="@integer/notes_lines"/>
+        />
+
+    <DatePicker
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/datePicker"
+        android:calendarViewShown="false"
+        android:spinnersShown="false"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -125,8 +133,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Done !"
+            android:textColor="@android:color/white"
             android:id="@+id/submitButton"
-            android:background="@drawable/button_regular"
+            android:background="@drawable/new_button"
             android:scaleType="fitCenter"
             android:layout_weight="1"
             android:layout_margin="@dimen/max_add_width"/>
@@ -135,7 +144,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Cancel"
-            android:background="@drawable/button_regular"
+            android:textColor="@android:color/white"
+            android:background="@drawable/new_button"
             android:id="@+id/cancelAddButton"
             android:layout_weight="1"
             android:layout_margin="@dimen/max_add_width"/>

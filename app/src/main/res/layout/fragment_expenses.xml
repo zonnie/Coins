@@ -6,15 +6,119 @@
               android:orientation="vertical">
 
     <!-- This is a must for a custom list in fragment listview -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/expense_item_card"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/totals_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/totals_hint_string"
+            android:paddingTop="@dimen/padding_start_currency"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/darker_gray"
+            android:layout_gravity="top"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/totalLayout"
+            android:gravity="center"
+            android:paddingLeft="@dimen/drawable_left_pad"
+            android:paddingRight="@dimen/drawable_left_pad"
+            android:paddingTop="@dimen/padding_start_currency"
+            android:paddingBottom="@dimen/padding_start_currency"
+            android:background="@drawable/expense_item_card"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₪"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/plusCurrency"
+                android:textColor="#ff44bf4c"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="0"
+                android:id="@+id/plusAmount"
+                android:textColor="#ff44bf4c"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="-"
+                android:id="@+id/minusSign"
+                android:paddingStart="@dimen/max_add_height"
+                android:paddingEnd="@dimen/max_add_height"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="₪"
+                android:id="@+id/minusCurrency"
+                android:textColor="#ffa50026"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="0"
+                android:id="@+id/minusAmount"
+                android:textColor="#ffa50026"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="="
+                android:id="@+id/outComeSign"
+                android:paddingStart="@dimen/max_add_height"
+                android:paddingEnd="@dimen/max_add_height"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="₪"
+                android:id="@+id/totalCurrency"
+                android:textColor="#ff44bf4c"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="0"
+                android:id="@+id/totalAmount"
+                android:textColor="#ff44bf4c"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
     <Button
     android:id="@+id/addNewExpenseButton"
     style="?android:attr/buttonStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:adjustViewBounds="false"
-    android:background="@drawable/back_regualr"
+    android:background="@drawable/expense_item_card"
+    android:layout_gravity="center"
+    android:paddingLeft="@dimen/big_padding"
+    android:paddingRight="@dimen/big_padding"
     android:text="@string/new_expense_button_caption"
-    android:textColor="@android:color/white"/>
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:textColor="@android:color/white"
+    android:visibility="gone"/>
 
     <ListView
         android:id="@id/android:list"
@@ -40,7 +144,7 @@
             android:layout_height="0dp"
             android:gravity="center_horizontal"
             android:text="@string/list_empty_hint"
-            android:paddingTop="@dimen/expense_drawable_left_pad"
+            android:paddingTop="@dimen/padding_start_currency"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/darker_gray"
             android:layout_weight="1"

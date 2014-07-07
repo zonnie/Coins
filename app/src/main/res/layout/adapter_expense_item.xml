@@ -7,12 +7,29 @@
     android:background="@color/background"
     android:weightSum="1">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/expense_item_date_text"
+        android:maxLength="4"
+        android:text="24th"
+        android:gravity="center"
+        android:background="@drawable/date_positit"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_marginLeft="@dimen/big_padding"
+        android:layout_marginRight="@dimen/drawable_left_pad"
+        android:layout_marginTop="@dimen/expense_card_margin"
+        android:textColor="@android:color/darker_gray"
+        android:paddingLeft="@dimen/drawable_left_pad"
+        android:paddingRight="@dimen/drawable_left_pad"
+        android:paddingTop="@dimen/padding_start_currency"
+        android:paddingBottom="@dimen/padding_start_currency"
+        android:layout_height="wrap_content"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/expense_drawable_left_pad"
         android:layout_marginRight="@dimen/expense_drawable_left_pad"
-        android:layout_marginTop="@dimen/expense_card_margin"
         android:layout_marginBottom="@dimen/expense_card_margin"
         android:id="@+id/transaction_card_layout"
         android:background="@drawable/expense_item_card"
@@ -22,12 +39,29 @@
         android:showDividers="none"
         >
 
+        <!--<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingEnd="@dimen/activity_vertical_margin"
+            android:paddingStart="@dimen/padding_start_currency"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/expense_item_date_text"
+                android:maxLength="2"
+                android:text="24"
+                android:gravity="center"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_height="wrap_content"/>-->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingEnd="@dimen/activity_vertical_margin"
-            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/padding_start_currency"
             >
 
 
@@ -88,5 +122,6 @@
             android:textColor="@android:color/darker_gray"
             />
 
-    </LinearLayout>
+            </LinearLayout>
+    <!--</LinearLayout>-->
 </LinearLayout>

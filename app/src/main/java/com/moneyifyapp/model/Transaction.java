@@ -1,5 +1,7 @@
 package com.moneyifyapp.model;
 
+import java.util.Calendar;
+
 /**
  * Created by Zonnie_Work on 30/06/2014.
  */
@@ -19,6 +21,7 @@ public class Transaction
     public String mNotes;
     public boolean mIsExpense;
     public int mOrderIndex;
+    public String mTransactionDay;
 
     /********************************************************************/
     /**                          Methods                               **/
@@ -55,6 +58,21 @@ public class Transaction
         this.mImageResourceIndex = imageName;
         this.mNotes = note;
         this.mIsExpense = isExpense;
+        this.mTransactionDay = String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+    }
+
+    /**
+     * @param id
+     * @param description
+     * @param value
+     * @param currency
+     */
+    public Transaction(String id, String description, String value,
+                       String currency, String note, int imageName, boolean isExpense,
+                       String day)
+    {
+        this(id, description, value, currency, note, imageName, isExpense);
+        this.mTransactionDay = day;
     }
 
     /**
@@ -70,6 +88,7 @@ public class Transaction
         this.mImageResourceIndex = Images.getImageByPosition(0);
         this.mNotes = "";
         this.mIsExpense = true;
+        this.mTransactionDay = String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
     }
 
     /**

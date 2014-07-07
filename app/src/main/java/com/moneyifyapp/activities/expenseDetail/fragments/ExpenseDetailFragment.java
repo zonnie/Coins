@@ -126,15 +126,6 @@ public class ExpenseDetailFragment extends Fragment
         mExpenseNotes = (EditText) view.findViewById(R.id.addExpenseNotes);
         mToggleIsExpense = (ToggleButton) view.findViewById(R.id.isExpenseToggle);
 
-        // Currency spinner
-        /*mCurrencySpinner = (Spinner)view.findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter_state = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item, Utils.state);
-        adapter_state
-                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mCurrencySpinner.setAdapter(adapter_state);
-        mCurrencySpinner.setSelection(1);*/
-
         // Bind listener
         mSubmitButton.setOnClickListener(new View.OnClickListener()
         {
