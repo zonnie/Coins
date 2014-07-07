@@ -39,7 +39,7 @@
                 android:drawableLeft="@drawable/cal"
                 android:drawablePadding="@dimen/big_padding"
                 android:gravity="center"
-                android:text="New Text"
+                android:text=""
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@android:color/white"
                 />
@@ -53,7 +53,6 @@
                 android:paddingEnd="@dimen/activity_vertical_margin"
                 android:paddingStart="@dimen/big_padding"
                 android:paddingTop="@dimen/drawable_left_pad"
-                android:text="Please enter a note..."
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/lighter_gray"
                 android:visibility="gone"/>

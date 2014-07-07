@@ -17,7 +17,7 @@
         android:id="@+id/splashSlogan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save some coins"
+        android:text="@string/splash_slogan"
         android:textColor="@color/lighter_gray"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:gravity="center"

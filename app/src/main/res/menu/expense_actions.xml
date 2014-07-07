@@ -6,6 +6,6 @@
     <item
         android:id="@+id/refresh_list"
         android:showAsAction="withText"
-        android:title="Refresh"/>
+        android:title="@string/item_list_refresh"/>
 
 </menu>

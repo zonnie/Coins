@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:id="@+id/expense_item_date_text"
         android:maxLength="4"
-        android:text="24th"
+        android:text=""
         android:gravity="center"
         android:background="@drawable/date_positit"
         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/email"
                 android:drawablePadding="@dimen/expense_drawable_left_pad"
-                android:text="Large Text"
+                android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:gravity="center"/>
 
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
                 android:gravity="center|right"
-                android:text="$"
+                android:text="@string/default_currency"
                 android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 />
@@ -91,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center|right"
-                android:text="50"
+                android:text="@string/init_total_value"
                 android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 />
@@ -117,7 +117,7 @@
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/drawable_left_pad"
             android:paddingBottom="@dimen/drawable_left_pad"
-            android:text="Please enter a note..."
+            android:text="@string/enter_note_hint"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/darker_gray"
             />

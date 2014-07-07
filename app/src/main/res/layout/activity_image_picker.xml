@@ -9,11 +9,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.4"
         android:gravity="center"
         android:textColor="@android:color/white"
         android:background="@drawable/back_regualr"
-        android:text="Touch the category image to pick one"
+        android:text="@string/image_gallery_hint"
         />
 
     <GridView

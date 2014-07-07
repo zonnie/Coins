@@ -38,23 +38,23 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="₪"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/default_currency"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/plusCurrency"
                 android:textColor="#ff44bf4c"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="0"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/init_total_value"
                 android:id="@+id/plusAmount"
                 android:textColor="#ff44bf4c"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="-"
                 android:id="@+id/minusSign"
                 android:paddingStart="@dimen/max_add_height"
@@ -63,23 +63,23 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="₪"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/default_currency"
                 android:id="@+id/minusCurrency"
                 android:textColor="#ffa50026"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="0"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/init_total_value"
                 android:id="@+id/minusAmount"
                 android:textColor="#ffa50026"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="="
                 android:id="@+id/outComeSign"
                 android:paddingStart="@dimen/max_add_height"
@@ -88,16 +88,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="₪"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/default_currency"
+                android:textStyle="bold"
                 android:id="@+id/totalCurrency"
                 android:textColor="#ff44bf4c"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="0"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold"
+                android:text="@string/init_total_value"
                 android:id="@+id/totalAmount"
                 android:textColor="#ff44bf4c"/>
 

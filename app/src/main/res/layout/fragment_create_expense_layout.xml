@@ -61,7 +61,7 @@
         android:id="@+id/addExpenseDescription"
         android:layout_gravity="center_horizontal"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:hint="What did you purchase"
+        android:hint="@string/add_item_description_hint"
         android:drawableLeft="@drawable/desc"
         android:drawablePadding="@dimen/expense_drawable_left_pad"
         android:maxLength="@integer/max_desc_len"
@@ -84,7 +84,7 @@
             android:drawableLeft="@drawable/sum"
             android:drawablePadding="@dimen/expense_drawable_left_pad"
             android:singleLine="true"
-            android:hint="How much did it cost ?"
+            android:hint="@string/item_value_hint"
             />
 
         <TextView
@@ -93,7 +93,7 @@
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:gravity="center"
-            android:text="₪"
+            android:text="@string/default_currency"
             android:textColor="@android:color/darker_gray"
             android:id="@+id/addExpenseCurrency"
             android:layout_gravity="center_vertical|right"/>
@@ -127,28 +127,31 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         >
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/item_details_cancel"
+            android:textColor="@android:color/white"
+            android:background="@drawable/new_button"
+            android:id="@+id/cancelAddButton"
+            android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_margin="@dimen/max_add_width"/>
 
         <Button
             android:src="@drawable/ok"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Done !"
+            android:text="@string/item_details_submit"
             android:textColor="@android:color/white"
             android:id="@+id/submitButton"
             android:background="@drawable/new_button"
             android:scaleType="fitCenter"
             android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_margin="@dimen/max_add_width"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:textColor="@android:color/white"
-            android:background="@drawable/new_button"
-            android:id="@+id/cancelAddButton"
-            android:layout_weight="1"
-            android:layout_margin="@dimen/max_add_width"/>
+
 
     </LinearLayout>
 
