@@ -139,6 +139,55 @@ public class ExpenseListFragment extends ListFragment
     }
 
     /**
+     * Needed in order to use the custom layout.
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        View view = inflater.inflate(R.layout.fragment_expenses, container, false);
+
+        mNewTransactionButton = (Button) view.findViewById(R.id.addNewExpenseButton);
+        mNewTransactionButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getActivity(), ExpenseDetailActivity.class);
+                intent.putExtra(REQ_CODE_KEY, ExpensesActivity.REQ_NEW_ITEM);
+                startActivityForResult(intent, ExpensesActivity.REQ_NEW_ITEM);
+            }
+        });
+
+        mTotalLayout = (LinearLayout)view.findViewById(R.id.totalLayout);
+        mTotalIncome = (TextView)view.findViewById(R.id.plusAmount);
+        mTotalIncomeSign = (TextView) view.findViewById(R.id.plusCurrency);
+        mTotalExpense = (TextView)view.findViewById(R.id.minusAmount);
+        mTotalExpenseSign = (TextView) view.findViewById(R.id.minusCurrency);
+        mTotalSavings = (TextView)view.findViewById(R.id.totalAmount);
+        mTotalSavingsSign = (TextView)view.findViewById(R.id.totalCurrency);
+
+        // Clear the total bar's data
+        mTotalSavings.setText(String.valueOf(0));
+        mTotalIncome.setText(String.valueOf(0));
+        mTotalExpense.setText(String.valueOf(0));
+
+        // Update total's currency to default
+        updateTotalCurrencyToPrefDefault();
+
+        for(Transaction transaction : mTransactions.getItems())
+        {
+            updateTotals(transaction, false);
+        }
+
+        return view;
+    }
+
+    /**
      *
      */
     @Override
@@ -198,6 +247,66 @@ public class ExpenseListFragment extends ListFragment
     }
 
     /**
+     *
+     */
+    public void refreshFromDatabase()
+    {
+        ParseUser user = ParseUser.getCurrentUser();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("expense");
+        query.whereEqualTo(ExpensesActivity.PARSE_USER_KEY, user);
+        query.whereEqualTo(YEAR_KEY, mYearTransactions.mYear);
+        query.whereEqualTo(MONTH_KEY, mTransactions.mMonthNumber);
+        query.addAscendingOrder(PARSE_DATE_KEY);
+        query.findInBackground(new FindCallback<ParseObject>()
+        {
+            public void done(List<ParseObject> expenseList, ParseException e)
+            {
+                if (e == null)
+                {
+                    clearTotals();
+                    buildExpenseListFromParse(expenseList);
+                } else
+                {
+                    Toast toast = Toast.makeText(getActivity(), "We have some DB issues... :(", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            }
+        });
+    }
+
+    /**
+     * Initializes the expenses from the remote DB.
+     *
+     * @param list
+     */
+    public void buildExpenseListFromParse(List<ParseObject> list)
+    {
+        if (list != null)
+        {
+            mAdapter.clear();
+
+            for (ParseObject curExpense : list)
+            {
+                Transaction transaction = new Transaction(curExpense.getString(Transaction.KEY_ID),
+                        curExpense.getString(Transaction.KEY_DESCRIPTION),
+                        curExpense.getString(Transaction.KEY_VALUE),
+                        curExpense.getString(Transaction.KEY_CURRENCY),
+                        curExpense.getString(Transaction.KEY_NOTES),
+                        curExpense.getInt(Transaction.KEY_IMAGE_NAME),
+                        curExpense.getBoolean(Transaction.KEY_TYPE),
+                        curExpense.getString(DAY_KEY)
+                );
+
+                // Normalize all currencies according to default
+                transaction.mCurrency = Utils.getDefaultCurrency(getActivity());
+
+                // Add a transaction w/o creating a new instance and not saving in DB
+                addNewTransaction(transaction);
+            }
+        }
+    }
+
+    /**
      * @param menu
      * @return
      */
@@ -220,7 +329,7 @@ public class ExpenseListFragment extends ListFragment
 
         if (id == R.id.refresh_list)
         {
-            initializeExpenses();
+            refreshFromDatabase();
             Toast.makeText(getActivity(), "Refreshing...", Toast.LENGTH_SHORT);
         }
         else if(id == R.id.add_expense)
@@ -231,50 +340,6 @@ public class ExpenseListFragment extends ListFragment
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Needed in order to use the custom layout.
-     *
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
-     */
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        View view = inflater.inflate(R.layout.fragment_expenses, container, false);
-
-        mNewTransactionButton = (Button) view.findViewById(R.id.addNewExpenseButton);
-        mNewTransactionButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(getActivity(), ExpenseDetailActivity.class);
-                intent.putExtra(REQ_CODE_KEY, ExpensesActivity.REQ_NEW_ITEM);
-                startActivityForResult(intent, ExpensesActivity.REQ_NEW_ITEM);
-            }
-        });
-
-        mTotalLayout = (LinearLayout)view.findViewById(R.id.totalLayout);
-        mTotalIncome = (TextView)view.findViewById(R.id.plusAmount);
-        mTotalIncomeSign = (TextView) view.findViewById(R.id.plusCurrency);
-        mTotalExpense = (TextView)view.findViewById(R.id.minusAmount);
-        mTotalExpenseSign = (TextView) view.findViewById(R.id.minusCurrency);
-        mTotalSavings = (TextView)view.findViewById(R.id.totalAmount);
-        mTotalSavingsSign = (TextView)view.findViewById(R.id.totalCurrency);
-
-        // Update total's currency to default
-        updateTotalCurrencyToPrefDefault();
-
-        for(Transaction transaction : mTransactions.getItems())
-        {
-            updateTotals(transaction, false);
-        }
-
-        return view;
     }
 
     /**
@@ -486,7 +551,7 @@ public class ExpenseListFragment extends ListFragment
                 {
                     // TODO: This needs to be dynamic
                     currency = Transaction.CURRENCY_DEFAULT;
-                    addNewTransaction(desc, sum, currency, note, image, isExpense);
+                    createNewTransaction(desc, sum, currency, note, image, isExpense);
                 }
                 else if (requestCode == ExpensesActivity.REQ_EDIT_ITEM)
                 {
@@ -512,7 +577,7 @@ public class ExpenseListFragment extends ListFragment
      * @param addDescription
      * @param addSum
      */
-    public void addNewTransaction(String addDescription, String addSum, String currency, String note, int image, boolean isExpense)
+    public void createNewTransaction(String addDescription, String addSum, String currency, String note, int image, boolean isExpense)
     {
         String newId = generateId(addDescription, addSum, currency);
 
@@ -522,6 +587,24 @@ public class ExpenseListFragment extends ListFragment
         // Save to Parse
         ParseObject expenseObject = new ParseObject(Transaction.CLASS_NAME);
         saveDataInBackground(newTransaction, expenseObject);
+
+        // The adapter will add the expense to the model collection so it can update observer
+        // as well.
+        mAdapter.insert(newTransaction, 0);
+        updateTotals(newTransaction, false);
+    }
+
+    /**
+     *
+     * Add a transaction w/o creating a new instance and not saving in DB.
+     *
+     * @param newTransaction
+     *
+     */
+    public void addNewTransaction(Transaction newTransaction)
+    {
+        String newId = generateId(newTransaction.mDescription, newTransaction.mValue, newTransaction.mCurrency);
+        newTransaction.mId = newId;
 
         // The adapter will add the expense to the model collection so it can update observer
         // as well.
@@ -591,44 +674,6 @@ public class ExpenseListFragment extends ListFragment
     }
 
     /**
-     * Initializes the expenses from the remote DB.
-     *
-     * @param list
-     */
-    public void buildExpenseListFromParse(List<ParseObject> list)
-    {
-        if (list != null)
-        {
-            mAdapter.clear();
-
-            // Clear the total bar's data
-            mTotalSavings.setText(String.valueOf(0));
-            mTotalIncome.setText(String.valueOf(0));
-            mTotalExpense.setText(String.valueOf(0));
-
-
-            for (ParseObject curExpense : list)
-            {
-                Transaction transaction = new Transaction(curExpense.getString(Transaction.KEY_ID),
-                        curExpense.getString(Transaction.KEY_DESCRIPTION),
-                        curExpense.getString(Transaction.KEY_VALUE),
-                        curExpense.getString(Transaction.KEY_CURRENCY),
-                        curExpense.getString(Transaction.KEY_NOTES),
-                        curExpense.getInt(Transaction.KEY_IMAGE_NAME),
-                        curExpense.getBoolean(Transaction.KEY_TYPE),
-                        curExpense.getString(DAY_KEY)
-                );
-
-                // Normalize all currencies according to default
-                transaction.mCurrency = Utils.getDefaultCurrency(getActivity());
-
-                mAdapter.insert(transaction, 0);
-                updateTotals(transaction, false);
-            }
-        }
-    }
-
-    /**
      * @return
      */
     private String generateId(String description, String sum, String currency)
@@ -690,5 +735,15 @@ public class ExpenseListFragment extends ListFragment
         mTotalSavings.setText(String.valueOf(initTotal));
         mTotalIncome.setText(String.valueOf(initIncome));
         mTotalExpense.setText(String.valueOf(initExpense));
+    }
+
+    /**
+     * Clears the totals bar
+     */
+    private void clearTotals()
+    {
+        mTotalSavings.setText(String.valueOf(0));
+        mTotalIncome.setText(String.valueOf(0));
+        mTotalExpense.setText(String.valueOf(0));
     }
 }

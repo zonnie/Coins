@@ -88,6 +88,12 @@ public class Utils
         context.getActionBar().setIcon(resourceId);
     }
 
+    /**
+     * Get the default configured currency
+     *
+     * @param context
+     * @return
+     */
     public static String getDefaultCurrency(Activity context)
     {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(PrefActivity.PREF_LIST_NAME,

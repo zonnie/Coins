@@ -4,9 +4,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.model.Images;
@@ -20,6 +20,7 @@ public class ImageAdapter extends BaseAdapter
     // Container context
     private ImagePickerActivity mContext;
     private View mView;
+    public static int IMAGE_PICKER_IMAGE_SIZE = 210;
 
     /********************************************************************/
     /**                          Methods                               **/
@@ -61,9 +62,9 @@ public class ImageAdapter extends BaseAdapter
         ImageButton imageButton = (ImageButton)mView.findViewById(R.id.categoryImage);
         //TextView imageCaption = (TextView)mView.findViewById(R.id.categoryCaption);
         imageButton.setBackgroundColor(mContext.getResources().getColor(android.R.color.transparent));
-        imageButton.setLayoutParams(new GridView.LayoutParams(200, 200));
+        imageButton.setLayoutParams(new LinearLayout.LayoutParams(IMAGE_PICKER_IMAGE_SIZE, IMAGE_PICKER_IMAGE_SIZE));
         imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageButton.setPadding(8, 8, 8, 8);
+        //imageButton.setPadding(8, 8, 8, 8);
 
 
         // Call the containing activity with the item's position
@@ -76,10 +77,10 @@ public class ImageAdapter extends BaseAdapter
             }
         });
         int resourceId = Images.getImageByPosition(position);
-        imageButton.setImageResource(resourceId);
         //imageCaption.setText(Images.getCaptions().get(position));
+        imageButton.setImageResource(resourceId);
 
-        return imageButton;
+        return mView;
     }
 
     /**
