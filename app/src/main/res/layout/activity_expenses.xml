@@ -1,37 +1,65 @@
 <android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-                                   xmlns:tools="http://schemas.android.com/tools"
-                                   android:id="@+id/pager"
-                                   android:layout_width="match_parent"
-                                   android:layout_height="match_parent"
-                                   tools:context=".ExpensesActivity">
-    <android.support.v4.view.PagerTitleStrip
-        android:id="@+id/pager_title_strip"
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:background="@drawable/back_regualr"
-        android:textColor="#fff"
-        android:paddingTop="8dp"
-        android:paddingBottom="4dp"/>
+        android:layout_height="match_parent"
+        tools:context=".ExpensesActivity">
 
-</android.support.v4.view.ViewPager>
+        <android.support.v4.view.PagerTitleStrip
+            android:id="@+id/pager_title_strip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@drawable/back_regualr"
+            android:paddingBottom="4dp"
+            android:paddingTop="8dp"
+            android:textColor="#fff"/>
 
-    <ListView
-        android:id="@+id/left_drawer"
-        android:layout_width="220dp"
+    </android.support.v4.view.ViewPager>
+
+    <LinearLayout
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:choiceMode="singleChoice"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="0dp"
-        android:background="@drawable/drawer_item_card"
-        />
+        android:id="@+id/top_list_layout"
+        android:layout_width="220dp"
+        android:orientation="vertical"
+        android:weightSum="10"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/drawable_left_pad"
+            android:divider="@android:color/darker_gray"
+            android:background="@drawable/button_alternate"
+            android:text="@string/drawer_top_title_text"
+            android:id="@+id/top_drawer_title"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            />
+
+        <ListView
+            android:layout_weight="9"
+            android:layout_width="match_parent"
+            android:id="@+id/left_drawer"
+            android:layout_height="0dp"
+            android:background="@drawable/drawer_item_card"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="0dp"
+            />
+    </LinearLayout>
     <!-- Fragments are created on run-time -->
 </android.support.v4.widget.DrawerLayout>

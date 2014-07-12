@@ -3,11 +3,13 @@ package com.moneyifyapp.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
+import com.moneyifyapp.activities.preferences.PrefActivity;
 import com.parse.Parse;
 
 /**
@@ -75,5 +77,21 @@ public class Utils
     public static void removeLogo(Activity context)
     {
         context.getActionBar().setIcon(new ColorDrawable(context.getResources().getColor(android.R.color.transparent)));
+    }
+
+    /**
+     *
+     * @param context
+     */
+    public static void setLogo(Activity context, int resourceId)
+    {
+        context.getActionBar().setIcon(resourceId);
+    }
+
+    public static String getDefaultCurrency(Activity context)
+    {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(PrefActivity.PREF_LIST_NAME,
+                context.getResources().getString(R.string.pref_default_currency_value));
+
     }
 }

@@ -1,0 +1,24 @@
+<resources>
+        <string name="title_activity_pref">Preferences</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_default_currency">Application Currency</string>
+
+    <!-- Available currencies -->
+
+    <string name="pref_default_currency_value">$</string>
+
+    <string-array name="currencies">
+        <item>US Dollar - $</item>
+        <item>Israeli Shekel - ₪</item>
+    </string-array>
+
+    <string-array name="currenciesvalues">
+        <item>$</item>
+        <item>₪</item>
+    </string-array>
+</resources>

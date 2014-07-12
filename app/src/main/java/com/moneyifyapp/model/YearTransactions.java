@@ -10,6 +10,7 @@ public class YearTransactions
     /********************************************************************/
 
     MonthTransactions[] mYearTransactions;
+    public int mYear;
 
     /********************************************************************/
     /**                          Methods                               **/
@@ -18,9 +19,10 @@ public class YearTransactions
     /**
      *
      */
-    public YearTransactions()
+    public YearTransactions(int year)
     {
         this.mYearTransactions = new MonthTransactions[12];
+        this.mYear = year;
     }
 
     /**

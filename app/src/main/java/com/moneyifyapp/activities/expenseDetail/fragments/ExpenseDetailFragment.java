@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -38,7 +37,6 @@ public class ExpenseDetailFragment extends Fragment
     EditText mExpenseDescription;
     EditText mExpenseValue;
     ImageButton mExpenseIcon;
-    Spinner mCurrencySpinner;
     TextView mExpenseCurrency;
     EditText mExpenseNotes;
     ToggleButton mToggleIsExpense;
@@ -163,7 +161,6 @@ public class ExpenseDetailFragment extends Fragment
             mExpenseValue.setText(mTempExpenseObject.mValue);
             mExpenseCurrency.setText(mTempExpenseObject.mCurrency);
             mExpenseNotes.setText(mTempExpenseObject.mNotes);
-            //TODO for image need to do
             mExpenseIcon.setImageResource(Images.getImageByPosition(mTempExpenseObject.mImageResourceIndex));
             mToggleIsExpense.setChecked(!mTempExpenseObject.mIsExpense);
         }

@@ -42,6 +42,10 @@
             android:name=".activities.expenseDetail.ImagePickerActivity"
             android:label="@string/title_activity_image_picker" >
         </activity>
+        <activity
+            android:name=".activities.preferences.PrefActivity"
+            android:label="@string/title_activity_pref" >
+        </activity>
     </application>
 
 </manifest>

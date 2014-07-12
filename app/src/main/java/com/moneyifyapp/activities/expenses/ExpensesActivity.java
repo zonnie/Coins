@@ -16,18 +16,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.drawer.DrawerItemAdapter;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.activities.login.LoginActivity;
+import com.moneyifyapp.activities.preferences.PrefActivity;
 import com.moneyifyapp.model.Transaction;
+import com.moneyifyapp.model.YearTransactions;
 import com.moneyifyapp.model.enums.Months;
 import com.moneyifyapp.utils.Utils;
 import com.parse.ParseUser;
 
 import java.util.Calendar;
+import java.util.Map;
 
 /**
  *
@@ -65,14 +69,20 @@ public class ExpensesActivity extends Activity
     public static final int EXPENSE_RESULT_OK = 222;
     public static final int EXPENSE_RESULT_CANCELED = 333;
     public static final int REQ_NEW_ITEM = 42;
+    public static final int REQ_PREFS = 532;
+    public static final int RESP_CHANGED = 533;
     public static final int REQ_EDIT_ITEM = 92;
     public static String PARSE_USER_KEY = "user";
 
     // Drawer
     private DrawerLayout mDrawerLayout;
+    private LinearLayout mDrawerTopListLayout;
     private ListView mDrawerList;
     private CharSequence mTitle;
     private ActionBarDrawerToggle mDrawerToggle;
+    private YearTransactions mYearTransactions;
+    private Activity mActivity;
+    private Map<Integer, Fragment> mPageReferenceMap;
 
     /********************************************************************/
     /**                          Methods                               **/
@@ -87,6 +97,9 @@ public class ExpensesActivity extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        mActivity = this;
+
         setContentView(R.layout.activity_expenses);
         mCalender = Calendar.getInstance();
 
@@ -108,13 +121,12 @@ public class ExpensesActivity extends Activity
 
         mTitle = "Stuff to Do";
 
+        mDrawerTopListLayout = (LinearLayout) findViewById(R.id.top_list_layout);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
         // Set the adapter for the list view
         //mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mPlanetTitles));
         mDrawerList.setAdapter(new DrawerItemAdapter(this, R.layout.drawer_list_item));
-        // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         mDrawerToggle = createDrawerToggle();
@@ -125,12 +137,10 @@ public class ExpensesActivity extends Activity
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP);
 
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setHomeButtonEnabled(true);
+        mYearTransactions = new YearTransactions(mCalender.get(Calendar.YEAR));
     }
 
     /**
-     *
      * @return
      */
     private ActionBarDrawerToggle createDrawerToggle()
@@ -191,7 +201,23 @@ public class ExpensesActivity extends Activity
         {
             // Highlight the selected item, update the title, and close the drawer
             mDrawerList.setItemChecked(position, true);
-            mDrawerLayout.closeDrawer(mDrawerList);
+            mDrawerLayout.closeDrawer(mDrawerTopListLayout);
+
+            //TODO This is temp, should be done for every drawer item
+            if (position == 0)
+            {
+                /** Do drawer actions here **/
+                mYearTransactions = new YearTransactions(mCalender.get(Calendar.YEAR) + 1);
+            }
+            if (position == 1)
+            {
+                return;
+            }
+            if (position == 2)
+            {
+                Intent intent = new Intent(mActivity, PrefActivity.class);
+                startActivityForResult(intent, REQ_PREFS);
+            }
         }
     }
 
@@ -233,11 +259,8 @@ public class ExpensesActivity extends Activity
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
-        }
-        else if (mDrawerToggle.onOptionsItemSelected(item))
+        } else if (mDrawerToggle.onOptionsItemSelected(item))
         {
-            // Do stuff
-
             return true;
         }
 
@@ -264,6 +287,21 @@ public class ExpensesActivity extends Activity
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
+        int position = mViewPager.getCurrentItem();
+        updateFragment(position);
+    }
+
+    /**
+     *
+     * Updates the 'id' fragment in the viewpager.
+     *
+     * @param id
+     */
+    private void updateFragment(int id)
+    {
+        ExpenseListFragment frag = (ExpenseListFragment)getFragmentManager().findFragmentByTag("android:switcher:"+R.id.pager+":"+id);
+        frag.initializeExpenses();
+        frag.updateTotalCurrencyToPrefDefault();
     }
 
     /**
@@ -291,7 +329,8 @@ public class ExpensesActivity extends Activity
         {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return ExpenseListFragment.newInstance(position);
+            ExpenseListFragment fragment = ExpenseListFragment.newInstance(position, mYearTransactions);
+            return fragment;
 
         }
 
@@ -316,7 +355,8 @@ public class ExpensesActivity extends Activity
         @Override
         public CharSequence getPageTitle(int position)
         {
-            return Months.getMonthNameByNumber(position + 1) + " " + mCalender.get(Calendar.YEAR);
+            //return Months.getMonthNameByNumber(position + 1) + " " + mCalender.get(Calendar.YEAR);
+            return Months.getMonthNameByNumber(position + 1) + " " + mYearTransactions.mYear;
         }
     }
 }

@@ -5,7 +5,9 @@ import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenseDetail.ExpenseDetailActivity;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
@@ -54,6 +57,7 @@ public class ExpenseListFragment extends ListFragment
     public static final String PAGE_ID_KEY = "frag_id";
     public static final String MONTH_KEY = "month";
     public static final String DAY_KEY = "day";
+    public static final String YEAR_JSON_KEY = "yearJson";
     public static final String YEAR_KEY = "year";
     public static final String PARSE_DATE_KEY = "createdAt";
     public static final String REQ_CODE_KEY = "req";
@@ -64,9 +68,12 @@ public class ExpenseListFragment extends ListFragment
     private OnFragmentInteractionListener mListener;
     private LinearLayout mTotalLayout;
     private TextView mTotalIncome;
+    private TextView mTotalIncomeSign;
     private TextView mTotalExpense;
+    private TextView mTotalExpenseSign;
     private TextView mTotalSavings;
     private TextView mTotalSavingsSign;
+    private SharedPreferences mPreferences;
     private ListView mList;
     public static boolean DONE_LOADING = false;
 
@@ -81,10 +88,13 @@ public class ExpenseListFragment extends ListFragment
      *
      * @return
      */
-    public static ExpenseListFragment newInstance(int pageId)
+    public static ExpenseListFragment newInstance(int pageId, YearTransactions yearTransactions)
     {
+        Gson gson = new Gson();
+        String yearString = gson.toJson(yearTransactions);
         ExpenseListFragment fragment = new ExpenseListFragment();
         Bundle args = new Bundle();
+        args.putString(YEAR_JSON_KEY, yearString);
         args.putInt(PAGE_ID_KEY, pageId);
         fragment.setArguments(args);
         return fragment;
@@ -105,16 +115,14 @@ public class ExpenseListFragment extends ListFragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         setHasOptionsMenu(true);
-
-        if(mYearTransactions == null)
-        {
-            mYearTransactions = new YearTransactions();
-        }
 
         if (getArguments() != null)
         {
             // Create a new month
+            String yearJson = getArguments().getString(YEAR_JSON_KEY);
+            mYearTransactions = new Gson().fromJson(yearJson, YearTransactions.class);
             mYearTransactions.addMonth(getArguments().getInt(PAGE_ID_KEY));
             mTransactions = mYearTransactions.get(getArguments().getInt(PAGE_ID_KEY));
         }
@@ -130,7 +138,7 @@ public class ExpenseListFragment extends ListFragment
     /**
      *
      */
-    private void initializeExpenses()
+    public void initializeExpenses()
     {
         // Init Parse for data storing
         Utils.initializeParse(getActivity());
@@ -138,6 +146,7 @@ public class ExpenseListFragment extends ListFragment
         ParseUser user = ParseUser.getCurrentUser();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("expense");
         query.whereEqualTo(ExpensesActivity.PARSE_USER_KEY, user);
+        query.whereEqualTo(YEAR_KEY, mYearTransactions.mYear);
         query.whereEqualTo(MONTH_KEY, mTransactions.mMonthNumber);
         query.addAscendingOrder(PARSE_DATE_KEY);
         query.findInBackground(new FindCallback<ParseObject>()
@@ -219,9 +228,14 @@ public class ExpenseListFragment extends ListFragment
 
         mTotalLayout = (LinearLayout)view.findViewById(R.id.totalLayout);
         mTotalIncome = (TextView)view.findViewById(R.id.plusAmount);
+        mTotalIncomeSign = (TextView) view.findViewById(R.id.plusCurrency);
         mTotalExpense = (TextView)view.findViewById(R.id.minusAmount);
+        mTotalExpenseSign = (TextView) view.findViewById(R.id.minusCurrency);
         mTotalSavings = (TextView)view.findViewById(R.id.totalAmount);
         mTotalSavingsSign = (TextView)view.findViewById(R.id.totalCurrency);
+
+        // Update total's currency to default
+        updateTotalCurrencyToPrefDefault();
 
         for(Transaction transaction : mTransactions.getItems())
         {
@@ -231,6 +245,15 @@ public class ExpenseListFragment extends ListFragment
         return view;
     }
 
+    /**
+     * Used to update the total's bar currencies from outside
+     */
+    public void updateTotalCurrencyToPrefDefault()
+    {
+        mTotalExpenseSign.setText(Utils.getDefaultCurrency(getActivity()));
+        mTotalIncomeSign.setText(Utils.getDefaultCurrency(getActivity()));
+        mTotalSavingsSign.setText(Utils.getDefaultCurrency(getActivity()));
+    }
 
     /**
      * @param savedState
@@ -244,11 +267,9 @@ public class ExpenseListFragment extends ListFragment
         getListView().setDivider(null);
         getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
         {
-
             @Override
             public boolean onItemLongClick(AdapterView<?> av, View v, int position, long id)
             {
-                int itemPosition;
                 List<Transaction> expenses = mAdapter.getItems();
 
                 for (int i = 0; i < expenses.size(); ++i)
@@ -313,8 +334,8 @@ public class ExpenseListFragment extends ListFragment
         String expenseDescription = mAdapter.getItems().get(position).mDescription;
 
         new AlertDialog.Builder(getActivity())
-                .setMessage("You selected to remove " + "\"" + expenseDescription +
-                        "\"" + ".\nAre you sure you want to remove this expense ?")
+                .setMessage("Are you sure you want to remove " + "\"" + expenseDescription +
+                        "\"" + " ?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener()
                 {
@@ -505,6 +526,7 @@ public class ExpenseListFragment extends ListFragment
         expenseObject.put(ExpensesActivity.PARSE_USER_KEY, user);
         expenseObject.put(MONTH_KEY, mTransactions.mMonthNumber);
         expenseObject.put(DAY_KEY, newTransaction.mTransactionDay);
+        expenseObject.put(YEAR_KEY, mYearTransactions.mYear);
         expenseObject.saveInBackground();
 
     }
@@ -564,6 +586,9 @@ public class ExpenseListFragment extends ListFragment
                         curExpense.getBoolean(Transaction.KEY_TYPE),
                         curExpense.getString(DAY_KEY)
                 );
+
+                // Normalize all currencies according to default
+                transaction.mCurrency = Utils.getDefaultCurrency(getActivity());
 
                 mAdapter.insert(transaction, 0);
                 updateTotals(transaction, false);

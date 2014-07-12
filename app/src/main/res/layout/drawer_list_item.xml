@@ -40,7 +40,7 @@
                 android:drawablePadding="@dimen/big_padding"
                 android:gravity="center"
                 android:text=""
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@android:color/white"
                 />
 
@@ -56,6 +56,16 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/lighter_gray"
                 android:visibility="gone"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/drawable_left_pad"
+                android:layout_marginRight="@dimen/drawable_left_pad"
+                android:background="@color/green"
+                android:id="@+id/expenseItemSeperator"
+                android:fadingEdge="horizontal"
+                android:layout_marginTop="@dimen/drawable_left_pad"/>
 
         </LinearLayout>
     </LinearLayout>
