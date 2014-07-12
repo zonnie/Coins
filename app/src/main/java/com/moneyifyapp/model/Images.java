@@ -86,6 +86,45 @@ public class Images
 
         mImages.add(R.drawable.car);
         mImageCaptions.add("Car");
+
+        mImages.add(R.drawable.bike);
+        mImageCaptions.add("Bike");
+
+        mImages.add(R.drawable.book);
+        mImageCaptions.add("Books");
+
+        mImages.add(R.drawable.buds);
+        mImageCaptions.add("Music");
+
+        mImages.add(R.drawable.chart);
+        mImageCaptions.add("Invesments");
+
+        mImages.add(R.drawable.gift);
+        mImageCaptions.add("Gift");
+
+        mImages.add(R.drawable.insurance);
+        mImageCaptions.add("Insurance");
+
+        mImages.add(R.drawable.junk);
+        mImageCaptions.add("Junkfood");
+
+        mImages.add(R.drawable.lcd);
+        mImageCaptions.add("electronics");
+
+        mImages.add(R.drawable.mp3);
+        mImageCaptions.add("Downloaded Music");
+
+        mImages.add(R.drawable.print);
+        mImageCaptions.add("Printing");
+
+        mImages.add(R.drawable.safe);
+        mImageCaptions.add("Savings");
+
+        mImages.add(R.drawable.saving);
+        mImageCaptions.add("Cash");
+
+        mImages.add(R.drawable.world);
+        mImageCaptions.add("Flights");
     }
 
     /**

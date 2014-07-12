@@ -31,13 +31,12 @@ import com.moneyifyapp.utils.Utils;
 import com.parse.ParseUser;
 
 import java.util.Calendar;
-import java.util.Map;
 
 /**
  *
  */
 public class ExpensesActivity extends Activity
-        implements ExpenseListFragment.OnFragmentInteractionListener
+        implements ExpenseListFragment.OnFragmentInteractionListener, ViewPager.OnPageChangeListener
 {
     /********************************************************************/
     /**                            Members                             **/
@@ -82,7 +81,6 @@ public class ExpensesActivity extends Activity
     private ActionBarDrawerToggle mDrawerToggle;
     private YearTransactions mYearTransactions;
     private Activity mActivity;
-    private Map<Integer, Fragment> mPageReferenceMap;
 
     /********************************************************************/
     /**                          Methods                               **/
@@ -116,6 +114,7 @@ public class ExpensesActivity extends Activity
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setCurrentItem(mCalender.get(Calendar.MONTH));
+        mViewPager.setOnPageChangeListener(this);
 
         /** Drawer **/
 
@@ -190,6 +189,32 @@ public class ExpensesActivity extends Activity
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
+
+    /**
+     *
+     * @param position
+     * @param positionOffset
+     * @param positionOffsetPixels
+     */
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels){}
+
+    /**
+     *
+     * @param position
+     */
+    @Override
+    public void onPageSelected(int position)
+    {
+        updateFragmentOnCurrencyPrefChange(position);
+    }
+
+    /**
+     *
+     * @param state
+     */
+    @Override
+    public void onPageScrollStateChanged(int state){}
 
     /**
      *
@@ -288,7 +313,7 @@ public class ExpensesActivity extends Activity
     {
         super.onActivityResult(requestCode, resultCode, data);
         int position = mViewPager.getCurrentItem();
-        updateFragment(position);
+        updateFragmentOnCurrencyPrefChange(position);
     }
 
     /**
@@ -297,12 +322,15 @@ public class ExpensesActivity extends Activity
      *
      * @param id
      */
-    private void updateFragment(int id)
+    private void updateFragmentOnCurrencyPrefChange(int id)
     {
+        //TODO : This is will not be future-proof
         ExpenseListFragment frag = (ExpenseListFragment)getFragmentManager().findFragmentByTag("android:switcher:"+R.id.pager+":"+id);
-        frag.initializeExpenses();
+        frag.updateFragmentCurrency();
         frag.updateTotalCurrencyToPrefDefault();
     }
+
+
 
     /**
      * Inner class

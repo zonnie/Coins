@@ -115,6 +115,9 @@ public class ExpenseListFragment extends ListFragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        // Init Parse for data storing
+        Utils.initializeParse(getActivity());
+
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         setHasOptionsMenu(true);
 
@@ -138,11 +141,37 @@ public class ExpenseListFragment extends ListFragment
     /**
      *
      */
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+    }
+
+    /**
+     *
+     * Updates the fragment list item's currency if a pref change was done
+     *
+     */
+    public void updateFragmentCurrency()
+    {
+        // Normalize all currencies according to default only if different
+        if(!Utils.getDefaultCurrency(getActivity()).equals(mTransactions.getItems().get(0)))
+        {
+
+            for (int i = 0; i < mTransactions.getItems().size(); ++i)
+            {
+                mTransactions.getItems().get(i).mCurrency = Utils.getDefaultCurrency(getActivity());
+            }
+
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    /**
+     *
+     */
     public void initializeExpenses()
     {
-        // Init Parse for data storing
-        Utils.initializeParse(getActivity());
-
         ParseUser user = ParseUser.getCurrentUser();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("expense");
         query.whereEqualTo(ExpensesActivity.PARSE_USER_KEY, user);
