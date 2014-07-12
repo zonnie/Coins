@@ -96,6 +96,8 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         return getRegularView(position, view);
     }
 
+
+
     /**
      *
      * @param position

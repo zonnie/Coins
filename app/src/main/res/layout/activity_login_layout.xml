@@ -69,6 +69,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
+                android:imeActionId="@+id/next"
+                android:imeOptions="actionNext"
                 android:maxLines="1"
                 android:drawableLeft="@drawable/email"
                 android:drawablePadding="@dimen/drawable_left_pad"

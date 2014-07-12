@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,6 +15,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -38,7 +41,9 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.UUID;
 
 /**
@@ -76,6 +81,7 @@ public class ExpenseListFragment extends ListFragment
     private SharedPreferences mPreferences;
     private ListView mList;
     public static boolean DONE_LOADING = false;
+    private Queue<Integer> mRemoveQueue;
 
     /********************************************************************/
     /**                          Methods                               **/
@@ -119,6 +125,7 @@ public class ExpenseListFragment extends ListFragment
         Utils.initializeParse(getActivity());
 
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mRemoveQueue = new LinkedList<Integer>();
         setHasOptionsMenu(true);
 
         if (getArguments() != null)
@@ -239,7 +246,7 @@ public class ExpenseListFragment extends ListFragment
                     buildExpenseListFromParse(expenseList);
                 } else
                 {
-                    Toast toast = Toast.makeText(getActivity(), "We have some DB issues... :(", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getActivity(), "We are having some issues, sorry", Toast.LENGTH_LONG);
                     toast.show();
                 }
             }
@@ -267,7 +274,7 @@ public class ExpenseListFragment extends ListFragment
                     buildExpenseListFromParse(expenseList);
                 } else
                 {
-                    Toast toast = Toast.makeText(getActivity(), "We have some DB issues... :(", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getActivity(), "We are having some issues, sorry", Toast.LENGTH_LONG);
                     toast.show();
                 }
             }
@@ -393,7 +400,6 @@ public class ExpenseListFragment extends ListFragment
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery(Transaction.CLASS_NAME);
         query.whereEqualTo(Transaction.KEY_ID, expenseToRemove.mId);
-
         query.findInBackground(new FindCallback<ParseObject>()
         {
             @Override
@@ -407,13 +413,27 @@ public class ExpenseListFragment extends ListFragment
                         @Override
                         public void done(ParseException e)
                         {
-                            // TODO Auto-generated method stub
                             if (e == null)
                             {
-                                Toast.makeText(getActivity(), "DEBUG : Deleted Successfully!", Toast.LENGTH_LONG).show();
-                            } else
+                                int removeId = mRemoveQueue.peek();
+                                // Remove the next item set in the queue
+                                Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_out);
+                                getListView().getChildAt(removeId).startAnimation(anim);
+
+                                new Handler().postDelayed(new Runnable()
+                                {
+                                    public void run()
+                                    {
+                                        mAdapter.remove(mRemoveQueue.remove());
+                                    }
+
+                                }, anim.getDuration());
+                            }
+                            else
                             {
+                                // Remove the id from queue w/o removing the item
                                 Toast.makeText(getActivity(), "Something went wrong :(" + e.toString(), Toast.LENGTH_LONG).show();
+                                mRemoveQueue.remove();
                             }
 
                         }
@@ -456,9 +476,10 @@ public class ExpenseListFragment extends ListFragment
      */
     private void removeItemFromList(int position)
     {
+        // Put the next ID to be removed async from the list
+        mRemoveQueue.add(position);
         updateTotals(mAdapter.getItem(position), true);
         removeItemWithId(position);
-        mAdapter.remove(position);
     }
 
     /**

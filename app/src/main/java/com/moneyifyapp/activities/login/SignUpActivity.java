@@ -3,6 +3,7 @@ package com.moneyifyapp.activities.login;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +15,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-public class SignUpActivity extends Activity
+public class SignUpActivity extends Activity implements View.OnClickListener
 {
 
     /********************************************************************/
@@ -25,6 +26,7 @@ public class SignUpActivity extends Activity
 
     EditText mUserEditText;
     EditText mPassEditText;
+    EditText mPassRepeatEditText;
 
     /********************************************************************/
     /**                          Methods                               **/
@@ -46,7 +48,12 @@ public class SignUpActivity extends Activity
 
         mUserEditText = (EditText) findViewById(R.id.usernameEditText);
         mPassEditText = (EditText) findViewById(R.id.passEditText);
+        mPassRepeatEditText = (EditText) findViewById(R.id.passVerifyEditText);
         Button signUpButton = (Button) findViewById(R.id.confirm_signup);
+
+        mUserEditText.setOnClickListener(this);
+        mPassEditText.setOnClickListener(this);
+        mPassRepeatEditText.setOnClickListener(this);
 
         // Bind sign up button.
         signUpButton.setOnClickListener(new View.OnClickListener()
@@ -54,33 +61,83 @@ public class SignUpActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                if (validate())
+                if (isSignUpValid())
                 {
                     signUp();
                 }
             }
         });
 
-
     }
 
     /**
-     * Validate the sign up info.
-     *
-     * @return 'true' if valid, 'false' otherwise.
+     * @param v
      */
-    private boolean validate()
+    @Override
+    public void onClick(View v)
     {
-        boolean valid = true;
+        ((EditText) v).setError(null);
+    }
 
-        if (mUserEditText.getText().length() <= 0
-                || mPassEditText.getText().length() <= 0
-                || mPassEditText.getText().length() < 4)
+    /**
+     * Attempts to sign in or register the account specified by the login form.
+     * If there are form errors (invalid email, missing fields, etc.), the
+     * errors are presented and no actual login attempt is made.
+     */
+    public boolean isSignUpValid()
+    {
+        // Reset errors.
+        mUserEditText.setError(null);
+        mPassEditText.setError(null);
+        mPassRepeatEditText.setError(null);
+
+        // Store values at the time of the login attempt.
+        String email = mUserEditText.getText().toString();
+        String password = mPassEditText.getText().toString();
+        String verifyPass = mPassRepeatEditText.getText().toString();
+
+        boolean cancel = false;
+        View focusView = null;
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(email))
         {
-            valid = false;
+            mUserEditText.setError(getString(R.string.error_field_required));
+            focusView = mUserEditText;
+            cancel = true;
+        }
+        else if (!Utils.isEmailValid(email))
+        {
+            mUserEditText.setError(getString(R.string.error_invalid_email));
+            focusView = mUserEditText;
+            cancel = true;
+        }
+        // Check for a valid password, if the user entered one.
+        else if (TextUtils.isEmpty(password) || !Utils.isPasswordValid(password))
+        {
+            mPassEditText.setError(getString(R.string.error_invalid_password));
+            focusView = mPassEditText;
+            cancel = true;
+        }
+        // Check for a verified paassword matching
+        else if (TextUtils.isEmpty(password) || !(password.equals(verifyPass)))
+        {
+            mPassRepeatEditText.setError(getString(R.string.error_password_not_match));
+            focusView = mPassRepeatEditText;
+            cancel = true;
         }
 
-        return valid;
+        if (cancel)
+        {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     /**

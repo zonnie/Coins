@@ -52,6 +52,31 @@ public class YearTransactions
 
     /**
      *
+     * @param month
+     * @param transactions
+     */
+    public void addTransactionToMonth(int month, Transaction transactions)
+    {
+        if(this.mYearTransactions[month] == null)
+        {
+            addMonth(month);
+        }
+
+        this.mYearTransactions[month].mTransactions.add(transactions);
+    }
+
+    /**
+     *
+     * @param month
+     * @param transactions
+     */
+    public void setMonthTransactions(int month, MonthTransactions transactions)
+    {
+        this.mYearTransactions[month] = transactions;
+    }
+
+    /**
+     *
      */
     public int size()
     {

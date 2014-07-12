@@ -12,13 +12,25 @@ import com.moneyifyapp.R;
 import com.moneyifyapp.activities.preferences.PrefActivity;
 import com.parse.Parse;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by Zonnie_Work on 01/07/2014.
  */
 public class Utils
 {
+    /********************************************************************/
+    /**                          Members                               **/
+    /********************************************************************/
 
     public static String state[] = {"$", "₪"};
+    private static final String mEmailFormat = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+
+    /********************************************************************/
+    /**                          Methods                               **/
+    /********************************************************************/
+
 
     /**
      *
@@ -99,5 +111,38 @@ public class Utils
         return PreferenceManager.getDefaultSharedPreferences(context).getString(PrefActivity.PREF_LIST_NAME,
                 context.getResources().getString(R.string.pref_default_currency_value));
 
+    }
+
+    /**
+     *
+     * Validates the email's format
+     *
+     * @param email
+     * @return
+     */
+    public static boolean isEmailValid(String email)
+    {
+        boolean isValid = false;
+
+        String expression = mEmailFormat;
+        CharSequence inputStr = email;
+
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+        if (matcher.matches())
+        {
+            isValid = true;
+        }
+        return isValid;
+    }
+
+    /**
+     * @param password
+     * @return
+     */
+    public static boolean isPasswordValid(String password)
+    {
+        // Nothing fancy
+        return password.length() >= 4;
     }
 }

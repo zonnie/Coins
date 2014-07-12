@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -13,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,7 +31,7 @@ import com.parse.ParseUser;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends Activity
+public class LoginActivity extends Activity implements OnClickListener
 {
     /********************************************************************/
     /**                          Members                               **/
@@ -70,13 +72,18 @@ public class LoginActivity extends Activity
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
 
+        mEmailView.setOnClickListener(this);
+        mPasswordView.setOnClickListener(this);
+
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener()
         {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent)
             {
-                if (id == R.id.login || id == EditorInfo.IME_NULL)
+                if ((id == R.id.login) || (id == EditorInfo.IME_NULL))
                 {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(mPasswordView.getWindowToken(), 0);
                     attemptLogin();
                     return true;
                 }
@@ -113,6 +120,16 @@ public class LoginActivity extends Activity
     }
 
     /**
+     *
+     * @param v
+     */
+    @Override
+    public void onClick(View v)
+    {
+        ((EditText)v).setError(null);
+    }
+
+    /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
@@ -131,24 +148,24 @@ public class LoginActivity extends Activity
         View focusView = null;
 
 
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password))
-        {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
-        }
-
         // Check for a valid email address.
         if (TextUtils.isEmpty(email))
         {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
-        } else if (!isEmailValid(email))
+        }
+        else if (!Utils.isEmailValid(email))
         {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
+            cancel = true;
+        }
+        // Check for a valid password, if the user entered one.
+        else if (TextUtils.isEmpty(password) || !Utils.isPasswordValid(password))
+        {
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
             cancel = true;
         }
 
@@ -157,7 +174,8 @@ public class LoginActivity extends Activity
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
-        } else
+        }
+        else
         {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
@@ -190,26 +208,6 @@ public class LoginActivity extends Activity
                     }
                 }
         );
-    }
-
-    /**
-     * @param email
-     * @return
-     */
-    private boolean isEmailValid(String email)
-    {
-        // Validates an email simply
-        return email.contains("@");
-    }
-
-    /**
-     * @param password
-     * @return
-     */
-    private boolean isPasswordValid(String password)
-    {
-        // Nothing fancy
-        return password.length() >= 4;
     }
 
     /**
