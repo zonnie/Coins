@@ -154,16 +154,19 @@ public class ExpenseListFragment extends ListFragment
      */
     public void updateFragmentCurrency()
     {
-        // Normalize all currencies according to default only if different
-        if(!Utils.getDefaultCurrency(getActivity()).equals(mTransactions.getItems().get(0)))
+        if(mTransactions.getItems().size() != 0)
         {
-
-            for (int i = 0; i < mTransactions.getItems().size(); ++i)
+            // Normalize all currencies according to default only if different
+            if (!Utils.getDefaultCurrency(getActivity()).equals(mTransactions.getItems().get(0)))
             {
-                mTransactions.getItems().get(i).mCurrency = Utils.getDefaultCurrency(getActivity());
-            }
 
-            mAdapter.notifyDataSetChanged();
+                for (int i = 0; i < mTransactions.getItems().size(); ++i)
+                {
+                    mTransactions.getItems().get(i).mCurrency = Utils.getDefaultCurrency(getActivity());
+                }
+
+                mAdapter.notifyDataSetChanged();
+            }
         }
     }
 
