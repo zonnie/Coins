@@ -112,11 +112,11 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             // Update ht look of the the view accordingly
             if (mTransactions.getItems().get(position).mIsExpense == false)
             {
-                updateViewToIncome(view);
+                updateViewToExpense(view, R.color.income_color);
             }
             else
             {
-                updateViewToExpense(view);
+                updateViewToExpense(view, R.color.expense_color);
             }
 
             mExpenseDescription = (TextView) view.findViewById(R.id.expenseDesc);
@@ -222,32 +222,18 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     }
 
     /**
-     * Updates the item to be income item.
+     *
+     * Updates the item to be expense/income item.
      *
      * @param view
      */
-    private void updateViewToIncome(View view)
+    private void updateViewToExpense(View view, int colorId)
     {
         TextView amount = (TextView)view.findViewById(R.id.expenseValue);
-        amount.setTextColor(view.getResources().getColor(android.R.color.holo_green_dark));
+        amount.setTextColor(view.getResources().getColor(colorId));
 
         TextView currency = (TextView)view.findViewById(R.id.currency);
-        currency.setTextColor(view.getResources().getColor(android.R.color.holo_green_dark));
-    }
-
-    /**
-     *
-     * Updates the item to be expense item.
-     *
-     * @param view
-     */
-    private void updateViewToExpense(View view)
-    {
-        TextView amount = (TextView)view.findViewById(R.id.expenseValue);
-        amount.setTextColor(view.getResources().getColor(android.R.color.black));
-
-        TextView currency = (TextView)view.findViewById(R.id.currency);
-        currency.setTextColor(view.getResources().getColor(android.R.color.black));
+        currency.setTextColor(view.getResources().getColor(colorId));
 
     }
 
@@ -345,14 +331,14 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         {
             if(mMyView != null)
             {
-                updateViewToIncome(mMyView);
+                updateViewToExpense(mMyView, R.color.expense_color);
             }
         }
         else if(!expense.mIsExpense && changeTextColor)
         {
             if(mMyView != null)
             {
-                updateViewToExpense(mMyView);
+                updateViewToExpense(mMyView, R.color.income_color);
             }
         }
     }
