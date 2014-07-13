@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,6 +49,8 @@ public class ExpenseDetailFragment extends Fragment
     boolean mIsEdit;
     private int mCurrentImage;
     public static final String EXPENSE_EDIT_KEY = "edit";
+    private AlphaAnimation mAlphaDown;
+    private AlphaAnimation mAlphaUp;
 
 
     /********************************************************************/
@@ -101,6 +104,15 @@ public class ExpenseDetailFragment extends Fragment
             mTempExpenseObject = new Transaction("", description, value, currency, note, image, isExpense);
 
             mCurrentImage = image;
+
+            mAlphaDown = new AlphaAnimation(1.0f, 0.3f);
+            mAlphaDown.setDuration(500);
+            mAlphaDown.setFillAfter(true);
+
+            mAlphaUp = new AlphaAnimation(0.3f, 1.0f);
+            mAlphaUp.setFillAfter(true);
+            mAlphaUp.setDuration(500);
+
         }
     }
 
@@ -188,6 +200,7 @@ public class ExpenseDetailFragment extends Fragment
                 Intent intent = new Intent(getActivity(), ImagePickerActivity.class);
                 startActivityForResult(intent, ExpensesActivity.IMAGE_PICK_REQ);
                 getActivity().overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                mExpenseIcon.startAnimation(mAlphaDown);
             }
         });
 
@@ -215,12 +228,15 @@ public class ExpenseDetailFragment extends Fragment
     {
         super.onActivityResult(requestCode, resultCode, data);
 
+        mExpenseIcon.startAnimation(mAlphaUp);
+
         if (resultCode == ExpensesActivity.IMAGE_PICK_OK)
         {
 
             mCurrentImage = data.getExtras().getInt(Transaction.KEY_IMAGE_NAME);
             mExpenseIcon.setImageResource(Images.getImageByPosition(mCurrentImage));
-        } else if (resultCode == ExpensesActivity.IMAGE_PICK_CANCEL)
+        }
+        else if (resultCode == ExpensesActivity.IMAGE_PICK_CANCEL)
         {
             //Nothing yet
         }

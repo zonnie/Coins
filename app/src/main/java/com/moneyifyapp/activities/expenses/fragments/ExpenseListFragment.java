@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -72,17 +71,18 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
     private ExpenseItemAdapter mAdapter;
     private OnFragmentInteractionListener mListener;
     private LinearLayout mTotalLayout;
+    private LinearLayout mItemLayout;
     private TextView mTotalIncome;
     private TextView mTotalIncomeSign;
     private TextView mTotalExpense;
     private TextView mTotalExpenseSign;
     private TextView mTotalSavings;
     private TextView mTotalSavingsSign;
-    private ImageButton mRemoveItemButton;
     private SharedPreferences mPreferences;
     private ListView mList;
     public static boolean DONE_LOADING = false;
     private Queue<Integer> mRemoveQueue;
+
 
     /********************************************************************/
     /**                          Methods                               **/

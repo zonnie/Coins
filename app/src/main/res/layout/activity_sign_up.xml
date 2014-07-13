@@ -78,7 +78,7 @@
             android:padding="10dp"
             android:layout_margin="4dp"
             android:textColor="@android:color/white"
-            android:background="@drawable/new_button"
+            android:background="@drawable/stanard_button_drawable"
             android:text="@string/action_sing_up"
             />
     </LinearLayout>
