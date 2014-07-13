@@ -68,6 +68,7 @@
             android:hint="@string/add_item_description_hint"
             android:maxLength="@integer/max_desc_len"
             android:singleLine="true"
+            android:maxLines="1"
             android:textAppearance="?android:attr/textAppearanceMedium"
             />
 
@@ -85,8 +86,12 @@
                 android:layout_weight="9"
                 android:drawableLeft="@drawable/sum"
                 android:drawablePadding="@dimen/expense_drawable_left_pad"
+                android:imeActionId="@+id/sum_action"
+                android:imeActionLabel="@string/item_details_submit"
+                android:imeOptions="actionDone"
                 android:hint="@string/item_value_hint"
                 android:inputType="numberDecimal"
+                android:maxLines="1"
                 android:singleLine="true"
                 />
 
@@ -111,7 +116,11 @@
             android:drawableLeft="@drawable/notes_2"
             android:drawablePadding="@dimen/expense_drawable_left_pad"
             android:hint="Notes..."
+            android:imeActionId="@+id/note_action"
+            android:imeActionLabel="@string/item_details_submit"
+            android:imeOptions="actionDone"
             android:inputType="textMultiLine"
+            android:maxLines="2"
             android:maxLength="@integer/max_note_len"
             android:textAppearance="?android:attr/textAppearanceSmall"
             />

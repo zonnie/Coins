@@ -17,8 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -49,7 +49,7 @@ import java.util.UUID;
 /**
  * A fragment representing a list of Items.
  */
-public class ExpenseListFragment extends ListFragment
+public class ExpenseListFragment extends ListFragment implements ExpenseItemAdapter.ListItemHandler
 {
 
     /********************************************************************/
@@ -78,6 +78,7 @@ public class ExpenseListFragment extends ListFragment
     private TextView mTotalExpenseSign;
     private TextView mTotalSavings;
     private TextView mTotalSavingsSign;
+    private ImageButton mRemoveItemButton;
     private SharedPreferences mPreferences;
     private ListView mList;
     public static boolean DONE_LOADING = false;
@@ -91,7 +92,6 @@ public class ExpenseListFragment extends ListFragment
      * Factory to pass some data for different fragments creation.
      *
      * @param pageId
-     *
      * @return
      */
     public static ExpenseListFragment newInstance(int pageId, YearTransactions yearTransactions)
@@ -137,7 +137,7 @@ public class ExpenseListFragment extends ListFragment
             mTransactions = mYearTransactions.get(getArguments().getInt(PAGE_ID_KEY));
         }
 
-        mAdapter = new ExpenseItemAdapter(getActivity(), R.layout.adapter_expense_item, mTransactions);
+        mAdapter = new ExpenseItemAdapter(getActivity(), R.layout.adapter_expense_item, mTransactions, this);
 
         // Init Parse for data storing
         initializeExpenses();
@@ -170,13 +170,13 @@ public class ExpenseListFragment extends ListFragment
             }
         });
 
-        mTotalLayout = (LinearLayout)view.findViewById(R.id.totalLayout);
-        mTotalIncome = (TextView)view.findViewById(R.id.plusAmount);
+        mTotalLayout = (LinearLayout) view.findViewById(R.id.totalLayout);
+        mTotalIncome = (TextView) view.findViewById(R.id.plusAmount);
         mTotalIncomeSign = (TextView) view.findViewById(R.id.plusCurrency);
-        mTotalExpense = (TextView)view.findViewById(R.id.minusAmount);
+        mTotalExpense = (TextView) view.findViewById(R.id.minusAmount);
         mTotalExpenseSign = (TextView) view.findViewById(R.id.minusCurrency);
-        mTotalSavings = (TextView)view.findViewById(R.id.totalAmount);
-        mTotalSavingsSign = (TextView)view.findViewById(R.id.totalCurrency);
+        mTotalSavings = (TextView) view.findViewById(R.id.totalAmount);
+        mTotalSavingsSign = (TextView) view.findViewById(R.id.totalCurrency);
 
         // Clear the total bar's data
         mTotalSavings.setText(String.valueOf(0));
@@ -186,7 +186,7 @@ public class ExpenseListFragment extends ListFragment
         // Update total's currency to default
         updateTotalCurrencyToPrefDefault();
 
-        for(Transaction transaction : mTransactions.getItems())
+        for (Transaction transaction : mTransactions.getItems())
         {
             updateTotals(transaction, false);
         }
@@ -204,13 +204,11 @@ public class ExpenseListFragment extends ListFragment
     }
 
     /**
-     *
      * Updates the fragment list item's currency if a pref change was done
-     *
      */
     public void updateFragmentCurrency()
     {
-        if(mTransactions.getItems().size() != 0)
+        if (mTransactions.getItems().size() != 0)
         {
             // Normalize all currencies according to default only if different
             if (!Utils.getDefaultCurrency(getActivity()).equals(mTransactions.getItems().get(0)))
@@ -338,8 +336,7 @@ public class ExpenseListFragment extends ListFragment
         {
             refreshFromDatabase();
             Toast.makeText(getActivity(), "Refreshing...", Toast.LENGTH_SHORT);
-        }
-        else if(id == R.id.add_expense)
+        } else if (id == R.id.add_expense)
         {
             Intent intent = new Intent(getActivity(), ExpenseDetailActivity.class);
             intent.putExtra(REQ_CODE_KEY, ExpensesActivity.REQ_NEW_ITEM);
@@ -369,24 +366,6 @@ public class ExpenseListFragment extends ListFragment
 
         //Remove dividers
         getListView().setDivider(null);
-        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
-        {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> av, View v, int position, long id)
-            {
-                List<Transaction> expenses = mAdapter.getItems();
-
-                for (int i = 0; i < expenses.size(); ++i)
-                {
-                    if (i == position)
-                    {
-                        verifyRemoveDialog(position);
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
     }
 
     /**
@@ -430,8 +409,7 @@ public class ExpenseListFragment extends ListFragment
                                     }
 
                                 }, anim.getDuration());
-                            }
-                            else
+                            } else
                             {
                                 // Remove the id from queue w/o removing the item
                                 Toast.makeText(getActivity(), "Something went wrong :(" + e.toString(), Toast.LENGTH_LONG).show();
@@ -453,8 +431,7 @@ public class ExpenseListFragment extends ListFragment
         String expenseDescription = mAdapter.getItems().get(position).mDescription;
 
         new AlertDialog.Builder(getActivity())
-                .setMessage("Are you sure you want to remove " + "\"" + expenseDescription +
-                        "\"" + " ?")
+                .setMessage("Are you sure you want to remove this?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener()
                 {
@@ -523,7 +500,15 @@ public class ExpenseListFragment extends ListFragment
     public void onListItemClick(ListView l, View v, int position, long id)
     {
         super.onListItemClick(l, v, position, id);
+        listItemClicked(position);
+    }
 
+    /**
+     *
+     * @param position
+     */
+    public void listItemClicked(int position)
+    {
         if (null != mListener)
         {
             mListener.expenseItemClickedInFragment(mAdapter.getItems().get(position));
@@ -577,8 +562,7 @@ public class ExpenseListFragment extends ListFragment
                     Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
                     getListView().getChildAt(0).startAnimation(anim);
 
-                }
-                else if (requestCode == ExpensesActivity.REQ_EDIT_ITEM)
+                } else if (requestCode == ExpensesActivity.REQ_EDIT_ITEM)
                 {
                     // Remove the old transaction from the totals
                     updateTotals(mTransactions.getItems().get(position), true);
@@ -620,11 +604,9 @@ public class ExpenseListFragment extends ListFragment
     }
 
     /**
-     *
      * Add a transaction w/o creating a new instance and not saving in DB.
      *
      * @param newTransaction
-     *
      */
     public void addNewTransaction(Transaction newTransaction)
     {
@@ -709,7 +691,6 @@ public class ExpenseListFragment extends ListFragment
     }
 
     /**
-     *
      * @param newTransaction
      * @param isRemoval
      */
@@ -721,16 +702,15 @@ public class ExpenseListFragment extends ListFragment
         int curTransValue = Integer.valueOf(newTransaction.mValue);
 
         // Collect info
-        if(isExpense)
+        if (isExpense)
         {
-            if(isRemoval)
+            if (isRemoval)
                 initExpense -= curTransValue;
             else
                 initExpense += curTransValue;
-        }
-        else
+        } else
         {
-            if(isRemoval)
+            if (isRemoval)
                 initIncome -= curTransValue;
             else
                 initIncome += curTransValue;
@@ -741,12 +721,11 @@ public class ExpenseListFragment extends ListFragment
         int color;
 
         // Set the total and it's colors
-        if(initTotal < 0 )
+        if (initTotal < 0)
         {
             color = getResources().getColor(R.color.expense_color);
             initTotal = (-initTotal);
-        }
-        else
+        } else
         {
             color = getResources().getColor(R.color.income_color);
         }
@@ -767,5 +746,37 @@ public class ExpenseListFragment extends ListFragment
         mTotalSavings.setText(String.valueOf(0));
         mTotalIncome.setText(String.valueOf(0));
         mTotalExpense.setText(String.valueOf(0));
+    }
+
+    /**
+     *
+     * Callback to be called by contained adapter
+     *
+     * @param view
+     */
+    @Override
+    public void removeFromFragmentList(View view)
+    {
+        final int position = getListView().getPositionForView((LinearLayout) view.getParent().getParent());
+        if (position >= 0)
+        {
+            verifyRemoveDialog(position);
+        }
+    }
+
+    /**
+     *
+     * Callback to be called by contained adapter
+     *
+     * @param view
+     */
+    @Override
+    public void showItem(View view)
+    {
+        final int position = getListView().getPositionForView((LinearLayout) view.getParent().getParent());
+        if (position >= 0)
+        {
+            listItemClicked(position);
+        }
     }
 }

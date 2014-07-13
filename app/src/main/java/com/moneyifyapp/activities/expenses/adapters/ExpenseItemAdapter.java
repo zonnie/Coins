@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
      * ****************************************************************
      */
 
+    private ListItemHandler mListener;
     private TextView mExpenseDescription;
     private TextView mExpenseValue;
     private TextView mExpenseCurrency;
@@ -37,6 +39,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private TextView mExpenseDayOfMonth;
     private int mLayoutResourceId;
     private MonthTransactions mTransactions;
+    private Button mRemoveItemButton;
     private ImageView mImage;
     private int mItemsLoaded;
     private View mMyView;
@@ -53,9 +56,10 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
      * @param context
      * @param resource
      */
-    public ExpenseItemAdapter(Context context, int resource, MonthTransactions expenses)
+    public ExpenseItemAdapter(Context context, int resource, MonthTransactions expenses, ListItemHandler listener)
     {
         super(context, resource, expenses.getItems());
+        mListener = listener;
         mTransactions = expenses;
         mLayoutResourceId = resource;
         mItemsLoaded = 0;
@@ -96,8 +100,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         return getRegularView(position, view);
     }
 
-
-
     /**
      *
      * @param position
@@ -122,11 +124,28 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             }
 
             mExpenseDescription = (TextView) view.findViewById(R.id.expenseDesc);
+            mExpenseDescription.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    mListener.showItem(v);
+                }
+            });
             mImage = (ImageView)view.findViewById(R.id.image_container);
             mExpenseValue = (TextView) view.findViewById(R.id.expenseValue);
             mExpenseCurrency = (TextView) view.findViewById(R.id.currency);
             mExpenseNote = (TextView) view.findViewById(R.id.expenseItemNote);
             mExpenseDayOfMonth = (TextView)view.findViewById(R.id.expense_item_date_text);
+            mRemoveItemButton = (Button) view.findViewById(R.id.expenseRemove);
+            mRemoveItemButton.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    mListener.removeFromFragmentList(v);
+                }
+            });
 
             /**     Build the view **/
 
@@ -169,9 +188,9 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         {
             String date = currentTransactionView.mTransactionDay;
 
-            if(date.endsWith("1")){date += "st";}
-            else if(date.endsWith("2")){date += "nd";}
-            else if(date.endsWith("3")){date += "rd";}
+            if(date.endsWith("1") && !date.equals("11")){date += "st";}
+            else if(date.endsWith("2") && !date.equals("12")){date += "nd";}
+            else if(date.endsWith("3") && !date.equals("13")){date += "rd";}
             else {date += "th";}
 
             mExpenseDayOfMonth.setText(date);
@@ -354,9 +373,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     public void insert(Transaction transaction, int position)
     {
         super.insert(transaction, position);
-        //Animation animation = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in);
-        //View view = getView(position, null, null);
-        //view.startAnimation(animation);
     }
 
     /**
@@ -369,5 +385,14 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         Drawable img = getContext().getResources().getDrawable(resourceIndex);
         img.setBounds( 0, 0, PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
         mExpenseDescription.setCompoundDrawables(img, null, null, null);
+    }
+
+    /**
+     * Interface to communicate with the containing fragment
+     */
+    public interface ListItemHandler
+    {
+        public void removeFromFragmentList(View view);
+        public void showItem(View view);
     }
 }

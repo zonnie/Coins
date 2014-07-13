@@ -2,11 +2,14 @@ package com.moneyifyapp.activities.expenseDetail.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -119,9 +122,43 @@ public class ExpenseDetailFragment extends Fragment
         mExpenseDescription = (EditText) view.findViewById(R.id.addExpenseDescription);
         mExpenseCurrency = (TextView) view.findViewById(R.id.addExpenseCurrency);
         mExpenseValue = (EditText) view.findViewById(R.id.addExpenseSum);
+        mExpenseValue.setOnEditorActionListener(new TextView.OnEditorActionListener()
+        {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+            {
+                boolean handled = false;
+                if (actionId == R.id.sum_action)
+                {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(mExpenseValue.getWindowToken(), 0);
+                    onSumbitPressed();
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
+
         //TODO need to rectify this
-        mExpenseIcon = (ImageButton)view.findViewById(R.id.addExpenseImage);
+        mExpenseIcon = (ImageButton) view.findViewById(R.id.addExpenseImage);
         mExpenseNotes = (EditText) view.findViewById(R.id.addExpenseNotes);
+        mExpenseNotes.setOnEditorActionListener(new TextView.OnEditorActionListener()
+        {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+            {
+                boolean handled = false;
+                if (actionId == R.id.note_action)
+                {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(mExpenseNotes.getWindowToken(), 0);
+                    onSumbitPressed();
+                    handled = true;
+                }
+                return handled;
+            }
+        });
         mToggleIsExpense = (ToggleButton) view.findViewById(R.id.isExpenseToggle);
 
         // Bind listener
@@ -169,7 +206,6 @@ public class ExpenseDetailFragment extends Fragment
     }
 
     /**
-     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -179,13 +215,12 @@ public class ExpenseDetailFragment extends Fragment
     {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == ExpensesActivity.IMAGE_PICK_OK)
+        if (resultCode == ExpensesActivity.IMAGE_PICK_OK)
         {
 
             mCurrentImage = data.getExtras().getInt(Transaction.KEY_IMAGE_NAME);
             mExpenseIcon.setImageResource(Images.getImageByPosition(mCurrentImage));
-        }
-        else if(resultCode == ExpensesActivity.IMAGE_PICK_CANCEL)
+        } else if (resultCode == ExpensesActivity.IMAGE_PICK_CANCEL)
         {
             //Nothing yet
         }
