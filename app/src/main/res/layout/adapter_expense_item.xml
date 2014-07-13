@@ -44,24 +44,8 @@
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="right">
+            >
 
-            <Button
-                android:layout_width="30dp"
-                android:id="@+id/expenseRemove"
-                android:text="X"
-                android:src="@drawable/rem"
-                android:background="@drawable/date_positit"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_marginRight="@dimen/drawable_left_pad"
-                android:layout_marginTop="@dimen/expense_card_margin"
-                android:textColor="@android:color/darker_gray"
-                android:paddingLeft="@dimen/drawable_left_pad"
-                android:paddingRight="@dimen/drawable_left_pad"
-                android:paddingTop="@dimen/padding_start_currency"
-                android:paddingBottom="@dimen/padding_start_currency"
-                android:layout_height="30dp"
-                android:layout_gravity="center_vertical"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -149,21 +133,46 @@
             android:fadingEdge="horizontal"
             android:layout_marginTop="@dimen/drawable_left_pad"/>
 
-        <TextView
-            android:id="@+id/expenseItemNote"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingEnd="@dimen/activity_vertical_margin"
-            android:paddingStart="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/drawable_left_pad"
-            android:paddingBottom="@dimen/drawable_left_pad"
-            android:text="@string/enter_note_hint"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@android:color/darker_gray"
-            />
+            android:layout_height="match_parent"
+            android:weightSum="30">
 
-            </LinearLayout>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/expenseItemNote"
+                android:gravity="center"
+                android:paddingEnd="@dimen/activity_vertical_margin"
+                android:paddingStart="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/drawable_left_pad"
+                android:paddingBottom="@dimen/drawable_left_pad"
+                android:layout_marginBottom="@dimen/expense_card_margin"
+                android:text="@string/enter_note_hint"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@android:color/darker_gray"
+                android:layout_weight="27"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/expenseRemove"
+                android:text="x"
+                android:background="@drawable/remove_button_drawable"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginRight="@dimen/drawable_left_pad"
+                android:layout_marginTop="@dimen/expense_card_margin"
+                android:layout_marginBottom="@dimen/expense_card_margin"
+                android:textColor="@android:color/black"
+                android:paddingLeft="@dimen/drawable_left_pad"
+                android:paddingRight="@dimen/drawable_left_pad"
+                android:paddingBottom="@dimen/padding_start_currency"
+                android:gravity="center"
+                android:layout_weight="3"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
     <!--</LinearLayout>-->
 </LinearLayout>

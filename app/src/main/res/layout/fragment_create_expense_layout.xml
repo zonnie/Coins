@@ -35,29 +35,6 @@
             android:background="@android:color/transparent"
             android:src="@drawable/shop"/>
 
-        <ToggleButton
-            android:id="@+id/isExpenseToggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/expense_toggle"
-            android:gravity="center"
-            android:paddingBottom="@dimen/drawable_left_pad"
-            android:paddingEnd="@dimen/big_padding"
-            android:paddingStart="@dimen/big_padding"
-            android:paddingTop="@dimen/drawable_left_pad"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textOff="Expense"
-            android:textOn="Income"/>
-
-        <TextView
-            android:id="@+id/toggle_expense_hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/drawable_left_pad"
-            android:text="@string/toggle_hint_text"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@android:color/darker_gray"/>
-
         <EditText
             android:id="@+id/addExpenseDescription"
             android:layout_width="match_parent"
@@ -125,18 +102,42 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             />
 
-        <DatePicker
+        <!--<DatePicker
             android:id="@+id/datePicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:calendarViewShown="false"
             android:spinnersShown="false"
-            android:visibility="gone"/>
+            android:visibility="gone"/>-->
+
+        <ToggleButton
+            android:id="@+id/isExpenseToggle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/expense_toggle"
+            android:gravity="center"
+            android:paddingBottom="@dimen/drawable_left_pad"
+            android:paddingEnd="@dimen/big_padding"
+            android:paddingStart="@dimen/big_padding"
+            android:paddingTop="@dimen/drawable_left_pad"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textOff="Expense"
+            android:textOn="Income"/>
+
+        <TextView
+            android:id="@+id/toggle_expense_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/drawable_left_pad"
+            android:text="@string/toggle_hint_text"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/darker_gray"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginTop="@dimen/drawable_left_pad"
             android:orientation="horizontal"
             >
 

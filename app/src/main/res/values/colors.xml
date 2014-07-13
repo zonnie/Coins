@@ -7,4 +7,5 @@
     <color name="lighter_gray">#ddd</color>
     <color name="income_color">#ff44bf4c</color>
     <color name="expense_color">#ffa50026</color>
+    <color name="remove_text_color">#FF7A7A</color>
 </resources>
