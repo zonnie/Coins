@@ -773,7 +773,7 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
     @Override
     public void showItem(View view)
     {
-        final int position = getListView().getPositionForView((LinearLayout) view.getParent().getParent());
+        final int position = getListView().getPositionForView((LinearLayout) view.getParent());
         if (position >= 0)
         {
             listItemClicked(position);

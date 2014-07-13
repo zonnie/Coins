@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
@@ -33,6 +34,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
 
     private ListItemHandler mListener;
     private TextView mExpenseDescription;
+    private LinearLayout mItemLayout;
     private TextView mExpenseValue;
     private TextView mExpenseCurrency;
     private TextView mExpenseNote;
@@ -113,6 +115,17 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         // Populate the current view according to collection item.
         if (currentTransactionView != null)
         {
+            // Take care of click to layout to be able to edit item in view
+            mItemLayout = (LinearLayout) view.findViewById(R.id.transaction_card_layout);
+            mItemLayout.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    mListener.showItem(v);
+                }
+            });
+
             // Update ht look of the the view accordingly
             if (mTransactions.getItems().get(position).mIsExpense == false)
             {
@@ -123,20 +136,17 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
                 updateViewToExpense(view, R.color.expense_color);
             }
 
+            // Handle click view for edit
             mExpenseDescription = (TextView) view.findViewById(R.id.expenseDesc);
-            mExpenseDescription.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    mListener.showItem(v);
-                }
-            });
             mImage = (ImageView)view.findViewById(R.id.image_container);
+            // Handle click view for edit
             mExpenseValue = (TextView) view.findViewById(R.id.expenseValue);
             mExpenseCurrency = (TextView) view.findViewById(R.id.currency);
+            // Handle click view for edit
             mExpenseNote = (TextView) view.findViewById(R.id.expenseItemNote);
             mExpenseDayOfMonth = (TextView)view.findViewById(R.id.expense_item_date_text);
+
+            // Handle click view for edit
             mRemoveItemButton = (Button) view.findViewById(R.id.expenseRemove);
             mRemoveItemButton.setOnClickListener(new View.OnClickListener()
             {
