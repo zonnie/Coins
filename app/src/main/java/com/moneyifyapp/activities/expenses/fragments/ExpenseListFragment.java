@@ -417,14 +417,16 @@ public class ExpenseListFragment extends ListFragment
                             {
                                 int removeId = mRemoveQueue.peek();
                                 // Remove the next item set in the queue
-                                Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_out);
+                                Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
                                 getListView().getChildAt(removeId).startAnimation(anim);
 
                                 new Handler().postDelayed(new Runnable()
                                 {
                                     public void run()
                                     {
-                                        mAdapter.remove(mRemoveQueue.remove());
+                                        int removeId = mRemoveQueue.remove();
+                                        updateTotals(mAdapter.getItem(removeId), true);
+                                        mAdapter.remove(removeId);
                                     }
 
                                 }, anim.getDuration());
@@ -478,7 +480,6 @@ public class ExpenseListFragment extends ListFragment
     {
         // Put the next ID to be removed async from the list
         mRemoveQueue.add(position);
-        updateTotals(mAdapter.getItem(position), true);
         removeItemWithId(position);
     }
 
@@ -573,6 +574,9 @@ public class ExpenseListFragment extends ListFragment
                     // TODO: This needs to be dynamic
                     currency = Transaction.CURRENCY_DEFAULT;
                     createNewTransaction(desc, sum, currency, note, image, isExpense);
+                    Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
+                    getListView().getChildAt(0).startAnimation(anim);
+
                 }
                 else if (requestCode == ExpensesActivity.REQ_EDIT_ITEM)
                 {
@@ -624,9 +628,6 @@ public class ExpenseListFragment extends ListFragment
      */
     public void addNewTransaction(Transaction newTransaction)
     {
-        String newId = generateId(newTransaction.mDescription, newTransaction.mValue, newTransaction.mCurrency);
-        newTransaction.mId = newId;
-
         // The adapter will add the expense to the model collection so it can update observer
         // as well.
         mAdapter.insert(newTransaction, 0);
