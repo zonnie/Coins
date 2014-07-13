@@ -35,7 +35,8 @@
     <string name="item_list_refresh">"Refresh"</string>
     <string name="image_gallery_hint">"Touch the category image to pick one"</string>
     <string name="splash_slogan">"Save some coins"</string>
-    <string name="default_currency">"₪"</string>
+    <string name="splash_slogan_under">"by Zonnie"</string>
+    <string name="default_currency">"$"</string>
     <string name="init_total_value">"0"</string>
     <string name="add_item_description_hint">"What is this ?"</string>
     <string name="item_value_hint">"What was it worth ?"</string>

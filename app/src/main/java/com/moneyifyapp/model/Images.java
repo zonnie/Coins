@@ -96,8 +96,8 @@ public class Images
         mImages.add(R.drawable.buds);
         mImageCaptions.add("Music");
 
-        mImages.add(R.drawable.chart);
-        mImageCaptions.add("Invesments");
+        //mImages.add(R.drawable.chart);
+        //mImageCaptions.add("Invesments");
 
         mImages.add(R.drawable.gift);
         mImageCaptions.add("Gift");

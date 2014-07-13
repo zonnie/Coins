@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:background="@drawable/splash"
+              android:background="@drawable/button_alternate"
               android:orientation="vertical"
               android:weightSum="4"
               android:gravity="center">
@@ -18,8 +18,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/splash_slogan"
-        android:textColor="@color/lighter_gray"
+        android:textColor="@android:color/white"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/splashTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/splash_slogan_under"
+        android:textColor="@android:color/white"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:gravity="center"
         />
 

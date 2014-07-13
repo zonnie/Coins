@@ -16,8 +16,10 @@ public class DrawerUtils
     {
         drawerItems = new ArrayList<DrawerItem>();
         //drawerItems.add(new DrawerItem("Change Year", "Change the year", R.drawable.cal));
-        drawerItems.add(new DrawerItem("My Wallets", "Here you can manage your wallets", R.drawable.wallet));
-        drawerItems.add(new DrawerItem("Share Wallet", "Share your wallet with friends", R.drawable.share));
+        drawerItems.add(new DrawerItem("Analytics", "Understand your coins", R.drawable.chart));
+        //drawerItems.add(new DrawerItem("My Wallets", "Here you can manage your wallets", R.drawable.wallet));
+        drawerItems.add(new DrawerItem("Share Wallet", "Share your wallet with friends", R.drawable.wallet));
         drawerItems.add(new DrawerItem("Preferences", "Menage your preferences", R.drawable.contorls));
+
     }
 }

@@ -31,7 +31,7 @@
                 android:layout_marginLeft="@dimen/big_padding"
                 android:layout_marginRight="@dimen/drawable_left_pad"
                 android:layout_marginTop="@dimen/expense_card_margin"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="@android:color/black"
                 android:paddingLeft="@dimen/drawable_left_pad"
                 android:paddingRight="@dimen/drawable_left_pad"
                 android:paddingTop="@dimen/padding_start_currency"

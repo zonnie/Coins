@@ -15,10 +15,18 @@
     <string-array name="currencies">
         <item>US Dollar - $</item>
         <item>Israeli Shekel - ₪</item>
+        <item>Pound Sterling - £</item>
+        <item>Euro - €</item>
+        <item>Japanese Yen - ¥</item>
+        <item>Chinese Yuan - ¥</item>
     </string-array>
 
     <string-array name="currenciesvalues">
         <item>$</item>
         <item>₪</item>
+        <item>€</item>
+        <item>£</item>
+        <item>¥</item>
+        <item>¥</item>
     </string-array>
 </resources>

@@ -24,7 +24,7 @@ public class Utils
     /**                          Members                               **/
     /********************************************************************/
 
-    public static String state[] = {"$", "₪"};
+    public static String globalCurrencyList[] = {"$", "₪", "€", "£", "¥", "¥"};
     private static final String mEmailFormat = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
 
     /********************************************************************/
@@ -41,9 +41,9 @@ public class Utils
     {
         int res = 0;
 
-        for(int i = 0; i < state.length; ++i)
+        for(int i = 0; i < globalCurrencyList.length; ++i)
         {
-            if(str.equals(state[i]))
+            if(str.equals(globalCurrencyList[i]))
             {
                 res = i;
             }
