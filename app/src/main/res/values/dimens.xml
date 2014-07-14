@@ -11,4 +11,6 @@
     <dimen name="max_add_width">10dp</dimen>
     <dimen name="big_padding">25dp</dimen>
     <dimen name="image_dimen">72dp</dimen>
+    <dimen name="huge_font">25sp</dimen>
+    <dimen name="large_font">20sp</dimen>
 </resources>

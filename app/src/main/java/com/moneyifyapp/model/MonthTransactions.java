@@ -1,6 +1,7 @@
 package com.moneyifyapp.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -48,18 +49,18 @@ public class MonthTransactions
      *
      * @return
      */
-    public long sumExpenses(boolean sumExpenses)
+    public long sumExpenses(SubsetType type)
     {
         long sum = 0;
 
         for (Transaction curTrans : mTransactions)
         {
-            if(curTrans.mIsExpense == true && sumExpenses == true)
+            if(type == SubsetType.EXPENSE && curTrans.mIsExpense == true)
             {
                 long curTransSum = Long.valueOf(curTrans.mValue);
                 sum += curTransSum;
             }
-            else if(curTrans.mIsExpense == false && sumExpenses == false)
+            else if(type == SubsetType.INCOME && curTrans.mIsExpense == false)
             {
                 long curTransSum = Long.valueOf(curTrans.mValue);
                 sum += curTransSum;
@@ -67,5 +68,95 @@ public class MonthTransactions
         }
 
         return sum;
+    }
+
+    /**
+     * Get the max expense/income.
+     *
+     * @param type - if 'true' then get max expense, otherwise get max income.
+     *
+     * @return the max transaction
+     */
+    public long getMaxTransaction(SubsetType type)
+    {
+        long maxExpense = 0;
+
+        for(Transaction curTrans : mTransactions)
+        {
+            Long curValue = Long.valueOf(curTrans.mValue);
+
+            if(type == SubsetType.EXPENSE && curTrans.mIsExpense == true)
+            {
+                if(maxExpense < curValue)
+                {
+                    maxExpense = curValue;
+                }
+            }
+            else if(type == SubsetType.INCOME && curTrans.mIsExpense == false)
+            {
+                if(maxExpense < curValue)
+                {
+                    maxExpense = curValue;
+                }
+            }
+        }
+
+        return maxExpense;
+    }
+
+    /**
+     *
+     * @param type
+     * @return
+     */
+    private MonthTransactions getTransactionSubset(SubsetType type)
+    {
+        MonthTransactions res = new MonthTransactions(mMonthNumber);
+
+        for(Transaction curTrans : mTransactions)
+        {
+            if(type == SubsetType.EXPENSE && curTrans.mIsExpense == true)
+            {
+                res.getItems().add(curTrans);
+            }
+            else if(type == SubsetType.INCOME && curTrans.mIsExpense == false)
+            {
+                res.getItems().add(curTrans);
+            }
+        }
+
+        return res;
+    }
+
+    /**
+     * Enum for extracting subsets of the transactions
+     */
+    public static enum SubsetType {INCOME, EXPENSE};
+
+    /**
+     *
+     * Sort the transactions according to the transcation value.
+     * This sorts in a decending order.
+     *
+     */
+    public void sort()
+    {
+        Collections.sort(this.mTransactions);
+        Collections.reverse(this.mTransactions);
+    }
+
+    /**
+     *
+     * Get transaction subset sorted in decending order.
+     *
+     * @param type
+     * @return
+     */
+    public MonthTransactions getTransactionSubsetSorted(SubsetType type)
+    {
+        MonthTransactions result = getTransactionSubset(type);
+        result.sort();
+
+        return result;
     }
 }

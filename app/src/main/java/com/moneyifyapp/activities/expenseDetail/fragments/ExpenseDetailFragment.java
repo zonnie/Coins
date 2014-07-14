@@ -209,7 +209,6 @@ public class ExpenseDetailFragment extends Fragment
             //mCurrencySpinner.setSelection(Utils.findIndextByString(mTempExpenseObject.mCurrency));
             mExpenseDescription.setText(mTempExpenseObject.mDescription);
             mExpenseValue.setText(mTempExpenseObject.mValue);
-            mExpenseCurrency.setText(mTempExpenseObject.mCurrency);
             mExpenseNotes.setText(mTempExpenseObject.mNotes);
             mExpenseIcon.setImageResource(Images.getImageByPosition(mTempExpenseObject.mImageResourceIndex));
             mToggleIsExpense.setChecked(!mTempExpenseObject.mIsExpense);

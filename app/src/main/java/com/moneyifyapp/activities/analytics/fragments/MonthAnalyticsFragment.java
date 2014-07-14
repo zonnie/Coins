@@ -5,15 +5,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.moneyifyapp.R;
+import com.moneyifyapp.activities.expenses.adapters.ExpenseItemAdapterRead;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.YearTransactions;
 import com.moneyifyapp.model.enums.Months;
 import com.moneyifyapp.utils.Utils;
+import com.moneyifyapp.views.CurrencyTextView;
 
 /**
  * An analytics fragment that represents a month
@@ -40,8 +46,17 @@ public class MonthAnalyticsFragment extends Fragment
     private TextView mYearLabelTextView;
     private TextView mMonthTotalExepenseTextView;
     private TextView mMonthTotalIncomeTextView;
-    private TextView mExpenseCurrenyTextView;
-    private TextView mIncomeCurrencyTextView;
+    private CurrencyTextView mExpenseCurrenyTextView;
+    private CurrencyTextView mIncomeCurrencyTextView;
+    private TextView mBiggestExpenseTextView;
+    private TextView mBiggestIncomeTextView;
+    private Animation mAppearAnimation;
+    private Animation mAppearAnimationLong;
+    private LinearLayout mDateLabelLayout;
+    private LinearLayout mMainContainerLayout;
+    private ListView mBiggestExpenseList;
+    private ListView mBiggestIncomeList;
+    private View mRootView;
 
     /********************************************************************/
     /**                          Methods                               **/
@@ -85,6 +100,9 @@ public class MonthAnalyticsFragment extends Fragment
         mMonth = getArguments().getInt(ExpenseListFragment.MONTH_KEY);
         mYear = getArguments().getInt(ExpenseListFragment.YEAR_KEY);
 
+        // Load animations
+        loadAnimations();
+
         if (getArguments() != null)
         {
             // Get the month number, transaction and page id
@@ -103,6 +121,21 @@ public class MonthAnalyticsFragment extends Fragment
     }
 
     /**
+     * Loads animations
+     */
+    private void loadAnimations()
+    {
+        if(mAppearAnimation == null)
+        {
+            mAppearAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
+        }
+        if(mAppearAnimationLong == null)
+        {
+            mAppearAnimationLong = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in_long);
+        }
+    }
+
+    /**
      *
      * @param inflater
      * @param container
@@ -113,36 +146,67 @@ public class MonthAnalyticsFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.fragment_analytics_total, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_analytics_total, container, false);
 
         if(mYearTransactions != null && mMonthTransactions != null)
         {
             /** Handle the date labels **/
-            // Update the date labels
-            mMonthLabelTextView = (TextView)rootView.findViewById(R.id.analytics_month_label);
-            mYearLabelTextView = (TextView)rootView.findViewById(R.id.analytics_year_label);
-            mYearLabelTextView = (TextView)rootView.findViewById(R.id.analytics_year_label);
-
-            mMonthLabelTextView.setText(Months.getMonthNameByNumber(mMonth + 1));
-            mYearLabelTextView.setText(String.valueOf(mYear));
+            mMonthLabelTextView = loadTextViewAndSetText(R.id.analytics_month_label, Months.getMonthNameByNumber(mMonth + 1));
+            mYearLabelTextView = loadTextViewAndSetText(R.id.analytics_year_label, String.valueOf(mYear));
 
             /** Handle the basic sum **/
+            String totalExepense = String.valueOf(mMonthTransactions.sumExpenses(MonthTransactions.SubsetType.EXPENSE));
+            String totalIncome = String.valueOf(mMonthTransactions.sumExpenses(MonthTransactions.SubsetType.INCOME));
+            mMonthTotalExepenseTextView = loadTextViewAndSetText(R.id.analytics_by_date_expense_sum,totalExepense);
+            mMonthTotalIncomeTextView = loadTextViewAndSetText(R.id.analytics_by_date_income_sum,totalIncome);
 
-            String totalExepense = String.valueOf(mMonthTransactions.sumExpenses(true));
-            String totalIncome = String.valueOf(mMonthTransactions.sumExpenses(false));
+            /** Handle animations **/
+            mDateLabelLayout = (LinearLayout) mRootView.findViewById(R.id.month_analytics_date_layout);
+            mMainContainerLayout = (LinearLayout) mRootView.findViewById(R.id.month_analytics_main_layout);
+            mDateLabelLayout.startAnimation(mAppearAnimation);
+            mMainContainerLayout.startAnimation(mAppearAnimationLong);
 
-            mMonthTotalExepenseTextView = (TextView)rootView.findViewById(R.id.analytics_by_date_expense_sum);
-            mMonthTotalIncomeTextView = (TextView)rootView.findViewById(R.id.analytics_by_date_income_sum);
-            mMonthTotalExepenseTextView.setText(totalExepense);
-            mMonthTotalIncomeTextView.setText(totalIncome);
+            /** Handle 'interstring' notations **/
+            String biggestExpense = String.valueOf(mMonthTransactions.getMaxTransaction(MonthTransactions.SubsetType.EXPENSE));
+            String biggestIncome = String.valueOf(mMonthTransactions.getMaxTransaction(MonthTransactions.SubsetType.INCOME));
+            mBiggestExpenseTextView = loadTextViewAndSetText(R.id.analytics_biggest_expense_sum, biggestExpense);
+            mBiggestIncomeTextView = loadTextViewAndSetText(R.id.analytics_biggest_income_sum, biggestIncome);
 
-            // Update currency
-            mExpenseCurrenyTextView = (TextView)rootView.findViewById(R.id.analytics_by_date_expense_currency);
-            mIncomeCurrencyTextView = (TextView)rootView.findViewById(R.id.analytics_by_date_income_currency);
-            mExpenseCurrenyTextView.setText(Utils.getDefaultCurrency(getActivity()));
-            mIncomeCurrencyTextView.setText(Utils.getDefaultCurrency(getActivity()));
+            /** Add the biggest income/expense **/
+            mBiggestExpenseList = (ListView)mRootView.findViewById(R.id.month_analytics_biggest_expense_list);
+            mBiggestIncomeList = (ListView)mRootView.findViewById(R.id.month_analytics_biggest_income_list);
+
+            MonthTransactions expenses = mMonthTransactions.getTransactionSubsetSorted(MonthTransactions.SubsetType.EXPENSE);
+            MonthTransactions incomes = mMonthTransactions.getTransactionSubsetSorted(MonthTransactions.SubsetType.INCOME);
+            ExpenseItemAdapterRead expenseAdapter = new ExpenseItemAdapterRead(getActivity(), R.layout.adapter_expense_item_read, expenses);
+            ExpenseItemAdapterRead incomeAdapter = new ExpenseItemAdapterRead(getActivity(), R.layout.adapter_expense_item_read, incomes);
+
+            mBiggestExpenseList.setAdapter(expenseAdapter);
+            mBiggestIncomeList.setAdapter(incomeAdapter);
+
         }
 
-        return rootView;
+        return mRootView;
+    }
+
+    /**
+     *
+     * Loads a text view from the view, sets it text and returns the text view.
+     *
+     * @param resourceId
+     * @param text
+     * @return
+     */
+    private TextView loadTextViewAndSetText(int resourceId, String text)
+    {
+        TextView textView = null;
+
+        if (mRootView != null)
+        {
+            textView = (TextView) mRootView.findViewById(resourceId);
+            textView.setText(text);
+        }
+
+        return textView;
     }
 }

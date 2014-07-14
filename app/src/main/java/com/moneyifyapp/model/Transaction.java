@@ -5,7 +5,7 @@ import java.util.Calendar;
 /**
  * Created by Zonnie_Work on 30/06/2014.
  */
-public class Transaction
+public class Transaction implements Comparable<Transaction>
 {
     /********************************************************************/
     /**                          Members                               **/
@@ -114,5 +114,31 @@ public class Transaction
     public void setmNotes(String mNotes)
     {
         this.mNotes = mNotes;
+    }
+
+    /**
+     * Compare 2 transactions
+     *
+     * @param another
+     * @return
+     */
+    @Override
+    public int compareTo(Transaction another)
+    {
+        long myValue = Long.valueOf(this.mValue);
+        long anotherValue = Long.valueOf(another.mValue);
+
+        if(myValue < anotherValue)
+        {
+            return -1;
+        }
+        else if(myValue > anotherValue)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
     }
 }

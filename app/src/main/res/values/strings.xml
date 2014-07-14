@@ -52,6 +52,7 @@
     <string name="title_analytics_by_category">By Category</string>
     <string name="title_analytics_general">General</string>
     <string name="title_activity_month_analytics">MonthAnalytics</string>
+    <string name="title_analytics_month_overview">Month Overview</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

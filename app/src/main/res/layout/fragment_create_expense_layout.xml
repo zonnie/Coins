@@ -5,6 +5,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:background="@color/background"
     >
 
     <LinearLayout
@@ -72,7 +73,7 @@
                 android:singleLine="true"
                 />
 
-            <TextView
+            <com.moneyifyapp.views.CurrencyTextView
                 android:id="@+id/addExpenseCurrency"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -96,8 +97,7 @@
             android:imeActionId="@+id/note_action"
             android:imeActionLabel="@string/item_details_submit"
             android:imeOptions="actionDone"
-            android:inputType="textMultiLine"
-            android:maxLines="2"
+            android:maxLines="1"
             android:maxLength="@integer/max_note_len"
             android:textAppearance="?android:attr/textAppearanceSmall"
             />

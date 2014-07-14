@@ -1,138 +1,323 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:orientation="vertical"
-              android:layout_height="match_parent"
-              android:background="@color/background"
-              android:paddingBottom="@dimen/activity_vertical_margin"
-              android:paddingLeft="@dimen/activity_horizontal_margin"
-              android:paddingRight="@dimen/activity_horizontal_margin"
-              android:paddingTop="@dimen/activity_vertical_margin"
-              tools:context="com.moneyifyapp.activities.analytics.AnalyticsActivity.ByDateAnalyticsFragment"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/background"
+
     >
 
     <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/expense_card_margin"
-        android:layout_marginLeft="@dimen/expense_drawable_left_pad"
-        android:layout_marginRight="@dimen/expense_drawable_left_pad"
-        android:background="@drawable/expense_item_card"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:padding="@dimen/drawable_left_pad"
-        >
-
-        <TextView
-            android:id="@+id/analytics_month_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/padding_start_currency"
-            android:text="July"
-            />
-        <TextView
-            android:id="@+id/analytics_year_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2014"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/analytics_total_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/expense_card_margin"
-        android:layout_marginLeft="@dimen/expense_drawable_left_pad"
-        android:layout_marginRight="@dimen/expense_drawable_left_pad"
-        android:background="@drawable/expense_item_card"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="@dimen/drawable_left_pad"
-        android:showDividers="none"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.moneyifyapp.activities.analytics.AnalyticsActivity.ByDateAnalyticsFragment"
         >
 
         <LinearLayout
+            android:id="@+id/month_analytics_date_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/expense_card_margin"
+            android:layout_marginLeft="@dimen/image_dimen"
+            android:layout_marginRight="@dimen/image_dimen"
+            android:background="@drawable/expense_item_card"
+            android:gravity="center"
             android:orientation="horizontal"
-            android:paddingEnd="@dimen/activity_vertical_margin"
-            android:paddingStart="@dimen/padding_start_currency"
+            android:padding="@dimen/drawable_left_pad"
             >
 
-
             <TextView
+                android:id="@+id/analytics_month_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Expenses"
-                android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-            <TextView
-                android:id="@+id/analytics_by_date_expense_currency"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.4"
-                android:gravity="center|right"
-                android:text="@string/default_currency"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/expense_color"
-                android:textStyle="bold"
+                android:layout_marginEnd="@dimen/padding_start_currency"
+                android:text="December"
+                android:textSize="@dimen/huge_font"
                 />
 
             <TextView
-                android:id="@+id/analytics_by_date_expense_sum"
+                android:id="@+id/analytics_year_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center|right"
-                android:text="@string/init_total_value"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/expense_color"
-                android:textStyle="bold"
+                android:text="2014"
+                android:textSize="@dimen/huge_font"
                 />
-
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/month_analytics_main_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/drawable_left_pad"
-            android:orientation="horizontal"
-            android:paddingEnd="@dimen/activity_vertical_margin"
-            android:paddingStart="@dimen/padding_start_currency"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             >
 
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Income"
-                android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-            <TextView
-                android:id="@+id/analytics_by_date_income_currency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.4"
-                android:gravity="center|right"
-                android:text="@string/default_currency"
+                android:layout_marginBottom="@dimen/padding_start_currency"
+                android:layout_marginTop="@dimen/big_padding"
+                android:gravity="center"
+                android:text="@string/analytics_str_totals_hint"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/income_color"
-                android:textStyle="bold"
+                android:textColor="@android:color/darker_gray"
                 />
+
+            <!-- Totals -->
+
+            <LinearLayout
+                android:id="@+id/month_analytics_total_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/expense_card_margin"
+                android:layout_marginLeft="@dimen/expense_drawable_left_pad"
+                android:layout_marginRight="@dimen/expense_drawable_left_pad"
+                android:background="@drawable/expense_item_card"
+                android:orientation="vertical"
+                android:padding="@dimen/drawable_left_pad"
+                android:showDividers="none"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingEnd="@dimen/padding_start_currency"
+                    android:paddingStart="@dimen/padding_start_currency"
+                    >
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/analytics_str_total_expense_label"
+                        android:textSize="@dimen/large_font"
+                        />
+
+                    <com.moneyifyapp.views.CurrencyTextView
+                        android:id="@+id/analytics_by_date_expense_currency"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:gravity="center|right"
+                        android:text="@string/default_currency"
+                        android:textColor="@color/expense_color"
+                        android:textSize="@dimen/large_font"
+                        android:textStyle="bold"
+                        />
+
+                    <TextView
+                        android:id="@+id/analytics_by_date_expense_sum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|right"
+                        android:text="@string/init_total_value"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/expense_color"
+                        android:textSize="@dimen/large_font"
+                        android:textStyle="bold"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/drawable_left_pad"
+                    android:orientation="horizontal"
+                    android:paddingEnd="@dimen/padding_start_currency"
+                    android:paddingStart="@dimen/padding_start_currency"
+                    >
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/analytics_str_total_income_label"
+                        android:textSize="@dimen/large_font"
+                        />
+
+                    <com.moneyifyapp.views.CurrencyTextView
+                        android:id="@+id/analytics_by_date_income_currency"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:gravity="center|right"
+                        android:text="@string/default_currency"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/income_color"
+                        android:textSize="@dimen/large_font"
+                        android:textStyle="bold"
+                        />
+
+                    <TextView
+                        android:id="@+id/analytics_by_date_income_sum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|right"
+                        android:text="@string/init_total_value"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/income_color"
+                        android:textSize="@dimen/large_font"
+                        android:textStyle="bold"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/analytics_by_date_income_sum"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center|right"
-                android:text="@string/init_total_value"
+                android:layout_marginBottom="@dimen/padding_start_currency"
+                android:layout_marginTop="@dimen/big_padding"
+                android:gravity="center"
+                android:text="@string/analytics_str_intrest_hint"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/income_color"
-                android:textStyle="bold"
+                android:textColor="@android:color/darker_gray"
                 />
 
-        </LinearLayout>
-    </LinearLayout>
+            <!-- Biggest expense -->
 
-</LinearLayout>
+            <LinearLayout
+                android:id="@+id/month_analytics_biggest_expense_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/expense_card_margin"
+                android:layout_marginLeft="@dimen/expense_drawable_left_pad"
+                android:layout_marginRight="@dimen/expense_drawable_left_pad"
+                android:background="@drawable/expense_item_card"
+                android:orientation="vertical"
+                android:padding="@dimen/drawable_left_pad"
+                android:showDividers="none"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingEnd="@dimen/padding_start_currency"
+                    android:paddingStart="@dimen/padding_start_currency"
+                    >
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/analytics_str_biggest_expense_label"
+                        android:textSize="@dimen/large_font"
+                        />
+
+                    <com.moneyifyapp.views.CurrencyTextView
+                        android:id="@+id/analytics_biggest_expense_currency"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:gravity="center|right"
+                        android:text="@string/default_currency"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/expense_color"
+                        android:textSize="@dimen/large_font"
+                        android:textStyle="bold"
+                        />
+
+                    <TextView
+                        android:id="@+id/analytics_biggest_expense_sum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|right"
+                        android:text="@string/init_total_value"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/expense_color"
+                        android:textSize="@dimen/large_font"
+                        android:textStyle="bold"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/month_analytics_biggest_expense_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                </ListView>
+
+            <!-- Biggest income -->
+
+            <LinearLayout
+                android:id="@+id/month_analytics_biggest_income_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/expense_card_margin"
+                android:layout_marginLeft="@dimen/expense_drawable_left_pad"
+                android:layout_marginRight="@dimen/expense_drawable_left_pad"
+                android:background="@drawable/expense_item_card"
+                android:orientation="vertical"
+                android:padding="@dimen/drawable_left_pad"
+                android:showDividers="none"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingEnd="@dimen/padding_start_currency"
+                    android:paddingStart="@dimen/padding_start_currency"
+                    >
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/analytics_str_biggest_income_label"
+                        android:textSize="@dimen/large_font"
+                        />
+
+                    <com.moneyifyapp.views.CurrencyTextView
+                        android:id="@+id/analytics_biggest_income_currency"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:gravity="center|right"
+                        android:text="@string/default_currency"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/income_color"
+                        android:textSize="@dimen/large_font"
+                        android:textStyle="bold"
+                        />
+
+                    <TextView
+                        android:id="@+id/analytics_biggest_income_sum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|right"
+                        android:text="@string/init_total_value"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/income_color"
+                        android:textSize="@dimen/large_font"
+                        android:textStyle="bold"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/month_analytics_biggest_income_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </ListView>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

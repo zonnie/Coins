@@ -52,7 +52,7 @@
         </activity>
         <activity
             android:name=".activities.analytics.MonthAnalytics"
-            android:label="@string/title_activity_month_analytics" >
+            android:label="@string/title_analytics_month_overview" >
         </activity>
     </application>
 

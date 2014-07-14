@@ -24,7 +24,7 @@ public class Utils
     /**                          Members                               **/
     /********************************************************************/
 
-    public static String globalCurrencyList[] = {"$", "₪", "€", "£", "¥", "¥"};
+    public static String globalCurrencyList[] = {"$", "₪", "£", "€", "¥", "¥"};
     private static final String mEmailFormat = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
 
     /********************************************************************/
@@ -106,7 +106,7 @@ public class Utils
      * @param context
      * @return
      */
-    public static String getDefaultCurrency(Activity context)
+    public static String getDefaultCurrency(Context context)
     {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(PrefActivity.PREF_LIST_NAME,
                 context.getResources().getString(R.string.pref_default_currency_value));

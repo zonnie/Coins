@@ -141,24 +141,7 @@
                 android:text="@string/enter_note_hint"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@android:color/darker_gray"
-                android:layout_weight="27"/>
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:id="@+id/expenseRemove"
-                android:text="x"
-                android:background="@drawable/remove_button_drawable"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_marginRight="@dimen/drawable_left_pad"
-                android:layout_marginTop="@dimen/expense_card_margin"
-                android:layout_marginBottom="@dimen/expense_card_margin"
-                android:textColor="@android:color/black"
-                android:paddingLeft="@dimen/drawable_left_pad"
-                android:paddingRight="@dimen/drawable_left_pad"
-                android:paddingBottom="@dimen/padding_start_currency"
-                android:gravity="center"
-                android:layout_weight="3"/>
+                android:layout_weight="30"/>
         </LinearLayout>
 
     </LinearLayout>
