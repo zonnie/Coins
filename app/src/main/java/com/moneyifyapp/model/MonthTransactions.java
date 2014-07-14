@@ -23,14 +23,49 @@ public class MonthTransactions
     /**                          Methods                               **/
     /********************************************************************/
 
+    /**
+     *
+     * @param monthNumber
+     */
     public MonthTransactions(int monthNumber)
     {
         mTransactions = new ArrayList<Transaction>();
         mMonthNumber = monthNumber;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Transaction> getItems()
     {
         return mTransactions;
+    }
+
+    /**
+     *
+     * Sums up all the expenses in this month
+     *
+     * @return
+     */
+    public long sumExpenses(boolean sumExpenses)
+    {
+        long sum = 0;
+
+        for (Transaction curTrans : mTransactions)
+        {
+            if(curTrans.mIsExpense == true && sumExpenses == true)
+            {
+                long curTransSum = Long.valueOf(curTrans.mValue);
+                sum += curTransSum;
+            }
+            else if(curTrans.mIsExpense == false && sumExpenses == false)
+            {
+                long curTransSum = Long.valueOf(curTrans.mValue);
+                sum += curTransSum;
+            }
+        }
+
+        return sum;
     }
 }

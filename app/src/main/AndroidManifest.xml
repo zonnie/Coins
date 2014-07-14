@@ -46,6 +46,14 @@
             android:name=".activities.preferences.PrefActivity"
             android:label="@string/title_activity_pref" >
         </activity>
+        <activity
+            android:name=".activities.analytics.AnalyticsActivity"
+            android:label="@string/title_activity_analytics" >
+        </activity>
+        <activity
+            android:name=".activities.analytics.MonthAnalytics"
+            android:label="@string/title_activity_month_analytics" >
+        </activity>
     </application>
 
 </manifest>

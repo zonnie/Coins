@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.moneyifyapp.R;
+import com.moneyifyapp.activities.analytics.AnalyticsActivity;
 import com.moneyifyapp.activities.expenses.drawer.DrawerItemAdapter;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.activities.login.LoginActivity;
@@ -232,7 +233,9 @@ public class ExpensesActivity extends Activity
             if (position == 0)
             {
                 /** Do drawer actions here **/
-                mYearTransactions = new YearTransactions(mCalender.get(Calendar.YEAR) + 1);
+                //mYearTransactions = new YearTransactions(mCalender.get(Calendar.YEAR) + 1);
+                Intent intent = new Intent(mActivity, AnalyticsActivity.class);
+                startActivity(intent);
             }
             if (position == 1)
             {
@@ -383,7 +386,6 @@ public class ExpensesActivity extends Activity
         @Override
         public CharSequence getPageTitle(int position)
         {
-            //return Months.getMonthNameByNumber(position + 1) + " " + mCalender.get(Calendar.YEAR);
             return Months.getMonthNameByNumber(position + 1) + " " + mYearTransactions.mYear;
         }
     }

@@ -36,7 +36,7 @@ public enum Months
         {
             if (curMonth.getMonthNumber() == number)
             {
-                month = curMonth.toString();
+                month = curMonth.toString().toUpperCase();
             }
         }
 

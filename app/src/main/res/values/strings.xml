@@ -5,8 +5,8 @@
     <string name="main_title">Coins</string>
     <string name="jump_today_caption">Jump to today</string>
     <string name="logout_caption">Logout</string>
-    <string name="list_empty_hint">touch the "+" button above to add some</string>
-    <string name="totals_hint_string">Bottom line for this month</string>
+    <string name="list_empty_hint">Tap the "+" button above to add some</string>
+    <string name="totals_hint_string">Tap for detailed overview</string>
     <string name="list_empty_message">Nothing here, so lonely</string>
     <string name="new_expense_button_caption">Add</string>
     <string name="error_invalid_email">This email address is invalid</string>
@@ -26,14 +26,14 @@
     <string name="login_welcome">Welcome!</string>
     <string name="login_welcome_2nd_line">Sign in and save some Coins</string>
     <string name="signup_welcome">Some info that we\'ll know you in the future</string>
-    <string name="image_picker_hint_text">Touch the image to select category</string>
-    <string name="toggle_hint_text">Choose between expense and income</string>
+    <string name="image_picker_hint_text">Tap the image to select category</string>
+    <string name="toggle_hint_text">Tap to swtich between expense and income</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="item_details_submit">"Done !"</string>
     <string name="item_details_cancel">"Cancel"</string>
     <string name="item_list_refresh">"Refresh"</string>
-    <string name="image_gallery_hint">"Touch the category image to pick one"</string>
+    <string name="image_gallery_hint">"Tap the category image to pick one"</string>
     <string name="splash_slogan">"Save some coins"</string>
     <string name="splash_slogan_under">"by Zonnie"</string>
     <string name="default_currency">"$"</string>
@@ -42,4 +42,16 @@
     <string name="item_value_hint">"What was it worth ?"</string>
     <string name="enter_note_hint">"Please enter a note"</string>
     <string name="drawer_top_title_text">"Stuff to Do</string>
+    <string name="title_activity_analytics">Analytics</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_analytics_by_date">By Date</string>
+    <string name="title_analytics_by_category">By Category</string>
+    <string name="title_analytics_general">General</string>
+    <string name="title_activity_month_analytics">MonthAnalytics</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.moneyifyapp.R;
+import com.moneyifyapp.activities.analytics.MonthAnalytics;
 import com.moneyifyapp.activities.expenseDetail.ExpenseDetailActivity;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.activities.expenses.adapters.ExpenseItemAdapter;
@@ -79,9 +80,8 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
     private TextView mTotalSavings;
     private TextView mTotalSavingsSign;
     private SharedPreferences mPreferences;
-    private ListView mList;
-    public static boolean DONE_LOADING = false;
     private Queue<Integer> mRemoveQueue;
+    private int mPageId;
 
 
     /********************************************************************/
@@ -132,9 +132,10 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
         {
             // Create a new month
             String yearJson = getArguments().getString(YEAR_JSON_KEY);
+            mPageId = getArguments().getInt(PAGE_ID_KEY);
             mYearTransactions = new Gson().fromJson(yearJson, YearTransactions.class);
-            mYearTransactions.addMonth(getArguments().getInt(PAGE_ID_KEY));
-            mTransactions = mYearTransactions.get(getArguments().getInt(PAGE_ID_KEY));
+            mYearTransactions.addMonth(mPageId);
+            mTransactions = mYearTransactions.get(mPageId);
         }
 
         mAdapter = new ExpenseItemAdapter(getActivity(), R.layout.adapter_expense_item, mTransactions, this);
@@ -190,6 +191,24 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
         {
             updateTotals(transaction, false);
         }
+
+        // On total's click go to month total
+        mTotalLayout.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Gson gson = new Gson();
+                String yearString = gson.toJson(mYearTransactions);
+                Intent intent = new Intent(getActivity(), MonthAnalytics.class);
+                Bundle data = new Bundle();
+                data.putInt(MONTH_KEY, mPageId);
+                data.putInt(YEAR_KEY, mYearTransactions.mYear);
+                data.putString(YEAR_JSON_KEY, yearString);
+                intent.putExtras(data);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
