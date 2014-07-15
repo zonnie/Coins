@@ -1,6 +1,7 @@
 package com.moneyifyapp.activities.expenses.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private TextView mExpenseCurrency;
     private TextView mExpenseNote;
     private TextView mExpenseDayOfMonth;
+    private TextView mExpenseDaySuffix;
     private int mLayoutResourceId;
     private MonthTransactions mTransactions;
     private Button mRemoveItemButton;
@@ -48,6 +50,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     public static int PICK_IMAGE_DIMENSIONS = 80;
     private final String EMPTY_NOTE_HINT = "Please enter a note...";
     private Animation mItemsLoadAnimation;
+    private Typeface mDateFont;
 
     /********************************************************************/
     /**                          Methods                               **/
@@ -65,6 +68,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         mTransactions = expenses;
         mLayoutResourceId = resource;
         mItemsLoaded = 0;
+        mDateFont = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
     }
 
     /**
@@ -145,6 +149,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             // Handle click view for edit
             mExpenseNote = (TextView) view.findViewById(R.id.expenseItemNote);
             mExpenseDayOfMonth = (TextView)view.findViewById(R.id.expense_item_date_text);
+            mExpenseDaySuffix = (TextView)view.findViewById(R.id.expense_item_date_suffix);
 
             // Handle click view for edit
             mRemoveItemButton = (Button) view.findViewById(R.id.expenseRemove);
@@ -197,13 +202,20 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         if (mExpenseDescription != null)
         {
             String date = currentTransactionView.mTransactionDay;
+            String dateSuffix  = "";
 
-            if(date.endsWith("1") && !date.equals("11")){date += "st";}
-            else if(date.endsWith("2") && !date.equals("12")){date += "nd";}
-            else if(date.endsWith("3") && !date.equals("13")){date += "rd";}
-            else {date += "th";}
+            /*if(mDateFont != null)
+            {
+                mExpenseDayOfMonth.setTypeface(mDateFont);
+            }*/
+
+            if(date.endsWith("1") && !date.equals("11")){dateSuffix += "st";}
+            else if(date.endsWith("2") && !date.equals("12")){dateSuffix += "nd";}
+            else if(date.endsWith("3") && !date.equals("13")){dateSuffix += "rd";}
+            else {dateSuffix += "th";}
 
             mExpenseDayOfMonth.setText(date);
+            mExpenseDaySuffix.setText(dateSuffix);
         }
 
     }

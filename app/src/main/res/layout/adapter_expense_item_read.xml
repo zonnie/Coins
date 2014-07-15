@@ -8,7 +8,7 @@
     android:background="@color/background"
     android:weightSum="1">
 
-    <LinearLayout
+    <!--<LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </LinearLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,7 +57,7 @@
         android:layout_marginRight="@dimen/expense_drawable_left_pad"
         android:layout_marginBottom="@dimen/expense_card_margin"
         android:id="@+id/transaction_card_layout"
-        android:background="@drawable/expense_item_card"
+        android:background="@drawable/expense_item_card_read"
         android:orientation="vertical"
         android:paddingBottom="@dimen/padding_start_currency"
         android:paddingTop="@dimen/drawable_left_pad"

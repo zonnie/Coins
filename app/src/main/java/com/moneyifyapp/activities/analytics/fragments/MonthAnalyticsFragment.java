@@ -19,7 +19,6 @@ import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.YearTransactions;
 import com.moneyifyapp.model.enums.Months;
 import com.moneyifyapp.utils.Utils;
-import com.moneyifyapp.views.CurrencyTextView;
 
 /**
  * An analytics fragment that represents a month
@@ -42,14 +41,6 @@ public class MonthAnalyticsFragment extends Fragment
     private int mYear;
     private MonthTransactions mMonthTransactions;
     private YearTransactions mYearTransactions;
-    private TextView mMonthLabelTextView;
-    private TextView mYearLabelTextView;
-    private TextView mMonthTotalExepenseTextView;
-    private TextView mMonthTotalIncomeTextView;
-    private CurrencyTextView mExpenseCurrenyTextView;
-    private CurrencyTextView mIncomeCurrencyTextView;
-    private TextView mBiggestExpenseTextView;
-    private TextView mBiggestIncomeTextView;
     private Animation mAppearAnimation;
     private Animation mAppearAnimationLong;
     private LinearLayout mDateLabelLayout;
@@ -151,14 +142,14 @@ public class MonthAnalyticsFragment extends Fragment
         if(mYearTransactions != null && mMonthTransactions != null)
         {
             /** Handle the date labels **/
-            mMonthLabelTextView = loadTextViewAndSetText(R.id.analytics_month_label, Months.getMonthNameByNumber(mMonth + 1));
-            mYearLabelTextView = loadTextViewAndSetText(R.id.analytics_year_label, String.valueOf(mYear));
+            loadTextViewAndSetText(R.id.analytics_month_label, Months.getMonthNameByNumber(mMonth + 1));
+            loadTextViewAndSetText(R.id.analytics_year_label, String.valueOf(mYear));
 
             /** Handle the basic sum **/
             String totalExepense = String.valueOf(mMonthTransactions.sumExpenses(MonthTransactions.SubsetType.EXPENSE));
             String totalIncome = String.valueOf(mMonthTransactions.sumExpenses(MonthTransactions.SubsetType.INCOME));
-            mMonthTotalExepenseTextView = loadTextViewAndSetText(R.id.analytics_by_date_expense_sum,totalExepense);
-            mMonthTotalIncomeTextView = loadTextViewAndSetText(R.id.analytics_by_date_income_sum,totalIncome);
+            loadTextViewAndSetText(R.id.analytics_by_date_expense_sum,totalExepense);
+            loadTextViewAndSetText(R.id.analytics_by_date_income_sum,totalIncome);
 
             /** Handle animations **/
             mDateLabelLayout = (LinearLayout) mRootView.findViewById(R.id.month_analytics_date_layout);
@@ -166,23 +157,34 @@ public class MonthAnalyticsFragment extends Fragment
             mDateLabelLayout.startAnimation(mAppearAnimation);
             mMainContainerLayout.startAnimation(mAppearAnimationLong);
 
-            /** Handle 'interstring' notations **/
-            String biggestExpense = String.valueOf(mMonthTransactions.getMaxTransaction(MonthTransactions.SubsetType.EXPENSE));
-            String biggestIncome = String.valueOf(mMonthTransactions.getMaxTransaction(MonthTransactions.SubsetType.INCOME));
-            mBiggestExpenseTextView = loadTextViewAndSetText(R.id.analytics_biggest_expense_sum, biggestExpense);
-            mBiggestIncomeTextView = loadTextViewAndSetText(R.id.analytics_biggest_income_sum, biggestIncome);
-
             /** Add the biggest income/expense **/
-            mBiggestExpenseList = (ListView)mRootView.findViewById(R.id.month_analytics_biggest_expense_list);
-            mBiggestIncomeList = (ListView)mRootView.findViewById(R.id.month_analytics_biggest_income_list);
 
-            MonthTransactions expenses = mMonthTransactions.getTransactionSubsetSorted(MonthTransactions.SubsetType.EXPENSE);
-            MonthTransactions incomes = mMonthTransactions.getTransactionSubsetSorted(MonthTransactions.SubsetType.INCOME);
-            ExpenseItemAdapterRead expenseAdapter = new ExpenseItemAdapterRead(getActivity(), R.layout.adapter_expense_item_read, expenses);
-            ExpenseItemAdapterRead incomeAdapter = new ExpenseItemAdapterRead(getActivity(), R.layout.adapter_expense_item_read, incomes);
+            MonthTransactions expenses = mMonthTransactions.getTopFromSubset(MonthTransactions.SubsetType.EXPENSE);
+            MonthTransactions incomes = mMonthTransactions.getTopFromSubset(MonthTransactions.SubsetType.INCOME);
 
-            mBiggestExpenseList.setAdapter(expenseAdapter);
-            mBiggestIncomeList.setAdapter(incomeAdapter);
+            if(expenses.getItems().size() > 0)
+            {
+                mBiggestExpenseList = (ListView)mRootView.findViewById(R.id.month_analytics_biggest_expense_list);
+                ExpenseItemAdapterRead expenseAdapter = new ExpenseItemAdapterRead(getActivity(), R.layout.adapter_expense_item_read, expenses);
+                mBiggestExpenseList.setAdapter(expenseAdapter);
+            }
+            else
+            {
+                TextView emptyExpenses = (TextView)mRootView.findViewById(R.id.analytics_month_empty_expense);
+                emptyExpenses.setVisibility(View.VISIBLE);
+            }
+
+            if(incomes.getItems().size() > 0)
+            {
+                mBiggestIncomeList = (ListView)mRootView.findViewById(R.id.month_analytics_biggest_income_list);
+                ExpenseItemAdapterRead incomeAdapter = new ExpenseItemAdapterRead(getActivity(), R.layout.adapter_expense_item_read, incomes);
+                mBiggestIncomeList.setAdapter(incomeAdapter);
+            }
+            else
+            {
+                TextView emptyIncome = (TextView)mRootView.findViewById(R.id.analytics_month_empty_income);
+                emptyIncome.setVisibility(View.VISIBLE);
+            }
 
         }
 

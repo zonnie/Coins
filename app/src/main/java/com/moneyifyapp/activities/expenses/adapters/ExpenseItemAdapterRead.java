@@ -18,8 +18,6 @@ import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.Transaction;
 
-import java.util.List;
-
 /**
  * An expense item adapter.
  */
@@ -83,6 +81,7 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
         if (view == null)
         {
 
+
             LayoutInflater viewInflator;
             viewInflator = LayoutInflater.from(getContext());
 
@@ -97,7 +96,9 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
             view.startAnimation(mItemsLoadAnimation);
         }
 
-        return getRegularView(position, view);
+        getRegularView(position, view);
+
+        return view;
     }
 
     /**
@@ -134,12 +135,7 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
             mExpenseCurrency = (TextView) view.findViewById(R.id.currency);
             // Handle click view for edit
             mExpenseNote = (TextView) view.findViewById(R.id.expenseItemNote);
-            mExpenseDayOfMonth = (TextView)view.findViewById(R.id.expense_item_date_text);
 
-            /**     Build the view **/
-
-            // Handle the view's creation date
-            handleViewDate(currentTransactionView);
             // Update image from object
             updateImage(Images.getImageByPosition(currentTransactionView.mImageResourceIndex));
             // Handle view's description
@@ -163,26 +159,6 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
         if (mExpenseDescription != null)
         {
             mExpenseDescription.setText(currentTransactionView.mDescription);
-        }
-
-    }
-
-    /**
-     *
-     * @param currentTransactionView
-     */
-    private void handleViewDate(Transaction currentTransactionView)
-    {
-        if (mExpenseDescription != null)
-        {
-            String date = currentTransactionView.mTransactionDay;
-
-            if(date.endsWith("1") && !date.equals("11")){date += "st";}
-            else if(date.endsWith("2") && !date.equals("12")){date += "nd";}
-            else if(date.endsWith("3") && !date.equals("13")){date += "rd";}
-            else {date += "th";}
-
-            mExpenseDayOfMonth.setText(date);
         }
 
     }
@@ -245,49 +221,6 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
         TextView currency = (TextView)view.findViewById(R.id.currency);
         currency.setTextColor(view.getResources().getColor(colorId));
 
-    }
-
-    /**
-     * Get the expense items.
-     */
-    public List<Transaction> getItems()
-    {
-        return mTransactions.getItems();
-    }
-
-    /**
-     *
-     * Update the view look according to it's type.
-     *
-     * @param updatedExpense
-     * @param expense
-     */
-    private void updateViewType(Transaction updatedExpense, Transaction expense)
-    {
-        boolean changeTextColor = false;
-
-        if(updatedExpense.mIsExpense != expense.mIsExpense)
-        {
-            changeTextColor = true;
-        }
-
-        updatedExpense.mIsExpense = expense.mIsExpense;
-
-        // Update the amount color according to transaction type
-        if(expense.mIsExpense && changeTextColor)
-        {
-            if(mMyView != null)
-            {
-                updateViewToExpense(mMyView, R.color.expense_color);
-            }
-        }
-        else if(!expense.mIsExpense && changeTextColor)
-        {
-            if(mMyView != null)
-            {
-                updateViewToExpense(mMyView, R.color.income_color);
-            }
-        }
     }
 
     /**

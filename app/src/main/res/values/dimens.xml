@@ -2,10 +2,12 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="expense_remove_button_bottom_margin">4dp</dimen>
     <dimen name="expense_card_margin">5dp</dimen>
     <dimen name="padding_start_currency">5dp</dimen>
     <dimen name="drawable_left_pad">10dp</dimen>
     <dimen name="expense_drawable_left_pad">15dp</dimen>
+    <dimen name="expense_date_margin_end">15dp</dimen>
     <dimen name="splash_top_margin">150dp</dimen>
     <dimen name="max_add_height">10dp</dimen>
     <dimen name="max_add_width">10dp</dimen>

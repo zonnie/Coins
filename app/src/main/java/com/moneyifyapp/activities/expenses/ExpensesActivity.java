@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.analytics.AnalyticsActivity;
@@ -82,6 +84,8 @@ public class ExpensesActivity extends Activity
     private ActionBarDrawerToggle mDrawerToggle;
     private YearTransactions mYearTransactions;
     private Activity mActivity;
+    private Typeface mHeadLineTypeFace;
+
 
     /********************************************************************/
     /**                          Methods                               **/
@@ -138,6 +142,10 @@ public class ExpensesActivity extends Activity
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP);
 
         mYearTransactions = new YearTransactions(mCalender.get(Calendar.YEAR));
+
+        mHeadLineTypeFace = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
+        TextView title = (TextView)findViewById(R.id.top_drawer_title);
+        title.setTypeface(mHeadLineTypeFace);
     }
 
     /**

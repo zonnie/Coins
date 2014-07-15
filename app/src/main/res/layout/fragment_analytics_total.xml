@@ -1,6 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="fill_parent"
             android:layout_gravity="center"
             android:background="@color/background"
 
@@ -9,12 +9,15 @@
     <LinearLayout
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="fill_parent"
         android:orientation="vertical"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/big_padding"
         tools:context="com.moneyifyapp.activities.analytics.AnalyticsActivity.ByDateAnalyticsFragment"
         >
+
+        <!-- Title -->
 
         <LinearLayout
             android:id="@+id/month_analytics_date_layout"
@@ -47,6 +50,8 @@
                 />
         </LinearLayout>
 
+        <!-- Body -->
+
         <LinearLayout
             android:id="@+id/month_analytics_main_layout"
             android:layout_width="match_parent"
@@ -58,11 +63,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/padding_start_currency"
+                android:layout_marginBottom="@dimen/big_padding"
                 android:layout_marginTop="@dimen/big_padding"
                 android:gravity="center"
                 android:text="@string/analytics_str_totals_hint"
-                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@android:color/darker_gray"
                 />
 
@@ -173,11 +178,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/padding_start_currency"
+                android:layout_marginBottom="@dimen/big_padding"
                 android:layout_marginTop="@dimen/big_padding"
                 android:gravity="center"
                 android:text="@string/analytics_str_intrest_hint"
-                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@android:color/darker_gray"
                 />
 
@@ -187,18 +192,19 @@
                 android:id="@+id/month_analytics_biggest_expense_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/expense_card_margin"
-                android:layout_marginLeft="@dimen/expense_drawable_left_pad"
-                android:layout_marginRight="@dimen/expense_drawable_left_pad"
+                android:layout_marginLeft="@dimen/drawable_left_pad"
+                android:layout_marginRight="@dimen/drawable_left_pad"
                 android:background="@drawable/expense_item_card"
                 android:orientation="vertical"
                 android:padding="@dimen/drawable_left_pad"
                 android:showDividers="none"
+
                 >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingEnd="@dimen/padding_start_currency"
                     android:paddingStart="@dimen/padding_start_currency"
@@ -208,45 +214,34 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
                         android:text="@string/analytics_str_biggest_expense_label"
                         android:textSize="@dimen/large_font"
-                        />
-
-                    <com.moneyifyapp.views.CurrencyTextView
-                        android:id="@+id/analytics_biggest_expense_currency"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
-                        android:gravity="center|right"
-                        android:text="@string/default_currency"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/expense_color"
-                        android:textSize="@dimen/large_font"
-                        android:textStyle="bold"
-                        />
-
-                    <TextView
-                        android:id="@+id/analytics_biggest_expense_sum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center|right"
-                        android:text="@string/init_total_value"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/expense_color"
-                        android:textSize="@dimen/large_font"
-                        android:textStyle="bold"
                         />
 
                 </LinearLayout>
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/analytics_month_empty_expense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_start_currency"
+                android:layout_marginTop="@dimen/drawable_left_pad"
+                android:gravity="center"
+                android:text="@string/analytics_str_no_income"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@android:color/black"
+                android:visibility="gone"
+                />
+
             <ListView
                 android:id="@+id/month_analytics_biggest_expense_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/drawable_left_pad"
+                >
 
-                </ListView>
+            </ListView>
 
             <!-- Biggest income -->
 
@@ -254,9 +249,8 @@
                 android:id="@+id/month_analytics_biggest_income_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/expense_card_margin"
-                android:layout_marginLeft="@dimen/expense_drawable_left_pad"
-                android:layout_marginRight="@dimen/expense_drawable_left_pad"
+                android:layout_marginLeft="@dimen/drawable_left_pad"
+                android:layout_marginRight="@dimen/drawable_left_pad"
                 android:background="@drawable/expense_item_card"
                 android:orientation="vertical"
                 android:padding="@dimen/drawable_left_pad"
@@ -266,6 +260,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingEnd="@dimen/padding_start_currency"
                     android:paddingStart="@dimen/padding_start_currency"
@@ -275,44 +270,33 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
                         android:text="@string/analytics_str_biggest_income_label"
                         android:textSize="@dimen/large_font"
-                        />
-
-                    <com.moneyifyapp.views.CurrencyTextView
-                        android:id="@+id/analytics_biggest_income_currency"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
-                        android:gravity="center|right"
-                        android:text="@string/default_currency"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/income_color"
-                        android:textSize="@dimen/large_font"
-                        android:textStyle="bold"
-                        />
-
-                    <TextView
-                        android:id="@+id/analytics_biggest_income_sum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center|right"
-                        android:text="@string/init_total_value"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/income_color"
-                        android:textSize="@dimen/large_font"
-                        android:textStyle="bold"
                         />
 
                 </LinearLayout>
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/analytics_month_empty_income"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_start_currency"
+                android:layout_marginTop="@dimen/drawable_left_pad"
+                android:gravity="center"
+                android:text="@string/analytics_str_no_income"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@android:color/darker_gray"
+                android:visibility="gone"
+                />
+
             <ListView
                 android:id="@+id/month_analytics_biggest_income_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/drawable_left_pad"
+                >
 
             </ListView>
 

@@ -63,7 +63,7 @@
                 android:textColor="@android:color/darker_gray"
                 android:layout_marginBottom="@dimen/drawable_left_pad"/>
 
-            <AutoCompleteTextView
+            <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

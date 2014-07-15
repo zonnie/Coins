@@ -129,6 +129,26 @@ public class MonthTransactions
     }
 
     /**
+     *
+     * Returns the top transaction from a subset of transactions.
+     *
+     * @param type
+     * @return
+     */
+    public MonthTransactions getTopFromSubset(SubsetType type)
+    {
+        MonthTransactions transactions = getTransactionSubset(type);
+        if(transactions.getItems().size() > 0)
+        {
+            Transaction transaction = transactions.getItems().get(0);
+            transactions.getItems().clear();
+            transactions.getItems().add(transaction);
+        }
+
+        return transactions;
+    }
+
+    /**
      * Enum for extracting subsets of the transactions
      */
     public static enum SubsetType {INCOME, EXPENSE};

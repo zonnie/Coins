@@ -6,7 +6,7 @@
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
 
-    <string name="pref_default_currency">Application Currency</string>
+    <string name="pref_default_currency">Currency</string>
 
     <!-- Available currencies -->
 
@@ -24,8 +24,8 @@
     <string-array name="currenciesvalues">
         <item>$</item>
         <item>₪</item>
-        <item>€</item>
         <item>£</item>
+        <item>€</item>
         <item>¥</item>
         <item>¥</item>
     </string-array>

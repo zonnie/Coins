@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -776,7 +777,7 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
     @Override
     public void removeFromFragmentList(View view)
     {
-        final int position = getListView().getPositionForView((LinearLayout) view.getParent().getParent());
+        final int position = getListView().getPositionForView((GridLayout) view.getParent().getParent());
         if (position >= 0)
         {
             verifyRemoveDialog(position);
