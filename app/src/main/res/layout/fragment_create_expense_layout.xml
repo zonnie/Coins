@@ -161,7 +161,6 @@
                 android:layout_weight="1"
                 android:background="@drawable/stanard_button_drawable"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ok"
                 android:text="@string/item_details_submit"
                 android:textColor="@android:color/white"/>
 

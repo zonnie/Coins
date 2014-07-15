@@ -68,7 +68,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         mTransactions = expenses;
         mLayoutResourceId = resource;
         mItemsLoaded = 0;
-        mDateFont = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
+        mDateFont = Typeface.create("sans-serif-thin", Typeface.NORMAL);
     }
 
     /**
@@ -204,11 +204,14 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             String date = currentTransactionView.mTransactionDay;
             String dateSuffix  = "";
 
-            /*if(mDateFont != null)
+            // Change the font
+            if(mDateFont != null)
             {
                 mExpenseDayOfMonth.setTypeface(mDateFont);
-            }*/
+                mExpenseDaySuffix.setTypeface(mDateFont);
+            }
 
+            // Build the day suffix
             if(date.endsWith("1") && !date.equals("11")){dateSuffix += "st";}
             else if(date.endsWith("2") && !date.equals("12")){dateSuffix += "nd";}
             else if(date.endsWith("3") && !date.equals("13")){dateSuffix += "rd";}

@@ -12,32 +12,21 @@ import com.moneyifyapp.utils.Utils;
 
 /**
  *
+ * This is the per-month analytics activity.
+ * It is used to detail the transactions and some insights on that month.
+ *
  */
 public class MonthAnalytics extends Activity
 {
+    private int mMonth;
+    private int mYear;
+    private YearTransactions mYearTransactions;
 
-    /********************************************************************/
-    /**                          Members                               **/
-    /********************************************************************/
-
-    /********************************************************************/
-    /**                          Methods                               **/
-    /********************************************************************/
-
-    /**
-     * @param savedInstanceState
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_month_analytics);
-
-        // Get the month
-        int month = getIntent().getExtras().getInt(ExpenseListFragment.MONTH_KEY);
-        int year = getIntent().getExtras().getInt(ExpenseListFragment.YEAR_KEY);
-        String yearTransString = getIntent().getExtras().getString(ExpenseListFragment.YEAR_JSON_KEY);
-        YearTransactions yearTransactions = new Gson().fromJson(yearTransString, YearTransactions.class);
 
         if (savedInstanceState == null)
         {
@@ -46,11 +35,19 @@ public class MonthAnalytics extends Activity
             Utils.initializeActionBar(this);
             Utils.setLogo(this,R.drawable.chart);
 
-            // Instantiate a fragment
-            MonthAnalyticsFragment fragment = MonthAnalyticsFragment.newInstance(month, year, yearTransactions);
+            initYearTransactiosnFromIntent();
 
-            // Tell activity to load fragment
+            // Instantiate a fragment and load with fragment manager
+            MonthAnalyticsFragment fragment = MonthAnalyticsFragment.newInstance(mMonth, mYear, mYearTransactions);
             getFragmentManager().beginTransaction().add(R.id.container,fragment).commit();
         }
+    }
+
+    private void initYearTransactiosnFromIntent()
+    {
+        mMonth = getIntent().getExtras().getInt(ExpenseListFragment.MONTH_KEY);
+        mYear = getIntent().getExtras().getInt(ExpenseListFragment.YEAR_KEY);
+        String yearTransString = getIntent().getExtras().getString(ExpenseListFragment.YEAR_JSON_KEY);
+        mYearTransactions = new Gson().fromJson(yearTransString, YearTransactions.class);
     }
 }

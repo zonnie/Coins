@@ -6,8 +6,6 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.analytics.fragments.MonthAnalyticsFragment;
@@ -16,24 +14,19 @@ import com.moneyifyapp.utils.Utils;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class AnalyticsActivity extends Activity
+/**
+ * This is a swipable activity that displays all
+ * The major analytics avialable.
+ */
+public class FullAnalyticsActivity extends Activity
 {
-
-    /********************************************************************/
-    /**                          Members                               **/
-    /********************************************************************/
-
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private Calendar mCalender;
-
-    /********************************************************************/
-    /**                          Methods                               **/
-    /********************************************************************/
+    private int mAnalyticsCount;
+    private static int ANALYTICS_COUNT_DEFAULT = 3;
 
     /**
-     *
-     * @param savedInstanceState
      */
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -45,6 +38,7 @@ public class AnalyticsActivity extends Activity
         Utils.initializeActionBar(this);
         Utils.setLogo(this,R.drawable.chart);
         mCalender = Calendar.getInstance();
+        mAnalyticsCount = ANALYTICS_COUNT_DEFAULT;
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -53,52 +47,19 @@ public class AnalyticsActivity extends Activity
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
     }
 
     /**
      *
-     * @param menu
-     * @return
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.analytics, menu);
-        return true;
-    }
-
-    /**
+     * This is the pager, it is responsible for the creating
+     * fragments for each page, handling the page count and titiling.
+     * It is used by the ViewPager
      *
-     * @param item
-     * @return
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings)
-        {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter
     {
 
         /**
-         *
-         * @param fm
          */
         public SectionsPagerAdapter(FragmentManager fm)
         {
@@ -106,9 +67,6 @@ public class AnalyticsActivity extends Activity
         }
 
         /**
-         *
-         * @param position
-         * @return
          */
         @Override
         public Fragment getItem(int position)
@@ -119,8 +77,6 @@ public class AnalyticsActivity extends Activity
         }
 
         /**
-         *
-         * @return
          */
         @Override
         public int getCount()
@@ -130,9 +86,6 @@ public class AnalyticsActivity extends Activity
         }
 
         /**
-         *
-         * @param position
-         * @return
          */
         @Override
         public CharSequence getPageTitle(int position)

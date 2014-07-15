@@ -20,16 +20,11 @@ import com.moneyifyapp.model.Transaction;
 
 /**
  * An expense item adapter.
+ * This adapter should be used to display lists of transactions.
+ *
  */
 public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
 {
-
-    /********************************************************************/
-    /**                          Members                               **/
-    /**
-     * ****************************************************************
-     */
-
     private TextView mExpenseDescription;
     private LinearLayout mItemLayout;
     private TextView mExpenseValue;
@@ -46,14 +41,8 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
     private final String EMPTY_NOTE_HINT = "Please enter a note...";
     private Animation mItemsLoadAnimation;
 
-    /********************************************************************/
-    /**                          Methods                               **/
-    /********************************************************************/
-
-
     /**
-     * @param context
-     * @param resource
+     *
      */
     public ExpenseItemAdapterRead(Context context, int resource, MonthTransactions expenses)
     {
@@ -61,15 +50,14 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
         mTransactions = expenses;
         mLayoutResourceId = resource;
         mItemsLoaded = 0;
+
+        // Load animation lazy
+        if (mItemsLoadAnimation == null)
+            mItemsLoadAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
     }
 
     /**
      * Generates the fragments view for display for each list view item.
-     *
-     * @param position
-     * @param convertView
-     * @param parent
-     * @return
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
@@ -78,160 +66,121 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
         View view = convertView;
         mMyView = view;
 
-        if (view == null)
+        if (mMyView == null)
         {
-
-
-            LayoutInflater viewInflator;
-            viewInflator = LayoutInflater.from(getContext());
-
-            view = viewInflator.inflate(mLayoutResourceId, null);
-
-            // Load animation lazy
-            if(mItemsLoadAnimation == null)
-            {
-                mItemsLoadAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
-            }
-
-            view.startAnimation(mItemsLoadAnimation);
+            inflateGivenLayoutAndAnimate();
         }
 
-        getRegularView(position, view);
+        getRegularView(position);
 
-        return view;
+        return mMyView;
     }
 
     /**
-     *
-     * @param position
-     * @param view
-     * @return
      */
-    private View getRegularView(int position, View view)
+    private void inflateGivenLayoutAndAnimate()
+    {
+        LayoutInflater viewInflator;
+        viewInflator = LayoutInflater.from(getContext());
+        mMyView = viewInflator.inflate(mLayoutResourceId, null);
+        mMyView.startAnimation(mItemsLoadAnimation);
+    }
+
+    /**
+     */
+    private View getRegularView(int position)
     {
         Transaction currentTransactionView = mTransactions.getItems().get(position);
 
         // Populate the current view according to collection item.
         if (currentTransactionView != null)
         {
-            // Take care of click to layout to be able to edit item in view
-            mItemLayout = (LinearLayout) view.findViewById(R.id.transaction_card_layout);
+            storeViews();
 
             // Update ht look of the the view accordingly
-            if (mTransactions.getItems().get(position).mIsExpense == false)
-            {
-                updateViewToExpense(view, R.color.income_color);
-            }
+            if(mTransactions.getItems().get(position).mIsExpense == true)
+                updateTransactionSumColor(mMyView, R.color.expense_color);
             else
-            {
-                updateViewToExpense(view, R.color.expense_color);
-            }
+                updateTransactionSumColor(mMyView, R.color.income_color);
 
-            // Handle click view for edit
-            mExpenseDescription = (TextView) view.findViewById(R.id.expenseDesc);
-            mImage = (ImageView)view.findViewById(R.id.image_container);
-            // Handle click view for edit
-            mExpenseValue = (TextView) view.findViewById(R.id.expenseValue);
-            mExpenseCurrency = (TextView) view.findViewById(R.id.currency);
-            // Handle click view for edit
-            mExpenseNote = (TextView) view.findViewById(R.id.expenseItemNote);
-
-            // Update image from object
-            updateImage(Images.getImageByPosition(currentTransactionView.mImageResourceIndex));
-            // Handle view's description
+            updateDescriptionLeftDrawable(Images.getImageByPosition(currentTransactionView.mImageResourceIndex));
             handleViewDescription(currentTransactionView);
-            // Handle view's value amount
             handleViewValue(currentTransactionView);
-            // Handle view's currency
             handleViewCurrency(currentTransactionView);
-            // Handle view's note
             handleViewNote(currentTransactionView);
         }
-        return view;
+        return mMyView;
     }
 
     /**
-     *
-     * @param currentTransactionView
+     */
+    private void storeViews()
+    {
+        // Take care of click to layout to be able to edit item in view
+        mItemLayout = (LinearLayout) mMyView.findViewById(R.id.transaction_card_layout);
+        mExpenseDescription = (TextView) mMyView.findViewById(R.id.expenseDesc);
+        mImage = (ImageView) mMyView.findViewById(R.id.image_container);
+        mExpenseValue = (TextView) mMyView.findViewById(R.id.expenseValue);
+        mExpenseCurrency = (TextView) mMyView.findViewById(R.id.currency);
+        mExpenseNote = (TextView) mMyView.findViewById(R.id.expenseItemNote);
+
+    }
+
+    /**
      */
     private void handleViewDescription(Transaction currentTransactionView)
     {
         if (mExpenseDescription != null)
-        {
             mExpenseDescription.setText(currentTransactionView.mDescription);
-        }
-
     }
 
     /**
-     *
-     * @param currentTransactionView
      */
     private void handleViewValue(Transaction currentTransactionView)
     {
         if (mExpenseValue != null)
-        {
-
             mExpenseValue.setText(currentTransactionView.mValue);
-        }
     }
 
     /**
-     *
-     * @param currentTransactionView
      */
     private void handleViewCurrency(Transaction currentTransactionView)
     {
         if (mExpenseCurrency != null)
-        {
             mExpenseCurrency.setText(currentTransactionView.mCurrency);
-        }
     }
 
     /**
-     *
-     * @param currentTransactionView
      */
     private void handleViewNote(Transaction currentTransactionView)
     {
         if (mExpenseNote != null)
         {
             if (!currentTransactionView.mNotes.isEmpty())
-            {
                 mExpenseNote.setText(currentTransactionView.mNotes);
-            }
             else
-            {
                 mExpenseNote.setText(EMPTY_NOTE_HINT);
-            }
         }
     }
 
     /**
-     *
-     * Updates the item to be expense/income item.
-     *
-     * @param view
      */
-    private void updateViewToExpense(View view, int colorId)
+    private void updateTransactionSumColor(View view, int colorId)
     {
-        TextView amount = (TextView)view.findViewById(R.id.expenseValue);
-        amount.setTextColor(view.getResources().getColor(colorId));
+        TextView amount = (TextView) view.findViewById(R.id.expenseValue);
+        TextView currency = (TextView) view.findViewById(R.id.currency);
 
-        TextView currency = (TextView)view.findViewById(R.id.currency);
+        amount.setTextColor(view.getResources().getColor(colorId));
         currency.setTextColor(view.getResources().getColor(colorId));
 
     }
 
     /**
-     * Update the description's left drawable
-     *
-     * @param resourceIndex
      */
-    private void updateImage(int resourceIndex)
+    private void updateDescriptionLeftDrawable(int resourceIndex)
     {
         Drawable img = getContext().getResources().getDrawable(resourceIndex);
-        img.setBounds( 0, 0, PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
+        img.setBounds(0, 0, PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
         mExpenseDescription.setCompoundDrawables(img, null, null, null);
     }
 }

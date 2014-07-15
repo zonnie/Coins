@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="analytics_str_total_expense_label">Expenses</string>
-    <string name="analytics_str_total_income_label">Income</string>
-    <string name="analytics_str_biggest_expense_label">Biggest Expense</string>
-    <string name="analytics_str_biggest_income_label">Biggest Income</string>
-    <string name="analytics_str_totals_hint">This is this month\'s bottom line</string>
-    <string name="analytics_str_intrest_hint">Some interesting info we saw</string>
+    <string name="analytics_str_total_expense_label">Spent</string>
+    <string name="analytics_str_total_income_label">Earned</string>
+    <string name="analytics_str_biggest_expense_label">Top Spent</string>
+    <string name="analytics_str_biggest_income_label">Highest Income</string>
+    <string name="analytics_str_totals_hint">Monthly bottom line</string>
+    <string name="analytics_str_intrest_hint">Some interesting insights</string>
     <string name="analytics_str_no_income">Nothing earned :(</string>
     <string name="analytics_str_no_expense">Noting spent, hooray :)</string>
 </resources>

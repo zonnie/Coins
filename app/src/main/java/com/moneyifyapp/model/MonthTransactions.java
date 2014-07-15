@@ -72,10 +72,7 @@ public class MonthTransactions
 
     /**
      * Get the max expense/income.
-     *
      * @param type - if 'true' then get max expense, otherwise get max income.
-     *
-     * @return the max transaction
      */
     public long getMaxTransaction(SubsetType type)
     {
@@ -84,20 +81,15 @@ public class MonthTransactions
         for(Transaction curTrans : mTransactions)
         {
             Long curValue = Long.valueOf(curTrans.mValue);
-
             if(type == SubsetType.EXPENSE && curTrans.mIsExpense == true)
             {
                 if(maxExpense < curValue)
-                {
                     maxExpense = curValue;
-                }
             }
             else if(type == SubsetType.INCOME && curTrans.mIsExpense == false)
             {
                 if(maxExpense < curValue)
-                {
                     maxExpense = curValue;
-                }
             }
         }
 
@@ -105,9 +97,8 @@ public class MonthTransactions
     }
 
     /**
-     *
-     * @param type
-     * @return
+     * Returns a subset of the monthly transactions according
+     * to the given type.
      */
     private MonthTransactions getTransactionSubset(SubsetType type)
     {
@@ -129,15 +120,11 @@ public class MonthTransactions
     }
 
     /**
-     *
      * Returns the top transaction from a subset of transactions.
-     *
-     * @param type
-     * @return
      */
     public MonthTransactions getTopFromSubset(SubsetType type)
     {
-        MonthTransactions transactions = getTransactionSubset(type);
+        MonthTransactions transactions = getTransactionSubsetSorted(type);
         if(transactions.getItems().size() > 0)
         {
             Transaction transaction = transactions.getItems().get(0);
@@ -154,10 +141,8 @@ public class MonthTransactions
     public static enum SubsetType {INCOME, EXPENSE};
 
     /**
-     *
      * Sort the transactions according to the transcation value.
      * This sorts in a decending order.
-     *
      */
     public void sort()
     {
@@ -166,11 +151,7 @@ public class MonthTransactions
     }
 
     /**
-     *
      * Get transaction subset sorted in decending order.
-     *
-     * @param type
-     * @return
      */
     public MonthTransactions getTransactionSubsetSorted(SubsetType type)
     {

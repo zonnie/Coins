@@ -3,16 +3,10 @@ package com.moneyifyapp.model;
 import java.util.Calendar;
 
 /**
- * Created by Zonnie_Work on 30/06/2014.
+ * This is the main modeling for a transaction
  */
 public class Transaction implements Comparable<Transaction>
 {
-    /********************************************************************/
-    /**                          Members                               **/
-    /**
-     * ****************************************************************
-     */
-
     public String mId;
     public String mDescription;
     public String mValue;
@@ -20,15 +14,7 @@ public class Transaction implements Comparable<Transaction>
     public int mImageResourceIndex;
     public String mNotes;
     public boolean mIsExpense;
-    public int mOrderIndex;
     public String mTransactionDay;
-
-    /********************************************************************/
-    /**                          Methods                               **/
-    /**
-     * ****************************************************************
-     */
-
     public static final String CLASS_NAME = "expense";
     public static final String KEY_ID = "code";
     public static final String KEY_DESCRIPTION = "description";
@@ -37,16 +23,12 @@ public class Transaction implements Comparable<Transaction>
     public static final String KEY_IMAGE_NAME = "image";
     public static final String KEY_NOTES = "note";
     public static final String KEY_TYPE = "type";
-    public static final boolean IS_EXPENSE_DEFAULT = true;
     public static final String CURRENCY_DEFAULT = "₪";
-    public static final int KEY_ORDER = 0;
+    public static final String DEFUALT_TRANSCATION_ID = "0";
 
 
     /**
-     * @param id
-     * @param description
-     * @param value
-     * @param currency
+     *
      */
     public Transaction(String id, String description, String value,
                        String currency, String note, int imageName, boolean isExpense)
@@ -62,10 +44,7 @@ public class Transaction implements Comparable<Transaction>
     }
 
     /**
-     * @param id
-     * @param description
-     * @param value
-     * @param currency
+     *
      */
     public Transaction(String id, String description, String value,
                        String currency, String note, int imageName, boolean isExpense,
@@ -77,7 +56,6 @@ public class Transaction implements Comparable<Transaction>
 
     /**
      *
-     * @param id
      */
     public Transaction(String id)
     {
@@ -92,7 +70,7 @@ public class Transaction implements Comparable<Transaction>
     }
 
     /**
-     * @return
+     *
      */
     @Override
     public String toString()
@@ -101,26 +79,7 @@ public class Transaction implements Comparable<Transaction>
     }
 
     /**
-     * @param mImageResourceIndex
-     */
-    public void setmImageResourceIndex(int mImageResourceIndex)
-    {
-        this.mImageResourceIndex = mImageResourceIndex;
-    }
-
-    /**
-     * @param mNotes
-     */
-    public void setmNotes(String mNotes)
-    {
-        this.mNotes = mNotes;
-    }
-
-    /**
-     * Compare 2 transactions
      *
-     * @param another
-     * @return
      */
     @Override
     public int compareTo(Transaction another)
@@ -129,16 +88,10 @@ public class Transaction implements Comparable<Transaction>
         long anotherValue = Long.valueOf(another.mValue);
 
         if(myValue < anotherValue)
-        {
             return -1;
-        }
         else if(myValue > anotherValue)
-        {
             return 1;
-        }
         else
-        {
             return 0;
-        }
     }
 }

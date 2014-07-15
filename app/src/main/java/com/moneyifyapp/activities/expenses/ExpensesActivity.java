@@ -22,7 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
-import com.moneyifyapp.activities.analytics.AnalyticsActivity;
+import com.moneyifyapp.activities.analytics.FullAnalyticsActivity;
 import com.moneyifyapp.activities.expenses.drawer.DrawerItemAdapter;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.activities.login.LoginActivity;
@@ -242,7 +242,7 @@ public class ExpensesActivity extends Activity
             {
                 /** Do drawer actions here **/
                 //mYearTransactions = new YearTransactions(mCalender.get(Calendar.YEAR) + 1);
-                Intent intent = new Intent(mActivity, AnalyticsActivity.class);
+                Intent intent = new Intent(mActivity, FullAnalyticsActivity.class);
                 startActivity(intent);
             }
             if (position == 1)

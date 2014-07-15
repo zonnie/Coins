@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenseDetail.fragments.ExpenseDetailFragment;
@@ -15,15 +13,14 @@ import com.moneyifyapp.activities.preferences.PrefActivity;
 import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.utils.Utils;
 
+/**
+ * This activity holds a fragment that handles the
+ * insertion or viewing of a transaction's detailed info.
+ * This is used for both addition of new transactions and editing existing ones.
+ */
 public class ExpenseDetailActivity extends Activity
         implements ExpenseDetailFragment.OnFragmentInteractionListener
 {
-    /********************************************************************/
-    /**                          Section                               **/
-    /**
-     * ****************************************************************
-     */
-
     private int mRequestCode;
     private int mItemPosition;
     private String mDescription;
@@ -33,13 +30,8 @@ public class ExpenseDetailActivity extends Activity
     private int mImageName;
     private boolean mIsExpense;
 
-    /********************************************************************/
-    /**                          Section                               **/
-    /********************************************************************/
-
-
     /**
-     * @param savedInstanceState
+     *
      */
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -49,6 +41,7 @@ public class ExpenseDetailActivity extends Activity
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
         setContentView(R.layout.activity_create_expense_layout);
+
         Utils.initializeActionBar(this);
         Utils.removeLogo(this);
 
@@ -56,76 +49,50 @@ public class ExpenseDetailActivity extends Activity
         boolean isEdit = false;
 
         if (mRequestCode == ExpensesActivity.REQ_EDIT_ITEM)
-        {
             isEdit = true;
-        }
 
         if (savedInstanceState == null)
         {
             Transaction tempExpense;
 
-            // This is a new item to create
+            // If this is not an edit, clone the transcation for edit
             if (!isEdit)
-            {
-                tempExpense = new Transaction("0");
-            }
-            // We are editing an existing item
+                tempExpense = new Transaction(Transaction.DEFUALT_TRANSCATION_ID);
             else
-            {
-                mItemPosition = getIntent().getExtras().getInt(ExpenseListFragment.MONTH_KEY);
-                mDescription = getIntent().getExtras().getString(Transaction.KEY_DESCRIPTION);
-                mValue = getIntent().getExtras().getString(Transaction.KEY_VALUE);
-                mCurrency = getIntent().getExtras().getString(Transaction.KEY_CURRENCY);
-                mNotes = getIntent().getExtras().getString(Transaction.KEY_NOTES);
-                mImageName = getIntent().getExtras().getInt(Transaction.KEY_IMAGE_NAME);
-                mIsExpense = getIntent().getExtras().getBoolean(Transaction.KEY_TYPE);
+                tempExpense = createTransactionFromIntent();
 
-                tempExpense = new Transaction("0", mDescription, mValue, mCurrency, mNotes, mImageName, mIsExpense);
-
-
-            }
-
-            // Get the default currency
-            tempExpense.mCurrency = PreferenceManager.getDefaultSharedPreferences(this).getString(PrefActivity.PREF_LIST_NAME, "$");
             getFragmentManager().beginTransaction()
                     .add(R.id.container, ExpenseDetailFragment.newInstance(isEdit, tempExpense))
                     .commit();
         }
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
+    /**
+     *
+     */
+    private Transaction createTransactionFromIntent()
     {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.create_expense, menu);
-        return true;
-    }
+        mItemPosition = getIntent().getExtras().getInt(ExpenseListFragment.MONTH_KEY);
+        mDescription = getIntent().getExtras().getString(Transaction.KEY_DESCRIPTION);
+        mValue = getIntent().getExtras().getString(Transaction.KEY_VALUE);
+        //mCurrency = getIntent().getExtras().getString(Transaction.KEY_CURRENCY);
+        mNotes = getIntent().getExtras().getString(Transaction.KEY_NOTES);
+        mImageName = getIntent().getExtras().getInt(Transaction.KEY_IMAGE_NAME);
+        mIsExpense = getIntent().getExtras().getBoolean(Transaction.KEY_TYPE);
+        // Get the default currency
+        mCurrency = PreferenceManager.getDefaultSharedPreferences(this).getString(PrefActivity.PREF_LIST_NAME, "$");
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        // The action
-        int id = item.getItemId();
-
-        /*
-        if (id == R.id.action_settings)
-        {
-            return true;
-        }
-        */
-
-        return super.onOptionsItemSelected(item);
+        return new Transaction(Transaction.DEFUALT_TRANSCATION_ID, mDescription, mValue, mCurrency, mNotes, mImageName, mIsExpense);
     }
 
     /**
-     * @param addDescription
-     * @param addSum
+     *
      */
     @Override
     public void onAddExpense(String addDescription, String addSum, String addCurrency, String addNote, int addImage, boolean isExpense)
     {
         Intent data = getIntent();
+
         data.putExtra(Transaction.KEY_DESCRIPTION, addDescription);
         data.putExtra(Transaction.KEY_VALUE, addSum);
         data.putExtra(Transaction.KEY_IMAGE_NAME, addImage);
@@ -133,12 +100,15 @@ public class ExpenseDetailActivity extends Activity
         data.putExtra(Transaction.KEY_NOTES, addNote);
         data.putExtra(ExpenseListFragment.MONTH_KEY, mItemPosition);
         data.putExtra(Transaction.KEY_TYPE, isExpense);
-        setResult(ExpensesActivity.EXPENSE_RESULT_OK, data);
 
+        setResult(ExpensesActivity.EXPENSE_RESULT_OK, data);
         finish();
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
+    /**
+     *
+     */
     @Override
     public void cancel()
     {

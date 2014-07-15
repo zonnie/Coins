@@ -47,7 +47,7 @@
             android:label="@string/title_activity_pref" >
         </activity>
         <activity
-            android:name=".activities.analytics.AnalyticsActivity"
+            android:name=".activities.analytics.FullAnalyticsActivity"
             android:label="@string/title_activity_analytics" >
         </activity>
         <activity

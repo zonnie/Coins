@@ -19,7 +19,7 @@
             android:gravity="center_horizontal"
             android:text="@string/totals_hint_string"
             android:paddingTop="@dimen/padding_start_currency"
-            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="@dimen/tiny_font"
             android:textColor="@android:color/darker_gray"
             android:layout_gravity="top"/>
         <LinearLayout
@@ -30,7 +30,6 @@
             android:gravity="center"
             android:paddingLeft="@dimen/drawable_left_pad"
             android:paddingRight="@dimen/drawable_left_pad"
-            android:paddingTop="@dimen/padding_start_currency"
             android:paddingBottom="@dimen/padding_start_currency"
             android:visibility="visible">
 
@@ -38,14 +37,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/default_currency"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="@dimen/huge_font"
                 android:id="@+id/plusCurrency"
                 android:textColor="@color/income_color"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="@dimen/huge_font"
                 android:text="@string/init_total_value"
                 android:id="@+id/plusAmount"
                 android:textColor="@color/income_color"/>
@@ -53,7 +52,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="@dimen/huge_font"
                 android:text="-"
                 android:id="@+id/minusSign"
                 android:paddingStart="@dimen/max_add_height"
@@ -62,7 +61,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="@dimen/huge_font"
                 android:text="@string/default_currency"
                 android:id="@+id/minusCurrency"
                 android:textColor="@color/expense_color"/>
@@ -70,7 +69,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="@dimen/huge_font"
                 android:text="@string/init_total_value"
                 android:id="@+id/minusAmount"
                 android:textColor="@color/expense_color"/>
@@ -87,7 +86,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="@dimen/huge_font"
                 android:text="@string/default_currency"
                 android:textStyle="bold"
                 android:id="@+id/totalCurrency"
@@ -96,7 +95,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="@dimen/huge_font"
                 android:textStyle="bold"
                 android:text="@string/init_total_value"
                 android:id="@+id/totalAmount"
