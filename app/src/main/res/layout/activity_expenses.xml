@@ -41,7 +41,6 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/expense_date_margin_end"
-            android:divider="@android:color/darker_gray"
             android:background="@drawable/drawer_item_card"
             android:text="@string/drawer_top_title_text"
             android:id="@+id/top_drawer_title"

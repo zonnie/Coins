@@ -102,14 +102,6 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             />
 
-        <!--<DatePicker
-            android:id="@+id/datePicker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:calendarViewShown="false"
-            android:spinnersShown="false"
-            android:visibility="gone"/>-->
-
         <ToggleButton
             android:id="@+id/isExpenseToggle"
             android:layout_width="match_parent"

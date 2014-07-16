@@ -26,6 +26,7 @@ public class Utils
 
     public static String globalCurrencyList[] = {"$", "₪", "£", "€", "¥", "¥"};
     private static final String mEmailFormat = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+    public static final String THIN_FONT_NAME = "sans-serif-thin";
 
     /********************************************************************/
     /**                          Methods                               **/

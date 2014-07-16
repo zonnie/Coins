@@ -17,6 +17,7 @@ import com.moneyifyapp.R;
 import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.Transaction;
+import com.moneyifyapp.utils.Utils;
 
 import java.util.List;
 
@@ -25,16 +26,10 @@ import java.util.List;
  */
 public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
 {
-
-    /********************************************************************/
-    /**                          Members                               **/
-    /**
-     * ****************************************************************
-     */
-
     private ListItemHandler mListener;
     private TextView mExpenseDescription;
     private LinearLayout mItemLayout;
+    private LinearLayout mExpenseNoteContainer;
     private TextView mExpenseValue;
     private TextView mExpenseCurrency;
     private TextView mExpenseNote;
@@ -45,18 +40,10 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private Button mRemoveItemButton;
     private View mMyView;
     public static int PICK_IMAGE_DIMENSIONS = 80;
-    private final String EMPTY_NOTE_HINT = "Please enter a note...";
     private Animation mItemsLoadAnimation;
     private Typeface mDateFont;
 
-    /********************************************************************/
-    /**                          Methods                               **/
-    /********************************************************************/
-
-
     /**
-     * @param context
-     * @param resource
      */
     public ExpenseItemAdapter(Context context, int resource, MonthTransactions expenses, ListItemHandler listener)
     {
@@ -64,51 +51,38 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         mListener = listener;
         mTransactions = expenses;
         mLayoutResourceId = resource;
-        mDateFont = Typeface.create("sans-serif-thin", Typeface.NORMAL);
+        mDateFont = Typeface.create(Utils.THIN_FONT_NAME, Typeface.NORMAL);
     }
 
     /**
      * Generates the fragments view for display for each list view item.
-     *
-     * @param position
-     * @param convertView
-     * @param parent
-     * @return
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
+        mMyView = convertView;
 
-        View view = convertView;
-        mMyView = view;
-
-        if (view == null)
+        if (mMyView == null)
         {
 
             LayoutInflater viewInflator;
             viewInflator = LayoutInflater.from(getContext());
 
-            view = viewInflator.inflate(mLayoutResourceId, null);
+            mMyView = viewInflator.inflate(mLayoutResourceId, null);
 
             // Load animation lazy
             if(mItemsLoadAnimation == null)
-            {
                 mItemsLoadAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
-            }
 
-            view.startAnimation(mItemsLoadAnimation);
+            mMyView.startAnimation(mItemsLoadAnimation);
         }
 
-        return getRegularView(position, view);
+        return getRegularView(position);
     }
 
     /**
-     *
-     * @param position
-     * @param view
-     * @return
      */
-    private View getRegularView(int position, View view)
+    private View getRegularView(int position)
     {
         Transaction currentTransactionView = mTransactions.getItems().get(position);
 
@@ -116,7 +90,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         if (currentTransactionView != null)
         {
             // Take care of click to layout to be able to edit item in view
-            mItemLayout = (LinearLayout) view.findViewById(R.id.transaction_card_layout);
+            mItemLayout = (LinearLayout) mMyView.findViewById(R.id.transaction_card_layout);
             mItemLayout.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -126,19 +100,8 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
                 }
             });
 
-            // Update ht look of the the view accordingly
-            if (mTransactions.getItems().get(position).mIsExpense == false)
-                updateViewToExpense(view, R.color.income_color);
-            else
-                updateViewToExpense(view, R.color.expense_color);
-
-            mExpenseDescription = (TextView) view.findViewById(R.id.expenseDesc);
-            mExpenseValue = (TextView) view.findViewById(R.id.expenseValue);
-            mExpenseCurrency = (TextView) view.findViewById(R.id.currency);
-            mExpenseNote = (TextView) view.findViewById(R.id.expenseItemNote);
-            mExpenseDayOfMonth = (TextView)view.findViewById(R.id.expense_item_date_text);
-            mExpenseDaySuffix = (TextView)view.findViewById(R.id.expense_item_date_suffix);
-            mRemoveItemButton = (Button) view.findViewById(R.id.expenseRemove);
+            initTransactionLookType(position);
+            storeViews();
             mRemoveItemButton.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -148,8 +111,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
                 }
             });
 
-            /**     Build the view **/
-
             handleViewDate(currentTransactionView);
             updateImage(Images.getImageByPosition(currentTransactionView.mImageResourceIndex));
             handleViewDescription(currentTransactionView);
@@ -157,12 +118,33 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             handleViewCurrency(currentTransactionView);
             handleViewNote(currentTransactionView);
         }
-        return view;
+        return mMyView;
+    }
+
+    private void initTransactionLookType(int position)
+    {
+        // Update ht look of the the view accordingly
+        if (!(mTransactions.getItems().get(position).mIsExpense))
+            updateViewToExpense(mMyView, R.color.income_color);
+        else
+            updateViewToExpense(mMyView, R.color.expense_color);
     }
 
     /**
-     *
-     * @param currentTransactionView
+     */
+    private void storeViews()
+    {
+        mExpenseDescription = (TextView) mMyView.findViewById(R.id.expenseDesc);
+        mExpenseValue = (TextView) mMyView.findViewById(R.id.expenseValue);
+        mExpenseCurrency = (TextView) mMyView.findViewById(R.id.currency);
+        mExpenseNote = (TextView) mMyView.findViewById(R.id.expenseItemNote);
+        mExpenseDayOfMonth = (TextView)mMyView.findViewById(R.id.expense_item_date_text);
+        mExpenseDaySuffix = (TextView)mMyView.findViewById(R.id.expense_item_date_suffix);
+        mRemoveItemButton = (Button) mMyView.findViewById(R.id.expenseRemove);
+        mExpenseNoteContainer = (LinearLayout)mMyView.findViewById(R.id.expenseItemNoteContainer);
+    }
+
+    /**
      */
     private void handleViewDescription(Transaction currentTransactionView)
     {
@@ -174,8 +156,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     }
 
     /**
-     *
-     * @param currentTransactionView
      */
     private void handleViewDate(Transaction currentTransactionView)
     {
@@ -204,46 +184,31 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     }
 
     /**
-     *
-     * @param currentTransactionView
      */
     private void handleViewValue(Transaction currentTransactionView)
     {
         if (mExpenseValue != null)
-        {
-
             mExpenseValue.setText(currentTransactionView.mValue);
-        }
     }
 
     /**
-     *
-     * @param currentTransactionView
      */
     private void handleViewCurrency(Transaction currentTransactionView)
     {
         if (mExpenseCurrency != null)
-        {
             mExpenseCurrency.setText(currentTransactionView.mCurrency);
-        }
     }
 
     /**
-     *
-     * @param currentTransactionView
      */
     private void handleViewNote(Transaction currentTransactionView)
     {
         if (mExpenseNote != null)
         {
             if (!currentTransactionView.mNotes.isEmpty())
-            {
                 mExpenseNote.setText(currentTransactionView.mNotes);
-            }
             else
-            {
-                mExpenseNote.setText(EMPTY_NOTE_HINT);
-            }
+                mExpenseNote.setText("Please enter a note...");
         }
     }
 
