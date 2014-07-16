@@ -121,8 +121,8 @@
             android:paddingStart="@dimen/big_padding"
             android:paddingTop="@dimen/drawable_left_pad"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textOff="Expense"
-            android:textOn="Income"/>
+            android:textOff="@string/spent_string"
+            android:textOn="@string/revenue_string"/>
 
         <TextView
             android:id="@+id/toggle_expense_hint"

@@ -10,7 +10,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -44,8 +43,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private int mLayoutResourceId;
     private MonthTransactions mTransactions;
     private Button mRemoveItemButton;
-    private ImageView mImage;
-    private int mItemsLoaded;
     private View mMyView;
     public static int PICK_IMAGE_DIMENSIONS = 80;
     private final String EMPTY_NOTE_HINT = "Please enter a note...";
@@ -67,7 +64,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         mListener = listener;
         mTransactions = expenses;
         mLayoutResourceId = resource;
-        mItemsLoaded = 0;
         mDateFont = Typeface.create("sans-serif-thin", Typeface.NORMAL);
     }
 
@@ -132,26 +128,16 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
 
             // Update ht look of the the view accordingly
             if (mTransactions.getItems().get(position).mIsExpense == false)
-            {
                 updateViewToExpense(view, R.color.income_color);
-            }
             else
-            {
                 updateViewToExpense(view, R.color.expense_color);
-            }
 
-            // Handle click view for edit
             mExpenseDescription = (TextView) view.findViewById(R.id.expenseDesc);
-            mImage = (ImageView)view.findViewById(R.id.image_container);
-            // Handle click view for edit
             mExpenseValue = (TextView) view.findViewById(R.id.expenseValue);
             mExpenseCurrency = (TextView) view.findViewById(R.id.currency);
-            // Handle click view for edit
             mExpenseNote = (TextView) view.findViewById(R.id.expenseItemNote);
             mExpenseDayOfMonth = (TextView)view.findViewById(R.id.expense_item_date_text);
             mExpenseDaySuffix = (TextView)view.findViewById(R.id.expense_item_date_suffix);
-
-            // Handle click view for edit
             mRemoveItemButton = (Button) view.findViewById(R.id.expenseRemove);
             mRemoveItemButton.setOnClickListener(new View.OnClickListener()
             {
@@ -164,17 +150,11 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
 
             /**     Build the view **/
 
-            // Handle the view's creation date
             handleViewDate(currentTransactionView);
-            // Update image from object
             updateImage(Images.getImageByPosition(currentTransactionView.mImageResourceIndex));
-            // Handle view's description
             handleViewDescription(currentTransactionView);
-            // Handle view's value amount
             handleViewValue(currentTransactionView);
-            // Handle view's currency
             handleViewCurrency(currentTransactionView);
-            // Handle view's note
             handleViewNote(currentTransactionView);
         }
         return view;

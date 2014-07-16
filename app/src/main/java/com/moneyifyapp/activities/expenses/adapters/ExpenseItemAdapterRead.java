@@ -9,7 +9,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -30,11 +29,9 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
     private TextView mExpenseValue;
     private TextView mExpenseCurrency;
     private TextView mExpenseNote;
-    private TextView mExpenseDayOfMonth;
     private int mLayoutResourceId;
     private MonthTransactions mTransactions;
     private Button mRemoveItemButton;
-    private ImageView mImage;
     private int mItemsLoaded;
     private View mMyView;
     public static int PICK_IMAGE_DIMENSIONS = 80;
@@ -119,7 +116,6 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
         // Take care of click to layout to be able to edit item in view
         mItemLayout = (LinearLayout) mMyView.findViewById(R.id.transaction_card_layout);
         mExpenseDescription = (TextView) mMyView.findViewById(R.id.expenseDesc);
-        mImage = (ImageView) mMyView.findViewById(R.id.image_container);
         mExpenseValue = (TextView) mMyView.findViewById(R.id.expenseValue);
         mExpenseCurrency = (TextView) mMyView.findViewById(R.id.currency);
         mExpenseNote = (TextView) mMyView.findViewById(R.id.expenseItemNote);

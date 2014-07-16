@@ -11,13 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.adapters.ExpenseItemAdapterRead;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.YearTransactions;
 import com.moneyifyapp.model.enums.Months;
+import com.moneyifyapp.utils.JsonServiceYearTransactions;
 import com.moneyifyapp.utils.Utils;
 
 /**
@@ -38,12 +38,20 @@ public class MonthAnalyticsFragment extends Fragment
     private ListView mBiggestExpenseList;
     private ListView mBiggestIncomeList;
     private View mRootView;
+    private static JsonServiceYearTransactions mJsonService;
+
+
+    private static final String PROFITED_LABEL = "Profit";
+    private static final String LOST_LABEL = "Loss";
+    private static final String BROKE_EVEN = "Broke even";
 
     /**
      */
     public static MonthAnalyticsFragment newInstance(int month, int year, YearTransactions transactions)
     {
-        String yearTransJson = yearTransactionToJson(transactions);
+        mJsonService = JsonServiceYearTransactions.getInstance();
+        String yearTransJson = mJsonService.toJson(transactions);
+
         MonthAnalyticsFragment fragment = new MonthAnalyticsFragment();
         Bundle args = new Bundle();
         args.putString(ExpenseListFragment.YEAR_JSON_KEY, yearTransJson);
@@ -90,6 +98,7 @@ public class MonthAnalyticsFragment extends Fragment
         {
             initDateLabels();
             initTotalSums();
+            initProfitOrLossLabels();
 
             startAppearanceAnimations();
 
@@ -100,19 +109,6 @@ public class MonthAnalyticsFragment extends Fragment
         return mRootView;
     }
 
-
-    /**
-     */
-    private static String yearTransactionToJson(YearTransactions transactions)
-    {
-        Gson gson = new Gson();
-        String yearTransJson = "";
-        if(transactions != null)
-            yearTransJson = gson.toJson(transactions);
-
-        return yearTransJson;
-    }
-
     /**
      */
     private void initYearTransactionsFromJson()
@@ -121,7 +117,7 @@ public class MonthAnalyticsFragment extends Fragment
         String yearTransJson = getArguments().getString(ExpenseListFragment.YEAR_JSON_KEY);
         if(!yearTransJson.isEmpty())
         {
-            mYearTransactions = new Gson().fromJson(yearTransJson, YearTransactions.class);
+            mYearTransactions = mJsonService.fromJson(yearTransJson);
             mMonthTransactions = mYearTransactions.get(mMonth);
         }
         else
@@ -160,9 +156,42 @@ public class MonthAnalyticsFragment extends Fragment
     {
         String totalExepense = String.valueOf(mMonthTransactions.sumExpenses(MonthTransactions.SubsetType.EXPENSE));
         String totalIncome = String.valueOf(mMonthTransactions.sumExpenses(MonthTransactions.SubsetType.INCOME));
-        loadTextViewAndSetText(R.id.analytics_by_date_expense_sum,totalExepense);
-        loadTextViewAndSetText(R.id.analytics_by_date_income_sum,totalIncome);
+        loadTextViewAndSetText(R.id.analytics_monthly_expense_sum,totalExepense);
+        loadTextViewAndSetText(R.id.analytics_monthly_income_sum,totalIncome);
 
+    }
+
+    /**
+     */
+    private void initProfitOrLossLabels()
+    {
+        double totalSpent = mMonthTransactions.sumExpenses(MonthTransactions.SubsetType.EXPENSE);
+        double totalRevenue = mMonthTransactions.sumExpenses(MonthTransactions.SubsetType.INCOME);
+        double totalProfit = totalRevenue - totalSpent;
+
+        TextView profitTextView = loadTextViewAndSetText(R.id.analytics_monthly_profit_sum, String.valueOf(totalProfit));
+        TextView profitCurrency = (TextView)mRootView.findViewById(R.id.analytics_monthly_profit_currency);
+        TextView profitLabel = (TextView)mRootView.findViewById(R.id.analytics_monthly_profit_label);
+
+        int color = getResources().getColor(android.R.color.black);
+
+        if (totalProfit > 0)
+        {
+            color = getResources().getColor(R.color.income_color);
+            profitLabel.setText(PROFITED_LABEL);
+        }
+        else if(totalProfit < 0)
+        {
+            color = getResources().getColor(R.color.expense_color);
+            totalProfit = (-totalProfit);
+            profitLabel.setText(LOST_LABEL);
+        }
+        else
+            profitLabel.setText(BROKE_EVEN);
+
+        profitTextView.setText(String.valueOf(totalProfit));
+        profitTextView.setTextColor(color);
+        profitCurrency.setTextColor(color);
     }
 
     /**

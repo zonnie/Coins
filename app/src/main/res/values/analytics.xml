@@ -2,6 +2,7 @@
 <resources>
     <string name="analytics_str_total_expense_label">Spent</string>
     <string name="analytics_str_total_income_label">Earned</string>
+    <string name="analytics_str_total_profit_label">Profit</string>
     <string name="analytics_str_biggest_expense_label">Top Spent</string>
     <string name="analytics_str_biggest_income_label">Highest Income</string>
     <string name="analytics_str_totals_hint">Monthly bottom line</string>

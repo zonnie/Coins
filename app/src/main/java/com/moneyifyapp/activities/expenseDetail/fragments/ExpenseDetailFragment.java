@@ -30,12 +30,6 @@ import com.moneyifyapp.model.Transaction;
  */
 public class ExpenseDetailFragment extends Fragment
 {
-    /********************************************************************/
-    /**                          Members                               **/
-    /**
-     * ****************************************************************
-     */
-
     Button mSubmitButton;
     Button mCancelButton;
     EditText mExpenseDescription;
@@ -52,14 +46,7 @@ public class ExpenseDetailFragment extends Fragment
     private AlphaAnimation mAlphaDown;
     private AlphaAnimation mAlphaUp;
 
-
-    /********************************************************************/
-    /**                          Methods                               **/
-    /********************************************************************/
-
     /**
-     *
-     *
      */
     public static ExpenseDetailFragment newInstance(boolean isEdit, Transaction expense)
     {
@@ -79,13 +66,15 @@ public class ExpenseDetailFragment extends Fragment
         return fragment;
     }
 
+    /**
+     */
     public ExpenseDetailFragment()
     {
         // Required empty public constructor
     }
 
     /**
-     * @param savedInstanceState
+     * On Create
      */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -117,10 +106,7 @@ public class ExpenseDetailFragment extends Fragment
     }
 
     /**
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
+     * On Create View
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -218,9 +204,6 @@ public class ExpenseDetailFragment extends Fragment
     }
 
     /**
-     * @param requestCode
-     * @param resultCode
-     * @param data
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -243,8 +226,6 @@ public class ExpenseDetailFragment extends Fragment
 
 
     /**
-     *
-     *
      */
     public void onSumbitPressed()
     {
@@ -269,7 +250,6 @@ public class ExpenseDetailFragment extends Fragment
     }
 
     /**
-     * @param activity
      */
     @Override
     public void onAttach(Activity activity)
@@ -287,7 +267,6 @@ public class ExpenseDetailFragment extends Fragment
     }
 
     /**
-     *
      */
     @Override
     public void onDetach()
@@ -307,7 +286,6 @@ public class ExpenseDetailFragment extends Fragment
     }
 
     /**
-     *
      */
     private void onCancelPressed()
     {

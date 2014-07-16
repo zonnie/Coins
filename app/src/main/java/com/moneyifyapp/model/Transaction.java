@@ -84,8 +84,8 @@ public class Transaction implements Comparable<Transaction>
     @Override
     public int compareTo(Transaction another)
     {
-        long myValue = Long.valueOf(this.mValue);
-        long anotherValue = Long.valueOf(another.mValue);
+        double myValue = Long.valueOf(this.mValue);
+        double anotherValue = Long.valueOf(another.mValue);
 
         if(myValue < anotherValue)
             return -1;

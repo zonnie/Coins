@@ -106,7 +106,7 @@
                         />
 
                     <com.moneyifyapp.views.CurrencyTextView
-                        android:id="@+id/analytics_by_date_expense_currency"
+                        android:id="@+id/analytics_monthly_expense_currency"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.4"
@@ -118,7 +118,7 @@
                         />
 
                     <TextView
-                        android:id="@+id/analytics_by_date_expense_sum"
+                        android:id="@+id/analytics_monthly_expense_sum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center|right"
@@ -150,7 +150,7 @@
                         />
 
                     <com.moneyifyapp.views.CurrencyTextView
-                        android:id="@+id/analytics_by_date_income_currency"
+                        android:id="@+id/analytics_monthly_income_currency"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.4"
@@ -163,7 +163,7 @@
                         />
 
                     <TextView
-                        android:id="@+id/analytics_by_date_income_sum"
+                        android:id="@+id/analytics_monthly_income_sum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center|right"
@@ -175,7 +175,70 @@
                         />
 
                 </LinearLayout>
+
+
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/month_analytics_profit_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/expense_card_margin"
+                android:layout_marginLeft="@dimen/expense_drawable_left_pad"
+                android:layout_marginRight="@dimen/expense_drawable_left_pad"
+                android:background="@drawable/expense_item_card"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/drawable_left_pad"
+                android:paddingRight="@dimen/drawable_left_pad"
+                android:paddingBottom="@dimen/drawable_left_pad"
+                android:showDividers="none"
+                >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/drawable_left_pad"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/padding_start_currency"
+                android:paddingStart="@dimen/padding_start_currency"
+                >
+
+
+                <TextView
+                    android:id="@+id/analytics_monthly_profit_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/analytics_str_total_profit_label"
+                    android:textSize="@dimen/large_font"
+                    />
+
+                <com.moneyifyapp.views.CurrencyTextView
+                    android:id="@+id/analytics_monthly_profit_currency"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:gravity="center|right"
+                    android:text="@string/default_currency"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/large_font"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:id="@+id/analytics_monthly_profit_sum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|right"
+                    android:text="@string/init_total_value"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/large_font"
+                    android:textStyle="bold"
+                    />
+
+            </LinearLayout>
+                </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"

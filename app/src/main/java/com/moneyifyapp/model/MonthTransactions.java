@@ -49,20 +49,20 @@ public class MonthTransactions
      *
      * @return
      */
-    public long sumExpenses(SubsetType type)
+    public double sumExpenses(SubsetType type)
     {
-        long sum = 0;
+        double sum = 0;
 
         for (Transaction curTrans : mTransactions)
         {
             if(type == SubsetType.EXPENSE && curTrans.mIsExpense == true)
             {
-                long curTransSum = Long.valueOf(curTrans.mValue);
+                double curTransSum = Double.valueOf(curTrans.mValue);
                 sum += curTransSum;
             }
             else if(type == SubsetType.INCOME && curTrans.mIsExpense == false)
             {
-                long curTransSum = Long.valueOf(curTrans.mValue);
+                double curTransSum = Double.valueOf(curTrans.mValue);
                 sum += curTransSum;
             }
         }
@@ -74,13 +74,13 @@ public class MonthTransactions
      * Get the max expense/income.
      * @param type - if 'true' then get max expense, otherwise get max income.
      */
-    public long getMaxTransaction(SubsetType type)
+    public double getMaxTransaction(SubsetType type)
     {
-        long maxExpense = 0;
+        double maxExpense = 0;
 
         for(Transaction curTrans : mTransactions)
         {
-            Long curValue = Long.valueOf(curTrans.mValue);
+            Double curValue = Double.valueOf(curTrans.mValue);
             if(type == SubsetType.EXPENSE && curTrans.mIsExpense == true)
             {
                 if(maxExpense < curValue)
