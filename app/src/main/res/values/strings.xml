@@ -26,8 +26,8 @@
     <string name="login_welcome">Welcome!</string>
     <string name="login_welcome_2nd_line">Sign in and save some Coins</string>
     <string name="signup_welcome">Some info that we\'ll know you in the future</string>
-    <string name="image_picker_hint_text">Tap the image to select category</string>
-    <string name="toggle_hint_text">Tap to swtich between spending and revenue</string>
+    <string name="image_picker_hint_text">Tap to select category</string>
+    <string name="toggle_hint_text">Tap to change</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="item_details_submit">"Done !"</string>
@@ -49,7 +49,7 @@
     <string name="title_analytics_by_category">By Category</string>
     <string name="title_analytics_general">General</string>
     <string name="title_activity_month_analytics">MonthAnalytics</string>
-    <string name="title_analytics_month_overview">Monthly Overview</string>
+    <string name="title_analytics_month_overview">Monthly Insights</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="revenues_string">"Revenues</string>
     <string name="revenue_string">"Revenue</string>

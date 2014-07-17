@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:gravity="start"
             android:orientation="vertical"
+            android:paddingLeft="@dimen/drawable_left_pad"
             >
 
             <LinearLayout
@@ -36,8 +37,8 @@
                     android:background="@drawable/detail_date_back"
                     android:paddingLeft="@dimen/drawable_left_pad"
                     android:paddingRight="@dimen/drawable_left_pad"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="MAR"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
 
                     />
 
@@ -67,23 +68,34 @@
 
             >
 
-            <TextView
-                android:id="@+id/image_picker_hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/expense_card_margin"
-                android:layout_marginTop="@dimen/expense_card_margin"
-                android:text="@string/image_picker_hint_text"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/darker_gray"/>
-
-            <ImageButton
-                android:id="@+id/addExpenseImage"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="128dp"
-                android:layout_marginBottom="@dimen/drawable_left_pad"
-                android:background="@android:color/transparent"
-                android:src="@drawable/shop"/>
+                android:layout_height="wrap_content"
+                android:gravity="center|top"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/big_padding"
+                android:paddingRight="@dimen/big_padding"
+                >
+
+                <TextView
+                    android:id="@+id/image_picker_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/expense_card_margin"
+                    android:layout_marginTop="@dimen/expense_card_margin"
+                    android:text="@string/image_picker_hint_text"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/darker_gray"/>
+
+                <ImageButton
+                    android:id="@+id/addExpenseImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="@dimen/drawable_left_pad"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/shop"/>
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/addExpenseDescription"
@@ -151,28 +163,39 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 />
 
-            <ToggleButton
-                android:id="@+id/isExpenseToggle"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/expense_toggle"
-                android:gravity="center"
-                android:paddingBottom="@dimen/drawable_left_pad"
-                android:paddingEnd="@dimen/big_padding"
-                android:paddingStart="@dimen/big_padding"
-                android:paddingTop="@dimen/drawable_left_pad"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textOff="@string/spent_string"
-                android:textOn="@string/revenue_string"/>
-
-            <TextView
-                android:id="@+id/toggle_expense_hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/drawable_left_pad"
-                android:text="@string/toggle_hint_text"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/darker_gray"/>
+                android:layout_marginTop="@dimen/drawable_left_pad"
+                android:orientation="vertical"
+                >
+
+                <ToggleButton
+                    android:id="@+id/isExpenseToggle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/expense_toggle"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/drawable_left_pad"
+                    android:paddingEnd="@dimen/big_padding"
+                    android:paddingStart="@dimen/big_padding"
+                    android:paddingTop="@dimen/drawable_left_pad"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textOff="@string/spent_string"
+                    android:textOn="@string/revenue_string"/>
+
+                <TextView
+                    android:id="@+id/toggle_expense_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/toggle_hint_text"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/darker_gray"/>
+
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"

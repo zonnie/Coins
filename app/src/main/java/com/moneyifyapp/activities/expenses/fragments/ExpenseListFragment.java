@@ -544,7 +544,10 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
                     currency = Transaction.CURRENCY_DEFAULT;
                     createNewTransaction(desc, sum, currency, note, image, isExpense);
                     Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
-                    getListView().getChildAt(0).startAnimation(anim);
+                    if(getListView().getChildCount() > 0)
+                    {
+                        getListView().getChildAt(0).startAnimation(anim);
+                    }
 
                 } else if (requestCode == ExpensesActivity.REQ_EDIT_ITEM)
                 {

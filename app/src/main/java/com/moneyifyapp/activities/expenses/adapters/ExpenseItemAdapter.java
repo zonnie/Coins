@@ -339,6 +339,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     public void insert(Transaction transaction, int position)
     {
         super.insert(transaction, position);
+        notifyDataSetChanged();
     }
 
     /**
