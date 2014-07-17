@@ -18,6 +18,7 @@
                 android:endColor="#D9D9D9"
                 android:type="linear"
                 />
+            <corners android:radius="5dp"/>
         </shape>
     </item>
 </layer-list>

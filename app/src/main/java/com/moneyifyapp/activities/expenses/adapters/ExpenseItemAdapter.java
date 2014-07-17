@@ -171,11 +171,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
                 mExpenseDaySuffix.setTypeface(mDateFont);
             }
 
-            // Build the day suffix
-            if(date.endsWith("1") && !date.equals("11")){dateSuffix += "st";}
-            else if(date.endsWith("2") && !date.equals("12")){dateSuffix += "nd";}
-            else if(date.endsWith("3") && !date.equals("13")){dateSuffix += "rd";}
-            else {dateSuffix += "th";}
+            String dateSuffixe = Utils.generateDayInMonthSuffix(date);
 
             mExpenseDayOfMonth.setText(date);
             mExpenseDaySuffix.setText(dateSuffix);

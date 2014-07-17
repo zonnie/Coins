@@ -27,8 +27,10 @@ public class ExpenseDetailActivity extends Activity
     private String mValue;
     private String mCurrency;
     private String mNotes;
+    private String mTransactionDay;
     private int mImageName;
     private boolean mIsExpense;
+    private int mMonth;
 
     /**
      *
@@ -46,6 +48,8 @@ public class ExpenseDetailActivity extends Activity
         Utils.removeLogo(this);
 
         mRequestCode = getIntent().getExtras().getInt(ExpenseListFragment.REQ_CODE_KEY);
+        mMonth = getIntent().getExtras().getInt(ExpenseListFragment.MONTH_KEY);
+
         boolean isEdit = false;
 
         if (mRequestCode == ExpensesActivity.REQ_EDIT_ITEM)
@@ -62,7 +66,7 @@ public class ExpenseDetailActivity extends Activity
                 tempExpense = createTransactionFromIntent();
 
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, ExpenseDetailFragment.newInstance(isEdit, tempExpense))
+                    .add(R.id.container, ExpenseDetailFragment.newInstance(isEdit, tempExpense, mMonth))
                     .commit();
         }
     }
@@ -72,17 +76,20 @@ public class ExpenseDetailActivity extends Activity
      */
     private Transaction createTransactionFromIntent()
     {
-        mItemPosition = getIntent().getExtras().getInt(ExpenseListFragment.MONTH_KEY);
+        mItemPosition = getIntent().getExtras().getInt(ExpenseListFragment.ITEM_POS_KEY);
+        mMonth = getIntent().getExtras().getInt(ExpenseListFragment.MONTH_KEY);
         mDescription = getIntent().getExtras().getString(Transaction.KEY_DESCRIPTION);
         mValue = getIntent().getExtras().getString(Transaction.KEY_VALUE);
-        //mCurrency = getIntent().getExtras().getString(Transaction.KEY_CURRENCY);
+        mTransactionDay = getIntent().getExtras().getString(ExpenseListFragment.DAY_KEY);
         mNotes = getIntent().getExtras().getString(Transaction.KEY_NOTES);
         mImageName = getIntent().getExtras().getInt(Transaction.KEY_IMAGE_NAME);
         mIsExpense = getIntent().getExtras().getBoolean(Transaction.KEY_TYPE);
+
         // Get the default currency
         mCurrency = PreferenceManager.getDefaultSharedPreferences(this).getString(PrefActivity.PREF_LIST_NAME, "$");
 
-        return new Transaction(Transaction.DEFUALT_TRANSCATION_ID, mDescription, mValue, mCurrency, mNotes, mImageName, mIsExpense);
+        return new Transaction(Transaction.DEFUALT_TRANSCATION_ID, mDescription, mValue,
+                                mCurrency, mNotes, mImageName, mIsExpense, mTransactionDay);
     }
 
     /**
@@ -98,7 +105,8 @@ public class ExpenseDetailActivity extends Activity
         data.putExtra(Transaction.KEY_IMAGE_NAME, addImage);
         data.putExtra(Transaction.KEY_CURRENCY, addCurrency);
         data.putExtra(Transaction.KEY_NOTES, addNote);
-        data.putExtra(ExpenseListFragment.MONTH_KEY, mItemPosition);
+        data.putExtra(ExpenseListFragment.ITEM_POS_KEY, mItemPosition);
+        data.putExtra(ExpenseListFragment.MONTH_KEY, mMonth);
         data.putExtra(Transaction.KEY_TYPE, isExpense);
 
         setResult(ExpensesActivity.EXPENSE_RESULT_OK, data);

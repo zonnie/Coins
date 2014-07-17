@@ -8,157 +8,207 @@
             android:background="@color/background"
     >
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center|top"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/big_padding"
-        android:paddingRight="@dimen/big_padding"
-
+        android:layout_gravity="end"
         >
 
-        <TextView
-            android:id="@+id/image_picker_hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/expense_card_margin"
-            android:layout_marginTop="@dimen/expense_card_margin"
-            android:text="@string/image_picker_hint_text"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@android:color/darker_gray"/>
-
-        <ImageButton
-            android:id="@+id/addExpenseImage"
-            android:layout_width="match_parent"
-            android:layout_height="128dp"
-            android:layout_marginBottom="@dimen/drawable_left_pad"
-            android:background="@android:color/transparent"
-            android:src="@drawable/shop"/>
-
-        <EditText
-            android:id="@+id/addExpenseDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:drawableLeft="@drawable/desc"
-            android:drawablePadding="@dimen/expense_drawable_left_pad"
-            android:hint="@string/add_item_description_hint"
-            android:maxLength="@integer/max_desc_len"
-            android:singleLine="true"
-            android:maxLines="1"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            />
-
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="10"
+            android:gravity="start"
+            android:orientation="vertical"
             >
 
-            <EditText
-                android:id="@+id/addExpenseSum"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="9"
-                android:drawableLeft="@drawable/sum"
-                android:drawablePadding="@dimen/expense_drawable_left_pad"
-                android:imeActionId="@+id/sum_action"
-                android:imeActionLabel="@string/item_details_submit"
-                android:imeOptions="actionDone"
-                android:hint="@string/item_value_hint"
-                android:inputType="numberDecimal"
-                android:maxLines="1"
-                android:singleLine="true"
-                />
+                android:layout_marginLeft="@dimen/drawable_left_pad"
+                android:gravity="start"
+                android:orientation="vertical"
+                >
 
-            <com.moneyifyapp.views.CurrencyTextView
-                android:id="@+id/addExpenseCurrency"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical|right"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/default_currency"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                <TextView
+                    android:id="@+id/detail_date_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/detail_date_back"
+                    android:paddingLeft="@dimen/drawable_left_pad"
+                    android:paddingRight="@dimen/drawable_left_pad"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="MAR"
+
+                    />
+
+                <TextView
+                    android:id="@+id/detail_date_day"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/detail_date_back"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/big_padding"
+                    android:paddingLeft="@dimen/drawable_left_pad"
+                    android:paddingRight="@dimen/drawable_left_pad"
+                    android:paddingTop="@dimen/big_padding"
+                    android:text="24"
+                    android:textSize="@dimen/huge_font"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|top"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/big_padding"
+            android:paddingRight="@dimen/big_padding"
+
+            >
+
+            <TextView
+                android:id="@+id/image_picker_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/expense_card_margin"
+                android:layout_marginTop="@dimen/expense_card_margin"
+                android:text="@string/image_picker_hint_text"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@android:color/darker_gray"/>
 
-        </LinearLayout>
+            <ImageButton
+                android:id="@+id/addExpenseImage"
+                android:layout_width="match_parent"
+                android:layout_height="128dp"
+                android:layout_marginBottom="@dimen/drawable_left_pad"
+                android:background="@android:color/transparent"
+                android:src="@drawable/shop"/>
 
-        <EditText
-            android:id="@+id/addExpenseNotes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/expense_card_margin"
-            android:drawableLeft="@drawable/notes_2"
-            android:drawablePadding="@dimen/expense_drawable_left_pad"
-            android:hint="Notes..."
-            android:imeActionId="@+id/note_action"
-            android:imeActionLabel="@string/item_details_submit"
-            android:imeOptions="actionDone"
-            android:maxLines="1"
-            android:maxLength="@integer/max_note_len"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            />
-
-        <ToggleButton
-            android:id="@+id/isExpenseToggle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/expense_toggle"
-            android:gravity="center"
-            android:paddingBottom="@dimen/drawable_left_pad"
-            android:paddingEnd="@dimen/big_padding"
-            android:paddingStart="@dimen/big_padding"
-            android:paddingTop="@dimen/drawable_left_pad"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textOff="@string/spent_string"
-            android:textOn="@string/revenue_string"/>
-
-        <TextView
-            android:id="@+id/toggle_expense_hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/drawable_left_pad"
-            android:text="@string/toggle_hint_text"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@android:color/darker_gray"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/drawable_left_pad"
-            android:orientation="horizontal"
-            >
-
-            <Button
-                android:id="@+id/cancelAddButton"
-                style="?android:attr/buttonBarButtonStyle"
+            <EditText
+                android:id="@+id/addExpenseDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/max_add_width"
-                android:layout_weight="1"
-                android:background="@drawable/stanard_button_drawable"
-                android:text="@string/item_details_cancel"
-                android:textColor="@android:color/white"/>
+                android:layout_gravity="center_horizontal"
+                android:drawableLeft="@drawable/desc"
+                android:drawablePadding="@dimen/expense_drawable_left_pad"
+                android:hint="@string/add_item_description_hint"
+                android:maxLength="@integer/max_desc_len"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                />
 
-            <Button
-                android:id="@+id/submitButton"
-                style="?android:attr/buttonBarButtonStyle"
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                >
+
+                <EditText
+                    android:id="@+id/addExpenseSum"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="9"
+                    android:drawableLeft="@drawable/sum"
+                    android:drawablePadding="@dimen/expense_drawable_left_pad"
+                    android:hint="@string/item_value_hint"
+                    android:imeActionId="@+id/sum_action"
+                    android:imeActionLabel="@string/item_details_submit"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    />
+
+                <com.moneyifyapp.views.CurrencyTextView
+                    android:id="@+id/addExpenseCurrency"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/default_currency"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@android:color/darker_gray"/>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/addExpenseNotes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/max_add_width"
-                android:layout_weight="1"
-                android:background="@drawable/stanard_button_drawable"
-                android:scaleType="fitCenter"
-                android:text="@string/item_details_submit"
-                android:textColor="@android:color/white"/>
+                android:layout_marginBottom="@dimen/expense_card_margin"
+                android:drawableLeft="@drawable/notes_2"
+                android:drawablePadding="@dimen/expense_drawable_left_pad"
+                android:hint="Notes..."
+                android:imeActionId="@+id/note_action"
+                android:imeActionLabel="@string/item_details_submit"
+                android:imeOptions="actionDone"
+                android:maxLength="@integer/max_note_len"
+                android:maxLines="1"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                />
 
+            <ToggleButton
+                android:id="@+id/isExpenseToggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/expense_toggle"
+                android:gravity="center"
+                android:paddingBottom="@dimen/drawable_left_pad"
+                android:paddingEnd="@dimen/big_padding"
+                android:paddingStart="@dimen/big_padding"
+                android:paddingTop="@dimen/drawable_left_pad"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textOff="@string/spent_string"
+                android:textOn="@string/revenue_string"/>
+
+            <TextView
+                android:id="@+id/toggle_expense_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/drawable_left_pad"
+                android:text="@string/toggle_hint_text"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@android:color/darker_gray"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/drawable_left_pad"
+                android:gravity="center"
+                android:orientation="horizontal"
+                >
+
+                <Button
+                    android:id="@+id/cancelAddButton"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/max_add_width"
+                    android:layout_weight="1"
+                    android:background="@drawable/stanard_button_drawable"
+                    android:text="@string/item_details_cancel"
+                    android:textColor="@android:color/white"/>
+
+                <Button
+                    android:id="@+id/submitButton"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/max_add_width"
+                    android:layout_weight="1"
+                    android:background="@drawable/stanard_button_drawable"
+                    android:scaleType="fitCenter"
+                    android:text="@string/item_details_submit"
+                    android:textColor="@android:color/white"/>
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
-
+    </FrameLayout>
 </ScrollView>

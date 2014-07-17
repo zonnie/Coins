@@ -21,8 +21,12 @@ import android.widget.ToggleButton;
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenseDetail.ImagePickerActivity;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
+import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.Transaction;
+import com.moneyifyapp.utils.AnimationUtils;
+import com.moneyifyapp.utils.JsonServiceYearTransactions;
+import com.moneyifyapp.utils.Utils;
 
 /**
  * A fragment for detail transaction view.
@@ -30,37 +34,40 @@ import com.moneyifyapp.model.Transaction;
  */
 public class ExpenseDetailFragment extends Fragment
 {
-    Button mSubmitButton;
-    Button mCancelButton;
-    EditText mExpenseDescription;
-    EditText mExpenseValue;
-    ImageButton mExpenseIcon;
-    TextView mExpenseCurrency;
-    EditText mExpenseNotes;
-    ToggleButton mToggleIsExpense;
+    private Button mSubmitButton;
+    private TextView mDetailDateDay;
+    private TextView mDetailDateMonth;
+    private Button mCancelButton;
+    private EditText mExpenseDescription;
+    private EditText mExpenseValue;
+    private ImageButton mExpenseIcon;
+    private TextView mExpenseCurrency;
+    private EditText mExpenseNotes;
+    private ToggleButton mToggleIsExpense;
     private OnFragmentInteractionListener mListener;
     private Transaction mTempExpenseObject;
-    boolean mIsEdit;
+    private boolean mIsEdit;
     private int mCurrentImage;
     public static final String EXPENSE_EDIT_KEY = "edit";
     private AlphaAnimation mAlphaDown;
     private AlphaAnimation mAlphaUp;
+    private View mView;
+    private int mMonth;
+    private String mMonthPrefix;
 
     /**
      */
-    public static ExpenseDetailFragment newInstance(boolean isEdit, Transaction expense)
+    public static ExpenseDetailFragment newInstance(boolean isEdit, Transaction expense, int month)
     {
         ExpenseDetailFragment fragment = new ExpenseDetailFragment();
         Bundle args = new Bundle();
         if (expense != null)
         {
+            String transactionJson = JsonServiceYearTransactions.getInstance().toJson(expense);
+
+            args.putString(Transaction.TRANS_JSON, transactionJson);
             args.putBoolean(EXPENSE_EDIT_KEY, isEdit);
-            args.putString(Transaction.KEY_DESCRIPTION, expense.mDescription);
-            args.putString(Transaction.KEY_VALUE, expense.mValue);
-            args.putString(Transaction.KEY_CURRENCY, expense.mCurrency);
-            args.putString(Transaction.KEY_NOTES, expense.mNotes);
-            args.putInt(Transaction.KEY_IMAGE_NAME, expense.mImageResourceIndex);
-            args.putBoolean(Transaction.KEY_TYPE, expense.mIsExpense);
+            args.putInt(ExpenseListFragment.MONTH_KEY, month);
         }
         fragment.setArguments(args);
         return fragment;
@@ -83,25 +90,16 @@ public class ExpenseDetailFragment extends Fragment
         if (getArguments() != null)
         {
             mIsEdit = getArguments().getBoolean(EXPENSE_EDIT_KEY);
-            String description = getArguments().getString(Transaction.KEY_DESCRIPTION);
-            String value = getArguments().getString(Transaction.KEY_VALUE);
-            String currency = getArguments().getString(Transaction.KEY_CURRENCY);
-            String note = getArguments().getString(Transaction.KEY_NOTES);
-            int image = getArguments().getInt(Transaction.KEY_IMAGE_NAME);
-            boolean isExpense = getArguments().getBoolean(Transaction.KEY_TYPE);
+            mMonth = getArguments().getInt(ExpenseListFragment.MONTH_KEY);
 
-            mTempExpenseObject = new Transaction("", description, value, currency, note, image, isExpense);
+            String transactionJson = getArguments().getString(Transaction.TRANS_JSON);
+            mTempExpenseObject = JsonServiceYearTransactions.getInstance().fromJsonToTransaction(transactionJson);
 
-            mCurrentImage = image;
+            mMonthPrefix = Utils.getMonthPrefixByIndex(mMonth);
+            mCurrentImage = mTempExpenseObject.mImageResourceIndex;
 
-            mAlphaDown = new AlphaAnimation(1.0f, 0.3f);
-            mAlphaDown.setDuration(500);
-            mAlphaDown.setFillAfter(true);
-
-            mAlphaUp = new AlphaAnimation(0.3f, 1.0f);
-            mAlphaUp.setFillAfter(true);
-            mAlphaUp.setDuration(500);
-
+            mAlphaDown = AnimationUtils.getAlphaDownAnimation();
+            mAlphaUp = AnimationUtils.getmAlphaUpAnimation();
         }
     }
 
@@ -112,14 +110,28 @@ public class ExpenseDetailFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_create_expense_layout, container, false);
+        mView = inflater.inflate(R.layout.fragment_create_expense_layout, container, false);
 
-        // Save the views
-        mSubmitButton = (Button) view.findViewById(R.id.submitButton);
-        mCancelButton = (Button) view.findViewById(R.id.cancelAddButton);
-        mExpenseDescription = (EditText) view.findViewById(R.id.addExpenseDescription);
-        mExpenseCurrency = (TextView) view.findViewById(R.id.addExpenseCurrency);
-        mExpenseValue = (EditText) view.findViewById(R.id.addExpenseSum);
+        storeViews();
+
+        mExpenseNotes.setOnEditorActionListener(new TextView.OnEditorActionListener()
+        {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+            {
+                boolean handled = false;
+                if (actionId == R.id.note_action)
+                {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(mExpenseNotes.getWindowToken(), 0);
+                    onSumbitPressed();
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
+        //mExpenseValue.addTextChangedListener(new CurrencyTextWatcher(mExpenseValue));
         mExpenseValue.setOnEditorActionListener(new TextView.OnEditorActionListener()
         {
             @Override
@@ -137,27 +149,7 @@ public class ExpenseDetailFragment extends Fragment
             }
         });
 
-
-        //TODO need to rectify this
-        mExpenseIcon = (ImageButton) view.findViewById(R.id.addExpenseImage);
-        mExpenseNotes = (EditText) view.findViewById(R.id.addExpenseNotes);
-        mExpenseNotes.setOnEditorActionListener(new TextView.OnEditorActionListener()
-        {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
-            {
-                boolean handled = false;
-                if (actionId == R.id.note_action)
-                {
-                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(mExpenseNotes.getWindowToken(), 0);
-                    onSumbitPressed();
-                    handled = true;
-                }
-                return handled;
-            }
-        });
-        mToggleIsExpense = (ToggleButton) view.findViewById(R.id.isExpenseToggle);
+        mToggleIsExpense = (ToggleButton) mView.findViewById(R.id.isExpenseToggle);
 
         // Bind listener
         mSubmitButton.setOnClickListener(new View.OnClickListener()
@@ -190,17 +182,49 @@ public class ExpenseDetailFragment extends Fragment
             }
         });
 
+        initDataIfTransactionEdited();
+        initDetailDateLabels();
+
+        return mView;
+    }
+
+    /**
+     */
+    private void storeViews()
+    {
+        mDetailDateDay = (TextView) mView.findViewById(R.id.detail_date_day);
+        mSubmitButton = (Button) mView.findViewById(R.id.submitButton);
+        mCancelButton = (Button) mView.findViewById(R.id.cancelAddButton);
+        mExpenseDescription = (EditText) mView.findViewById(R.id.addExpenseDescription);
+        mExpenseCurrency = (TextView) mView.findViewById(R.id.addExpenseCurrency);
+        mExpenseValue = (EditText) mView.findViewById(R.id.addExpenseSum);
+        mExpenseIcon = (ImageButton) mView.findViewById(R.id.addExpenseImage);
+        mExpenseNotes = (EditText) mView.findViewById(R.id.addExpenseNotes);
+        mDetailDateMonth = (TextView) mView.findViewById(R.id.detail_date_month);
+    }
+
+    /**
+     */
+    private void initDetailDateLabels()
+    {
+        String date = mTempExpenseObject.mTransactionDay;
+        mDetailDateDay.setText(date);
+        if(mMonth >= 0)
+            mDetailDateMonth.setText(mMonthPrefix.toUpperCase());
+    }
+
+    /**
+     */
+    private void initDataIfTransactionEdited()
+    {
         if (mIsEdit)
         {
-            //mCurrencySpinner.setSelection(Utils.findIndextByString(mTempExpenseObject.mCurrency));
             mExpenseDescription.setText(mTempExpenseObject.mDescription);
             mExpenseValue.setText(mTempExpenseObject.mValue);
             mExpenseNotes.setText(mTempExpenseObject.mNotes);
             mExpenseIcon.setImageResource(Images.getImageByPosition(mTempExpenseObject.mImageResourceIndex));
             mToggleIsExpense.setChecked(!mTempExpenseObject.mIsExpense);
         }
-
-        return view;
     }
 
     /**
@@ -214,7 +238,6 @@ public class ExpenseDetailFragment extends Fragment
 
         if (resultCode == ExpensesActivity.IMAGE_PICK_OK)
         {
-
             mCurrentImage = data.getExtras().getInt(Transaction.KEY_IMAGE_NAME);
             mExpenseIcon.setImageResource(Images.getImageByPosition(mCurrentImage));
         }
@@ -236,7 +259,6 @@ public class ExpenseDetailFragment extends Fragment
             String note = mExpenseNotes.getText().toString();
             String sum = mExpenseValue.getText().toString();
             String currency = mExpenseCurrency.getText().toString();
-            //String currency = mCurrencySpinner.getSelectedItem().toString();
             boolean isExpense = !mToggleIsExpense.isChecked();  // If it's un-toggled this means this is an expense
 
             if (description.isEmpty() || sum.isEmpty())

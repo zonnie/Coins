@@ -1,6 +1,8 @@
 package com.moneyifyapp.utils;
 
 import com.google.gson.Gson;
+import com.moneyifyapp.model.MonthTransactions;
+import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.model.YearTransactions;
 
 /**
@@ -9,7 +11,7 @@ import com.moneyifyapp.model.YearTransactions;
  * This service creates an object from JSON and vice-versa.
  *
  */
-public class JsonServiceYearTransactions
+public class JsonServiceYearTransactions<T>
 {
     private static JsonServiceYearTransactions mInstance;
     private Gson mGson;
@@ -26,29 +28,40 @@ public class JsonServiceYearTransactions
     public static JsonServiceYearTransactions getInstance()
     {
         if(mInstance == null)
-        {
             mInstance = new JsonServiceYearTransactions();
-        }
-
         return  mInstance;
     }
 
     /**
      */
-    public String toJson(YearTransactions transactions)
+    public String toJson(T transactions)
     {
         Gson gson = new Gson();
-        String yearTransJson = "";
+        String json = "";
         if(transactions != null)
-            yearTransJson = gson.toJson(transactions);
+            json = gson.toJson(transactions);
 
-        return yearTransJson;
+        return json;
     }
 
     /**
      */
-    public YearTransactions fromJson(String transaction)
+    public YearTransactions fromJsonToYearTransactions(String transactions)
     {
-        return mGson.fromJson(transaction, YearTransactions.class);
+        return mGson.fromJson(transactions, YearTransactions.class);
     }
+
+    /**
+     */
+    public MonthTransactions fromJsonToMonthTransactions(String transactions)
+    {
+        return mGson.fromJson(transactions, MonthTransactions.class);
+    }
+    /**
+     */
+    public Transaction fromJsonToTransaction(String transactions)
+    {
+        return mGson.fromJson(transactions, Transaction.class);
+    }
+
 }

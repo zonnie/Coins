@@ -15,6 +15,7 @@ public class Transaction implements Comparable<Transaction>
     public String mNotes;
     public boolean mIsExpense;
     public String mTransactionDay;
+    public static final String TRANS_JSON = "transactionJson";
     public static final String CLASS_NAME = "expense";
     public static final String KEY_ID = "code";
     public static final String KEY_DESCRIPTION = "description";
@@ -84,8 +85,8 @@ public class Transaction implements Comparable<Transaction>
     @Override
     public int compareTo(Transaction another)
     {
-        double myValue = Long.valueOf(this.mValue);
-        double anotherValue = Long.valueOf(another.mValue);
+        double myValue = Double.valueOf(this.mValue);
+        double anotherValue = Double.valueOf(another.mValue);
 
         if(myValue < anotherValue)
             return -1;

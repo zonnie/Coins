@@ -117,7 +117,7 @@ public class MonthAnalyticsFragment extends Fragment
         String yearTransJson = getArguments().getString(ExpenseListFragment.YEAR_JSON_KEY);
         if(!yearTransJson.isEmpty())
         {
-            mYearTransactions = mJsonService.fromJson(yearTransJson);
+            mYearTransactions = mJsonService.fromJsonToYearTransactions(yearTransJson);
             mMonthTransactions = mYearTransactions.get(mMonth);
         }
         else
@@ -189,7 +189,8 @@ public class MonthAnalyticsFragment extends Fragment
         else
             profitLabel.setText(BROKE_EVEN);
 
-        profitTextView.setText(String.valueOf(totalProfit));
+        String profitStr = Utils.formatDoubleToTextCurrency(totalProfit);
+        profitTextView.setText(profitStr);
         profitTextView.setTextColor(color);
         profitCurrency.setTextColor(color);
     }

@@ -51,6 +51,7 @@ import java.util.UUID;
 public class ExpenseListFragment extends ListFragment implements ExpenseItemAdapter.ListItemHandler
 {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    public static final String ITEM_POS_KEY = "itemPos";
     public static final String PAGE_ID_KEY = "frag_id";
     public static final String MONTH_KEY = "month";
     public static final String DAY_KEY = "day";
@@ -130,7 +131,7 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
         // Create a new month
         String yearJson = getArguments().getString(YEAR_JSON_KEY);
         mPageId = getArguments().getInt(PAGE_ID_KEY);
-        mYearTransactions = mJsonService.fromJson(yearJson);
+        mYearTransactions = mJsonService.fromJsonToYearTransactions(yearJson);
         mYearTransactions.addMonth(mPageId);
         mTransactions = mYearTransactions.get(mPageId);
 
@@ -190,6 +191,7 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
     private void startNewTransactionActivity()
     {
         Intent intent = new Intent(getActivity(), ExpenseDetailActivity.class);
+        intent.putExtra(MONTH_KEY, mTransactions.mMonthNumber);
         intent.putExtra(REQ_CODE_KEY, ExpensesActivity.REQ_NEW_ITEM);
         startActivityForResult(intent, ExpensesActivity.REQ_NEW_ITEM);
     }
@@ -203,7 +205,7 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
 
         Intent intent = new Intent(getActivity(), MonthAnalytics.class);
         Bundle data = new Bundle();
-        data.putInt(MONTH_KEY, mPageId);
+        data.putInt(MONTH_KEY, mTransactions.mMonthNumber);
         data.putInt(YEAR_KEY, mYearTransactions.mYear);
         data.putString(YEAR_JSON_KEY, yearString);
         intent.putExtras(data);
@@ -361,6 +363,29 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
     }
 
     /**
+     */
+    private void removeItemFromList(int position)
+    {
+        // Put the next ID so that async functions could use it
+        mRemoveQueue.add(position);
+        View removedItem = getListView().getChildAt(position);
+        removedItem.startAnimation(mRemoveAnimation);
+
+        // After animation is done, remove item from list
+        new Handler().postDelayed(new Runnable()
+        {
+            public void run()
+            {
+                int itemId = mRemoveQueue.peek();
+                updateTotalsOnAddedTransaction(mAdapter.getItem(itemId), true);
+                mAdapter.remove(itemId);
+            }
+
+        }, mRemoveAnimation.getDuration());
+        removeItemWithId(position);
+    }
+
+    /**
      * Remove an item given it's list position.
      */
     private void removeItemWithId(int position)
@@ -383,7 +408,7 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
      */
     private void removeAfterParseQuery(List<ParseObject> list, ParseException e)
     {
-        if(e != null)
+        if(e == null)
         {
             if (list.size() != 0)
             {
@@ -433,29 +458,6 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
 
     /**
      */
-    private void removeItemFromList(int position)
-    {
-        // Put the next ID so that async functions could use it
-        mRemoveQueue.add(position);
-        View removedItem = getListView().getChildAt(position);
-        removedItem.startAnimation(mRemoveAnimation);
-
-        // After animation is done, remove item from list
-        new Handler().postDelayed(new Runnable()
-        {
-            public void run()
-            {
-                int itemId = mRemoveQueue.peek();
-                updateTotalsOnAddedTransaction(mAdapter.getItem(itemId), true);
-                mAdapter.remove(itemId);
-            }
-
-        }, mRemoveAnimation.getDuration());
-        removeItemWithId(position);
-    }
-
-    /**
-     */
     @Override
     public void onAttach(Activity activity)
     {
@@ -500,7 +502,9 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
 
             final Transaction expense = mAdapter.getItems().get(position);
             Intent intent = new Intent(getActivity(), ExpenseDetailActivity.class);
-            intent.putExtra(MONTH_KEY, position);
+            intent.putExtra(ITEM_POS_KEY, position);
+            intent.putExtra(MONTH_KEY, mTransactions.mMonthNumber);
+            intent.putExtra(DAY_KEY, expense.mTransactionDay);
             intent.putExtra(Transaction.KEY_DESCRIPTION, expense.mDescription);
             intent.putExtra(Transaction.KEY_VALUE, expense.mValue);
             intent.putExtra(Transaction.KEY_CURRENCY, expense.mCurrency);
@@ -531,7 +535,7 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
             String note = data.getExtras().getString(Transaction.KEY_NOTES);
             Boolean isExpense = data.getExtras().getBoolean(Transaction.KEY_TYPE);
 
-            int position = data.getExtras().getInt(MONTH_KEY);
+            int position = data.getExtras().getInt(ITEM_POS_KEY);
 
             if (!desc.isEmpty() && !sum.isEmpty())
             {
@@ -677,7 +681,7 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
 
         double initTotal = initIncome - initExpense;
 
-        int color = android.R.color.black;
+        int color;
         if (initTotal < 0)
         {
             color = getResources().getColor(R.color.expense_color);
@@ -689,9 +693,14 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
         // Update UI
         mTotalSavings.setTextColor(color);
         mTotalSavingsSign.setTextColor(color);
-        mTotalSavings.setText(String.valueOf(initTotal));
-        mTotalIncome.setText(String.valueOf(initIncome));
-        mTotalExpense.setText(String.valueOf(initExpense));
+
+
+        String incomeStr = Utils.formatDoubleToTextCurrency(initIncome);
+        String expenseStr = Utils.formatDoubleToTextCurrency(initExpense);
+        String savingStr = Utils.formatDoubleToTextCurrency(initTotal);
+        mTotalSavings.setText(savingStr);
+        mTotalIncome.setText(incomeStr);
+        mTotalExpense.setText(expenseStr);
     }
 
     /**

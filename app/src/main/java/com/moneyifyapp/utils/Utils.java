@@ -12,6 +12,8 @@ import com.moneyifyapp.R;
 import com.moneyifyapp.activities.preferences.PrefActivity;
 import com.parse.Parse;
 
+import java.text.DateFormatSymbols;
+import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,6 +29,7 @@ public class Utils
     public static String globalCurrencyList[] = {"$", "₪", "£", "€", "¥", "¥"};
     private static final String mEmailFormat = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
     public static final String THIN_FONT_NAME = "sans-serif-thin";
+    private static DecimalFormat mFormater;
 
     /********************************************************************/
     /**                          Methods                               **/
@@ -145,5 +148,63 @@ public class Utils
     {
         // Nothing fancy
         return password.length() >= 4;
+    }
+
+    /**
+     */
+    public static String generateDayInMonthSuffix(String date)
+    {
+        String dateSuffix = "";
+
+        // Build the day suffix
+        if(date.endsWith("1") && !date.equals("11")){dateSuffix += "st";}
+        else if(date.endsWith("2") && !date.equals("12")){dateSuffix += "nd";}
+        else if(date.endsWith("3") && !date.equals("13")){dateSuffix += "rd";}
+        else {dateSuffix += "th";}
+
+        return dateSuffix;
+    }
+
+    /**
+     */
+    public static String formatDoubleToTextCurrency(double sum)
+    {
+        if(mFormater == null)
+            mFormater = new DecimalFormat("#.##");
+        String sumStr = mFormater.format(sum);
+
+        return sumStr;
+    }
+
+    /**
+     */
+    public static String getMonthNameByIndex(int monthIndex)
+    {
+        String month = "";
+
+        String[] dateFormat = new DateFormatSymbols().getMonths();
+
+        if(dateFormat != null)
+        {
+            if(dateFormat.length-1 >= monthIndex)
+            {
+                month = dateFormat[monthIndex];
+            }
+        }
+
+        return month;
+    }
+
+    /**
+     */
+    public static String getMonthPrefixByIndex(int monthIndex)
+    {
+        String month = getMonthNameByIndex(monthIndex);
+        if(month.length() > 3)
+        {
+            month = month.substring(0,3);
+        }
+
+        return  month;
     }
 }
