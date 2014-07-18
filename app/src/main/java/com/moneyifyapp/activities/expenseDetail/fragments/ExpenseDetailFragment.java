@@ -95,7 +95,7 @@ public class ExpenseDetailFragment extends Fragment
             String transactionJson = getArguments().getString(Transaction.TRANS_JSON);
             mTempExpenseObject = JsonServiceYearTransactions.getInstance().fromJsonToTransaction(transactionJson);
 
-            mMonthPrefix = Utils.getMonthPrefixByIndex(mMonth);
+            mMonthPrefix = Utils.getMonthNameByIndex(mMonth);
             mCurrentImage = mTempExpenseObject.mImageResourceIndex;
 
             mAlphaDown = AnimationUtils.getAlphaDownAnimation();

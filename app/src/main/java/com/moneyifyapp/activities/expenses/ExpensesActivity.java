@@ -25,11 +25,13 @@ import com.moneyifyapp.R;
 import com.moneyifyapp.activities.analytics.FullAnalyticsActivity;
 import com.moneyifyapp.activities.expenses.drawer.DrawerItemAdapter;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
+import com.moneyifyapp.activities.graphs.DashboardActivity;
 import com.moneyifyapp.activities.login.LoginActivity;
 import com.moneyifyapp.activities.preferences.PrefActivity;
 import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.model.YearTransactions;
 import com.moneyifyapp.model.enums.Months;
+import com.moneyifyapp.utils.JsonServiceYearTransactions;
 import com.moneyifyapp.utils.Utils;
 import com.parse.ParseUser;
 
@@ -41,28 +43,8 @@ import java.util.Calendar;
 public class ExpensesActivity extends Activity
         implements ExpenseListFragment.OnFragmentInteractionListener, ViewPager.OnPageChangeListener
 {
-    /********************************************************************/
-    /**                            Members                             **/
-    /********************************************************************/
-
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v13.app.FragmentStatePagerAdapter}.
-     */
     SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     ViewPager mViewPager;
-
-    /**
-     * A calender instance for all date purposes.
-     */
     Calendar mCalender;
 
     public static final int IMAGE_PICK_REQ = 90;
@@ -85,11 +67,6 @@ public class ExpensesActivity extends Activity
     private YearTransactions mYearTransactions;
     private Activity mActivity;
     private Typeface mHeadLineTypeFace;
-
-
-    /********************************************************************/
-    /**                          Methods                               **/
-    /********************************************************************/
 
     /**
      * Called once every life cycle.
@@ -254,6 +231,14 @@ public class ExpensesActivity extends Activity
                 Intent intent = new Intent(mActivity, PrefActivity.class);
                 startActivityForResult(intent, REQ_PREFS);
             }
+            else
+            {
+                Intent intent = new Intent(mActivity, DashboardActivity.class);
+                Bundle data = new Bundle();
+                data.putString(ExpenseListFragment.YEAR_JSON_KEY, JsonServiceYearTransactions.getInstance().toJson(mYearTransactions));
+                intent.putExtras(data);
+                startActivity(intent);
+            }
         }
     }
 
@@ -394,7 +379,7 @@ public class ExpensesActivity extends Activity
         @Override
         public CharSequence getPageTitle(int position)
         {
-            return Months.getMonthNameByNumber(position + 1) + " " + mYearTransactions.mYear;
+            return Months.getMonthNameByNumber(position + 1).toUpperCase() + " " + mYearTransactions.mYear;
         }
     }
 }

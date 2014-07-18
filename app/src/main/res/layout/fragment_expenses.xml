@@ -37,16 +37,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/default_currency"
-                android:textSize="@dimen/large_font"
+                android:textSize="@dimen/huge_font"
                 android:id="@+id/plusCurrency"
+                android:fontFamily="sans-serif-condensed"
                 android:textColor="@color/income_color"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/large_font"
+                android:textSize="@dimen/huge_font"
                 android:text="@string/init_total_value"
                 android:id="@+id/plusAmount"
+                android:fontFamily="sans-serif-condensed"
                 android:textColor="@color/income_color"/>
 
             <TextView
@@ -55,23 +57,26 @@
                 android:textSize="@dimen/large_font"
                 android:text="-"
                 android:id="@+id/minusSign"
+
                 android:paddingStart="@dimen/max_add_height"
                 android:paddingEnd="@dimen/max_add_height"/>
 
             <com.moneyifyapp.views.CurrencyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/large_font"
+                android:textSize="@dimen/huge_font"
                 android:text="@string/default_currency"
                 android:id="@+id/minusCurrency"
+                android:fontFamily="sans-serif-condensed"
                 android:textColor="@color/expense_color"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/large_font"
+                android:textSize="@dimen/huge_font"
                 android:text="@string/init_total_value"
                 android:id="@+id/minusAmount"
+                android:fontFamily="sans-serif-condensed"
                 android:textColor="@color/expense_color"/>
 
             <TextView
@@ -86,19 +91,21 @@
             <com.moneyifyapp.views.CurrencyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/large_font"
+                android:textSize="@dimen/huge_font"
                 android:text="@string/default_currency"
                 android:textStyle="bold"
                 android:id="@+id/totalCurrency"
+                android:fontFamily="sans-serif-condensed"
                 android:textColor="@color/income_color"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/large_font"
+                android:textSize="@dimen/huge_font"
                 android:textStyle="bold"
                 android:text="@string/init_total_value"
                 android:id="@+id/totalAmount"
+                android:fontFamily="sans-serif-condensed"
                 android:textColor="@color/income_color"/>
 
         </LinearLayout>

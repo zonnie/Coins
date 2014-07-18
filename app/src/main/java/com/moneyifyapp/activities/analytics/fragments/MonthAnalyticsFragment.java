@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,9 +37,12 @@ public class MonthAnalyticsFragment extends Fragment
     private LinearLayout mDateLabelLayout;
     private LinearLayout mMainContainerLayout;
     private ListView mBiggestExpenseList;
+    private LinearLayout mBiggestExpenseLayout;
     private ListView mBiggestIncomeList;
+    private LinearLayout mBiggestIncomeLayout;
     private View mRootView;
     private static JsonServiceYearTransactions mJsonService;
+    private boolean mNoInsights;
 
 
     private static final String PROFITED_LABEL = "Profit";
@@ -70,7 +74,10 @@ public class MonthAnalyticsFragment extends Fragment
     {
         super.onCreate(savedInstanceState);
         // Init Parse for data storing
+        mNoInsights = false;
         Utils.initializeParse(getActivity());
+        Utils.initializeActionBar(getActivity());
+        Utils.setLogo(getActivity(), R.drawable.chart);
         mMonth = getArguments().getInt(ExpenseListFragment.MONTH_KEY);
         mYear = getArguments().getInt(ExpenseListFragment.YEAR_KEY);
 
@@ -99,6 +106,8 @@ public class MonthAnalyticsFragment extends Fragment
             initDateLabels();
             initTotalSums();
             initProfitOrLossLabels();
+            initWorstDay();
+            initTopCategory();
 
             startAppearanceAnimations();
 
@@ -154,11 +163,54 @@ public class MonthAnalyticsFragment extends Fragment
      */
     private void initTotalSums()
     {
-        String totalExepense = String.valueOf(mMonthTransactions.sumExpenses(MonthTransactions.SubsetType.EXPENSE));
-        String totalIncome = String.valueOf(mMonthTransactions.sumExpenses(MonthTransactions.SubsetType.INCOME));
+        String totalExepense = Utils.formatDoubleToTextCurrency(mMonthTransactions.sumExpenses(MonthTransactions.SubsetType.EXPENSE));
+        String totalIncome = Utils.formatDoubleToTextCurrency(mMonthTransactions.sumExpenses(MonthTransactions.SubsetType.INCOME));
         loadTextViewAndSetText(R.id.analytics_monthly_expense_sum,totalExepense);
         loadTextViewAndSetText(R.id.analytics_monthly_income_sum,totalIncome);
 
+    }
+
+    /**
+     */
+    private void initWorstDay()
+    {
+        MonthTransactions.Couple<Integer,Double> daySum = mMonthTransactions.getTopCategory(MonthTransactions.TopFilter.BUSIEST_DAY);
+
+        if(daySum != null)
+        {
+            updateHasInsignts();
+
+            LinearLayout worstDayLayout = (LinearLayout)mRootView.findViewById(R.id.month_analytics_worst_day_layout);
+            worstDayLayout.setVisibility(View.VISIBLE);
+            String dayStr = String.valueOf(daySum.mFirstField);
+            String suffix = Utils.generateDayInMonthSuffix(dayStr);
+            String month = Months.getMonthNameByNumber(mMonth + 1);
+
+            loadTextViewAndSetText(R.id.analytics_monthly_worst_day_date_label, month + " " + dayStr + suffix);
+            loadTextViewAndSetText(R.id.analytics_monthly_worst_day_sum, Utils.formatDoubleToTextCurrency(daySum.mSecondField));
+        }
+    }
+
+    /**
+     */
+    private void initTopCategory()
+    {
+        MonthTransactions.Couple<Integer,Double> categorySum = mMonthTransactions.getTopCategory(MonthTransactions.TopFilter.CATEGORY);
+
+        if(categorySum != null)
+        {
+            updateHasInsignts();
+
+            LinearLayout topCategoryLayout = (LinearLayout) mRootView.findViewById(R.id.month_analytics_top_category_layout);
+            topCategoryLayout.setVisibility(View.VISIBLE);
+
+            String sum = Utils.formatDoubleToTextCurrency(categorySum.mSecondField);
+            int resource = categorySum.mFirstField;
+
+            ImageView image = (ImageView) mRootView.findViewById(R.id.month_analytics_top_category_image);
+            loadTextViewAndSetText(R.id.month_analytics_top_category_sum, sum);
+            image.setImageResource(resource);
+        }
     }
 
     /**
@@ -221,14 +273,13 @@ public class MonthAnalyticsFragment extends Fragment
 
         if(expenses.getItems().size() > 0)
         {
+            updateHasInsignts();
+
+            mBiggestExpenseLayout = (LinearLayout)mRootView.findViewById(R.id.month_analytics_biggest_expense_layout);
+            mBiggestExpenseLayout.setVisibility(View.VISIBLE);
             mBiggestExpenseList = (ListView)mRootView.findViewById(R.id.month_analytics_biggest_expense_list);
             ExpenseItemAdapterRead expenseAdapter = new ExpenseItemAdapterRead(getActivity(), R.layout.adapter_expense_item_read, expenses);
             mBiggestExpenseList.setAdapter(expenseAdapter);
-        }
-        else
-        {
-            TextView emptyExpenses = (TextView)mRootView.findViewById(R.id.analytics_month_empty_expense);
-            emptyExpenses.setVisibility(View.VISIBLE);
         }
     }
 
@@ -240,14 +291,23 @@ public class MonthAnalyticsFragment extends Fragment
 
         if(incomes.getItems().size() > 0)
         {
+            updateHasInsignts();
+
+            mBiggestIncomeLayout = (LinearLayout)mRootView.findViewById(R.id.month_analytics_biggest_income_layout);
+            mBiggestIncomeLayout.setVisibility(View.VISIBLE);
             mBiggestIncomeList = (ListView)mRootView.findViewById(R.id.month_analytics_biggest_income_list);
             ExpenseItemAdapterRead incomeAdapter = new ExpenseItemAdapterRead(getActivity(), R.layout.adapter_expense_item_read, incomes);
             mBiggestIncomeList.setAdapter(incomeAdapter);
         }
-        else
+    }
+
+    private void updateHasInsignts()
+    {
+        if(mNoInsights == false)
         {
-            TextView emptyIncome = (TextView)mRootView.findViewById(R.id.analytics_month_empty_income);
-            emptyIncome.setVisibility(View.VISIBLE);
+            mNoInsights = true;
+            TextView insigntsLabel = (TextView) mRootView.findViewById(R.id.month_analytics_insignts_label);
+            insigntsLabel.setText("Some Insights we Found");
         }
     }
 }

@@ -56,4 +56,6 @@
     <string name="profits_string">"Profits</string>
     <string name="spending_string">"Spending</string>
     <string name="spent_string">"Spent</string>
+    <string name="title_activity_dashboard">Dashboard</string>
+
 </resources>

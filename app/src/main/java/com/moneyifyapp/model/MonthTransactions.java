@@ -160,4 +160,125 @@ public class MonthTransactions
 
         return result;
     }
+
+    /**
+    public Couple<Integer, Double> getWorstDay()
+    {
+        Double[] dayExpenses = new Double[32];
+        int maxDay = 0;
+        double maxSum = 0;
+
+        for(int i = 0; i < dayExpenses.length; ++i)
+            dayExpenses[i] = new Double(0);
+
+        for(Transaction curTransaction : mTransactions)
+        {
+            int curTransactionDay = Integer.valueOf(curTransaction.mTransactionDay);
+            double curTransactionSum = Double.parseDouble(curTransaction.mValue);
+            dayExpenses[curTransactionDay] += (curTransaction.mIsExpense) ? curTransactionSum : 0;
+        }
+
+        for(int i = 1; i < dayExpenses.length; ++i)
+        {
+            if(maxSum < dayExpenses[i])
+            {
+                maxDay = i;
+                maxSum = dayExpenses[i];
+            }
+        }
+
+        Couple<Integer, Double> daySum = (maxDay == 0) ? null : new Couple<Integer, Double>(maxDay, maxSum);
+
+        return daySum;
+    }*/
+
+    /**
+     */
+    public Couple getTopCategory(TopFilter filter)
+    {
+        int arrLength = 0;
+        int fillIndex = 0;
+        int checkIndex = 0;
+        switch (filter)
+        {
+            case BUSIEST_DAY:
+                arrLength = 32;
+                fillIndex = 1;
+                checkIndex = 1;
+                break;
+            case CATEGORY:
+                arrLength = Images.getCount();
+                fillIndex = 0;
+                checkIndex = 1;
+                break;
+            default:
+                return null;
+        }
+
+        Double[] dayExpenses = new Double[arrLength];
+        int maxKey = 0;
+        double maxSum = 0;
+
+        // Init the array
+        for(; fillIndex < dayExpenses.length; ++fillIndex)
+            dayExpenses[fillIndex] = new Double(0);
+
+        // Fill with sums per
+        for(Transaction curTransaction : mTransactions)
+        {
+            int arrayKey = 0;
+
+            switch (filter)
+            {
+                case CATEGORY:
+                    arrayKey = curTransaction.mImageResourceIndex;
+                    break;
+                case BUSIEST_DAY:
+                    arrayKey = Integer.valueOf(curTransaction.mTransactionDay);
+                    break;
+            }
+            double curTransactionSum = Double.parseDouble(curTransaction.mValue);
+            dayExpenses[arrayKey] += (curTransaction.mIsExpense) ? curTransactionSum : 0;
+        }
+
+        for(; checkIndex < dayExpenses.length; ++checkIndex)
+        {
+            if(maxSum < dayExpenses[checkIndex])
+            {
+                switch (filter)
+                {
+                    case CATEGORY:
+                        maxKey = Images.getImageByPosition(checkIndex);
+                        break;
+                    case BUSIEST_DAY:
+                        maxKey = checkIndex;
+                }
+                maxSum = dayExpenses[checkIndex];
+            }
+        }
+
+        Couple<Integer, Double> categorySum = (maxSum > 0) ? new Couple<Integer, Double>(maxKey, maxSum) : null;
+
+        return categorySum;
+    }
+
+    /**
+     *
+     */
+    public class Couple<T, M>
+    {
+        public T mFirstField;
+        public M mSecondField;
+
+        public Couple(T resouceId, M sum)
+        {
+            this.mFirstField = resouceId;
+            this.mSecondField = sum;
+        }
+    }
+
+    /**
+     * An enum representing filters for the top subset function.
+     */
+    public enum TopFilter {CATEGORY, BUSIEST_DAY};
 }

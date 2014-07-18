@@ -105,7 +105,8 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
         super.onCreate(savedInstanceState);
         // Init Parse for data storing
         Utils.initializeParse(getActivity());
-        mRemoveAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
+        if(mRemoveAnimation == null)
+            mRemoveAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
         mRemoveQueue = new LinkedList<Integer>();
         setHasOptionsMenu(true);
 

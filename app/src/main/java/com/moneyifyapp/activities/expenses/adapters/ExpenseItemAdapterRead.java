@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
@@ -25,14 +23,10 @@ import com.moneyifyapp.model.Transaction;
 public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
 {
     private TextView mExpenseDescription;
-    private LinearLayout mItemLayout;
     private TextView mExpenseValue;
     private TextView mExpenseCurrency;
-    private TextView mExpenseNote;
     private int mLayoutResourceId;
     private MonthTransactions mTransactions;
-    private Button mRemoveItemButton;
-    private int mItemsLoaded;
     private View mMyView;
     public static int PICK_IMAGE_DIMENSIONS = 80;
     private final String EMPTY_NOTE_HINT = "Please enter a note...";
@@ -46,7 +40,6 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
         super(context, resource, expenses.getItems());
         mTransactions = expenses;
         mLayoutResourceId = resource;
-        mItemsLoaded = 0;
 
         // Load animation lazy
         if (mItemsLoadAnimation == null)
@@ -104,7 +97,6 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
             handleViewDescription(currentTransactionView);
             handleViewValue(currentTransactionView);
             handleViewCurrency(currentTransactionView);
-            handleViewNote(currentTransactionView);
         }
         return mMyView;
     }
@@ -114,12 +106,9 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
     private void storeViews()
     {
         // Take care of click to layout to be able to edit item in view
-        mItemLayout = (LinearLayout) mMyView.findViewById(R.id.transaction_card_layout);
         mExpenseDescription = (TextView) mMyView.findViewById(R.id.expenseDesc);
         mExpenseValue = (TextView) mMyView.findViewById(R.id.expenseValue);
         mExpenseCurrency = (TextView) mMyView.findViewById(R.id.currency);
-        mExpenseNote = (TextView) mMyView.findViewById(R.id.expenseItemNote);
-
     }
 
     /**
@@ -144,19 +133,6 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
     {
         if (mExpenseCurrency != null)
             mExpenseCurrency.setText(currentTransactionView.mCurrency);
-    }
-
-    /**
-     */
-    private void handleViewNote(Transaction currentTransactionView)
-    {
-        if (mExpenseNote != null)
-        {
-            if (!currentTransactionView.mNotes.isEmpty())
-                mExpenseNote.setText(currentTransactionView.mNotes);
-            else
-                mExpenseNote.setText(EMPTY_NOTE_HINT);
-        }
     }
 
     /**

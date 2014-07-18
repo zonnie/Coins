@@ -33,12 +33,8 @@ public enum Months
         String month = "";
 
         for (Months curMonth : Months.values())
-        {
             if (curMonth.getMonthNumber() == number)
-            {
-                month = curMonth.toString().toUpperCase();
-            }
-        }
+                month = curMonth.toString();
 
         return month;
     }

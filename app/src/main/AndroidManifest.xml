@@ -12,20 +12,29 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".activities.expenses.ExpensesActivity"
-            android:label="" >
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label=""
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activities.login.LoginActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/action_sign_in"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".activities.login.SignUpActivity"
-            android:label="@string/action_sing_up" >
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/action_sing_up"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activities.SplashActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/main_title"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.CustomizedAppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,16 +44,22 @@
         </activity>
         <activity
             android:name=".activities.expenseDetail.ExpenseDetailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_create_expense"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".activities.expenseDetail.ImagePickerActivity"
-            android:label="@string/title_activity_image_picker" >
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_image_picker"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activities.preferences.PrefActivity"
-            android:label="@string/title_activity_pref" >
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_pref"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activities.analytics.FullAnalyticsActivity"
@@ -53,6 +68,10 @@
         <activity
             android:name=".activities.analytics.MonthAnalytics"
             android:label="@string/title_analytics_month_overview" >
+        </activity>
+        <activity
+            android:name=".activities.graphs.DashboardActivity"
+            android:label="@string/title_activity_dashboard" >
         </activity>
     </application>
 

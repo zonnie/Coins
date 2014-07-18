@@ -18,4 +18,5 @@
     <dimen name="huge_font">25sp</dimen>
     <dimen name="large_font">20sp</dimen>
     <dimen name="tiny_font">12sp</dimen>
+    <dimen name="medium_font">15sp</dimen>
 </resources>

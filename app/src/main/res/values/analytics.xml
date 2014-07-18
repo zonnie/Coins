@@ -5,8 +5,11 @@
     <string name="analytics_str_total_profit_label">Profit</string>
     <string name="analytics_str_biggest_expense_label">Top Spent</string>
     <string name="analytics_str_biggest_income_label">Highest Income</string>
+    <string name="analytics_str_worst_day_label">Busiest Day</string>
+    <string name="analytics_str_top_category_label">Top Category</string>
     <string name="analytics_str_totals_hint">Monthly bottom line</string>
-    <string name="analytics_str_intrest_hint">Some interesting insights</string>
+    <string name="analytics_str_intrest_hint">Can\'t jump to conclusion yet, add some transactions</string>
+    <string name="dashboard_bar_chart_title">Trends</string>
     <string name="analytics_str_no_income">Nothing earned :(</string>
     <string name="analytics_str_no_expense">Noting spent, hooray :)</string>
 </resources>
