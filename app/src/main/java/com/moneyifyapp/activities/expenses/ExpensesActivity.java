@@ -29,6 +29,7 @@ import com.moneyifyapp.activities.graphs.DashboardActivity;
 import com.moneyifyapp.activities.login.LoginActivity;
 import com.moneyifyapp.activities.preferences.PrefActivity;
 import com.moneyifyapp.model.Transaction;
+import com.moneyifyapp.model.TransactionHandler;
 import com.moneyifyapp.model.YearTransactions;
 import com.moneyifyapp.model.enums.Months;
 import com.moneyifyapp.utils.JsonServiceYearTransactions;
@@ -38,14 +39,14 @@ import com.parse.ParseUser;
 import java.util.Calendar;
 
 /**
- *
  */
 public class ExpensesActivity extends Activity
         implements ExpenseListFragment.OnFragmentInteractionListener, ViewPager.OnPageChangeListener
 {
-    SectionsPagerAdapter mSectionsPagerAdapter;
-    ViewPager mViewPager;
-    Calendar mCalender;
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private ViewPager mViewPager;
+    private Calendar mCalender;
+    private TransactionHandler mTransactionHadler;
 
     public static final int IMAGE_PICK_REQ = 90;
     public static final int IMAGE_PICK_OK = 423;
@@ -57,6 +58,7 @@ public class ExpensesActivity extends Activity
     public static final int RESP_CHANGED = 533;
     public static final int REQ_EDIT_ITEM = 92;
     public static String PARSE_USER_KEY = "user";
+    private final String DRAWER_TITLE = "Stuff to Do";
 
     // Drawer
     private DrawerLayout mDrawerLayout;
@@ -70,8 +72,6 @@ public class ExpensesActivity extends Activity
 
     /**
      * Called once every life cycle.
-     *
-     * @param savedInstanceState
      */
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -79,20 +79,17 @@ public class ExpensesActivity extends Activity
         super.onCreate(savedInstanceState);
 
         mActivity = this;
+        mTransactionHadler = TransactionHandler.getInstance(mActivity);
+        mCalender = Calendar.getInstance();
+        mYearTransactions = mTransactionHadler.getYearTransactions(String.valueOf(mCalender.get(Calendar.YEAR)));
 
         setContentView(R.layout.activity_expenses);
-        mCalender = Calendar.getInstance();
 
         // Init Parse for data storing
         Utils.initializeParse(this);
         Utils.initializeActionBar(this);
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
-
-
-        // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setCurrentItem(mCalender.get(Calendar.MONTH));
@@ -100,25 +97,16 @@ public class ExpensesActivity extends Activity
 
         /** Drawer **/
 
-        mTitle = "Stuff to Do";
-
         mDrawerTopListLayout = (LinearLayout) findViewById(R.id.top_list_layout);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        // Set the adapter for the list view
-        //mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mPlanetTitles));
         mDrawerList.setAdapter(new DrawerItemAdapter(this, R.layout.drawer_list_item));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
         mDrawerToggle = createDrawerToggle();
-
-        // Add shadow
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP);
 
-        mYearTransactions = new YearTransactions(mCalender.get(Calendar.YEAR));
 
         mHeadLineTypeFace = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
         TextView title = (TextView)findViewById(R.id.top_drawer_title);
@@ -126,7 +114,6 @@ public class ExpensesActivity extends Activity
     }
 
     /**
-     * @return
      */
     private ActionBarDrawerToggle createDrawerToggle()
     {
@@ -142,13 +129,13 @@ public class ExpensesActivity extends Activity
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view)
             {
-                getActionBar().setTitle(mTitle);
+                getActionBar().setTitle(DRAWER_TITLE);
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView)
             {
-                getActionBar().setTitle(mTitle);
+                getActionBar().setTitle(DRAWER_TITLE);
             }
         };
 
@@ -177,17 +164,11 @@ public class ExpensesActivity extends Activity
     }
 
     /**
-     *
-     * @param position
-     * @param positionOffset
-     * @param positionOffsetPixels
      */
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels){}
 
     /**
-     *
-     * @param position
      */
     @Override
     public void onPageSelected(int position)
@@ -196,8 +177,6 @@ public class ExpensesActivity extends Activity
     }
 
     /**
-     *
-     * @param state
      */
     @Override
     public void onPageScrollStateChanged(int state){}
@@ -290,8 +269,6 @@ public class ExpensesActivity extends Activity
 
     /**
      * Called by the contained fragment after an item within it was clicked.
-     *
-     * @param transaction the id of the item that was clicked.
      */
     @Override
     public void expenseItemClickedInFragment(Transaction transaction)
@@ -300,9 +277,6 @@ public class ExpensesActivity extends Activity
     }
 
     /**
-     * @param requestCode
-     * @param resultCode
-     * @param data
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -313,10 +287,7 @@ public class ExpensesActivity extends Activity
     }
 
     /**
-     *
      * Updates the 'id' fragment in the viewpager.
-     *
-     * @param id
      */
     private void updateFragmentOnCurrencyPrefChange(int id)
     {
@@ -326,12 +297,7 @@ public class ExpensesActivity extends Activity
         frag.updateTotalCurrencyToPrefDefault();
     }
 
-
-
     /**
-     * Inner class
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter
     {
@@ -342,26 +308,19 @@ public class ExpensesActivity extends Activity
         }
 
         /**
-         * Returns an fragment according to the position the
-         * user is viewing.
-         *
-         * @param position the position for which to fetch the item.
-         * @return the currently viewed fragment.
          */
         @Override
         public Fragment getItem(int position)
         {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            ExpenseListFragment fragment = ExpenseListFragment.newInstance(position, mYearTransactions);
+            ExpenseListFragment fragment = ExpenseListFragment.newInstance(position);
             return fragment;
 
         }
 
         /**
          * Determines the number of pages the view pages holds.
-         *
-         * @return int - the number of pages.
          */
         @Override
         public int getCount()
@@ -371,10 +330,6 @@ public class ExpensesActivity extends Activity
         }
 
         /**
-         * Responsible for the naming of the pages.
-         *
-         * @param position the position for which to get the title.
-         * @return string - the name of the page.
          */
         @Override
         public CharSequence getPageTitle(int position)

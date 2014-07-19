@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.widget.Spinner;
 
 import com.moneyifyapp.R;
-import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.activities.graphs.fragments.BarGraphFragment;
+import com.moneyifyapp.model.TransactionHandler;
 import com.moneyifyapp.model.YearTransactions;
-import com.moneyifyapp.utils.JsonServiceYearTransactions;
 import com.moneyifyapp.utils.Utils;
+
+import java.util.Calendar;
 
 /**
  *
@@ -18,6 +19,7 @@ public class DashboardActivity extends Activity
 {
     private Spinner mSpinner;
     private YearTransactions mYearTransactions;
+    private TransactionHandler mTransactionHandler;
 
     /**
      *
@@ -29,43 +31,23 @@ public class DashboardActivity extends Activity
         setContentView(R.layout.activity_dashboard);
 
         Utils.initializeActionBar(this);
-        Utils.initializeParse(this);
         Utils.setLogo(this,R.drawable.chart);
-
-        String yearTransString = getIntent().getExtras().getString(ExpenseListFragment.YEAR_JSON_KEY);
-        mYearTransactions = JsonServiceYearTransactions.getInstance().fromJsonToYearTransactions(yearTransString);
-
+        mTransactionHandler = TransactionHandler.getInstance(this);
+        mYearTransactions = mTransactionHandler.getYearTransactions(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 
         if (savedInstanceState == null)
         {
+            getFragmentManager().beginTransaction()
+                    .add(R.id.dashboard_graph_container, BarGraphFragment.newInstance(BarGraphFragment.BIG_GRAPH))
+                    .commit();
+
+            /*
             getFragmentManager().beginTransaction()
                     .add(R.id.dashboard_graph_container, new BarGraphFragment())
                     .commit();
             getFragmentManager().beginTransaction()
                     .add(R.id.dashboard_top_spent_container, new BarGraphFragment())
-                    .commit();
+                    .commit();*/
         }
     }
-
-    /*
-    public void addListenerOnSpinnerItemSelection()
-    {
-        mSpinner = (Spinner) findViewById(R.id.month_spinner);
-        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                getFragmentManager().beginTransaction()
-                        .add(R.id.dashboard_graph_container, BarGraphFragment.newInstance(position, mYearTransactions.get(position), BarGraphFragment.BIG_GRAPH))
-                        .commit();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-
-            }
-        });
-    }*/
 }

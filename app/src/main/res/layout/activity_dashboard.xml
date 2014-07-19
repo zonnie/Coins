@@ -12,14 +12,6 @@
                     android:layout_height="match_parent"
         >
 
-        <Spinner
-            android:id="@+id/month_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/months_ids"
-            android:gravity="center"
-            />
-
         <FrameLayout
             android:id="@+id/dashboard_graph_container"
             android:layout_width="match_parent"

@@ -29,8 +29,8 @@ import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.activities.expenses.adapters.ExpenseItemAdapter;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.Transaction;
+import com.moneyifyapp.model.TransactionHandler;
 import com.moneyifyapp.model.YearTransactions;
-import com.moneyifyapp.utils.JsonServiceYearTransactions;
 import com.moneyifyapp.utils.Utils;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
@@ -50,7 +50,6 @@ import java.util.UUID;
  */
 public class ExpenseListFragment extends ListFragment implements ExpenseItemAdapter.ListItemHandler
 {
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static final String ITEM_POS_KEY = "itemPos";
     public static final String PAGE_ID_KEY = "frag_id";
     public static final String MONTH_KEY = "month";
@@ -71,22 +70,17 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
     private TextView mTotalSavings;
     private TextView mTotalSavingsSign;
     private Queue<Integer> mRemoveQueue;
-    private int mPageId;
     private Animation mRemoveAnimation;
-    private static JsonServiceYearTransactions mJsonService;
     private View mView;
+    private TransactionHandler mTransactionHandler;
 
     /**
      * Factory to pass some data for different fragments creation.
      */
-    public static ExpenseListFragment newInstance(int pageId, YearTransactions yearTransactions)
+    public static ExpenseListFragment newInstance(int pageId)
     {
-        mJsonService = JsonServiceYearTransactions.getInstance();
-        String yearTransJson = mJsonService.toJson(yearTransactions);
-
         ExpenseListFragment fragment = new ExpenseListFragment();
         Bundle args = new Bundle();
-        args.putString(YEAR_JSON_KEY, yearTransJson);
         args.putInt(PAGE_ID_KEY, pageId);
         fragment.setArguments(args);
         return fragment;
@@ -104,7 +98,7 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
     {
         super.onCreate(savedInstanceState);
         // Init Parse for data storing
-        Utils.initializeParse(getActivity());
+        mTransactionHandler = TransactionHandler.getInstance(getActivity());
         if(mRemoveAnimation == null)
             mRemoveAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
         mRemoveQueue = new LinkedList<Integer>();
@@ -114,7 +108,6 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
             initDataFromIntentArgs();
 
         initListAdapter();
-        queryDatabaseAndBuildTransactions();
     }
 
     /**
@@ -130,11 +123,10 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
     private void initDataFromIntentArgs()
     {
         // Create a new month
-        String yearJson = getArguments().getString(YEAR_JSON_KEY);
-        mPageId = getArguments().getInt(PAGE_ID_KEY);
-        mYearTransactions = mJsonService.fromJsonToYearTransactions(yearJson);
-        mYearTransactions.addMonth(mPageId);
-        mTransactions = mYearTransactions.get(mPageId);
+        int pageId = getArguments().getInt(PAGE_ID_KEY);
+        mYearTransactions = mTransactionHandler.getYearTransactions(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+        mYearTransactions.addMonth(pageId);
+        mTransactions = mYearTransactions.get(pageId);
 
     }
 
@@ -147,9 +139,7 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
         mView = inflater.inflate(R.layout.fragment_expenses, container, false);
 
         storeViews();
-
         clearTotalsValues();
-
         updateTotalsForAllTransactions();
 
         // On total's click go to month total
@@ -228,27 +218,6 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
                 mAdapter.notifyDataSetChanged();
             }
         }
-    }
-
-    /**
-     */
-    public void queryDatabaseAndBuildTransactions()
-    {
-        ParseQuery<ParseObject> query = createParseQueryByListMonthAndYear();
-        query.findInBackground(new FindCallback<ParseObject>()
-        {
-            public void done(List<ParseObject> expenseList, ParseException e)
-            {
-                if (e == null)
-                {
-                    buildExpenseListFromParse(expenseList);
-                } else
-                {
-                    Toast toast = Toast.makeText(getActivity(), "We are having some issues, sorry", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-            }
-        });
     }
 
     /**

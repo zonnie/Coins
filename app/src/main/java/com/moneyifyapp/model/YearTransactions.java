@@ -5,19 +5,11 @@ package com.moneyifyapp.model;
  */
 public class YearTransactions
 {
-    /********************************************************************/
-    /**                          Members                               **/
-    /********************************************************************/
 
-    MonthTransactions[] mYearTransactions;
+    private MonthTransactions[] mYearTransactions;
     public int mYear;
 
-    /********************************************************************/
-    /**                          Methods                               **/
-    /********************************************************************/
-
     /**
-     *
      */
     public YearTransactions(int year)
     {
@@ -26,53 +18,31 @@ public class YearTransactions
     }
 
     /**
-     *
-     * @param month
-     * @return
      */
     public MonthTransactions get(int month)
     {
         return  mYearTransactions[month];
     }
 
+    public MonthTransactions[] getItems() {return mYearTransactions;}
+
     /**
-     *
-     * @param month
      */
     public void addMonth(int month)
     {
         if(mYearTransactions != null)
-        {
             if(mYearTransactions[month] == null)
-            {
                 mYearTransactions[month] = new MonthTransactions(month);
-            }
-        }
     }
 
     /**
-     *
-     * @param month
-     * @param transactions
      */
-    public void addTransactionToMonth(int month, Transaction transactions)
+    public void addTransactionToMonth(int month, Transaction transactions, int index)
     {
         if(this.mYearTransactions[month] == null)
-        {
             addMonth(month);
-        }
 
         this.mYearTransactions[month].mTransactions.add(transactions);
-    }
-
-    /**
-     *
-     * @param month
-     * @param transactions
-     */
-    public void setMonthTransactions(int month, MonthTransactions transactions)
-    {
-        this.mYearTransactions[month] = transactions;
     }
 
     /**
@@ -81,5 +51,22 @@ public class YearTransactions
     public int size()
     {
         return this.mYearTransactions.length;
+    }
+
+    public Integer maxMonth()
+    {
+        double maxMonth = 0;
+
+        for(int i = 0; i < size(); ++i)
+        {
+            if(get(i) != null)
+            {
+                double monthSum = get(i).sumExpenses(MonthTransactions.SubsetType.EXPENSE);
+                if (monthSum > maxMonth)
+                    maxMonth = monthSum;
+            }
+        }
+
+        return new Integer((int)maxMonth);
     }
 }

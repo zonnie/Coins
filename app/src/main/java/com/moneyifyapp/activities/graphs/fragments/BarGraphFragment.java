@@ -13,12 +13,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
-import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.model.MonthTransactions;
+import com.moneyifyapp.model.TransactionHandler;
+import com.moneyifyapp.model.YearTransactions;
 import com.moneyifyapp.model.enums.Months;
-import com.moneyifyapp.utils.JsonServiceYearTransactions;
 
-import java.util.Collections;
+import java.util.Calendar;
 
 /**
  * A bar graph fragment
@@ -28,7 +28,7 @@ public class BarGraphFragment extends Fragment
     private LinearLayout mLinearChart;
     private LinearLayout mXAxisContainer;
     private View mView;
-    private MonthTransactions mMonthTransaction;
+    private YearTransactions mYearTransactions;
     public static final int BAR_MARGIN = 5;
     private int mMaxHeight;
     private int mMaxBarHeight = 300;
@@ -43,12 +43,10 @@ public class BarGraphFragment extends Fragment
      *
      * @param graphSize - Choose between BIG_GRAPH, MEDIUM_GRAPH and SMALL_GRAPH
      */
-    public static BarGraphFragment newInstance(int pageId, MonthTransactions monthTransaction, int graphSize)
+    public static BarGraphFragment newInstance(int graphSize)
     {
-        String yearTransJson = JsonServiceYearTransactions.getInstance().toJson(monthTransaction);
         BarGraphFragment fragment = new BarGraphFragment();
         Bundle args = new Bundle();
-        args.putString(ExpenseListFragment.YEAR_JSON_KEY, yearTransJson);
         args.putInt(GRAPH_SIZE_ARG, graphSize);
         fragment.setArguments(args);
         return fragment;
@@ -56,9 +54,7 @@ public class BarGraphFragment extends Fragment
 
     /**
      */
-    public BarGraphFragment()
-    {
-    }
+    public BarGraphFragment(){}
 
     /**
      */
@@ -67,30 +63,28 @@ public class BarGraphFragment extends Fragment
                              Bundle savedInstanceState)
     {
         if (getArguments() != null)
-        {
-            String monthJson = getArguments().getString(ExpenseListFragment.YEAR_JSON_KEY);
             mMaxBarHeight = getArguments().getInt(GRAPH_SIZE_ARG);
-            mMonthTransaction = JsonServiceYearTransactions.getInstance().fromJsonToMonthTransactions(monthJson);
-        }
 
         mView = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        mYearTransactions = TransactionHandler.getInstance(getActivity()).getYearTransactions(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 
-        int weigtSum = mMonthTransaction.getItems().size();
+        int weigtSum = mYearTransactions.size();
 
         mLinearChart = (LinearLayout) mView.findViewById(R.id.linearChart);
         mLinearChart.setWeightSum(weigtSum);
         mXAxisContainer = (LinearLayout) mView.findViewById(R.id.xAxisLayout);
         mXAxisContainer.setWeightSum(weigtSum);
 
-        mMaxHeight = Integer.valueOf(Collections.max(mMonthTransaction.getItems()).mValue);
+        mMaxHeight = mYearTransactions.maxMonth();
 
-        for (int j = 0; j < mMonthTransaction.getItems().size(); j++)
-            drawChart(1, Integer.valueOf(mMonthTransaction.getItems().get(j).mValue));
-
-        for (int j = 0; j < mMonthTransaction.getItems().size(); j++)
+        for (int j = 0; j < mYearTransactions.size(); j++)
         {
-            createXvalue(j+1);
+            if(mYearTransactions.get(j) != null)
+                drawChart(1, (int) mYearTransactions.get(j).sumExpenses(MonthTransactions.SubsetType.EXPENSE));
         }
+
+        for (int j = 0; j < mYearTransactions.size(); j++)
+            createXvalue(j+1);
 
         return mView;
     }
