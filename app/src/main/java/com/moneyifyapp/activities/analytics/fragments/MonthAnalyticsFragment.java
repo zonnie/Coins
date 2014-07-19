@@ -109,7 +109,7 @@ public class MonthAnalyticsFragment extends Fragment
             initWorstDay();
             initTopCategory();
 
-            startAppearanceAnimations();
+            //startAppearanceAnimations();
 
             loadBiggestExpense();
             loadBiggestIncome();
@@ -163,8 +163,8 @@ public class MonthAnalyticsFragment extends Fragment
      */
     private void initTotalSums()
     {
-        String totalExepense = Utils.formatDoubleToTextCurrency(mMonthTransactions.sumExpenses(MonthTransactions.SubsetType.EXPENSE));
-        String totalIncome = Utils.formatDoubleToTextCurrency(mMonthTransactions.sumExpenses(MonthTransactions.SubsetType.INCOME));
+        String totalExepense = Utils.formatDoubleToTextCurrency(mMonthTransactions.sumTransactions(MonthTransactions.SubsetType.EXPENSE));
+        String totalIncome = Utils.formatDoubleToTextCurrency(mMonthTransactions.sumTransactions(MonthTransactions.SubsetType.INCOME));
         loadTextViewAndSetText(R.id.analytics_monthly_expense_sum,totalExepense);
         loadTextViewAndSetText(R.id.analytics_monthly_income_sum,totalIncome);
 
@@ -217,8 +217,8 @@ public class MonthAnalyticsFragment extends Fragment
      */
     private void initProfitOrLossLabels()
     {
-        double totalSpent = mMonthTransactions.sumExpenses(MonthTransactions.SubsetType.EXPENSE);
-        double totalRevenue = mMonthTransactions.sumExpenses(MonthTransactions.SubsetType.INCOME);
+        double totalSpent = mMonthTransactions.sumTransactions(MonthTransactions.SubsetType.EXPENSE);
+        double totalRevenue = mMonthTransactions.sumTransactions(MonthTransactions.SubsetType.INCOME);
         double totalProfit = totalRevenue - totalSpent;
 
         TextView profitTextView = loadTextViewAndSetText(R.id.analytics_monthly_profit_sum, String.valueOf(totalProfit));

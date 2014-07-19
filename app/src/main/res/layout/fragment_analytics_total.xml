@@ -26,9 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/back_regualr"
-            android:gravity="center"
             android:orientation="horizontal"
-            android:padding="@dimen/drawable_left_pad"
             >
 
             <TextView
@@ -38,6 +36,8 @@
                 android:layout_marginEnd="@dimen/padding_start_currency"
                 android:fontFamily="sans-serif-condensed"
                 android:text="December"
+                android:paddingRight="@dimen/padding_start_currency"
+                android:paddingLeft="@dimen/big_padding"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/huge_font"
                 android:textStyle="bold"
@@ -51,6 +51,8 @@
                 android:text="2014"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/huge_font"
+                android:paddingBottom="@dimen/padding_start_currency"
+                android:paddingTop="@dimen/padding_start_currency"
 
                 />
         </LinearLayout>

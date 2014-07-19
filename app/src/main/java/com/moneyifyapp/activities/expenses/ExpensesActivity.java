@@ -32,7 +32,6 @@ import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.model.TransactionHandler;
 import com.moneyifyapp.model.YearTransactions;
 import com.moneyifyapp.model.enums.Months;
-import com.moneyifyapp.utils.JsonServiceYearTransactions;
 import com.moneyifyapp.utils.Utils;
 import com.parse.ParseUser;
 
@@ -213,9 +212,6 @@ public class ExpensesActivity extends Activity
             else
             {
                 Intent intent = new Intent(mActivity, DashboardActivity.class);
-                Bundle data = new Bundle();
-                data.putString(ExpenseListFragment.YEAR_JSON_KEY, JsonServiceYearTransactions.getInstance().toJson(mYearTransactions));
-                intent.putExtras(data);
                 startActivity(intent);
             }
         }

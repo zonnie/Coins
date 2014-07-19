@@ -22,22 +22,19 @@ import android.widget.Toast;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
+import com.moneyifyapp.model.TransactionHandler;
 import com.moneyifyapp.utils.Utils;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import java.util.Calendar;
+
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends Activity implements OnClickListener
+public class LoginActivity extends Activity implements OnClickListener, TransactionHandler.onFetchingCompleteListener
 {
-    /********************************************************************/
-    /**                          Members                               **/
-    /**
-     * ****************************************************************
-     */
-
     // UI references.
     private EditText mEmailView;
     private EditText mPasswordView;
@@ -45,13 +42,9 @@ public class LoginActivity extends Activity implements OnClickListener
     private View mLoginFormView;
     private Button mEmailSignInButton;
     private Button mSignUpButton;
-
-    /********************************************************************/
-    /**                          Methods                               **/
-    /********************************************************************/
+    private TransactionHandler mTransactionHandler;
 
     /**
-     * @param savedInstanceState
      */
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -59,7 +52,6 @@ public class LoginActivity extends Activity implements OnClickListener
         super.onCreate(savedInstanceState);
 
         Utils.initializeActionBar(this);
-        Utils.initializeParse(this);
         Utils.removeLogo(this);
         // Remove logo for this activity
         getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
@@ -67,12 +59,17 @@ public class LoginActivity extends Activity implements OnClickListener
         // Set the content
         setContentView(R.layout.activity_login_layout);
 
+        mTransactionHandler = TransactionHandler.getInstance(this);
+        mTransactionHandler.registerToFetchComplete(this);
+
         // Set up the login form.
         mEmailView = (EditText) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
 
         mEmailView.setOnClickListener(this);
         mPasswordView.setOnClickListener(this);
+
+
 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener()
         {
@@ -99,7 +96,7 @@ public class LoginActivity extends Activity implements OnClickListener
             @Override
             public void onClick(View view)
             {
-                attemptLogin();
+                mTransactionHandler.featchYearTransactions(Calendar.getInstance().get(Calendar.YEAR));
             }
         });
 
@@ -269,6 +266,12 @@ public class LoginActivity extends Activity implements OnClickListener
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onFetchComplete()
+    {
+        attemptLogin();
     }
 }
 

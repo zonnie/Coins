@@ -1,5 +1,8 @@
 package com.moneyifyapp.model.enums;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Zonnie_Work on 30/06/2014.
  */
@@ -37,5 +40,15 @@ public enum Months
                 month = curMonth.toString();
 
         return month;
+    }
+
+    public static List<String> getMonthList()
+    {
+        List<String> list = new ArrayList<String>();
+
+        for(Months curMonth : Months.values())
+            list.add(curMonth.toString());
+
+        return list;
     }
 }

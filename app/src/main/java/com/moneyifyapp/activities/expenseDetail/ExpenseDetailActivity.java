@@ -115,7 +115,6 @@ public class ExpenseDetailActivity extends Activity
     }
 
     /**
-     *
      */
     @Override
     public void cancel()
@@ -129,7 +128,6 @@ public class ExpenseDetailActivity extends Activity
     }
 
     /**
-     *
      */
     @Override
     public void onBackPressed() {

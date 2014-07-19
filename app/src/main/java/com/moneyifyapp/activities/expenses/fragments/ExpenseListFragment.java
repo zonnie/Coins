@@ -48,7 +48,8 @@ import java.util.UUID;
 /**
  * A fragment representing a list of Items.
  */
-public class ExpenseListFragment extends ListFragment implements ExpenseItemAdapter.ListItemHandler
+public class ExpenseListFragment extends ListFragment 
+        implements ExpenseItemAdapter.ListItemHandler, TransactionHandler.onFetchingCompleteListener
 {
     public static final String ITEM_POS_KEY = "itemPos";
     public static final String PAGE_ID_KEY = "frag_id";
@@ -707,4 +708,11 @@ public class ExpenseListFragment extends ListFragment implements ExpenseItemAdap
         if (position >= 0)
             startEditTransactionActivity(position);
     }
+
+    @Override
+    public void onFetchComplete()
+    {
+
+    }
+
 }

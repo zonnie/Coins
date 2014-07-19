@@ -53,7 +53,9 @@ public class YearTransactions
         return this.mYearTransactions.length;
     }
 
-    public Integer maxMonth()
+    /**
+     */
+    public Integer maxMonthExpeneses()
     {
         double maxMonth = 0;
 
@@ -61,7 +63,7 @@ public class YearTransactions
         {
             if(get(i) != null)
             {
-                double monthSum = get(i).sumExpenses(MonthTransactions.SubsetType.EXPENSE);
+                double monthSum = get(i).sumTransactions(MonthTransactions.SubsetType.EXPENSE);
                 if (monthSum > maxMonth)
                     maxMonth = monthSum;
             }

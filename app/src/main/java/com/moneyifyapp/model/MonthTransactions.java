@@ -49,7 +49,8 @@ public class MonthTransactions
      *
      * @return
      */
-    public double sumExpenses(SubsetType type)
+
+    public double sumTransactions(SubsetType type)
     {
         double sum = 0;
 
@@ -70,9 +71,9 @@ public class MonthTransactions
         return sum;
     }
 
+
     /**
      * Get the max expense/income.
-     * @param type - if 'true' then get max expense, otherwise get max income.
      */
     public double getMaxTransaction(SubsetType type)
     {
@@ -160,37 +161,6 @@ public class MonthTransactions
 
         return result;
     }
-
-    /**
-    public Couple<Integer, Double> getWorstDay()
-    {
-        Double[] dayExpenses = new Double[32];
-        int maxDay = 0;
-        double maxSum = 0;
-
-        for(int i = 0; i < dayExpenses.length; ++i)
-            dayExpenses[i] = new Double(0);
-
-        for(Transaction curTransaction : mTransactions)
-        {
-            int curTransactionDay = Integer.valueOf(curTransaction.mTransactionDay);
-            double curTransactionSum = Double.parseDouble(curTransaction.mValue);
-            dayExpenses[curTransactionDay] += (curTransaction.mIsExpense) ? curTransactionSum : 0;
-        }
-
-        for(int i = 1; i < dayExpenses.length; ++i)
-        {
-            if(maxSum < dayExpenses[i])
-            {
-                maxDay = i;
-                maxSum = dayExpenses[i];
-            }
-        }
-
-        Couple<Integer, Double> daySum = (maxDay == 0) ? null : new Couple<Integer, Double>(maxDay, maxSum);
-
-        return daySum;
-    }*/
 
     /**
      */

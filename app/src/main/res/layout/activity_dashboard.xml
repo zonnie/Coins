@@ -13,16 +13,16 @@
         >
 
         <FrameLayout
-            android:id="@+id/dashboard_graph_container"
+            android:id="@+id/dashboard_spending_graph_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
 
         <FrameLayout
-            android:id="@+id/dashboard_top_spent_container"
+            android:id="@+id/dashboard_revenue_graph_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/dashboard_graph_container"
+            android:layout_below="@+id/dashboard_spending_graph_container"
             />
 
 

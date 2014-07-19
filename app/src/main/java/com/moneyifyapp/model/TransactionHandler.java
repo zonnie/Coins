@@ -18,7 +18,8 @@ import java.util.Map;
 import java.util.Queue;
 
 /**
- * Created by Zonnie_Work on 19/07/2014.
+ * Handlse the transactions.
+ * It is responsible for loading the transactions from Parse.
  */
 public class TransactionHandler
 {
@@ -26,7 +27,8 @@ public class TransactionHandler
     private Map<String, YearTransactions> mAllTransactions;
     private Queue<onFetchingCompleteListener> mFetchCompleteListeners;
 
-
+    /**
+     */
     private TransactionHandler(Activity context)
     {
         Utils.initializeParse(context);
@@ -34,6 +36,8 @@ public class TransactionHandler
         mFetchCompleteListeners = new LinkedList<onFetchingCompleteListener>();
     }
 
+    /**
+     */
     public static TransactionHandler getInstance(Activity context)
     {
         if(instance == null)
@@ -42,11 +46,15 @@ public class TransactionHandler
         return  instance;
     }
 
+    /**
+     */
     public void featchYearTransactions(int year)
     {
         queryDatabaseAndBuildTransactions(year);
     }
 
+    /**
+     */
     public void registerToFetchComplete(onFetchingCompleteListener listener)
     {
         this.mFetchCompleteListeners.add(listener);
