@@ -39,9 +39,6 @@ public class FullAnalyticsActivity extends Activity
         Utils.setLogo(this,R.drawable.chart);
         mCalender = Calendar.getInstance();
         mAnalyticsCount = ANALYTICS_COUNT_DEFAULT;
-
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
@@ -50,11 +47,6 @@ public class FullAnalyticsActivity extends Activity
     }
 
     /**
-     *
-     * This is the pager, it is responsible for the creating
-     * fragments for each page, handling the page count and titiling.
-     * It is used by the ViewPager
-     *
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter
     {
@@ -71,8 +63,6 @@ public class FullAnalyticsActivity extends Activity
         @Override
         public Fragment getItem(int position)
         {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
             return MonthAnalyticsFragment.newInstance(mCalender.get(Calendar.MONTH), mCalender.get(Calendar.YEAR), null);
         }
 

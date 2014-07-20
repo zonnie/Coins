@@ -87,6 +87,8 @@ public class TransactionHandler
     {
         if (list != null)
         {
+            this.clearUserTransactions();
+
             for (ParseObject curExpense : list)
             {
                 Transaction transaction = createTransactionFromParseObject(curExpense);

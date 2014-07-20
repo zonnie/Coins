@@ -195,21 +195,19 @@ public class ExpensesActivity extends Activity
             //TODO This is temp, should be done for every drawer item
             if (position == 0)
             {
-                /** Do drawer actions here **/
-                //mYearTransactions = new YearTransactions(mCalender.get(Calendar.YEAR) + 1);
                 Intent intent = new Intent(mActivity, FullAnalyticsActivity.class);
                 startActivity(intent);
             }
-            if (position == 1)
+            else if (position == 1)
             {
                 return;
             }
-            if (position == 2)
+            else if (position == 2)
             {
                 Intent intent = new Intent(mActivity, PrefActivity.class);
                 startActivityForResult(intent, REQ_PREFS);
             }
-            else
+            else if(position == 3)
             {
                 Intent intent = new Intent(mActivity, DashboardActivity.class);
                 startActivity(intent);

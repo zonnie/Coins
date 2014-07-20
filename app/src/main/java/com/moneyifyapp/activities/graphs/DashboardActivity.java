@@ -24,8 +24,8 @@ public class DashboardActivity extends Activity
 {
     private YearTransactions mYearTransactions;
     private TransactionHandler mTransactionHandler;
-    private final String SPEND_GRAPH = "Monthly Spending";
-    private final String REVENUE_GRAPH = "Monthly Revenue";
+    private final String SPEND_GRAPH = "Spending";
+    private final String REVENUE_GRAPH = "Revenues";
     private final String X_AXIS_TITLE = "Month";
 
     /**
@@ -53,11 +53,8 @@ public class DashboardActivity extends Activity
 
             BarGraphFragment.BarGraphParameters expenseParams = buildGraphParams(SPEND_GRAPH, MonthTransactions.SubsetType.EXPENSE, xLabels,
                     new ArrayList<String>(), R.drawable.graph_bar_back_red, X_AXIS_TITLE);
-            BarGraphFragment.BarGraphParameters incomeParams = buildGraphParams(REVENUE_GRAPH, MonthTransactions.SubsetType.INCOME, xLabels,
-                    new ArrayList<String>(), R.drawable.graph_bar_back_green, X_AXIS_TITLE);
 
             boolean noExpense = true;
-            boolean noIncome = true;
 
             for(Integer cur : expenseParams.mValues)
             {
@@ -68,16 +65,7 @@ public class DashboardActivity extends Activity
                 }
             }
 
-            for(Integer cur : incomeParams.mValues)
-            {
-                if(cur > 0)
-                {
-                    noIncome = false;
-                    break;
-                }
-            }
-
-            if(!noExpense || !noIncome)
+            if(!noExpense)
             {
                 TextView hint = (TextView)findViewById(R.id.dashboard_empty_hint_textview);
                 hint.setVisibility(View.GONE);
@@ -89,15 +77,6 @@ public class DashboardActivity extends Activity
                 getFragmentManager().beginTransaction()
                         .add(R.id.dashboard_spending_graph_container, BarGraphFragment.newInstance(expenseParams))
                         .commit();
-
-            }
-            if(!noIncome)
-            {
-                findViewById(R.id.dashboard_revenue_graph_container).setVisibility(View.VISIBLE);
-                getFragmentManager().beginTransaction()
-                        .add(R.id.dashboard_revenue_graph_container, BarGraphFragment.newInstance(incomeParams))
-                        .commit();
-
             }
         }
     }

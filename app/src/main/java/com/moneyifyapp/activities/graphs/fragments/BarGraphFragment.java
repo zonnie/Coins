@@ -190,6 +190,7 @@ public class BarGraphFragment extends Fragment
         public int mGraphSize;
         public String mTitle;
         public String mXAxisTitle;
+        public List<Integer> mSpecialBarsId;
 
         public BarGraphParameters(String title)
         {
@@ -198,6 +199,7 @@ public class BarGraphFragment extends Fragment
             mYAxisLabels = new ArrayList<String>();
             mGraphSize = MEDIUM_GRAPH;
             mTitle = title;
+            mSpecialBarsId = new ArrayList<Integer>();
         }
 
         /**
@@ -230,9 +232,18 @@ public class BarGraphFragment extends Fragment
                 mYAxisLabels.add(value);
         }
 
+        /**
+         */
         public void setXAxisTitle(String title)
         {
             this.mXAxisTitle = title;
+        }
+
+        /**
+         */
+        public void addSpecialBar(int barNumber)
+        {
+            mSpecialBarsId.add(barNumber);
         }
     }
 }

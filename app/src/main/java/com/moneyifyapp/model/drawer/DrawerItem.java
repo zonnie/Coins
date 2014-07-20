@@ -5,17 +5,9 @@ package com.moneyifyapp.model.drawer;
  */
 public class DrawerItem
 {
-    /********************************************************************/
-    /**                          Members                               **/
-    /********************************************************************/
-
     private String mItemTitle;
     private String mItemHint;
     private int mResourceId;
-
-    /********************************************************************/
-    /**                          Methods                               **/
-    /********************************************************************/
 
     public DrawerItem(String title, String hint, int resource)
     {
