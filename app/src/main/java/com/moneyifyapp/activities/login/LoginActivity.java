@@ -96,7 +96,7 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
             @Override
             public void onClick(View view)
             {
-                mTransactionHandler.featchYearTransactions(Calendar.getInstance().get(Calendar.YEAR));
+                attemptLogin();
             }
         });
 
@@ -192,15 +192,10 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
                     public void done(ParseUser user, ParseException e)
                     {
                         if (user != null)
-                        {
-                            goToMainActivity();
-                            finish();
-                        } else
-                        {
+                            mTransactionHandler.featchYearTransactions(Calendar.getInstance().get(Calendar.YEAR));
+                        else
                             signInFailed();
-                        }
 
-                        showProgress(false);
                     }
                 }
         );
@@ -271,7 +266,9 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
     @Override
     public void onFetchComplete()
     {
-        attemptLogin();
+        showProgress(false);
+        goToMainActivity();
+        finish();
     }
 }
 

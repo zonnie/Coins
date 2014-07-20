@@ -143,12 +143,23 @@ public class TransactionHandler
      */
     public YearTransactions getYearTransactions(String year)
     {
+        if(mAllTransactions.get(year) == null)
+            mAllTransactions.put(year, new YearTransactions(Integer.valueOf(year)));
+
         return mAllTransactions.get(year);
     }
 
+    /**
+     */
     public interface onFetchingCompleteListener
     {
         public void onFetchComplete();
+    }
 
+    /**
+     */
+    public void clearUserTransactions()
+    {
+        mAllTransactions.clear();
     }
 }

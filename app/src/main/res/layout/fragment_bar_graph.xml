@@ -1,7 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="match_parent"
               android:orientation="vertical"
+              android:background="@color/background"
               android:paddingBottom="@dimen/activity_vertical_margin"
     >
 
@@ -46,7 +47,6 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="@dimen/padding_start_currency"
-            android:layout_marginTop="@dimen/padding_start_currency"
             android:background="@android:color/darker_gray"
             />
 
@@ -59,6 +59,17 @@
             >
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/graph_x_axis_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_start_currency"
+            android:gravity="center"
+            android:text="Month"
+            android:textSize="@dimen/tiny_font"
+            android:textColor="@android:color/darker_gray"
+            />
 
     </LinearLayout>
 

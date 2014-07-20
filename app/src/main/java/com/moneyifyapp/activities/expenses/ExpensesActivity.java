@@ -243,24 +243,28 @@ public class ExpensesActivity extends Activity
         int id = item.getItemId();
 
         if (id == R.id.jump_today)
-        {
             mViewPager.setCurrentItem(mCalender.get(Calendar.MONTH));
-        } else if (id == R.id.logout)
-        {
-            // Logout user - this clears the disk from any user remains
-            ParseUser currentUser = ParseUser.getCurrentUser();
-            currentUser.logOut();
-
-            // Got to login now
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-        } else if (mDrawerToggle.onOptionsItemSelected(item))
-        {
+        else if (id == R.id.logout)
+            logOutUser();
+        else if (mDrawerToggle.onOptionsItemSelected(item))
             return true;
-        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     */
+    private void logOutUser()
+    {
+        // Logout user - this clears the disk from any user remains
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        currentUser.logOut();
+        mTransactionHadler.clearUserTransactions();
+
+        // Got to login now
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     /**

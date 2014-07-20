@@ -105,9 +105,7 @@ public class ExpenseListFragment extends ListFragment
         mRemoveQueue = new LinkedList<Integer>();
         setHasOptionsMenu(true);
 
-        if (getArguments() != null)
-            initDataFromIntentArgs();
-
+        initDataFromIntentArgs();
         initListAdapter();
     }
 

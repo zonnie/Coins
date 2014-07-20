@@ -12,10 +12,24 @@
                     android:layout_height="match_parent"
         >
 
+        <TextView
+            android:id="@+id/dashboard_empty_hint_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/expense_drawable_left_pad"
+            android:gravity="center"
+            android:paddingLeft="@dimen/drawable_left_pad"
+            android:paddingRight="@dimen/drawable_left_pad"
+            android:text="@string/dashboard_empty_hint"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/medium_font"
+            />
+
         <FrameLayout
             android:id="@+id/dashboard_spending_graph_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             />
 
         <FrameLayout
@@ -23,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/dashboard_spending_graph_container"
+            android:visibility="gone"
             />
 
 
