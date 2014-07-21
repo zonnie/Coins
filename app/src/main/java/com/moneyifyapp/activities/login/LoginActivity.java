@@ -187,7 +187,7 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
                     public void done(ParseUser user, ParseException e)
                     {
                         if (user != null)
-                            mTransactionHandler.featchYearTransactions(Calendar.getInstance().get(Calendar.YEAR));
+                            mTransactionHandler.fetchYearTransactions(Calendar.getInstance().get(Calendar.YEAR));
                         else
                             signInFailed();
 

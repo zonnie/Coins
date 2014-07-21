@@ -74,6 +74,7 @@ public class ExpenseListFragment extends ListFragment
     private View mView;
     private TransactionHandler mTransactionHandler;
     private int mPageId;
+    private int mYear;
 
     /**
      * Factory to pass some data for different fragments creation.
@@ -99,21 +100,17 @@ public class ExpenseListFragment extends ListFragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        int year = 0;
 
         if(!getArguments().isEmpty())
         {
             mPageId = getArguments().getInt(PAGE_ID_KEY);
-            year = getArguments().getInt(YEAR_KEY);
+            mYear = getArguments().getInt(YEAR_KEY);
         }
 
         // Init Parse for data storing
         mTransactionHandler = TransactionHandler.getInstance(getActivity());
-        if(mTransactionHandler.isFirstFeatch())
-        {
-            mTransactionHandler.registerToFetchComplete(this);
-            mTransactionHandler.featchYearTransactions(year);
-        }
+        reFeatchDataIfWeResumed();
+
         if(mRemoveAnimation == null)
             mRemoveAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
         mRemoveQueue = new LinkedList<Integer>();
@@ -121,6 +118,15 @@ public class ExpenseListFragment extends ListFragment
 
         initDataFromIntentArgs();
         initListAdapter();
+    }
+
+    /**
+     *
+     */
+    private void reFeatchDataIfWeResumed()
+    {
+        if(mTransactionHandler.isFirstFeatch())
+            mTransactionHandler.registerListenerAndFetchTransactions(this, mYear);
     }
 
     /**

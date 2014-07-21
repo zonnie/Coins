@@ -50,7 +50,15 @@ public class TransactionHandler
 
     /**
      */
-    public void featchYearTransactions(int year)
+    public void registerListenerAndFetchTransactions(onFetchingCompleteListener listener, int year)
+    {
+        registerToFetchComplete(listener);
+        fetchYearTransactions(year);
+    }
+
+    /**
+     */
+    public void fetchYearTransactions(int year)
     {
         if(!mFetchCompleteListeners.isEmpty())
         {

@@ -3,6 +3,9 @@ package com.moneyifyapp.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
@@ -19,6 +22,9 @@ public class SplashActivity extends Activity
         implements TransactionHandler.onFetchingCompleteListener
 {
     private TransactionHandler mTransactionHandler;
+    private String SHARED_PREF_NAME = "com.moneyifyapp";
+    private String FIRST_RUN_FLAG = "firstrun";
+    private int SPLASH_DISPLAY_LENGTH = 1200;
 
     /**
      */
@@ -28,10 +34,21 @@ public class SplashActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_layout);
 
-        // Init Parse API
+        boolean firstrun = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE).getBoolean(FIRST_RUN_FLAG, true);
+
+        // Save the state with shared preferences
+        getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE).edit().putBoolean(FIRST_RUN_FLAG, false).commit();
         mTransactionHandler = TransactionHandler.getInstance(this);
-        mTransactionHandler.registerToFetchComplete(this);
-        mTransactionHandler.featchYearTransactions(Calendar.getInstance().get(Calendar.YEAR));
+
+        if (!firstrun)
+            mTransactionHandler.registerListenerAndFetchTransactions(this, Calendar.getInstance().get(Calendar.YEAR));
+        else
+        {
+            LinearLayout firstTimeLayout = (LinearLayout) findViewById(R.id.first_time_layout);
+            firstTimeLayout.setVisibility(View.VISIBLE);
+            startWithNoQuery();
+        }
+
     }
 
     /**
@@ -50,5 +67,30 @@ public class SplashActivity extends Activity
 
         startActivity(mainIntent);
         finish();
+    }
+
+    /**
+     *
+     */
+    private void startWithNoQuery()
+    {
+        new Handler().postDelayed(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                Intent mainIntent;
+
+                // Login user automatically if it can be done
+                if (currentUser != null)
+                    mainIntent = new Intent(SplashActivity.this, ExpensesActivity.class);
+                else
+                    mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
+
+                startActivity(mainIntent);
+                finish();
+            }
+        }, SPLASH_DISPLAY_LENGTH);
     }
 }

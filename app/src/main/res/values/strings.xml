@@ -34,8 +34,10 @@
     <string name="item_details_cancel">"Cancel"</string>
     <string name="item_list_refresh">"Refresh"</string>
     <string name="image_gallery_hint">"Tap the category image to pick one"</string>
-    <string name="splash_slogan">"Save some coins"</string>
-    <string name="splash_slogan_under">"by Zonnie"</string>
+    <string name="splash_slogan">"Save some Coins"</string>
+    <string name="splash_first_time_title">"Welcome to Coins !"</string>
+    <string name="splash_first_time_body">"Add some stuff and start saving"</string>
+    <string name="splash_slogan_under">"ZonnieApps"</string>
     <string name="default_currency">"$"</string>
     <string name="init_total_value">"0"</string>
     <string name="add_item_description_hint">"What is this ?"</string>

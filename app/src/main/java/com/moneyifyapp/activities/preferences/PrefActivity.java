@@ -128,9 +128,7 @@ public class PrefActivity extends PreferenceActivity
     public void onBuildHeaders(List<Header> target)
     {
         if (!isSimplePreferences(this))
-        {
             loadHeadersFromResource(R.xml.pref_headers, target);
-        }
     }
 
     /**
@@ -169,9 +167,7 @@ public class PrefActivity extends PreferenceActivity
                 sPrefChanged = true;
                 // Update that settings changed
                 if(preference.getKey().equals(PREF_LIST_NAME))
-                {
                     sPrefChanges.put(PREF_LIST_NAME, true);
-                }
             }
             else
             {

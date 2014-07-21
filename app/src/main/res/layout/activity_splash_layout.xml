@@ -2,34 +2,87 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:background="@drawable/button_alternate"
+              android:gravity="center"
               android:orientation="vertical"
-              android:weightSum="4"
-              android:gravity="center">
+              android:weightSum="4">
 
-    <ImageView
-        android:id="@+id/splashImage"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/coin_large"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10"
+        >
 
-    <TextView
-        android:id="@+id/splashSlogan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/splash_slogan"
-        android:textColor="@android:color/white"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:gravity="center"
-        />
-    <TextView
-        android:id="@+id/splashTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/splash_slogan_under"
-        android:textColor="@android:color/white"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:gravity="center"
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="6"
+            android:layout_marginTop="@dimen/big_padding"
+            >
+
+            <TextView
+                android:id="@+id/splashTitle"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:gravity="center_horizontal|bottom"
+                android:text="@string/splash_slogan"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/huge_font"
+                />
+
+            <TextView
+                android:id="@+id/splashSlogan"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|top"
+                android:text="@string/splash_slogan_under"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@android:color/white"
+                />
+
+            <ImageView
+                android:id="@+id/splashImage"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:src="@drawable/coin_large"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/first_time_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="4"
+            android:visibility="gone"
+            >
+            <TextView
+                android:id="@+id/firstTimeWelcome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/expense_drawable_left_pad"
+                android:gravity="center"
+                android:text="@string/splash_first_time_title"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/large_font"
+                />
+
+            <TextView
+                android:id="@+id/firstTimeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/expense_drawable_left_pad"
+                android:gravity="top|center_horizontal"
+                android:text="@string/splash_first_time_body"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/medium_font"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
 
 </LinearLayout>
