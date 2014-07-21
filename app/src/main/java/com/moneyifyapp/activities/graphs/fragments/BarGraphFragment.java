@@ -110,10 +110,13 @@ public class BarGraphFragment extends Fragment
      */
     private void drawBars()
     {
-        for (int j = 0; j < mValues.size(); j++)
+        if(!mValues.isEmpty())
         {
-            int height = mValues.get(j);
-            drawSingleBar(height);
+            for (int j = 0; j < mValues.size(); j++)
+            {
+                int height = mValues.get(j);
+                drawSingleBar(height);
+            }
         }
     }
 
@@ -121,8 +124,11 @@ public class BarGraphFragment extends Fragment
      */
     private void drawXLabels()
     {
-        for (int j = 0; j < mValues.size(); j++)
-            createXvalue(mXAxisLabels.get(j));
+        if(!mXAxisLabels.isEmpty())
+        {
+            for (int j = 0; j < mValues.size(); j++)
+                createXvalue(mXAxisLabels.get(j));
+        }
     }
 
     /**
@@ -197,7 +203,7 @@ public class BarGraphFragment extends Fragment
             mValues = new ArrayList<Integer>();
             mXAxisLabels = new ArrayList<String>();
             mYAxisLabels = new ArrayList<String>();
-            mGraphSize = MEDIUM_GRAPH;
+            mGraphSize = BIG_GRAPH;
             mTitle = title;
             mSpecialBarsId = new ArrayList<Integer>();
         }

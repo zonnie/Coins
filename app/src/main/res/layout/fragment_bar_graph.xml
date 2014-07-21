@@ -10,10 +10,10 @@
         android:id="@+id/graph_bar_title_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/expense_drawable_left_pad"
+        android:layout_marginTop="@dimen/padding_start_currency"
         android:gravity="center"
         android:text="@string/dashboard_bar_expense_chart_title"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="@dimen/medium_font"
         android:textColor="@android:color/darker_gray"
         />
 
@@ -23,14 +23,17 @@
         android:layout_marginBottom="@dimen/expense_card_margin"
         android:layout_marginLeft="@dimen/expense_drawable_left_pad"
         android:layout_marginRight="@dimen/expense_drawable_left_pad"
-        android:layout_marginTop="@dimen/expense_drawable_left_pad"
+        android:layout_marginTop="@dimen/padding_start_currency"
         android:background="@drawable/expense_item_card"
         android:orientation="vertical"
         android:padding="@dimen/drawable_left_pad"
         android:weightSum="12"
         >
 
-
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
         <LinearLayout
             android:id="@+id/linearChart"
             android:layout_width="match_parent"
@@ -45,10 +48,12 @@
         <View
             android:id="@+id/view"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/padding_start_currency"
+            android:layout_height="0.5dp"
             android:background="@android:color/darker_gray"
+            android:layout_below="@id/linearChart"
             />
+
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/xAxisLayout"

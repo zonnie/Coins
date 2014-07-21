@@ -10,10 +10,15 @@ import com.moneyifyapp.R;
 import com.moneyifyapp.activities.analytics.fragments.MonthAnalyticsFragment;
 import com.moneyifyapp.activities.analytics.fragments.TopCategoryFragment;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
+import com.moneyifyapp.activities.graphs.fragments.BarGraphFragment;
+import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.YearTransactions;
 import com.moneyifyapp.model.enums.Months;
 import com.moneyifyapp.utils.JsonServiceYearTransactions;
 import com.moneyifyapp.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -47,13 +52,34 @@ public class MonthAnalytics extends Activity
             initDateLabels();
 
             // Instantiate a fragment and load with fragment manager
-            MonthAnalyticsFragment fragment = MonthAnalyticsFragment.newInstance(mMonth, mYear, mYearTransactions);
-            getFragmentManager().beginTransaction().add(R.id.container,fragment).commit();
-
-            TopCategoryFragment topFragment = TopCategoryFragment.newInstance(mMonth, mYear, mYearTransactions);
-            getFragmentManager().beginTransaction().add(R.id.analytics_monthly_top_category_container, topFragment).commit();
-
+            initMonthlyOverviewFragment();
+            initTopFragment();
+            initGraphFragment();
         }
+    }
+
+    /**
+     */
+    private void initMonthlyOverviewFragment()
+    {
+        MonthAnalyticsFragment fragment = MonthAnalyticsFragment.newInstance(mMonth, mYear, mYearTransactions);
+        getFragmentManager().beginTransaction().add(R.id.container,fragment).commit();
+    }
+
+    /**
+     */
+    private void initTopFragment()
+    {
+        TopCategoryFragment topFragment = TopCategoryFragment.newInstance(mMonth, mYear, mYearTransactions);
+        getFragmentManager().beginTransaction().add(R.id.analytics_monthly_top_category_container, topFragment).commit();
+    }
+
+    /**
+     */
+    private void initGraphFragment()
+    {
+        BarGraphFragment graphFragment = BarGraphFragment.newInstance(buildGraph());
+        getFragmentManager().beginTransaction().add(R.id.analytics_monthly_top_category_graph, graphFragment).commit();
     }
 
     /**
@@ -94,6 +120,20 @@ public class MonthAnalytics extends Activity
 
     /**
      */
+    private BarGraphFragment.BarGraphParameters buildGraph()
+    {
+        BarGraphFragment.BarGraphParameters params = new BarGraphFragment.BarGraphParameters("Top Categories");
+        params.setValues(createMaxListByType(MonthTransactions.SubsetType.EXPENSE));
+        params.setYLabels(new ArrayList<String>());
+        params.setXAxisTitle("Categories");
+        params.mResourceId =  R.drawable.graph_bar_back_red;
+        params.setXLabels(new ArrayList<String>());
+
+        return params;
+    }
+
+    /**
+     */
     @Override
     public void onBackPressed()
     {
@@ -111,5 +151,25 @@ public class MonthAnalytics extends Activity
             textView.setText(text);
 
         return textView;
+    }
+
+    /**
+     */
+    private List<Integer> createMaxListByType(MonthTransactions.SubsetType type)
+    {
+        List<Integer> result = new ArrayList<Integer>();
+
+        for(MonthTransactions month : mYearTransactions.getItems())
+        {
+            if(month != null)
+            {
+                int sum = (int) (month.sumTransactions(type));
+                result.add(sum);
+            }
+            else
+                result.add(0);
+        }
+
+        return result;
     }
 }

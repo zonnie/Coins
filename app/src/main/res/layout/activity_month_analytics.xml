@@ -51,18 +51,37 @@
 
         <!-- Top Category-->
 
-        <FrameLayout
-            android:id="@+id/analytics_monthly_top_category_container"
+        <LinearLayout
+            android:id="@+id/month_analytics_top_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:weightSum="5"
             android:layout_below="@+id/month_analytics_date_layout"
-            />
+            >
+
+            <FrameLayout
+                android:id="@+id/analytics_monthly_top_category_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                />
+
+            <FrameLayout
+                android:id="@+id/analytics_monthly_top_category_graph"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:layout_gravity="bottom"
+                />
+        </LinearLayout>
+
+        <!-- General Analytics -->
 
         <FrameLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/analytics_monthly_top_category_container"
+            android:layout_below="@+id/month_analytics_top_layout"
             />
 
     </RelativeLayout>

@@ -32,8 +32,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/expense_drawable_left_pad"
-                android:layout_marginTop="@dimen/expense_drawable_left_pad"
+                android:layout_marginBottom="@dimen/padding_start_currency"
+                android:layout_marginTop="@dimen/padding_start_currency"
                 android:gravity="center"
                 android:text="@string/analytics_str_totals_hint"
                 android:textColor="@android:color/darker_gray"
