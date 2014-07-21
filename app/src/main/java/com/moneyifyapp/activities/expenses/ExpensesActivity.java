@@ -63,7 +63,6 @@ public class ExpensesActivity extends Activity
     private DrawerLayout mDrawerLayout;
     private LinearLayout mDrawerTopListLayout;
     private ListView mDrawerList;
-    private CharSequence mTitle;
     private ActionBarDrawerToggle mDrawerToggle;
     private YearTransactions mYearTransactions;
     private Activity mActivity;
@@ -216,6 +215,12 @@ public class ExpensesActivity extends Activity
         }
     }
 
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+    }
+
     /**
      * @param menu
      * @return
@@ -319,7 +324,7 @@ public class ExpensesActivity extends Activity
         {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            ExpenseListFragment fragment = ExpenseListFragment.newInstance(position);
+            ExpenseListFragment fragment = ExpenseListFragment.newInstance(position, mCalender.get(Calendar.YEAR));
             return fragment;
 
         }

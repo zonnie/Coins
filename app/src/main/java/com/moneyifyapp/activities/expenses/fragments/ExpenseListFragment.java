@@ -73,14 +73,16 @@ public class ExpenseListFragment extends ListFragment
     private Animation mRemoveAnimation;
     private View mView;
     private TransactionHandler mTransactionHandler;
+    private int mPageId;
 
     /**
      * Factory to pass some data for different fragments creation.
      */
-    public static ExpenseListFragment newInstance(int pageId)
+    public static ExpenseListFragment newInstance(int pageId, int year)
     {
         ExpenseListFragment fragment = new ExpenseListFragment();
         Bundle args = new Bundle();
+        args.putInt(YEAR_KEY, year);
         args.putInt(PAGE_ID_KEY, pageId);
         fragment.setArguments(args);
         return fragment;
@@ -97,8 +99,21 @@ public class ExpenseListFragment extends ListFragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        int year = 0;
+
+        if(!getArguments().isEmpty())
+        {
+            mPageId = getArguments().getInt(PAGE_ID_KEY);
+            year = getArguments().getInt(YEAR_KEY);
+        }
+
         // Init Parse for data storing
         mTransactionHandler = TransactionHandler.getInstance(getActivity());
+        if(mTransactionHandler.isFirstFeatch())
+        {
+            mTransactionHandler.registerToFetchComplete(this);
+            mTransactionHandler.featchYearTransactions(year);
+        }
         if(mRemoveAnimation == null)
             mRemoveAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
         mRemoveQueue = new LinkedList<Integer>();
@@ -263,6 +278,28 @@ public class ExpenseListFragment extends ListFragment
             for (ParseObject curExpense : list)
             {
                 Transaction transaction = createTransactionFromParseObject(curExpense);
+                // Normalize all currencies according to default
+                transaction.mCurrency = Utils.getDefaultCurrency(getActivity());
+                addNewTransactionAndUpdateTotals(transaction);
+            }
+        }
+    }
+
+    /**
+     * Initializes the expenses from the remote DB.
+     */
+    public void buildExpenseListFromTransactionHandler()
+    {
+        mYearTransactions = mTransactionHandler.getYearTransactions(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+        mYearTransactions.addMonth(mPageId);
+        mTransactions = mYearTransactions.get(mPageId);
+
+        if (mTransactions != null && mTransactions.getItems() != null)
+        {
+            mAdapter.clear();
+
+            for (Transaction transaction : mTransactions.getItems())
+            {
                 // Normalize all currencies according to default
                 transaction.mCurrency = Utils.getDefaultCurrency(getActivity());
                 addNewTransactionAndUpdateTotals(transaction);
@@ -712,9 +749,6 @@ public class ExpenseListFragment extends ListFragment
     @Override
     public void onFetchComplete()
     {
-
+        buildExpenseListFromTransactionHandler();
     }
-
-
-
 }

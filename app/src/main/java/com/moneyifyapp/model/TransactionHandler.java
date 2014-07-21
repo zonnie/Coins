@@ -26,6 +26,7 @@ public class TransactionHandler
     private static TransactionHandler instance;
     private Map<String, YearTransactions> mAllTransactions;
     private Queue<onFetchingCompleteListener> mFetchCompleteListeners;
+    private boolean mIsFirstFatch;
 
     /**
      */
@@ -34,6 +35,7 @@ public class TransactionHandler
         Utils.initializeParse(context);
         mAllTransactions = new HashMap<String, YearTransactions>();
         mFetchCompleteListeners = new LinkedList<onFetchingCompleteListener>();
+        mIsFirstFatch = true;
     }
 
     /**
@@ -50,7 +52,10 @@ public class TransactionHandler
      */
     public void featchYearTransactions(int year)
     {
-        queryDatabaseAndBuildTransactions(year);
+        if(!mFetchCompleteListeners.isEmpty())
+        {
+            queryDatabaseAndBuildTransactions(year);
+        }
     }
 
     /**
@@ -81,6 +86,13 @@ public class TransactionHandler
     }
 
     /**
+     */
+    public boolean isFirstFeatch()
+    {
+        return mIsFirstFatch;
+    }
+
+    /**
      * Initializes the expenses from the remote DB.
      */
     public void buildExpenseListFromParse(List<ParseObject> list)
@@ -98,6 +110,7 @@ public class TransactionHandler
         }
 
         mFetchCompleteListeners.remove().onFetchComplete();
+        mIsFirstFatch = false;
     }
 
     /**

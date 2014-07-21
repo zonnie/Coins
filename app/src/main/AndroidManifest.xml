@@ -12,7 +12,6 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".activities.expenses.ExpensesActivity"
-            android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label=""
             android:screenOrientation="portrait" >
@@ -39,7 +38,6 @@
             android:theme="@style/Theme.CustomizedAppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
