@@ -34,7 +34,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private TextView mExpenseCurrency;
     private TextView mExpenseNote;
     private TextView mExpenseDayOfMonth;
-    private TextView mExpenseDaySuffix;
+    private TextView mExpenseMonth;
     private int mLayoutResourceId;
     private MonthTransactions mTransactions;
     private Button mRemoveItemButton;
@@ -51,7 +51,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         mListener = listener;
         mTransactions = expenses;
         mLayoutResourceId = resource;
-        mDateFont = Typeface.create(Utils.THIN_FONT_NAME, Typeface.NORMAL);
+        mDateFont = Typeface.create(Utils.EXPENSE_FONT_DAY, Typeface.NORMAL);
     }
 
     /**
@@ -139,7 +139,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         mExpenseCurrency = (TextView) mMyView.findViewById(R.id.currency);
         mExpenseNote = (TextView) mMyView.findViewById(R.id.expenseItemNote);
         mExpenseDayOfMonth = (TextView)mMyView.findViewById(R.id.expense_item_date_text);
-        mExpenseDaySuffix = (TextView)mMyView.findViewById(R.id.expense_item_date_suffix);
+        mExpenseMonth = (TextView)mMyView.findViewById(R.id.expense_item_date_month);
         mRemoveItemButton = (Button) mMyView.findViewById(R.id.expenseRemove);
         mExpenseNoteContainer = (LinearLayout)mMyView.findViewById(R.id.expenseItemNoteContainer);
     }
@@ -162,19 +162,14 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         if (mExpenseDescription != null)
         {
             String date = currentTransactionView.mTransactionDay;
-            String dateSuffix  = "";
+            String dateSuffix = Utils.getMonthPrefixByIndex(mTransactions.mMonthNumber).toUpperCase();
 
             // Change the font
             if(mDateFont != null)
-            {
                 mExpenseDayOfMonth.setTypeface(mDateFont);
-                mExpenseDaySuffix.setTypeface(mDateFont);
-            }
-
-            String dateSuffixe = Utils.generateDayInMonthSuffix(date);
 
             mExpenseDayOfMonth.setText(date);
-            mExpenseDaySuffix.setText(dateSuffix);
+            mExpenseMonth.setText(dateSuffix);
         }
 
     }

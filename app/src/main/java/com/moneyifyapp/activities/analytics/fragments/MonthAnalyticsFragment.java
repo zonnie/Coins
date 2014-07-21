@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.adapters.ExpenseItemAdapterRead;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
+import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.YearTransactions;
 import com.moneyifyapp.model.enums.Months;
@@ -209,6 +210,7 @@ public class MonthAnalyticsFragment extends Fragment
 
             ImageView image = (ImageView) mRootView.findViewById(R.id.month_analytics_top_category_image);
             loadTextViewAndSetText(R.id.month_analytics_top_category_sum, sum);
+            loadTextViewAndSetText(R.id.month_analytics_top_category_name, Images.getCaptionByImage(resource));
             image.setImageResource(resource);
         }
     }
@@ -251,7 +253,7 @@ public class MonthAnalyticsFragment extends Fragment
      */
     private void initDateLabels()
     {
-        loadTextViewAndSetText(R.id.analytics_month_label, Months.getMonthNameByNumber(mMonth + 1));
+        loadTextViewAndSetText(R.id.analytics_month_label, Months.getMonthNameByNumber(mMonth));
         loadTextViewAndSetText(R.id.analytics_year_label, String.valueOf(mYear));
     }
 

@@ -7,20 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Zonnie_Work on 03/07/2014.
  */
 public class Images
 {
-    /********************************************************************/
-    /**                          Members                               **/
-    /********************************************************************/
-
     private static List<Integer> mImages;
     private static List<String> mImageCaptions;
-
-    /********************************************************************/
-    /**                          Methods                               **/
-    /********************************************************************/
 
     static
     {
@@ -31,22 +22,22 @@ public class Images
         mImageCaptions.add("Shopping");
 
         mImages.add(R.drawable.ice_cream);
-        mImageCaptions.add("Ice Cream");
+        mImageCaptions.add("Sweets");
 
         mImages.add(R.drawable.internet);
         mImageCaptions.add("Internet");
 
         mImages.add(R.drawable.cell);
-        mImageCaptions.add("Cell Phone");
+        mImageCaptions.add("Celluar Charges");
 
         mImages.add(R.drawable.gaming);
         mImageCaptions.add("Gaming");
 
         mImages.add(R.drawable.camera);
-        mImageCaptions.add("Camera");
+        mImageCaptions.add("Camera Equipment");
 
         mImages.add(R.drawable.trip);
-        mImageCaptions.add("Trips");
+        mImageCaptions.add("Holidays");
 
         mImages.add(R.drawable.drinks);
         mImageCaptions.add("Drinks");
@@ -67,19 +58,19 @@ public class Images
         mImageCaptions.add("Home");
 
         mImages.add(R.drawable.music);
-        mImageCaptions.add("Music");
+        mImageCaptions.add("Concerts");
 
         mImages.add(R.drawable.bank);
-        mImageCaptions.add("Government");
+        mImageCaptions.add("Banking");
 
-        mImages.add(R.drawable.savings);
-        mImageCaptions.add("Savings");
+        //mImages.add(R.drawable.savings);
+        //mImageCaptions.add("Savings");
 
         mImages.add(R.drawable.tv);
         mImageCaptions.add("TV");
 
         mImages.add(R.drawable.computers);
-        mImageCaptions.add("Tech Stuff");
+        mImageCaptions.add("Computer");
 
         mImages.add(R.drawable.cloths);
         mImageCaptions.add("Cloths");
@@ -94,7 +85,7 @@ public class Images
         mImageCaptions.add("Books");
 
         mImages.add(R.drawable.buds);
-        mImageCaptions.add("Music");
+        mImageCaptions.add("Music Downloads");
 
         //mImages.add(R.drawable.chart);
         //mImageCaptions.add("Invesments");
@@ -109,10 +100,10 @@ public class Images
         mImageCaptions.add("Junkfood");
 
         mImages.add(R.drawable.lcd);
-        mImageCaptions.add("electronics");
+        mImageCaptions.add("Electronics");
 
-        mImages.add(R.drawable.mp3);
-        mImageCaptions.add("Downloaded Music");
+        //mImages.add(R.drawable.mp3);
+        //mImageCaptions.add("Downloaded Music");
 
         mImages.add(R.drawable.print);
         mImageCaptions.add("Printing");
@@ -125,6 +116,13 @@ public class Images
 
         mImages.add(R.drawable.world);
         mImageCaptions.add("Flights");
+
+        mImages.add(R.drawable.coffe);
+        mImageCaptions.add("Coffe");
+
+        mImages.add(R.drawable.parking);
+        mImageCaptions.add("Parking");
+
     }
 
     /**
@@ -173,5 +171,20 @@ public class Images
     public static List<String> getCaptions()
     {
         return  mImageCaptions;
+    }
+
+    /**
+     */
+    public static String getCaptionByImage(int resourceId)
+    {
+        String caption = "";
+
+        for(int i = 0; i < Images.getCount(); ++i)
+        {
+            if(Images.getImages().get(i) == resourceId)
+                caption = Images.getCaptions().get(i);
+        }
+
+        return caption;
     }
 }

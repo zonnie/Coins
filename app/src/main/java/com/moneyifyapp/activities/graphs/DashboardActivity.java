@@ -2,6 +2,8 @@ package com.moneyifyapp.activities.graphs;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,9 +25,6 @@ import java.util.List;
 public class DashboardActivity extends Activity
 {
     private YearTransactions mYearTransactions;
-    private TransactionHandler mTransactionHandler;
-    private final String SPEND_GRAPH = "Spending";
-    private final String REVENUE_GRAPH = "Revenues";
     private final String X_AXIS_TITLE = "Month";
 
     /**
@@ -38,8 +37,11 @@ public class DashboardActivity extends Activity
         setContentView(R.layout.activity_dashboard);
 
         Utils.initializeActionBar(this);
+        Utils.setupBackButton(this);
         Utils.setLogo(this,R.drawable.chart);
-        mTransactionHandler = TransactionHandler.getInstance(this);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+
+        TransactionHandler mTransactionHandler = TransactionHandler.getInstance(this);
         mYearTransactions = mTransactionHandler.getYearTransactions(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 
         if (savedInstanceState == null)
@@ -51,6 +53,7 @@ public class DashboardActivity extends Activity
                xLabels.add(label);
             }
 
+            String SPEND_GRAPH = "Spending";
             BarGraphFragment.BarGraphParameters expenseParams = buildGraphParams(SPEND_GRAPH, MonthTransactions.SubsetType.EXPENSE, xLabels,
                     new ArrayList<String>(), R.drawable.graph_bar_back_red, X_AXIS_TITLE);
 
@@ -115,5 +118,31 @@ public class DashboardActivity extends Activity
         expenseParams.setXAxisTitle(xTitle);
 
         return expenseParams;
+    }
+
+    /**
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 }

@@ -8,28 +8,29 @@
     android:showDividers="none"
     android:weightSum="1">
 
-    <GridLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/expense_drawable_left_pad"
+        android:layout_marginLeft="@dimen/expense_drawable_left_pad"
+        android:layout_marginRight="@dimen/expense_drawable_left_pad"
+        android:layout_marginTop="@dimen/padding_start_currency"
         android:orientation="horizontal"
+        android:weightSum="30"
         >
 
-
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|start"
-            android:layout_marginLeft="@dimen/padding_start_currency"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/padding_start_currency"
+            android:layout_weight="1.5"
             android:orientation="vertical"
-
             >
 
             <Button
                 android:id="@+id/expenseRemove"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="@dimen/drawable_left_pad"
-                android:layout_marginTop="@dimen/expense_card_margin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/remove_button_drawable"
                 android:gravity="center"
                 android:text="X"
@@ -39,135 +40,142 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="25.5"
+            android:orientation="vertical"
+            >
+
+
+            <LinearLayout
+                android:id="@+id/transaction_card_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/general_item_card"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/drawable_left_pad"
+                android:paddingTop="@dimen/drawable_left_pad"
+                android:showDividers="none"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingEnd="@dimen/activity_vertical_margin"
+                    android:paddingStart="@dimen/padding_start_currency"
+                    >
+
+
+                    <TextView
+                        android:id="@+id/expenseDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/email"
+                        android:drawablePadding="@dimen/expense_drawable_left_pad"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text=""
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                    <TextView
+                        android:id="@+id/currency"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:gravity="center|right"
+                        android:maxLines="1"
+                        android:text="@string/default_currency"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="@dimen/large_font"
+                        android:textStyle="bold"
+                        />
+
+                    <TextView
+                        android:id="@+id/expenseValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|right"
+                        android:maxLines="1"
+                        android:text="@string/init_total_value"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="@dimen/large_font"
+                        android:textStyle="bold"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/expenseItemNoteContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/expense_item_note"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/expenseItemNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="27"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:paddingBottom="@dimen/padding_start_currency"
+                    android:paddingEnd="@dimen/activity_vertical_margin"
+                    android:paddingStart="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/padding_start_currency"
+                    android:text="@string/enter_note_hint"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/darker_gray"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:layout_marginRight="@dimen/expense_date_margin_end"
-            android:background="@drawable/date_positit"
-            android:orientation="horizontal"
+            android:layout_weight="3"
+            android:background="@drawable/date_item_card"
+            android:orientation="vertical"
+            android:weightSum="20"
             >
 
             <TextView
                 android:id="@+id/expense_item_date_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="@dimen/expense_card_margin"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="11"
                 android:gravity="center"
                 android:paddingBottom="@dimen/padding_start_currency"
-                android:paddingLeft="@dimen/padding_start_currency"
                 android:paddingTop="@dimen/padding_start_currency"
                 android:text="24"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/huge_font"
+                android:textStyle="bold"
                 />
 
             <TextView
-                android:id="@+id/expense_item_date_suffix"
+                android:id="@+id/expense_item_date_month"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="@dimen/expense_card_margin"
+                android:layout_height="0dp"
+                android:layout_weight="9"
                 android:gravity="center"
                 android:paddingBottom="@dimen/padding_start_currency"
-                android:paddingRight="@dimen/padding_start_currency"
                 android:paddingTop="@dimen/padding_start_currency"
-                android:text="th"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/darker_gray"
-                />
-        </LinearLayout>
-
-    </GridLayout>
-
-    <LinearLayout
-        android:id="@+id/transaction_card_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/expense_drawable_left_pad"
-        android:layout_marginRight="@dimen/expense_drawable_left_pad"
-        android:background="@drawable/expense_item_card"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/drawable_left_pad"
-        android:paddingTop="@dimen/drawable_left_pad"
-        android:showDividers="none"
-        >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingEnd="@dimen/activity_vertical_margin"
-            android:paddingStart="@dimen/padding_start_currency"
-            >
-
-
-            <TextView
-                android:id="@+id/expenseDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/email"
-                android:drawablePadding="@dimen/expense_drawable_left_pad"
-                android:gravity="center"
-                android:maxLines="1"
-                android:text=""
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-            <TextView
-                android:id="@+id/currency"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.4"
-                android:gravity="center|right"
-                android:maxLines="1"
-                android:text="@string/default_currency"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="@dimen/large_font"
-                android:textStyle="bold"
+                android:text="MAR"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/medium_font"
                 />
 
-            <TextView
-                android:id="@+id/expenseValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center|right"
-                android:maxLines="1"
-                android:text="@string/init_total_value"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="@dimen/large_font"
-                android:textStyle="bold"
-                />
 
         </LinearLayout>
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/expenseItemNoteContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/drawable_left_pad"
-        android:layout_marginLeft="@dimen/big_padding"
-        android:layout_marginRight="@dimen/big_padding"
-        android:background="@drawable/expense_item_note"
-        android:orientation="vertical"
-        >
-
-        <TextView
-            android:id="@+id/expenseItemNote"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="27"
-            android:gravity="center"
-            android:maxLines="1"
-            android:paddingBottom="@dimen/padding_start_currency"
-            android:paddingEnd="@dimen/activity_vertical_margin"
-            android:paddingStart="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/padding_start_currency"
-            android:text="@string/enter_note_hint"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@android:color/darker_gray"
-            />
     </LinearLayout>
     <!--</LinearLayout>-->
 </LinearLayout>

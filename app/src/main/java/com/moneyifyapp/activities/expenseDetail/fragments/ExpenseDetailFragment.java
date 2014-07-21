@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -120,29 +121,10 @@ public class ExpenseDetailFragment extends Fragment
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
                 boolean handled = false;
-                if (actionId == R.id.note_action)
+                if ((actionId == EditorInfo.IME_ACTION_NEXT))
                 {
                     InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(mExpenseNotes.getWindowToken(), 0);
-                    onSumbitPressed();
-                    handled = true;
-                }
-                return handled;
-            }
-        });
-
-        //mExpenseValue.addTextChangedListener(new CurrencyTextWatcher(mExpenseValue));
-        mExpenseValue.setOnEditorActionListener(new TextView.OnEditorActionListener()
-        {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
-            {
-                boolean handled = false;
-                if (actionId == R.id.sum_action)
-                {
-                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(mExpenseValue.getWindowToken(), 0);
-                    onSumbitPressed();
                     handled = true;
                 }
                 return handled;
@@ -186,6 +168,13 @@ public class ExpenseDetailFragment extends Fragment
         initDetailDateLabels();
 
         return mView;
+    }
+
+    private void onKeyboardDoneClicked()
+    {
+        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mExpenseValue.getWindowToken(), 0);
+        onSumbitPressed();
     }
 
     /**

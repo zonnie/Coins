@@ -1,73 +1,161 @@
 <LinearLayout
+    android:id="@+id/item_root_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:id="@+id/item_root_layout"
+    android:background="@color/background"
     android:orientation="vertical"
     android:showDividers="none"
-    android:background="@color/background"
     android:weightSum="1">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/expense_drawable_left_pad"
         android:layout_marginLeft="@dimen/expense_drawable_left_pad"
         android:layout_marginRight="@dimen/expense_drawable_left_pad"
-        android:id="@+id/transaction_card_layout"
-        android:background="@drawable/expense_item_card_read"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/drawable_left_pad"
-        android:paddingTop="@dimen/drawable_left_pad"
-        android:showDividers="none"
+        android:layout_marginTop="@dimen/padding_start_currency"
+        android:orientation="horizontal"
+        android:weightSum="30"
         >
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingEnd="@dimen/activity_vertical_margin"
-            android:paddingStart="@dimen/padding_start_currency"
+            android:layout_weight="27"
+            android:orientation="vertical"
             >
 
 
-            <TextView
-                android:id="@+id/expenseDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/email"
-                android:drawablePadding="@dimen/expense_drawable_left_pad"
-                android:text=""
-                android:maxLines="1"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:gravity="center"/>
-
-            <TextView
-                android:id="@+id/currency"
+            <LinearLayout
+                android:id="@+id/transaction_card_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.4"
-                android:gravity="center|right"
-                android:maxLines="1"
-                android:text="@string/default_currency"
+                android:background="@drawable/general_item_card"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/drawable_left_pad"
+                android:paddingTop="@dimen/drawable_left_pad"
+                android:showDividers="none"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingEnd="@dimen/activity_vertical_margin"
+                    android:paddingStart="@dimen/padding_start_currency"
+                    >
+
+
+                    <TextView
+                        android:id="@+id/expenseDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/email"
+                        android:drawablePadding="@dimen/expense_drawable_left_pad"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text=""
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                    <TextView
+                        android:id="@+id/currency"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:gravity="center|right"
+                        android:maxLines="1"
+                        android:text="@string/default_currency"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="@dimen/large_font"
+                        android:textStyle="bold"
+                        />
+
+                    <TextView
+                        android:id="@+id/expenseValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|right"
+                        android:maxLines="1"
+                        android:text="@string/init_total_value"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="@dimen/large_font"
+                        android:textStyle="bold"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/expenseItemNoteContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/expense_item_note"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/expenseItemNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="27"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:paddingBottom="@dimen/padding_start_currency"
+                    android:paddingEnd="@dimen/activity_vertical_margin"
+                    android:paddingStart="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/padding_start_currency"
+                    android:text="@string/enter_note_hint"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/darker_gray"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_weight="3"
+            android:background="@drawable/date_item_card"
+            android:orientation="vertical"
+            android:weightSum="20"
+            >
+
+            <TextView
+                android:id="@+id/expense_item_date_text"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="11"
+                android:gravity="center"
+                android:paddingBottom="@dimen/padding_start_currency"
+                android:paddingTop="@dimen/padding_start_currency"
+                android:text="24"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/huge_font"
                 android:textStyle="bold"
-                android:textSize="@dimen/large_font"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 />
 
             <TextView
-                android:id="@+id/expenseValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center|right"
-                android:maxLines="1"
-                android:text="@string/init_total_value"
-                android:textSize="@dimen/large_font"
-                android:textStyle="bold"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/expense_item_date_month"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="9"
+                android:gravity="center"
+                android:paddingBottom="@dimen/padding_start_currency"
+                android:paddingTop="@dimen/padding_start_currency"
+                android:text="July"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/medium_font"
                 />
 
-        </LinearLayout>
-    </LinearLayout>
 
+        </LinearLayout>
+
+
+    </LinearLayout>
     <!--</LinearLayout>-->
 </LinearLayout>

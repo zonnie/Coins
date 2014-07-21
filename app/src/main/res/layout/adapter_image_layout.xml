@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@color/background"
+
+    >
+
+    <RelativeLayout
+        android:id="@+id/image_picker_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/general_item_card"
+        android:layout_marginBottom="@dimen/padding_start_currency"
+        android:layout_marginTop="@dimen/padding_start_currency"
+        android:layout_marginLeft="@dimen/mongo_padding"
+        android:layout_marginRight="@dimen/mongo_padding"
+        android:paddingBottom="@dimen/padding_start_currency"
+        android:paddingTop="@dimen/padding_start_currency"
+        android:paddingLeft="@dimen/drawable_left_pad"
+        android:paddingRight="@dimen/drawable_left_pad"
+        android:gravity="center"
+        >
+    <ImageButton
+        android:id="@+id/categoryImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:focusable="false"
+        android:gravity="center"
+        android:scaleType="centerCrop"
+        android:src="@drawable/shop"/>
+
+        <View
+            android:id="@+id/seperator"
+            android:layout_width="1px"
+            android:layout_height="50dp"
+            android:layout_marginStart="@dimen/drawable_left_pad"
+            android:background="@android:color/darker_gray"
+            android:layout_toRightOf="@+id/categoryImage"
+            android:fadingEdge="vertical"
+            android:fadingEdgeLength="@dimen/drawable_left_pad"
+            />
+
+    <TextView
+        android:id="@+id/categoryCaption"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@+id/seperator"
+        android:layout_alignWithParentIfMissing="true"
+        android:paddingLeft="@dimen/drawable_left_pad"
+        android:gravity="center|left"
+        android:text="Small Text"
+        android:textSize="@dimen/large_font"/>
+        </RelativeLayout>
+</RelativeLayout>

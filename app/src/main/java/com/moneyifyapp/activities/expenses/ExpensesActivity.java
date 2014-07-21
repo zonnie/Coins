@@ -87,6 +87,7 @@ public class ExpensesActivity extends Activity
         // Init Parse for data storing
         Utils.initializeParse(this);
         Utils.initializeActionBar(this);
+        Utils.setupBackButton(this);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -241,9 +242,15 @@ public class ExpensesActivity extends Activity
         int id = item.getItemId();
 
         if (id == R.id.jump_today)
+        {
             mViewPager.setCurrentItem(mCalender.get(Calendar.MONTH));
+            return true;
+        }
         else if (id == R.id.logout)
+        {
             logOutUser();
+            return true;
+        }
         else if (mDrawerToggle.onOptionsItemSelected(item))
             return true;
 
@@ -332,7 +339,7 @@ public class ExpensesActivity extends Activity
         @Override
         public CharSequence getPageTitle(int position)
         {
-            return Months.getMonthNameByNumber(position + 1).toUpperCase() + " " + mYearTransactions.mYear;
+            return Months.getMonthNameByNumber(position).toUpperCase() + " " + mYearTransactions.mYear;
         }
     }
 }

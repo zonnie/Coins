@@ -5,7 +5,9 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
+import android.view.MenuItem;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.analytics.fragments.MonthAnalyticsFragment;
@@ -23,8 +25,6 @@ public class FullAnalyticsActivity extends Activity
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private Calendar mCalender;
-    private int mAnalyticsCount;
-    private static int ANALYTICS_COUNT_DEFAULT = 3;
 
     /**
      */
@@ -36,14 +36,33 @@ public class FullAnalyticsActivity extends Activity
         // Init Parse for data storing
         Utils.initializeParse(this);
         Utils.initializeActionBar(this);
-        Utils.setLogo(this,R.drawable.chart);
+        Utils.setupBackButton(this);
+        Utils.setLogo(this, R.drawable.chart);
+
         mCalender = Calendar.getInstance();
-        mAnalyticsCount = ANALYTICS_COUNT_DEFAULT;
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+    }
+
+    /**
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+            {
+                NavUtils.navigateUpFromSameTask(this);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -92,5 +111,14 @@ public class FullAnalyticsActivity extends Activity
             }
             return null;
         }
+    }
+
+    /**
+     */
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 }

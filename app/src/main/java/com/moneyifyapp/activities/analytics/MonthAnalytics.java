@@ -2,6 +2,8 @@ package com.moneyifyapp.activities.analytics;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.view.MenuItem;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.analytics.fragments.MonthAnalyticsFragment;
@@ -30,7 +32,6 @@ public class MonthAnalytics extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_month_analytics);
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
         if (savedInstanceState == null)
         {
@@ -60,7 +61,26 @@ public class MonthAnalytics extends Activity
     /**
      */
     @Override
-    public void onBackPressed() {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+            {
+                NavUtils.navigateUpFromSameTask(this);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     */
+    @Override
+    public void onBackPressed()
+    {
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }

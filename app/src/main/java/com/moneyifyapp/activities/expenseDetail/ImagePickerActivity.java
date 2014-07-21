@@ -1,28 +1,19 @@
 package com.moneyifyapp.activities.expenseDetail;
 
-import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.GridView;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.utils.Utils;
 
-public class ImagePickerActivity extends Activity
+public class ImagePickerActivity extends ListActivity
 {
-    /********************************************************************/
-    /**                          Members                               **/
-    /********************************************************************/
-
     private Animation mItemsLoadAnimation;
-
-    /********************************************************************/
-    /**                          Methods                               **/
-    /********************************************************************/
 
     /**
      * @param savedInstanceState
@@ -33,25 +24,21 @@ public class ImagePickerActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_picker);
         Utils.initializeActionBar(this);
-        Utils.removeLogo(this);
-
-        GridView gridView = (GridView) findViewById(R.id.image_grid);
+        Utils.setLogo(this, R.drawable.pic);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
         // Instance of ImageAdapter Class
-        gridView.setAdapter(new ImageAdapter(this));
+        getListView().setAdapter(new ImageAdapter(this));
 
         // Load animation lazy
         if(mItemsLoadAnimation == null)
-        {
             mItemsLoadAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-        }
-        gridView.startAnimation(mItemsLoadAnimation);
+        getListView().startAnimation(mItemsLoadAnimation);
 
     }
 
     /**
-     * Called by the contained adapter when an image is clicked.
-     * This method returns the result to the calling activity with the image's resource id.
+     * Called by the adapter.
      */
     public void onItemClick(int position)
     {
@@ -68,9 +55,9 @@ public class ImagePickerActivity extends Activity
     @Override
     public void onBackPressed()
     {
+        super.onBackPressed();
         Intent mIntent = getIntent();
         setResult(ExpensesActivity.IMAGE_PICK_CANCEL, mIntent);
-        super.onBackPressed();
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 }

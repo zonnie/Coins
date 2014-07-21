@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -336,22 +335,25 @@ public class ExpenseListFragment extends ListFragment
     private void removeItemFromList(int position)
     {
         // Put the next ID so that async functions could use it
-        mRemoveQueue.add(position);
-        View removedItem = getListView().getChildAt(position);
-        removedItem.startAnimation(mRemoveAnimation);
-
-        // After animation is done, remove item from list
-        new Handler().postDelayed(new Runnable()
+        if(getListView().getChildAt(position) != null)
         {
-            public void run()
-            {
-                int itemId = mRemoveQueue.peek();
-                updateTotalsOnAddedTransaction(mAdapter.getItem(itemId), true);
-                mAdapter.remove(itemId);
-            }
+            mRemoveQueue.add(position);
+            View removedItem = getListView().getChildAt(position);
+            removedItem.startAnimation(mRemoveAnimation);
 
-        }, mRemoveAnimation.getDuration());
-        removeItemWithId(position);
+            // After animation is done, remove item from list
+            new Handler().postDelayed(new Runnable()
+            {
+                public void run()
+                {
+                    int itemId = mRemoveQueue.peek();
+                    updateTotalsOnAddedTransaction(mAdapter.getItem(itemId), true);
+                    mAdapter.remove(itemId);
+                }
+
+            }, mRemoveAnimation.getDuration());
+            removeItemWithId(position);
+        }
     }
 
     /**
@@ -691,7 +693,7 @@ public class ExpenseListFragment extends ListFragment
     @Override
     public void removeFromFragmentList(View viewInAdapter)
     {
-        final int position = getListView().getPositionForView((GridLayout) viewInAdapter.getParent().getParent());
+        final int position = getListView().getPositionForView((LinearLayout) viewInAdapter.getParent().getParent());
         if (position >= 0)
             verifyRemoveDialog(position);
     }

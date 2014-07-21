@@ -36,7 +36,7 @@ public enum Months
         String month = "";
 
         for (Months curMonth : Months.values())
-            if (curMonth.getMonthNumber() == number)
+            if (curMonth.getMonthNumber() == number+1)
                 month = curMonth.toString();
 
         return month;

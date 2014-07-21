@@ -18,36 +18,36 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:background="@drawable/back_regualr"
+            android:orientation="horizontal"
             >
 
-                <TextView
-                    android:id="@+id/detail_date_month"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingRight="@dimen/padding_start_currency"
-                    android:paddingLeft="@dimen/big_padding"
-                    android:gravity="start|center_vertical"
-                    android:text="March"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/white"
-                    android:fontFamily="sans-serif-condensed"
-                    android:textSize="@dimen/huge_font"
-                    />
+            <TextView
+                android:id="@+id/detail_date_month"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="start|center_vertical"
+                android:paddingLeft="@dimen/big_padding"
+                android:paddingRight="@dimen/padding_start_currency"
+                android:text="March"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/huge_font"
+                android:textStyle="bold"
+                />
 
-                <TextView
-                    android:id="@+id/detail_date_day"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="start"
-                    android:paddingBottom="@dimen/padding_start_currency"
-                    android:paddingTop="@dimen/padding_start_currency"
-                    android:fontFamily="sans-serif-condensed"
-                    android:textColor="@android:color/white"
-                    android:text="24th"
-                    android:textSize="@dimen/huge_font"
-                    />
+            <TextView
+                android:id="@+id/detail_date_day"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="start"
+                android:paddingBottom="@dimen/padding_start_currency"
+                android:paddingTop="@dimen/padding_start_currency"
+                android:text="24th"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/huge_font"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -60,34 +60,59 @@
 
             >
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center|top"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/big_padding"
-                android:paddingRight="@dimen/big_padding"
+                android:layout_marginBottom="@dimen/expense_card_margin"
+                android:layout_marginTop="@dimen/expense_card_margin"
+
                 >
 
-                <TextView
-                    android:id="@+id/image_picker_hint"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/expense_card_margin"
-                    android:layout_marginTop="@dimen/expense_card_margin"
-                    android:text="@string/image_picker_hint_text"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@android:color/darker_gray"/>
+                    android:layout_toRightOf="@+id/detail_date_category_layout"
+                    android:visibility="gone"
+                    >
 
-                <ImageButton
-                    android:id="@+id/addExpenseImage"
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Repeat"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/detail_date_category_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginBottom="@dimen/drawable_left_pad"
-                    android:background="@android:color/transparent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/shop"/>
-            </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:gravity="center|top"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/big_padding"
+                    android:paddingRight="@dimen/big_padding"
+                    >
+
+                    <TextView
+                        android:id="@+id/image_picker_hint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/image_picker_hint_text"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@android:color/darker_gray"/>
+
+                    <ImageButton
+                        android:id="@+id/addExpenseImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="@dimen/drawable_left_pad"
+                        android:background="@android:color/transparent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/shop"/>
+                </LinearLayout>
+
+            </RelativeLayout>
 
             <EditText
                 android:id="@+id/addExpenseDescription"
@@ -118,11 +143,9 @@
                     android:drawableLeft="@drawable/sum"
                     android:drawablePadding="@dimen/expense_drawable_left_pad"
                     android:hint="@string/item_value_hint"
-                    android:imeActionId="@+id/sum_action"
-                    android:imeActionLabel="@string/item_details_submit"
-                    android:imeOptions="actionDone"
+                    android:imeOptions="actionNext"
                     android:inputType="numberDecimal"
-                    android:maxLines="1"
+                    android:maxLength="6"
                     android:singleLine="true"
                     />
 
@@ -147,11 +170,9 @@
                 android:drawableLeft="@drawable/notes_2"
                 android:drawablePadding="@dimen/expense_drawable_left_pad"
                 android:hint="Notes..."
-                android:imeActionId="@+id/note_action"
-                android:imeActionLabel="@string/item_details_submit"
-                android:imeOptions="actionDone"
+                android:imeOptions="actionNext"
                 android:maxLength="@integer/max_note_len"
-                android:maxLines="1"
+                android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 />
 

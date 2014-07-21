@@ -28,6 +28,7 @@
             android:name=".activities.login.SignUpActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/action_sing_up"
+            android:parentActivityName=".activities.login.LoginActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -47,6 +48,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_create_expense"
             android:screenOrientation="portrait"
+            android:parentActivityName=".activities.expenses.ExpensesActivity"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
@@ -58,19 +60,23 @@
         <activity
             android:name=".activities.preferences.PrefActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:parentActivityName=".activities.expenses.ExpensesActivity"
             android:label="@string/title_activity_pref"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activities.analytics.FullAnalyticsActivity"
+            android:parentActivityName=".activities.expenses.ExpensesActivity"
             android:label="@string/title_activity_analytics" >
         </activity>
         <activity
             android:name=".activities.analytics.MonthAnalytics"
+            android:parentActivityName=".activities.expenses.ExpensesActivity"
             android:label="@string/title_analytics_month_overview" >
         </activity>
         <activity
             android:name=".activities.graphs.DashboardActivity"
+            android:parentActivityName=".activities.expenses.ExpensesActivity"
             android:label="@string/title_activity_dashboard" >
         </activity>
     </application>

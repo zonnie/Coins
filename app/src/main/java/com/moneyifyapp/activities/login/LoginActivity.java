@@ -116,8 +116,6 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
     }
 
     /**
-     *
-     * @param v
      */
     @Override
     public void onClick(View v)
@@ -126,9 +124,6 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
     }
 
     /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
      */
     public void attemptLogin()
     {
@@ -202,7 +197,6 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
     }
 
     /**
-     * Launches the main activity.
      */
     private void goToMainActivity()
     {
@@ -211,8 +205,6 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
     }
 
     /**
-     * A callback for when the sign in failed.
-     * This is mostly on Parse for now.
      */
     private void signInFailed()
     {
@@ -221,14 +213,10 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
     }
 
     /**
-     * Shows the progress UI and hides the login form.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     public void showProgress(final boolean show)
     {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2)
         {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
@@ -256,8 +244,6 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
             });
         } else
         {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }

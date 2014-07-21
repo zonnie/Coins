@@ -3,7 +3,9 @@ package com.moneyifyapp.activities.login;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,23 +19,11 @@ import com.parse.SignUpCallback;
 
 public class SignUpActivity extends Activity implements View.OnClickListener
 {
-
-    /********************************************************************/
-    /**                          Members                               **/
-    /**
-     * ****************************************************************
-     */
-
     EditText mUserEditText;
     EditText mPassEditText;
     EditText mPassRepeatEditText;
 
-    /********************************************************************/
-    /**                          Methods                               **/
-    /********************************************************************/
-
     /**
-     * @param savedInstanceState
      */
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -42,7 +32,9 @@ public class SignUpActivity extends Activity implements View.OnClickListener
 
         Utils.initializeActionBar(this);
         Utils.initializeParse(this);
+        Utils.setupBackButton(this);
         Utils.removeLogo(this);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
         setContentView(R.layout.activity_sign_up);
 
@@ -71,7 +63,6 @@ public class SignUpActivity extends Activity implements View.OnClickListener
     }
 
     /**
-     * @param v
      */
     @Override
     public void onClick(View v)
@@ -181,5 +172,34 @@ public class SignUpActivity extends Activity implements View.OnClickListener
     {
         Toast toast = Toast.makeText(this, "Sign Up failed :(", Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    /**
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+            {
+                NavUtils.navigateUpFromSameTask(this);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void onBackPressed()
+    {
+        Intent mIntent = getIntent();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        super.onBackPressed();
     }
 }

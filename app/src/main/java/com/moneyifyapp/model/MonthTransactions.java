@@ -13,19 +13,10 @@ import java.util.List;
 public class MonthTransactions
 {
 
-    /********************************************************************/
-    /**                          Members                               **/
-    /********************************************************************/
-
     public List<Transaction> mTransactions = new ArrayList<Transaction>();
     public final int mMonthNumber;
 
-    /********************************************************************/
-    /**                          Methods                               **/
-    /********************************************************************/
-
     /**
-     *
      * @param monthNumber
      */
     public MonthTransactions(int monthNumber)
@@ -44,10 +35,7 @@ public class MonthTransactions
     }
 
     /**
-     *
      * Sums up all the expenses in this month
-     *
-     * @return
      */
 
     public double sumTransactions(SubsetType type)

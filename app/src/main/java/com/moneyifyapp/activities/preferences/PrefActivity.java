@@ -11,6 +11,8 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NavUtils;
+import android.view.MenuItem;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
@@ -21,53 +23,32 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A {@link PreferenceActivity} that presents a set of application settings. On
- * handset devices, settings are presented as a single list. On tablets,
- * settings are split by category, with category headers shown to the left of
- * the list of settings.
- * <p/>
- * See <a href="http://developer.android.com/design/patterns/settings.html">
- * Android Design: Settings</a> for design guidelines and the <a
- * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
- * API Guide</a> for more information on developing a Settings UI.
+ *
  */
 public class PrefActivity extends PreferenceActivity
 {
-    /********************************************************************/
-    /**                          Members                               **/
-    /********************************************************************/
-
-
-    /**
-     * Determines whether to always show the simplified settings UI, where
-     * settings are presented in a single list. When false, settings are shown
-     * as a master/detail two-pane view on tablets. When true, a single pane is
-     * shown on tablets.
-     */
-    private static final boolean ALWAYS_SIMPLE_PREFS = false;
     public static final String PREF_LIST_NAME = "pref_currency_list";
     public static final String KEY_CURRENCY_CHANGE = "currency";
     public static Map<String, Boolean> sPrefChanges;
     public static boolean sPrefChanged = false;
 
-    /********************************************************************/
-    /**                          Methods                               **/
     /**
-     * ****************************************************************
      */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         sPrefChanges = new HashMap<String, Boolean>();
+
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         Utils.initializeActionBar(this);
         Utils.setLogo(this, R.drawable.contorls);
+        Utils.setupBackButton(this);
+
         PreferenceManager.setDefaultValues(this, R.xml.activity_pref_layout, false);
     }
 
     /**
-     * @param savedInstanceState
      */
     @Override
     protected void onPostCreate(Bundle savedInstanceState)
@@ -78,9 +59,6 @@ public class PrefActivity extends PreferenceActivity
     }
 
     /**
-     * Shows the simplified settings UI if the device configuration if the
-     * device configuration dictates that a simplified, single-pane UI should be
-     * shown.
      */
     private void setupSimplePreferencesScreen()
     {
@@ -131,15 +109,14 @@ public class PrefActivity extends PreferenceActivity
 
     /**
      * Determines whether the simplified settings UI should be shown. This is
-     * true if this is forced via {@link #ALWAYS_SIMPLE_PREFS}, or the device
+     * true if this is forced via ALWAYS_SIMPLE_PREFS, or the device
      * doesn't have newer APIs like {@link PreferenceFragment}, or the device
      * doesn't have an extra-large screen. In these cases, a single-pane
      * "simplified" settings UI should be shown.
      */
     private static boolean isSimplePreferences(Context context)
     {
-        return ALWAYS_SIMPLE_PREFS
-                || Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB
                 || !isXLargeTablet(context);
     }
 
@@ -251,41 +228,7 @@ public class PrefActivity extends PreferenceActivity
         }
     }
 
-    /** an example of more fragments
-     *
-     *
-     * This fragment shows notification preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     *
-     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-     public static class NotificationPreferenceFragment extends PreferenceFragment
-     {
-     @Override public void onCreate(Bundle savedInstanceState)
-     {
-     super.onCreate(savedInstanceState);
-     addPreferencesFromResource(R.xml.pref_notification);
-
-     // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-     // to their values. When their values change, their summaries are
-     // updated to reflect the new value, per the Android Design
-     // guidelines.
-     bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
-     }
-     }
-     */
-
     /**
-     *
-     */
-    @Override
-    public void onBackPressed()
-    {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-    }
-
-    /**
-     *
      */
     @Override
     public void finish()
@@ -295,8 +238,6 @@ public class PrefActivity extends PreferenceActivity
     }
 
     /**
-     * Updates the results in intent.
-     *
      */
     private void updateActivityResults()
     {
@@ -309,5 +250,33 @@ public class PrefActivity extends PreferenceActivity
             setResult(ExpensesActivity.RESP_CHANGED, intent);
             sPrefChanged = false;
         }
+    }
+
+    /**
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+            {
+                NavUtils.navigateUpFromSameTask(this);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     */
+    @Override
+    public void onBackPressed()
+    {
+        Intent mIntent = getIntent();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        super.onBackPressed();
     }
 }

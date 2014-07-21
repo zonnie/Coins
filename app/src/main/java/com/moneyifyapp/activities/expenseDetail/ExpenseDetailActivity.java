@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NavUtils;
+import android.view.MenuItem;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenseDetail.fragments.ExpenseDetailFragment;
@@ -41,14 +43,19 @@ public class ExpenseDetailActivity extends Activity
         super.onCreate(savedInstanceState);
 
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-
         setContentView(R.layout.activity_create_expense_layout);
-
         Utils.initializeActionBar(this);
-        Utils.removeLogo(this);
+        Utils.setupBackButton(this);
+        Utils.setLogo(this, R.drawable.transaction);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
-        mRequestCode = getIntent().getExtras().getInt(ExpenseListFragment.REQ_CODE_KEY);
-        mMonth = getIntent().getExtras().getInt(ExpenseListFragment.MONTH_KEY);
+        if(getIntent().getExtras() != null)
+        {
+            if(getIntent().hasExtra(ExpenseListFragment.REQ_CODE_KEY))
+                mRequestCode = getIntent().getExtras().getInt(ExpenseListFragment.REQ_CODE_KEY);
+            if(getIntent().hasExtra(ExpenseListFragment.MONTH_KEY))
+                mMonth = getIntent().getExtras().getInt(ExpenseListFragment.MONTH_KEY);
+        }
 
         boolean isEdit = false;
 
@@ -89,7 +96,7 @@ public class ExpenseDetailActivity extends Activity
         mCurrency = PreferenceManager.getDefaultSharedPreferences(this).getString(PrefActivity.PREF_LIST_NAME, "$");
 
         return new Transaction(Transaction.DEFUALT_TRANSCATION_ID, mDescription, mValue,
-                                mCurrency, mNotes, mImageName, mIsExpense, mTransactionDay);
+                mCurrency, mNotes, mImageName, mIsExpense, mTransactionDay);
     }
 
     /**
@@ -130,7 +137,26 @@ public class ExpenseDetailActivity extends Activity
     /**
      */
     @Override
-    public void onBackPressed() {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+            {
+                NavUtils.navigateUpFromSameTask(this);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     */
+    @Override
+    public void onBackPressed()
+    {
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
