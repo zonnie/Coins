@@ -260,6 +260,7 @@ public class PrefActivity extends PreferenceActivity
             {
                 NavUtils.navigateUpFromSameTask(this);
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                updateActivityResults();
                 return true;
             }
         }
@@ -271,7 +272,6 @@ public class PrefActivity extends PreferenceActivity
     @Override
     public void onBackPressed()
     {
-        Intent mIntent = getIntent();
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onBackPressed();
     }

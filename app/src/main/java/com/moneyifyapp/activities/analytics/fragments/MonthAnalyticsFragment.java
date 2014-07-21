@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.adapters.ExpenseItemAdapterRead;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
-import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.YearTransactions;
 import com.moneyifyapp.model.enums.Months;
@@ -104,11 +102,9 @@ public class MonthAnalyticsFragment extends Fragment
 
         if(mYearTransactions != null && mMonthTransactions != null)
         {
-            initDateLabels();
             initTotalSums();
             initProfitOrLossLabels();
             initWorstDay();
-            initTopCategory();
 
             //startAppearanceAnimations();
 
@@ -194,29 +190,6 @@ public class MonthAnalyticsFragment extends Fragment
 
     /**
      */
-    private void initTopCategory()
-    {
-        MonthTransactions.Couple<Integer,Double> categorySum = mMonthTransactions.getTopCategory(MonthTransactions.TopFilter.CATEGORY);
-
-        if(categorySum != null)
-        {
-            updateHasInsignts();
-
-            LinearLayout topCategoryLayout = (LinearLayout) mRootView.findViewById(R.id.month_analytics_top_category_layout);
-            topCategoryLayout.setVisibility(View.VISIBLE);
-
-            String sum = Utils.formatDoubleToTextCurrency(categorySum.mSecondField);
-            int resource = categorySum.mFirstField;
-
-            ImageView image = (ImageView) mRootView.findViewById(R.id.month_analytics_top_category_image);
-            loadTextViewAndSetText(R.id.month_analytics_top_category_sum, sum);
-            loadTextViewAndSetText(R.id.month_analytics_top_category_name, Images.getCaptionByImage(resource));
-            image.setImageResource(resource);
-        }
-    }
-
-    /**
-     */
     private void initProfitOrLossLabels()
     {
         double totalSpent = mMonthTransactions.sumTransactions(MonthTransactions.SubsetType.EXPENSE);
@@ -247,14 +220,6 @@ public class MonthAnalyticsFragment extends Fragment
         profitTextView.setText(profitStr);
         profitTextView.setTextColor(color);
         profitCurrency.setTextColor(color);
-    }
-
-    /**
-     */
-    private void initDateLabels()
-    {
-        loadTextViewAndSetText(R.id.analytics_month_label, Months.getMonthNameByNumber(mMonth));
-        loadTextViewAndSetText(R.id.analytics_year_label, String.valueOf(mYear));
     }
 
     /**

@@ -101,7 +101,7 @@ public class ExpenseListFragment extends ListFragment
     {
         super.onCreate(savedInstanceState);
 
-        if(!getArguments().isEmpty())
+        if(getArguments() != null)
         {
             mPageId = getArguments().getInt(PAGE_ID_KEY);
             mYear = getArguments().getInt(YEAR_KEY);
