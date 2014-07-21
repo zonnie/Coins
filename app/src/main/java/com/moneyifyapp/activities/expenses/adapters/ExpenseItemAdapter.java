@@ -39,7 +39,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private MonthTransactions mTransactions;
     private Button mRemoveItemButton;
     private View mMyView;
-    public static int PICK_IMAGE_DIMENSIONS = 80;
+    public static int PICK_IMAGE_DIMENSIONS = 90;
     private Animation mItemsLoadAnimation;
     private Typeface mDateFont;
 

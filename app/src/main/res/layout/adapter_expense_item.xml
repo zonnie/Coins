@@ -75,8 +75,9 @@
                         android:drawablePadding="@dimen/expense_drawable_left_pad"
                         android:gravity="center"
                         android:maxLines="1"
-                        android:text=""
-                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+                        android:text="Stam"
+                        android:textSize="@dimen/medium_font"
+                        />
 
                     <TextView
                         android:id="@+id/currency"
@@ -86,8 +87,7 @@
                         android:gravity="center|right"
                         android:maxLines="1"
                         android:text="@string/default_currency"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="@dimen/large_font"
+                        android:textSize="@dimen/medium_font"
                         android:textStyle="bold"
                         />
 
@@ -98,8 +98,7 @@
                         android:gravity="center|right"
                         android:maxLines="1"
                         android:text="@string/init_total_value"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="@dimen/large_font"
+                        android:textSize="@dimen/medium_font"
                         android:textStyle="bold"
                         />
 
@@ -127,7 +126,7 @@
                     android:paddingStart="@dimen/activity_horizontal_margin"
                     android:paddingTop="@dimen/padding_start_currency"
                     android:text="@string/enter_note_hint"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="@dimen/medium_font"
                     android:textColor="@android:color/darker_gray"
                     />
             </LinearLayout>

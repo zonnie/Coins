@@ -99,13 +99,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/image_picker_hint_text"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@android:color/darker_gray"/>
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="@dimen/tiny_font"
+                        />
 
                     <ImageButton
                         android:id="@+id/addExpenseImage"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
+                        android:layout_marginTop="@dimen/padding_start_currency"
                         android:layout_marginBottom="@dimen/drawable_left_pad"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
