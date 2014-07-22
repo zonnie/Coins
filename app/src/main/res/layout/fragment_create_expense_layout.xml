@@ -53,60 +53,69 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/padding_start_currency"
             android:gravity="center|top"
             android:orientation="vertical"
             android:paddingLeft="@dimen/big_padding"
             android:paddingRight="@dimen/big_padding"
-
             >
 
-
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/drawable_left_pad"
-                android:layout_marginTop="@dimen/drawable_left_pad"
+                android:layout_marginBottom="@dimen/padding_start_currency"
+                android:layout_marginTop="@dimen/padding_start_currency"
                 >
 
-
                 <LinearLayout
-                    android:id="@+id/detail_right_pane_layout"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/detail_date_category_layout"
-                    android:gravity="top"
+                    android:layout_gravity="start"
+                    android:layout_marginBottom="@dimen/padding_start_currency"
                     android:orientation="vertical"
+                    android:weightSum="6"
                     >
 
-                    <CheckBox
+                    <LinearLayout
+                        android:id="@+id/detail_date_category_layout"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="Repeat"
-                        android:typeface="normal"
-                        android:visibility="gone"
-                        />
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="5"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/big_padding"
+                        android:paddingRight="@dimen/big_padding"
+                        >
+
+                        <TextView
+                            android:id="@+id/image_picker_hint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/image_picker_hint_text"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="@dimen/tiny_font"
+                            />
+
+                        <ImageButton
+                            android:id="@+id/addExpenseImage"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginBottom="@dimen/drawable_left_pad"
+                            android:layout_marginTop="@dimen/padding_start_currency"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/shop"/>
+                    </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/drawable_left_pad"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
                         android:orientation="vertical"
                         >
-
-                        <ToggleButton
-                            android:id="@+id/isExpenseToggle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/expense_toggle"
-                            android:gravity="center"
-                            android:paddingBottom="@dimen/drawable_left_pad"
-                            android:paddingEnd="@dimen/big_padding"
-                            android:paddingStart="@dimen/big_padding"
-                            android:paddingTop="@dimen/drawable_left_pad"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textOff="@string/spent_string"
-                            android:textOn="@string/revenue_string"/>
 
                         <TextView
                             android:id="@+id/toggle_expense_hint"
@@ -116,152 +125,175 @@
                             android:text="@string/toggle_hint_text"
                             android:textColor="@android:color/darker_gray"
                             android:textSize="@dimen/tiny_font"
-                            android:visibility="gone"
+                            />
+
+                        <ToggleButton
+                            android:id="@+id/isExpenseToggle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/expense_toggle"
+                            android:paddingBottom="@dimen/drawable_left_pad"
+                            android:paddingEnd="@dimen/big_padding"
+                            android:paddingStart="@dimen/big_padding"
+                            android:paddingTop="@dimen/drawable_left_pad"
+                            android:textOff="@string/spent_string"
+                            android:textOn="@string/revenue_string"
+                            android:textSize="@dimen/medium_font"
                             />
 
                     </LinearLayout>
 
 
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/detail_date_category_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center|top"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/big_padding"
-                    android:paddingRight="@dimen/big_padding"
-                    >
-
-                    <TextView
-                        android:id="@+id/image_picker_hint"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/image_picker_hint_text"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="@dimen/tiny_font"
-                        />
-
-                    <ImageButton
-                        android:id="@+id/addExpenseImage"
+                    <LinearLayout
+                        android:id="@+id/detail_right_pane_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_marginBottom="@dimen/drawable_left_pad"
-                        android:layout_marginTop="@dimen/padding_start_currency"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/shop"/>
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/detail_date_category_layout"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        >
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Repeat"
+                            android:typeface="normal"
+                            />
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
-            </RelativeLayout>
+
+                <!-- Seperator -->
+
+                <View
+                    android:layout_width="0.3dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/drawable_left_pad"
+                    android:layout_marginTop="@dimen/padding_start_currency"
+                    android:background="@android:color/darker_gray"
+                    android:visibility="gone"
+                    />
+
+            </LinearLayout>
 
             <!-- Seperator -->
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginBottom="@dimen/drawable_left_pad"
+                android:layout_height="0.3dp"
                 android:background="@android:color/darker_gray"
                 />
 
-            <EditText
-                android:id="@+id/addExpenseDescription"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:drawableLeft="@drawable/desc"
-                android:drawablePadding="@dimen/expense_drawable_left_pad"
-                android:hint="@string/add_item_description_hint"
-                android:maxLength="@integer/max_desc_len"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="10"
+                android:layout_marginTop="@dimen/padding_start_currency"
+                android:orientation="vertical"
                 >
 
                 <EditText
-                    android:id="@+id/addExpenseSum"
-                    android:layout_width="0dp"
+                    android:id="@+id/addExpenseDescription"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="9"
-                    android:drawableLeft="@drawable/sum"
+                    android:layout_gravity="center_horizontal"
+                    android:drawableLeft="@drawable/desc"
                     android:drawablePadding="@dimen/expense_drawable_left_pad"
-                    android:hint="@string/item_value_hint"
-                    android:imeOptions="actionNext"
-                    android:inputType="numberDecimal"
-                    android:maxLength="6"
+                    android:hint="@string/add_item_description_hint"
+                    android:maxLength="@integer/max_desc_len"
+                    android:maxLines="1"
                     android:singleLine="true"
+                    android:textSize="@dimen/medium_font"
                     />
 
-                <com.moneyifyapp.views.CurrencyTextView
-                    android:id="@+id/addExpenseCurrency"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical|right"
-                    android:layout_weight="1"
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="10"
+                    >
+
+                    <EditText
+                        android:id="@+id/addExpenseSum"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="9"
+                        android:drawableLeft="@drawable/sum"
+                        android:drawablePadding="@dimen/expense_drawable_left_pad"
+                        android:hint="@string/item_value_hint"
+                        android:imeOptions="actionNext"
+                        android:inputType="numberDecimal"
+                        android:maxLength="6"
+                        android:singleLine="true"
+                        android:textSize="@dimen/medium_font"
+                        />
+
+                    <com.moneyifyapp.views.CurrencyTextView
+                        android:id="@+id/addExpenseCurrency"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/default_currency"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="@dimen/medium_font"/>
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/addExpenseNotes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/expense_card_margin"
+                    android:drawableLeft="@drawable/notes_2"
+                    android:drawablePadding="@dimen/expense_drawable_left_pad"
+                    android:hint="Notes..."
+                    android:imeOptions="actionNext"
+                    android:maxLength="@integer/max_note_len"
+                    android:singleLine="true"
+                    android:textSize="@dimen/medium_font"
+                    />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/drawable_left_pad"
                     android:gravity="center"
-                    android:text="@string/default_currency"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@android:color/darker_gray"/>
+                    android:orientation="horizontal"
+                    >
 
+                    <Button
+                        android:id="@+id/cancelAddButton"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/max_add_width"
+                        android:layout_weight="1"
+                        android:background="@drawable/stanard_button_drawable"
+                        android:text="@string/item_details_cancel"
+                        android:textColor="@android:color/white"/>
+
+                    <Button
+                        android:id="@+id/submitButton"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/max_add_width"
+                        android:layout_weight="1"
+                        android:background="@drawable/stanard_button_drawable"
+                        android:scaleType="fitCenter"
+                        android:text="@string/item_details_submit"
+                        android:textColor="@android:color/white"/>
+
+
+                </LinearLayout>
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/addExpenseNotes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/expense_card_margin"
-                android:drawableLeft="@drawable/notes_2"
-                android:drawablePadding="@dimen/expense_drawable_left_pad"
-                android:hint="Notes..."
-                android:imeOptions="actionNext"
-                android:maxLength="@integer/max_note_len"
-                android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/drawable_left_pad"
-                android:gravity="center"
-                android:orientation="horizontal"
-                >
-
-                <Button
-                    android:id="@+id/cancelAddButton"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/max_add_width"
-                    android:layout_weight="1"
-                    android:background="@drawable/stanard_button_drawable"
-                    android:text="@string/item_details_cancel"
-                    android:textColor="@android:color/white"/>
-
-                <Button
-                    android:id="@+id/submitButton"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/max_add_width"
-                    android:layout_weight="1"
-                    android:background="@drawable/stanard_button_drawable"
-                    android:scaleType="fitCenter"
-                    android:text="@string/item_details_submit"
-                    android:textColor="@android:color/white"/>
-
-
-            </LinearLayout>
 
         </LinearLayout>
 

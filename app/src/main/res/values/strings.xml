@@ -26,7 +26,7 @@
     <string name="login_welcome">Welcome!</string>
     <string name="login_welcome_2nd_line">Sign in and save some Coins</string>
     <string name="signup_welcome">Some info that we\'ll know you in the future</string>
-    <string name="image_picker_hint_text">Tap to select category</string>
+    <string name="image_picker_hint_text">Select category</string>
     <string name="toggle_hint_text">Tap to change</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
