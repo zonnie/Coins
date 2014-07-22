@@ -63,7 +63,6 @@ public class ExpenseListFragment extends ListFragment
     private YearTransactions mYearTransactions;
     private ExpenseItemAdapter mAdapter;
     private OnFragmentInteractionListener mListener;
-    private TextView mTotalEmptyHint;
     private TextView mTotalIncome;
     private TextView mTotalIncomeSign;
     private TextView mTotalExpense;
@@ -113,7 +112,7 @@ public class ExpenseListFragment extends ListFragment
 
         // Init Parse for data storing
         mTransactionHandler = TransactionHandler.getInstance(getActivity());
-        reFeatchDataIfWeResumed();
+        //reFeatchDataIfWeResumed();
 
         if (mRemoveAnimation == null)
             mRemoveAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
@@ -161,6 +160,10 @@ public class ExpenseListFragment extends ListFragment
         mView = inflater.inflate(R.layout.fragment_expenses, container, false);
 
         storeViews();
+
+        reFeatchDataIfWeResumed();
+
+
         initTotalsViews();
         updateTotalsForAllTransactions();
 
@@ -190,8 +193,7 @@ public class ExpenseListFragment extends ListFragment
         mTotalExpenseSign = (TextView) mView.findViewById(R.id.minusCurrency);
         mTotalSavings = (TextView) mView.findViewById(R.id.totalAmount);
         mTotalSavingsSign = (TextView) mView.findViewById(R.id.totalCurrency);
-        mTotalLayout = (LinearLayout) mView.findViewById(R.id.totalSubBarLayout);
-        mTotalEmptyHint = (TextView) mView.findViewById(R.id.totals_hint);
+        mTotalLayout = (LinearLayout) mView.findViewById(R.id.totalLayout);
     }
 
     /**
@@ -202,8 +204,8 @@ public class ExpenseListFragment extends ListFragment
         mTotalIncome.setText(String.valueOf(0));
         mTotalExpense.setText(String.valueOf(0));
 
-        hideTotalsIfTransactionListEmpty();
-        showTotalsIfTransactionsExist();
+        //hideTotalsIfTransactionListEmpty();
+        //showTotalsIfTransactionsExist();
     }
 
     /**
@@ -405,7 +407,7 @@ public class ExpenseListFragment extends ListFragment
                     int itemId = mRemoveQueue.peek();
                     updateTotalsOnAddedTransaction(mAdapter.getItem(itemId), true);
                     mAdapter.remove(itemId);
-                    hideTotalsIfTransactionListEmpty();
+                    //hideTotalsIfTransactionListEmpty();
 
                 }
 
@@ -575,7 +577,7 @@ public class ExpenseListFragment extends ListFragment
                     Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
                     if (getListView().getChildCount() > 0)
                         getListView().getChildAt(0).startAnimation(anim);
-                    showTotalsIfTransactionsExist();
+                    //showTotalsIfTransactionsExist();
 
                 } else if (requestCode == ExpensesActivity.REQ_EDIT_ITEM)
                 {
@@ -595,8 +597,7 @@ public class ExpenseListFragment extends ListFragment
 
     }
 
-    /**
-     */
+    /*
     private void showTotalsIfTransactionsExist()
     {
         if(!mAdapter.isEmpty() && mTotalEmptyHint.getVisibility() == View.VISIBLE)
@@ -606,16 +607,15 @@ public class ExpenseListFragment extends ListFragment
         }
     }
 
-    /**
-     */
     private void hideTotalsIfTransactionListEmpty()
     {
         if(mAdapter.isEmpty())
         {
             mTotalEmptyHint.setVisibility(View.VISIBLE);
-            mTotalLayout.setVisibility(View.INVISIBLE);
+            mTotalLayout.setVisibility(View.GONE);
         }
     }
+    */
 
     /**
      */

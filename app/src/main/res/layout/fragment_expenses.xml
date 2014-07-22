@@ -13,123 +13,123 @@
         android:paddingTop="@dimen/padding_start_currency"
 
         >-->
-        <!--<TextView
-            android:id="@+id/totals_hint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/totals_hint_string"
-            android:textSize="@dimen/tiny_font"
-            android:textColor="@android:color/darker_gray"
-            android:layout_gravity="top"/>-->
-        <LinearLayout
-            android:id="@+id/totalLayout"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="@dimen/drawable_left_pad"
-            android:paddingRight="@dimen/drawable_left_pad"
-            android:paddingBottom="@dimen/padding_start_currency"
-            android:paddingTop="@dimen/padding_start_currency"
-            android:background="@drawable/general_item_card"
-            >
+    <!--<TextView
+        android:id="@+id/totals_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/totals_hint_string"
+        android:textSize="@dimen/tiny_font"
+        android:textColor="@android:color/darker_gray"
+        android:layout_gravity="top"/>-->
+    <LinearLayout
+        android:id="@+id/totalLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/general_item_card"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/padding_start_currency"
+        android:paddingLeft="@dimen/drawable_left_pad"
+        android:paddingRight="@dimen/drawable_left_pad"
+        android:paddingTop="@dimen/padding_start_currency"
+        >
 
-            <TextView
+        <!--<TextView
             android:id="@+id/totals_hint"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/totals_hint_string"
-            android:textSize="@dimen/tiny_font"
             android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/tiny_font"
             android:visibility="gone"
-            />
+            />-->
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/totalSubBarLayout"
-                android:gravity="center"
-                >
+        <LinearLayout
+            android:id="@+id/totalSubBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            >
 
             <com.moneyifyapp.views.CurrencyTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/default_currency"
-                android:textSize="@dimen/huge_font"
                 android:id="@+id/plusCurrency"
-                android:fontFamily="sans-serif-condensed"
-                android:textColor="@color/income_color"/>
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/huge_font"
-                android:text="@string/init_total_value"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/default_currency"
+                android:textColor="@color/income_color"
+                android:textSize="@dimen/huge_font"/>
+
+            <TextView
                 android:id="@+id/plusAmount"
-                android:fontFamily="sans-serif-condensed"
-                android:textColor="@color/income_color"/>
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/large_font"
-                android:text="-"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/init_total_value"
+                android:textColor="@color/income_color"
+                android:textSize="@dimen/huge_font"/>
+
+            <TextView
                 android:id="@+id/minusSign"
-                android:paddingStart="@dimen/max_add_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:paddingEnd="@dimen/max_add_height"
+                android:paddingStart="@dimen/max_add_height"
+                android:text="-"
+                android:textSize="@dimen/large_font"
                 />
 
             <com.moneyifyapp.views.CurrencyTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/huge_font"
-                android:text="@string/default_currency"
                 android:id="@+id/minusCurrency"
-                android:fontFamily="sans-serif-condensed"
-                android:textColor="@color/expense_color"/>
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/huge_font"
-                android:text="@string/init_total_value"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/default_currency"
+                android:textColor="@color/expense_color"
+                android:textSize="@dimen/huge_font"/>
+
+            <TextView
                 android:id="@+id/minusAmount"
-                android:fontFamily="sans-serif-condensed"
-                android:textColor="@color/expense_color"/>
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="="
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/init_total_value"
+                android:textColor="@color/expense_color"
+                android:textSize="@dimen/huge_font"/>
+
+            <TextView
                 android:id="@+id/outComeSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/max_add_height"
                 android:paddingStart="@dimen/max_add_height"
-                android:paddingEnd="@dimen/max_add_height"/>
+                android:text="="
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
 
             <com.moneyifyapp.views.CurrencyTextView
+                android:id="@+id/totalCurrency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/huge_font"
-                android:text="@string/default_currency"
-                android:textStyle="bold"
-                android:id="@+id/totalCurrency"
                 android:fontFamily="sans-serif-condensed"
-                android:textColor="@color/income_color"/>
+                android:text="@string/default_currency"
+                android:textColor="@color/income_color"
+                android:textSize="@dimen/huge_font"
+                android:textStyle="bold"/>
 
             <TextView
+                android:id="@+id/totalAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/huge_font"
-                android:textStyle="bold"
-                android:text="@string/init_total_value"
-                android:id="@+id/totalAmount"
                 android:fontFamily="sans-serif-condensed"
-                android:textColor="@color/income_color"/>
-            </LinearLayout>
+                android:text="@string/init_total_value"
+                android:textColor="@color/income_color"
+                android:textSize="@dimen/huge_font"
+                android:textStyle="bold"/>
         </LinearLayout>
+    </LinearLayout>
 
     <!--</LinearLayout>-->
 
@@ -148,28 +148,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"
-        android:weightSum="3.5"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="3.5">
 
         <TextView
             android:id="@+id/emptyListHint"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:gravity="center_horizontal|bottom"
-            android:text="@string/list_empty_hint"
-            android:paddingTop="@dimen/padding_start_currency"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@android:color/darker_gray"
+            android:layout_gravity="top"
             android:layout_weight="1"
-            android:layout_gravity="top"/>
+            android:gravity="center_horizontal|bottom"
+            android:paddingTop="@dimen/padding_start_currency"
+            android:text="@string/list_empty_hint"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/darker_gray"/>
 
         <ImageView
             android:id="@+id/empty_image"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:paddingTop="@dimen/expense_drawable_left_pad"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
+            android:paddingTop="@dimen/expense_drawable_left_pad"
             android:src="@drawable/empty_2"
             />
 
@@ -177,13 +177,13 @@
             android:id="@+id/emptyListText"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:gravity="center_horizontal"
-            android:text="@string/list_empty_message"
-            android:paddingTop="@dimen/expense_drawable_left_pad"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@android:color/darker_gray"
+            android:layout_gravity="top"
             android:layout_weight="1"
-            android:layout_gravity="top"/>
+            android:gravity="center_horizontal"
+            android:paddingTop="@dimen/expense_drawable_left_pad"
+            android:text="@string/list_empty_message"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/darker_gray"/>
 
     </LinearLayout>
 
