@@ -20,6 +20,7 @@
         >
 
         <LinearLayout
+            android:id="@+id/remove_item_button_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/padding_start_currency"
@@ -40,6 +41,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/transaction_data_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="25.5"

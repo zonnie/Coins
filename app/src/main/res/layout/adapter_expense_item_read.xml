@@ -20,6 +20,7 @@
         >
 
         <LinearLayout
+            android:id="@+id/transaction_data_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="27"
@@ -146,7 +147,7 @@
                 android:gravity="center"
                 android:paddingBottom="@dimen/padding_start_currency"
                 android:paddingTop="@dimen/padding_start_currency"
-                android:text="July"
+                android:text="MAR"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/medium_font"
                 />

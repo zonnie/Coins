@@ -27,21 +27,14 @@ import java.util.List;
 public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
 {
     private ListItemHandler mListener;
-    private TextView mExpenseDescription;
-    private LinearLayout mItemLayout;
-    private LinearLayout mExpenseNoteContainer;
-    private TextView mExpenseValue;
-    private TextView mExpenseCurrency;
-    private TextView mExpenseNote;
-    private TextView mExpenseDayOfMonth;
-    private TextView mExpenseMonth;
     private int mLayoutResourceId;
     private MonthTransactions mTransactions;
-    private Button mRemoveItemButton;
-    private View mMyView;
     public static int PICK_IMAGE_DIMENSIONS = 90;
     private Animation mItemsLoadAnimation;
+    public View mMyView;
     private Typeface mDateFont;
+    private ViewHolder mViewHolder;
+
 
     /**
      */
@@ -64,18 +57,20 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
 
         if (mMyView == null)
         {
-
-            LayoutInflater viewInflator;
-            viewInflator = LayoutInflater.from(getContext());
-
+            mViewHolder = new ViewHolder();
+            LayoutInflater viewInflator = LayoutInflater.from(getContext());
             mMyView = viewInflator.inflate(mLayoutResourceId, null);
+            storeViews();
 
             // Load animation lazy
             if(mItemsLoadAnimation == null)
                 mItemsLoadAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
 
             mMyView.startAnimation(mItemsLoadAnimation);
+            mMyView.setTag(mViewHolder);
         }
+        else
+            mViewHolder = (ViewHolder)mMyView.getTag();
 
         return getRegularView(position);
     }
@@ -90,8 +85,8 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         if (currentTransactionView != null)
         {
             // Take care of click to layout to be able to edit item in view
-            mItemLayout = (LinearLayout) mMyView.findViewById(R.id.transaction_card_layout);
-            mItemLayout.setOnClickListener(new View.OnClickListener()
+            mViewHolder.mItemLayout = (LinearLayout) mMyView.findViewById(R.id.transaction_card_layout);
+            mViewHolder.mItemLayout.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
@@ -101,8 +96,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             });
 
             initTransactionLookType(position);
-            storeViews();
-            mRemoveItemButton.setOnClickListener(new View.OnClickListener()
+            mViewHolder.mRemoveItemButton.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
@@ -134,42 +128,40 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
      */
     private void storeViews()
     {
-        mExpenseDescription = (TextView) mMyView.findViewById(R.id.expenseDesc);
-        mExpenseValue = (TextView) mMyView.findViewById(R.id.expenseValue);
-        mExpenseCurrency = (TextView) mMyView.findViewById(R.id.currency);
-        mExpenseNote = (TextView) mMyView.findViewById(R.id.expenseItemNote);
-        mExpenseDayOfMonth = (TextView)mMyView.findViewById(R.id.expense_item_date_text);
-        mExpenseMonth = (TextView)mMyView.findViewById(R.id.expense_item_date_month);
-        mRemoveItemButton = (Button) mMyView.findViewById(R.id.expenseRemove);
-        mExpenseNoteContainer = (LinearLayout)mMyView.findViewById(R.id.expenseItemNoteContainer);
+        mViewHolder.mExpenseDescription = (TextView) mMyView.findViewById(R.id.expenseDesc);
+        mViewHolder.mExpenseValue = (TextView) mMyView.findViewById(R.id.expenseValue);
+        mViewHolder.mExpenseCurrency = (TextView) mMyView.findViewById(R.id.currency);
+        mViewHolder.mExpenseNote = (TextView) mMyView.findViewById(R.id.expenseItemNote);
+        mViewHolder.mExpenseDayOfMonth = (TextView)mMyView.findViewById(R.id.expense_item_date_text);
+        mViewHolder.mExpenseMonth = (TextView)mMyView.findViewById(R.id.expense_item_date_month);
+        mViewHolder.mRemoveItemButton = (Button) mMyView.findViewById(R.id.expenseRemove);
+        mViewHolder.mExpenseNoteContainer = (LinearLayout)mMyView.findViewById(R.id.expenseItemNoteContainer);
+        mViewHolder.mRemoveItemLayout = (LinearLayout) mMyView.findViewById(R.id.remove_item_button_layout);
     }
 
     /**
      */
     private void handleViewDescription(Transaction currentTransactionView)
     {
-        if (mExpenseDescription != null)
-        {
-            mExpenseDescription.setText(currentTransactionView.mDescription);
-        }
-
+        if (mViewHolder.mExpenseDescription != null)
+            mViewHolder.mExpenseDescription.setText(currentTransactionView.mDescription);
     }
 
     /**
      */
     private void handleViewDate(Transaction currentTransactionView)
     {
-        if (mExpenseDescription != null)
+        if (mViewHolder.mExpenseDescription != null)
         {
             String date = currentTransactionView.mTransactionDay;
             String dateSuffix = Utils.getMonthPrefixByIndex(mTransactions.mMonthNumber).toUpperCase();
 
             // Change the font
             if(mDateFont != null)
-                mExpenseDayOfMonth.setTypeface(mDateFont);
+                mViewHolder.mExpenseDayOfMonth.setTypeface(mDateFont);
 
-            mExpenseDayOfMonth.setText(date);
-            mExpenseMonth.setText(dateSuffix);
+            mViewHolder.mExpenseDayOfMonth.setText(date);
+            mViewHolder.mExpenseMonth.setText(dateSuffix);
         }
 
     }
@@ -178,28 +170,28 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
      */
     private void handleViewValue(Transaction currentTransactionView)
     {
-        if (mExpenseValue != null)
-            mExpenseValue.setText(currentTransactionView.mValue);
+        if (mViewHolder.mExpenseValue != null)
+            mViewHolder.mExpenseValue.setText(currentTransactionView.mValue);
     }
 
     /**
      */
     private void handleViewCurrency(Transaction currentTransactionView)
     {
-        if (mExpenseCurrency != null)
-            mExpenseCurrency.setText(currentTransactionView.mCurrency);
+        if (mViewHolder.mExpenseCurrency != null)
+            mViewHolder.mExpenseCurrency.setText(currentTransactionView.mCurrency);
     }
 
     /**
      */
     private void handleViewNote(Transaction currentTransactionView)
     {
-        if (mExpenseNote != null)
+        if (mViewHolder.mExpenseNote != null)
         {
             if (!currentTransactionView.mNotes.isEmpty())
-                mExpenseNote.setText(currentTransactionView.mNotes);
+                mViewHolder.mExpenseNote.setText(currentTransactionView.mNotes);
             else
-                mExpenseNote.setText("Please enter a note...");
+                mViewHolder.mExpenseNote.setText("Please enter a note...");
         }
     }
 
@@ -346,7 +338,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     {
         Drawable img = getContext().getResources().getDrawable(resourceIndex);
         img.setBounds( 0, 0, PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
-        mExpenseDescription.setCompoundDrawables(img, null, null, null);
+        mViewHolder.mExpenseDescription.setCompoundDrawables(img, null, null, null);
     }
 
     /**
@@ -357,4 +349,22 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         public void removeFromFragmentList(View view);
         public void showItem(View view);
     }
+
+    /**
+     * View holder for list viewing optimization
+     */
+    public static class ViewHolder
+    {
+        public TextView mExpenseDescription;
+        public LinearLayout mItemLayout;
+        public LinearLayout mRemoveItemLayout;
+        public LinearLayout mExpenseNoteContainer;
+        public TextView mExpenseValue;
+        public TextView mExpenseCurrency;
+        public TextView mExpenseNote;
+        public TextView mExpenseDayOfMonth;
+        public TextView mExpenseMonth;
+        public Button mRemoveItemButton;
+    }
+
 }

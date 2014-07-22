@@ -47,7 +47,7 @@ import java.util.UUID;
 /**
  * A fragment representing a list of Items.
  */
-public class ExpenseListFragment extends ListFragment 
+public class ExpenseListFragment extends ListFragment
         implements ExpenseItemAdapter.ListItemHandler, TransactionHandler.onFetchingCompleteListener
 {
     public static final String ITEM_POS_KEY = "itemPos";
@@ -91,7 +91,9 @@ public class ExpenseListFragment extends ListFragment
 
     /**
      */
-    public ExpenseListFragment(){}
+    public ExpenseListFragment()
+    {
+    }
 
     /**
      * On create
@@ -101,7 +103,7 @@ public class ExpenseListFragment extends ListFragment
     {
         super.onCreate(savedInstanceState);
 
-        if(getArguments() != null)
+        if (getArguments() != null)
         {
             mPageId = getArguments().getInt(PAGE_ID_KEY);
             mYear = getArguments().getInt(YEAR_KEY);
@@ -111,7 +113,7 @@ public class ExpenseListFragment extends ListFragment
         mTransactionHandler = TransactionHandler.getInstance(getActivity());
         reFeatchDataIfWeResumed();
 
-        if(mRemoveAnimation == null)
+        if (mRemoveAnimation == null)
             mRemoveAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
         mRemoveQueue = new LinkedList<Integer>();
         setHasOptionsMenu(true);
@@ -125,7 +127,7 @@ public class ExpenseListFragment extends ListFragment
      */
     private void reFeatchDataIfWeResumed()
     {
-        if(mTransactionHandler.isFirstFeatch())
+        if (mTransactionHandler.isFirstFeatch())
             mTransactionHandler.registerListenerAndFetchTransactions(this, mYear);
     }
 
@@ -171,6 +173,8 @@ public class ExpenseListFragment extends ListFragment
                 startMonthlyOverview();
             }
         });
+
+
 
         return mView;
     }
@@ -233,7 +237,9 @@ public class ExpenseListFragment extends ListFragment
             if (!Utils.getDefaultCurrency(getActivity()).equals(mTransactions.getItems().get(0).mCurrency))
             {
                 for (int i = 0; i < mTransactions.getItems().size(); ++i)
+                {
                     mTransactions.getItems().get(i).mCurrency = Utils.getDefaultCurrency(getActivity());
+                }
                 mAdapter.notifyDataSetChanged();
             }
         }
@@ -378,7 +384,7 @@ public class ExpenseListFragment extends ListFragment
     private void removeItemFromList(int position)
     {
         // Put the next ID so that async functions could use it
-        if(getListView().getChildAt(position) != null)
+        if (getListView().getChildAt(position) != null)
         {
             mRemoveQueue.add(position);
             View removedItem = getListView().getChildAt(position);
@@ -422,7 +428,7 @@ public class ExpenseListFragment extends ListFragment
      */
     private void removeAfterParseQuery(List<ParseObject> list, ParseException e)
     {
-        if(e == null)
+        if (e == null)
         {
             if (list.size() != 0)
             {
@@ -443,8 +449,7 @@ public class ExpenseListFragment extends ListFragment
                     }
                 });
             }
-        }
-        else
+        } else
             Toast.makeText(getActivity(), "Can't remove the item, couldn't find it..", Toast.LENGTH_LONG).show();
     }
 
@@ -506,6 +511,7 @@ public class ExpenseListFragment extends ListFragment
         startEditTransactionActivity(position);
     }
 
+
     /**
      */
     public void startEditTransactionActivity(int position)
@@ -558,7 +564,7 @@ public class ExpenseListFragment extends ListFragment
                     currency = Transaction.CURRENCY_DEFAULT;
                     createNewTransaction(desc, sum, currency, note, image, isExpense);
                     Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
-                    if(getListView().getChildCount() > 0)
+                    if (getListView().getChildCount() > 0)
                     {
                         getListView().getChildAt(0).startAnimation(anim);
                     }
@@ -678,7 +684,9 @@ public class ExpenseListFragment extends ListFragment
     private void updateTotalsForAllTransactions()
     {
         for (Transaction transaction : mTransactions.getItems())
+        {
             updateTotalsOnAddedTransaction(transaction, false);
+        }
     }
 
     /**
@@ -692,9 +700,9 @@ public class ExpenseListFragment extends ListFragment
 
         // Collect info
         if (isExpense)
-            initExpense += (isRemoval)? (-curTransValue):curTransValue;
+            initExpense += (isRemoval) ? (-curTransValue) : curTransValue;
         else
-            initIncome += (isRemoval)? (-curTransValue):curTransValue;
+            initIncome += (isRemoval) ? (-curTransValue) : curTransValue;
 
         double initTotal = initIncome - initExpense;
 
@@ -703,8 +711,7 @@ public class ExpenseListFragment extends ListFragment
         {
             color = getResources().getColor(R.color.expense_color);
             initTotal = (-initTotal);
-        }
-        else
+        } else
             color = getResources().getColor(R.color.income_color);
 
         // Update UI
@@ -752,6 +759,8 @@ public class ExpenseListFragment extends ListFragment
             startEditTransactionActivity(position);
     }
 
+    /**
+     */
     @Override
     public void onFetchComplete()
     {

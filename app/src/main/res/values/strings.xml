@@ -33,6 +33,8 @@
     <string name="item_details_submit">"Done !"</string>
     <string name="item_details_cancel">"Cancel"</string>
     <string name="item_list_refresh">"Refresh"</string>
+    <string name="item_list_edit">"Edit"</string>
+    <string name="item_list_delete">"Delete"</string>
     <string name="image_gallery_hint">"Tap the category image to pick one"</string>
     <string name="splash_slogan">"Save some Coins"</string>
     <string name="splash_first_time_title">"Welcome to Coins !"</string>

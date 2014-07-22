@@ -1,6 +1,7 @@
 package com.moneyifyapp.activities.expenses.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.moneyifyapp.R;
 import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.Transaction;
+import com.moneyifyapp.utils.Utils;
 
 /**
  * An expense item adapter.
@@ -25,12 +27,15 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
     private TextView mExpenseDescription;
     private TextView mExpenseValue;
     private TextView mExpenseCurrency;
+    private TextView mExpenseDayOfMonth;
+    private TextView mExpenseMonth;
     private int mLayoutResourceId;
     private MonthTransactions mTransactions;
     private View mMyView;
     public static int PICK_IMAGE_DIMENSIONS = 100;
     private final String EMPTY_NOTE_HINT = "Please enter a note...";
     private Animation mItemsLoadAnimation;
+    private Typeface mDateFont;
 
     /**
      *
@@ -40,6 +45,8 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
         super(context, resource, expenses.getItems());
         mTransactions = expenses;
         mLayoutResourceId = resource;
+        mDateFont = Typeface.create(Utils.EXPENSE_FONT_DAY, Typeface.NORMAL);
+
 
         // Load animation lazy
         if (mItemsLoadAnimation == null)
@@ -57,9 +64,7 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
         mMyView = view;
 
         if (mMyView == null)
-        {
             inflateGivenLayoutAndAnimate();
-        }
 
         getRegularView(position);
 
@@ -94,6 +99,7 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
                 updateTransactionSumColor(mMyView, R.color.income_color);
 
             updateDescriptionLeftDrawable(Images.getImageByPosition(currentTransactionView.mImageResourceIndex));
+            handleViewDate(currentTransactionView);
             handleViewDescription(currentTransactionView);
             handleViewValue(currentTransactionView);
             handleViewCurrency(currentTransactionView);
@@ -109,6 +115,8 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
         mExpenseDescription = (TextView) mMyView.findViewById(R.id.expenseDesc);
         mExpenseValue = (TextView) mMyView.findViewById(R.id.expenseValue);
         mExpenseCurrency = (TextView) mMyView.findViewById(R.id.currency);
+        mExpenseDayOfMonth = (TextView) mMyView.findViewById(R.id.expense_item_date_text);
+        mExpenseMonth = (TextView) mMyView.findViewById(R.id.expense_item_date_month);
     }
 
     /**
@@ -154,5 +162,24 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
         Drawable img = getContext().getResources().getDrawable(resourceIndex);
         img.setBounds(0, 0, PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
         mExpenseDescription.setCompoundDrawables(img, null, null, null);
+    }
+
+    /**
+     */
+    private void handleViewDate(Transaction currentTransactionView)
+    {
+        if (mExpenseDescription != null)
+        {
+            String date = currentTransactionView.mTransactionDay;
+            String dateSuffix = Utils.getMonthPrefixByIndex(mTransactions.mMonthNumber).toUpperCase();
+
+            // Change the font
+            if(mDateFont != null)
+                mExpenseDayOfMonth.setTypeface(mDateFont);
+
+            mExpenseDayOfMonth.setText(date);
+            mExpenseMonth.setText(dateSuffix);
+        }
+
     }
 }
