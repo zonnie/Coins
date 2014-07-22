@@ -217,9 +217,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     public void remove(int position)
     {
         Transaction transaction = mTransactions.getItems().get(position);
-
-
-
         super.remove(transaction);
     }
 

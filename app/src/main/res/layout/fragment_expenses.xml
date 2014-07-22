@@ -6,32 +6,53 @@
               android:orientation="vertical">
 
     <!-- This is a must for a custom list in fragment listview -->
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/expense_list_totals_card"
         android:orientation="vertical"
-        >
-        <TextView
+        android:paddingTop="@dimen/padding_start_currency"
+
+        >-->
+        <!--<TextView
             android:id="@+id/totals_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="@string/totals_hint_string"
-            android:paddingTop="@dimen/padding_start_currency"
             android:textSize="@dimen/tiny_font"
             android:textColor="@android:color/darker_gray"
-            android:layout_gravity="top"/>
+            android:layout_gravity="top"/>-->
         <LinearLayout
+            android:id="@+id/totalLayout"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/totalLayout"
             android:gravity="center"
             android:paddingLeft="@dimen/drawable_left_pad"
             android:paddingRight="@dimen/drawable_left_pad"
             android:paddingBottom="@dimen/padding_start_currency"
-            android:visibility="visible">
+            android:paddingTop="@dimen/padding_start_currency"
+            android:background="@drawable/general_item_card"
+            >
+
+            <TextView
+            android:id="@+id/totals_hint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/totals_hint_string"
+            android:textSize="@dimen/tiny_font"
+            android:textColor="@android:color/darker_gray"
+            android:visibility="gone"
+            />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/totalSubBarLayout"
+                android:gravity="center"
+                >
 
             <com.moneyifyapp.views.CurrencyTextView
                 android:layout_width="wrap_content"
@@ -57,9 +78,9 @@
                 android:textSize="@dimen/large_font"
                 android:text="-"
                 android:id="@+id/minusSign"
-
                 android:paddingStart="@dimen/max_add_height"
-                android:paddingEnd="@dimen/max_add_height"/>
+                android:paddingEnd="@dimen/max_add_height"
+                />
 
             <com.moneyifyapp.views.CurrencyTextView
                 android:layout_width="wrap_content"
@@ -107,10 +128,10 @@
                 android:id="@+id/totalAmount"
                 android:fontFamily="sans-serif-condensed"
                 android:textColor="@color/income_color"/>
-
+            </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
     <ListView
         android:id="@id/android:list"
@@ -134,7 +155,7 @@
             android:id="@+id/emptyListHint"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:gravity="center_horizontal"
+            android:gravity="center_horizontal|bottom"
             android:text="@string/list_empty_hint"
             android:paddingTop="@dimen/padding_start_currency"
             android:textAppearance="?android:attr/textAppearanceSmall"
@@ -146,7 +167,7 @@
             android:id="@+id/empty_image"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:paddingTop="@dimen/big_padding"
+            android:paddingTop="@dimen/expense_drawable_left_pad"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:src="@drawable/empty_2"

@@ -63,12 +63,14 @@ public class ExpenseListFragment extends ListFragment
     private YearTransactions mYearTransactions;
     private ExpenseItemAdapter mAdapter;
     private OnFragmentInteractionListener mListener;
+    private TextView mTotalEmptyHint;
     private TextView mTotalIncome;
     private TextView mTotalIncomeSign;
     private TextView mTotalExpense;
     private TextView mTotalExpenseSign;
     private TextView mTotalSavings;
     private TextView mTotalSavingsSign;
+    private LinearLayout mTotalLayout;
     private Queue<Integer> mRemoveQueue;
     private Animation mRemoveAnimation;
     private View mView;
@@ -148,7 +150,6 @@ public class ExpenseListFragment extends ListFragment
         mYearTransactions = mTransactionHandler.getYearTransactions(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
         mYearTransactions.addMonth(pageId);
         mTransactions = mYearTransactions.get(pageId);
-
     }
 
     /**
@@ -160,11 +161,11 @@ public class ExpenseListFragment extends ListFragment
         mView = inflater.inflate(R.layout.fragment_expenses, container, false);
 
         storeViews();
-        clearTotalsValues();
+        initTotalsViews();
         updateTotalsForAllTransactions();
 
+
         // On total's click go to month total
-        LinearLayout mTotalLayout = (LinearLayout) mView.findViewById(R.id.totalLayout);
         mTotalLayout.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -189,15 +190,20 @@ public class ExpenseListFragment extends ListFragment
         mTotalExpenseSign = (TextView) mView.findViewById(R.id.minusCurrency);
         mTotalSavings = (TextView) mView.findViewById(R.id.totalAmount);
         mTotalSavingsSign = (TextView) mView.findViewById(R.id.totalCurrency);
+        mTotalLayout = (LinearLayout) mView.findViewById(R.id.totalSubBarLayout);
+        mTotalEmptyHint = (TextView) mView.findViewById(R.id.totals_hint);
     }
 
     /**
      */
-    private void clearTotalsValues()
+    private void initTotalsViews()
     {
         mTotalSavings.setText(String.valueOf(0));
         mTotalIncome.setText(String.valueOf(0));
         mTotalExpense.setText(String.valueOf(0));
+
+        hideTotalsIfTransactionListEmpty();
+        showTotalsIfTransactionsExist();
     }
 
     /**
@@ -395,9 +401,12 @@ public class ExpenseListFragment extends ListFragment
             {
                 public void run()
                 {
+
                     int itemId = mRemoveQueue.peek();
                     updateTotalsOnAddedTransaction(mAdapter.getItem(itemId), true);
                     mAdapter.remove(itemId);
+                    hideTotalsIfTransactionListEmpty();
+
                 }
 
             }, mRemoveAnimation.getDuration());
@@ -565,9 +574,8 @@ public class ExpenseListFragment extends ListFragment
                     createNewTransaction(desc, sum, currency, note, image, isExpense);
                     Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
                     if (getListView().getChildCount() > 0)
-                    {
                         getListView().getChildAt(0).startAnimation(anim);
-                    }
+                    showTotalsIfTransactionsExist();
 
                 } else if (requestCode == ExpensesActivity.REQ_EDIT_ITEM)
                 {
@@ -585,6 +593,28 @@ public class ExpenseListFragment extends ListFragment
             }
         }
 
+    }
+
+    /**
+     */
+    private void showTotalsIfTransactionsExist()
+    {
+        if(!mAdapter.isEmpty() && mTotalEmptyHint.getVisibility() == View.VISIBLE)
+        {
+            mTotalEmptyHint.setVisibility(View.GONE);
+            mTotalLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     */
+    private void hideTotalsIfTransactionListEmpty()
+    {
+        if(mAdapter.isEmpty())
+        {
+            mTotalEmptyHint.setVisibility(View.VISIBLE);
+            mTotalLayout.setVisibility(View.INVISIBLE);
+        }
     }
 
     /**
@@ -717,7 +747,6 @@ public class ExpenseListFragment extends ListFragment
         // Update UI
         mTotalSavings.setTextColor(color);
         mTotalSavingsSign.setTextColor(color);
-
 
         String incomeStr = Utils.formatDoubleToTextCurrency(initIncome);
         String expenseStr = Utils.formatDoubleToTextCurrency(initExpense);

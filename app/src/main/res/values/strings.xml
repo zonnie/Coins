@@ -5,8 +5,8 @@
     <string name="main_title">Coins</string>
     <string name="jump_today_caption">Jump to today</string>
     <string name="logout_caption">Logout</string>
-    <string name="list_empty_hint">Tap the "+" button above to add some</string>
-    <string name="totals_hint_string">Tap for detailed overview</string>
+    <string name="list_empty_hint">Tap the "+" button add stuff</string>
+    <string name="totals_hint_string">Once you added some stuff, tap here</string>
     <string name="list_empty_message">Nothing here, so lonely</string>
     <string name="new_expense_button_caption">Add</string>
     <string name="error_invalid_email">This email address is invalid</string>
