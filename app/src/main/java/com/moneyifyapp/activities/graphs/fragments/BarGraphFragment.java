@@ -43,6 +43,7 @@ public class BarGraphFragment extends Fragment
     public static final String GRAPH_ARGS = "graphArgs";
     private Animation mBarAnimation;
     private BarGraphParameters mParameters;
+    private boolean mNoInsights = false;
 
     /**
      * Factory to pass some data for different fragments creation.
@@ -95,6 +96,9 @@ public class BarGraphFragment extends Fragment
     private void initViewsByParameters()
     {
         int weigtSum = mValues.size();
+
+        if(!mValues.isEmpty())
+            updateHasInsignts();
         mLinearChart = (LinearLayout) mView.findViewById(R.id.linearChart);
         mLinearChart.setWeightSum(weigtSum);
         mXAxisContainer = (LinearLayout) mView.findViewById(R.id.xAxisLayout);
@@ -182,6 +186,17 @@ public class BarGraphFragment extends Fragment
             mBarAnimation.setDuration(1000);
         }
         view.startAnimation(mBarAnimation);
+    }
+
+    private void updateHasInsignts()
+    {
+        if(mNoInsights == false)
+        {
+            mNoInsights = true;
+            LinearLayout layout = (LinearLayout) mView.findViewById(R.id.bar_graph_root);
+            if(layout != null)
+                layout.setVisibility(View.VISIBLE);
+        }
     }
 
     /**

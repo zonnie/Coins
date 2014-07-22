@@ -60,33 +60,74 @@
 
             >
 
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/expense_card_margin"
-                android:layout_marginTop="@dimen/expense_card_margin"
-
+                android:layout_marginBottom="@dimen/drawable_left_pad"
+                android:layout_marginTop="@dimen/drawable_left_pad"
                 >
 
+
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:id="@+id/detail_right_pane_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/detail_date_category_layout"
-                    android:visibility="gone"
+                    android:gravity="top"
+                    android:orientation="vertical"
                     >
 
                     <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="Repeat"
+                        android:typeface="normal"
+                        android:visibility="gone"
                         />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/drawable_left_pad"
+                        android:orientation="vertical"
+                        >
+
+                        <ToggleButton
+                            android:id="@+id/isExpenseToggle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/expense_toggle"
+                            android:gravity="center"
+                            android:paddingBottom="@dimen/drawable_left_pad"
+                            android:paddingEnd="@dimen/big_padding"
+                            android:paddingStart="@dimen/big_padding"
+                            android:paddingTop="@dimen/drawable_left_pad"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textOff="@string/spent_string"
+                            android:textOn="@string/revenue_string"/>
+
+                        <TextView
+                            android:id="@+id/toggle_expense_hint"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/toggle_hint_text"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="@dimen/tiny_font"
+                            android:visibility="gone"
+                            />
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
+
                 <LinearLayout
                     android:id="@+id/detail_date_category_layout"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center|top"
                     android:orientation="vertical"
@@ -107,14 +148,23 @@
                         android:id="@+id/addExpenseImage"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
-                        android:layout_marginTop="@dimen/padding_start_currency"
                         android:layout_marginBottom="@dimen/drawable_left_pad"
+                        android:layout_marginTop="@dimen/padding_start_currency"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:src="@drawable/shop"/>
                 </LinearLayout>
 
             </RelativeLayout>
+
+            <!-- Seperator -->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginBottom="@dimen/drawable_left_pad"
+                android:background="@android:color/darker_gray"
+                />
 
             <EditText
                 android:id="@+id/addExpenseDescription"
@@ -177,39 +227,6 @@
                 android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/drawable_left_pad"
-                android:layout_marginTop="@dimen/drawable_left_pad"
-                android:orientation="vertical"
-                >
-
-                <ToggleButton
-                    android:id="@+id/isExpenseToggle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/expense_toggle"
-                    android:gravity="center"
-                    android:paddingBottom="@dimen/drawable_left_pad"
-                    android:paddingEnd="@dimen/big_padding"
-                    android:paddingStart="@dimen/big_padding"
-                    android:paddingTop="@dimen/drawable_left_pad"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textOff="@string/spent_string"
-                    android:textOn="@string/revenue_string"/>
-
-                <TextView
-                    android:id="@+id/toggle_expense_hint"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/toggle_hint_text"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@android:color/darker_gray"/>
-
-            </LinearLayout>
 
 
             <LinearLayout

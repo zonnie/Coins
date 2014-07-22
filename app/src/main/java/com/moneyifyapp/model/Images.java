@@ -123,6 +123,12 @@ public class Images
         mImages.add(R.drawable.parking);
         mImageCaptions.add("Parking");
 
+        mImages.add(R.drawable.health);
+        mImageCaptions.add("Health");
+
+        mImages.add(R.drawable.sports);
+        mImageCaptions.add("Sports");
+
     }
 
     /**

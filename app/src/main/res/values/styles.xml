@@ -11,6 +11,7 @@
         <item name="android:popupMenuStyle">@style/MyPopupMenu</item>
         <item name="android:itemTextAppearance">@style/myCustomMenuTextApearance</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:checkboxStyle">@style/CustomCheckBox</item>
     </style>
 
     <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
@@ -60,6 +61,11 @@
         <item name="android:fontFamily">sans-serif-thin</item>
         <!--<item name="android:textStyle">bold</item>-->
         <!--<item name="android:fontFamily">sans-serif-light</item>-->
+    </style>
+
+    <style name="CustomCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <!--<item name="android:button">@drawable/cal</item>-->
+        <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
     <!-- Popup Menu Background Color styles -->
