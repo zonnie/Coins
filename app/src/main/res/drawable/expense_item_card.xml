@@ -6,11 +6,9 @@
             <corners android:topLeftRadius="2dp"/>
         </shape>
     </item>
-
     <item android:bottom="1dp">
         <shape android:shape="rectangle">
             <solid android:color="#F5F7F7"/>
-            <corners android:topLeftRadius="2dp"/>
         </shape>
     </item>
 </layer-list>

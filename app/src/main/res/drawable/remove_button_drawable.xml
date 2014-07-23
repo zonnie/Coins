@@ -2,5 +2,5 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true"
           android:drawable="@drawable/x_button_pressed" /> <!-- pressed -->
-    <item android:drawable="@drawable/expense_item_card" /> <!-- default -->
+    <item android:drawable="@drawable/x_button" /> <!-- default -->
 </selector>

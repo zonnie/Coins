@@ -1,5 +1,6 @@
 package com.moneyifyapp.activities.expenseDetail;
 
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.model.Images;
+import com.moneyifyapp.utils.Utils;
 
 /**
  *
@@ -18,7 +20,7 @@ public class ImageAdapter extends BaseAdapter
 {
     private ImagePickerActivity mContext;
     private View mView;
-    public static int IMAGE_PICKER_IMAGE_SIZE = 210;
+    private Typeface mCaptionFont;
 
     /**
      */
@@ -26,6 +28,8 @@ public class ImageAdapter extends BaseAdapter
     {
         super();
         mContext = context;
+        mCaptionFont = Typeface.create(Utils.DESCRIPTION_FONT_DAY, Typeface.NORMAL);
+
     }
 
     /**
@@ -50,6 +54,10 @@ public class ImageAdapter extends BaseAdapter
         imageButton.setBackgroundColor(mContext.getResources().getColor(android.R.color.transparent));
         RelativeLayout buttonLayout = (RelativeLayout)mView.findViewById(R.id.image_picker_layout);
 
+        if(mCaptionFont != null)
+            imageCaption.setTypeface(mCaptionFont);
+
+
         buttonLayout.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -58,27 +66,6 @@ public class ImageAdapter extends BaseAdapter
                 mContext.onItemClick(position);
             }
         });
-
-        /*
-        // Call the containing activity with the item's position
-        imageButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                mContext.onItemClick(position);
-            }
-        });
-
-        imageCaption.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                mContext.onItemClick(position);
-            }
-        });
-        */
 
         int resourceId = Images.getImageByPosition(position);
         imageCaption.setText(Images.getCaptions().get(position));

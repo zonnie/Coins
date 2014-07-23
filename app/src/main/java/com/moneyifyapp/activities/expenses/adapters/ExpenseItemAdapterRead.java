@@ -36,6 +36,7 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
     private final String EMPTY_NOTE_HINT = "Please enter a note...";
     private Animation mItemsLoadAnimation;
     private Typeface mDateFont;
+    private Typeface mDescriptionFont;
 
     /**
      *
@@ -46,7 +47,7 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
         mTransactions = expenses;
         mLayoutResourceId = resource;
         mDateFont = Typeface.create(Utils.EXPENSE_FONT_DAY, Typeface.NORMAL);
-
+        mDescriptionFont = Typeface.create(Utils.DESCRIPTION_FONT_DAY, Typeface.NORMAL);
 
         // Load animation lazy
         if (mItemsLoadAnimation == null)
@@ -124,7 +125,9 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
     private void handleViewDescription(Transaction currentTransactionView)
     {
         if (mExpenseDescription != null)
-            mExpenseDescription.setText(currentTransactionView.mDescription);
+            if(mDescriptionFont != null)
+                mExpenseDescription.setTypeface(mDescriptionFont);
+        mExpenseDescription.setText(currentTransactionView.mDescription);
     }
 
     /**

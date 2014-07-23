@@ -1,24 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!-- over bottom shadow -->
     <item>
         <shape android:shape="rectangle">
-            <gradient
-                android:angle="90"
-                android:centerX="17%"
-                android:centerColor="#F3F5F5"
-                android:startColor="#D9D9D9"
-                android:endColor="#F5F7F7"
-                android:type="linear"
-                />
-
-            <corners
-                android:topLeftRadius="2dp"
-                android:topRightRadius="2dp"
-                android:bottomLeftRadius="0dp"
-                android:bottomRightRadius="0dp"
-                />
+            <solid android:color="#C8CECF"/>
+            <corners android:topLeftRadius="2dp" android:bottomLeftRadius="2dp"/>
+        </shape>
+    </item>
+    <item android:bottom="1dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#F5F7F7"/>
+            <corners android:topLeftRadius="2dp" android:bottomLeftRadius="2dp"/>
         </shape>
     </item>
 </layer-list>

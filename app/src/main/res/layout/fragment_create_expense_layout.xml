@@ -64,14 +64,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/padding_start_currency"
-                android:layout_marginTop="@dimen/padding_start_currency"
+                android:gravity="center"
                 >
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:layout_marginBottom="@dimen/padding_start_currency"
                     android:orientation="vertical"
                     android:weightSum="6"
                     >
@@ -101,7 +100,7 @@
                             android:id="@+id/addExpenseImage"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:layout_marginBottom="@dimen/drawable_left_pad"
+                            android:layout_marginBottom="@dimen/padding_start_currency"
                             android:layout_marginTop="@dimen/padding_start_currency"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
@@ -206,7 +205,7 @@
                     android:maxLength="@integer/max_desc_len"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textSize="@dimen/medium_font"
+                    android:textSize="@dimen/large_font"
                     />
 
                 <LinearLayout
@@ -228,7 +227,7 @@
                         android:inputType="numberDecimal"
                         android:maxLength="6"
                         android:singleLine="true"
-                        android:textSize="@dimen/medium_font"
+                        android:textSize="@dimen/large_font"
                         />
 
                     <com.moneyifyapp.views.CurrencyTextView
@@ -240,7 +239,7 @@
                         android:gravity="center"
                         android:text="@string/default_currency"
                         android:textColor="@android:color/darker_gray"
-                        android:textSize="@dimen/medium_font"/>
+                        android:textSize="@dimen/huge_font"/>
 
                 </LinearLayout>
 
@@ -248,7 +247,7 @@
                     android:id="@+id/addExpenseNotes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/expense_card_margin"
+                    android:layout_marginBottom="@dimen/padding_start_currency"
                     android:drawableLeft="@drawable/notes_2"
                     android:drawablePadding="@dimen/expense_drawable_left_pad"
                     android:hint="Notes..."
@@ -262,7 +261,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/drawable_left_pad"
                     android:gravity="center"
                     android:orientation="horizontal"
                     >

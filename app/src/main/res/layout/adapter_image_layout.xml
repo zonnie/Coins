@@ -24,8 +24,8 @@
         >
     <ImageButton
         android:id="@+id/categoryImage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:focusable="false"
         android:gravity="center"
         android:scaleType="centerCrop"
@@ -34,7 +34,7 @@
         <View
             android:id="@+id/seperator"
             android:layout_width="1px"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:layout_marginStart="@dimen/drawable_left_pad"
             android:background="@android:color/darker_gray"
             android:layout_toRightOf="@+id/categoryImage"
@@ -45,7 +45,7 @@
     <TextView
         android:id="@+id/categoryCaption"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_toRightOf="@+id/seperator"
         android:layout_alignWithParentIfMissing="true"
         android:paddingLeft="@dimen/drawable_left_pad"

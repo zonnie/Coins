@@ -29,10 +29,11 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private ListItemHandler mListener;
     private int mLayoutResourceId;
     private MonthTransactions mTransactions;
-    public static int PICK_IMAGE_DIMENSIONS = 90;
+    public static int PICK_IMAGE_DIMENSIONS = 110;
     private Animation mItemsLoadAnimation;
     public View mMyView;
     private Typeface mDateFont;
+    private Typeface mDescriptionFont;
     private ViewHolder mViewHolder;
 
 
@@ -45,6 +46,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         mTransactions = expenses;
         mLayoutResourceId = resource;
         mDateFont = Typeface.create(Utils.EXPENSE_FONT_DAY, Typeface.NORMAL);
+        mDescriptionFont = Typeface.create(Utils.DESCRIPTION_FONT_DAY, Typeface.NORMAL);
     }
 
     /**
@@ -85,7 +87,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         if (currentTransactionView != null)
         {
             // Take care of click to layout to be able to edit item in view
-            mViewHolder.mItemLayout = (LinearLayout) mMyView.findViewById(R.id.transaction_card_layout);
+            mViewHolder.mItemLayout = (LinearLayout) mMyView.findViewById(R.id.transaction_data_layout);
             mViewHolder.mItemLayout.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -144,7 +146,11 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private void handleViewDescription(Transaction currentTransactionView)
     {
         if (mViewHolder.mExpenseDescription != null)
+        {
+            if(mDescriptionFont != null)
+                mViewHolder.mExpenseDescription.setTypeface(mDescriptionFont);
             mViewHolder.mExpenseDescription.setText(currentTransactionView.mDescription);
+        }
     }
 
     /**

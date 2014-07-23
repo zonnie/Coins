@@ -21,29 +21,15 @@ import java.util.List;
  */
 public class DrawerItemAdapter extends ArrayAdapter<DrawerItem>
 {
-
-    /********************************************************************/
-    /**                          Members                               **/
-    /**
-     * ****************************************************************
-     */
-
     private TextView mItemTitle;
     private TextView mItemHint;
     private List<DrawerItem> mDrawerItems;
     private View mMyView;
     private int mLayoutResourceId;
-    public static int PICK_IMAGE_DIMENSIONS = 70;
+    public static int PICK_IMAGE_DIMENSIONS = 120;
     private Animation mItemsLoadAnimation;
 
-    /********************************************************************/
-    /**                          Methods                               **/
-    /********************************************************************/
-
-
     /**
-     * @param context
-     * @param resource
      */
     public DrawerItemAdapter(Context context, int resource)
     {
@@ -54,11 +40,6 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItem>
 
     /**
      * Generates the fragments view for display for each list view item.
-     *
-     * @param position
-     * @param convertView
-     * @param parent
-     * @return
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
