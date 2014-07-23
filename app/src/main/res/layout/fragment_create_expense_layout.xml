@@ -13,12 +13,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:orientation="vertical"
+        android:layout_margin="@dimen/drawable_left_pad"
+        android:background="@drawable/card"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/back_regualr"
+            android:background="@drawable/date_header"
             android:orientation="horizontal"
             >
 
@@ -63,7 +65,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/padding_start_currency"
+                android:layout_marginBottom="@dimen/drawable_left_pad"
                 android:gravity="center"
                 >
 
@@ -104,7 +106,8 @@
                             android:layout_marginTop="@dimen/padding_start_currency"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/shop"/>
+                            android:src="@drawable/shop"
+                            />
                     </LinearLayout>
 
 
@@ -124,6 +127,7 @@
                             android:text="@string/toggle_hint_text"
                             android:textColor="@android:color/darker_gray"
                             android:textSize="@dimen/tiny_font"
+                            android:layout_marginBottom="@dimen/padding_start_currency"
                             />
 
                         <ToggleButton
@@ -139,6 +143,7 @@
                             android:textOff="@string/spent_string"
                             android:textOn="@string/revenue_string"
                             android:textSize="@dimen/medium_font"
+                            android:textColor="@android:color/white"
                             />
 
                     </LinearLayout>
@@ -199,11 +204,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:background="@android:color/transparent"
                     android:drawableLeft="@drawable/desc"
                     android:drawablePadding="@dimen/expense_drawable_left_pad"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:hint="@string/add_item_description_hint"
                     android:maxLength="@integer/max_desc_len"
-                    android:maxLines="1"
+                    android:paddingBottom="@dimen/padding_start_currency"
                     android:singleLine="true"
                     android:textSize="@dimen/large_font"
                     />
@@ -212,33 +220,37 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:weightSum="10"
+                    android:paddingBottom="@dimen/padding_start_currency"
                     >
 
                     <EditText
                         android:id="@+id/addExpenseSum"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="9"
+                        android:background="@android:color/transparent"
                         android:drawableLeft="@drawable/sum"
                         android:drawablePadding="@dimen/expense_drawable_left_pad"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
                         android:hint="@string/item_value_hint"
                         android:imeOptions="actionNext"
                         android:inputType="numberDecimal"
-                        android:maxLength="6"
+                        android:maxLength="7"
                         android:singleLine="true"
                         android:textSize="@dimen/large_font"
+
+
                         />
 
                     <com.moneyifyapp.views.CurrencyTextView
                         android:id="@+id/addExpenseCurrency"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical|right"
-                        android:layout_weight="1"
-                        android:gravity="center"
+                        android:gravity="center_vertical"
                         android:text="@string/default_currency"
                         android:textColor="@android:color/darker_gray"
+                        android:layout_marginLeft="@dimen/padding_start_currency"
                         android:textSize="@dimen/huge_font"/>
 
                 </LinearLayout>
@@ -248,13 +260,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/padding_start_currency"
+                    android:background="@android:color/transparent"
                     android:drawableLeft="@drawable/notes_2"
                     android:drawablePadding="@dimen/expense_drawable_left_pad"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:hint="Notes..."
                     android:imeOptions="actionNext"
                     android:maxLength="@integer/max_note_len"
                     android:singleLine="true"
                     android:textSize="@dimen/medium_font"
+
+                    />
+
+
+                <!-- Seperator -->
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:background="@android:color/darker_gray"
                     />
 
 
@@ -263,12 +288,14 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:layout_marginTop="@dimen/padding_start_currency"
                     >
 
                     <Button
                         android:id="@+id/cancelAddButton"
                         style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/max_add_width"
                         android:layout_weight="1"
@@ -279,7 +306,7 @@
                     <Button
                         android:id="@+id/submitButton"
                         style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/max_add_width"
                         android:layout_weight="1"

@@ -7,7 +7,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/coin"
+        android:icon="@drawable/coin_large"
         android:label="@string/main_title"
         android:theme="@style/AppTheme" >
         <activity

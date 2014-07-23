@@ -9,41 +9,42 @@
                 tools:context=".MainActivity">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true">
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/signUpMainImage"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:id="@+id/signUpMainImage"
-            android:src="@drawable/sign_up"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+            android:layout_marginBottom="@dimen/padding_start_currency"
+            android:src="@drawable/sign_up"/>
 
         <TextView
+            android:id="@+id/sign_up_welcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/signup_welcome"
-            android:id="@+id/sign_up_welcome"
             android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/expense_drawable_left_pad"
+            android:text="@string/signup_welcome"
             android:textColor="@android:color/darker_gray"
-            android:layout_marginBottom="@dimen/expense_drawable_left_pad"/>
+            android:textSize="@dimen/tiny_font"/>
 
         <EditText
             android:id="@+id/usernameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:hint="@string/Email"
+            android:background="@android:color/transparent"
             android:drawableLeft="@drawable/email"
             android:drawablePadding="@dimen/drawable_left_pad"
+            android:hint="@string/Email"
+            android:padding="@dimen/drawable_left_pad"
             android:textColorHint="#bbbbbb"/>
 
         <EditText
@@ -51,35 +52,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="-2dp"
-            android:padding="10dp"
-            android:hint="@string/password_hint"
+            android:background="@android:color/transparent"
             android:drawableLeft="@drawable/lock_min"
             android:drawablePadding="@dimen/drawable_left_pad"
-            android:textColorHint="#bbbbbb"
-            android:password="true"/>
+            android:hint="@string/password_hint"
+            android:padding="@dimen/drawable_left_pad"
+            android:password="true"
+            android:textColorHint="#bbbbbb"/>
 
         <EditText
             android:id="@+id/passVerifyEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/drawable_left_pad"
             android:layout_marginTop="-2dp"
-            android:padding="10dp"
-            android:hint="@string/verify_pass_hint"
+            android:background="@android:color/transparent"
             android:drawableLeft="@drawable/lock_min"
             android:drawablePadding="@dimen/drawable_left_pad"
-            android:layout_marginBottom="@dimen/drawable_left_pad"
-            android:textColorHint="#bbbbbb"
-            android:password="true"/>
+            android:hint="@string/verify_pass_hint"
+            android:padding="@dimen/drawable_left_pad"
+            android:password="true"
+            android:textColorHint="#bbbbbb"/>
 
         <Button
             android:id="@+id/confirm_signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:layout_margin="4dp"
-            android:textColor="@android:color/white"
             android:background="@drawable/stanard_button_drawable"
+            android:padding="10dp"
             android:text="@string/action_sing_up"
+            android:textColor="@android:color/white"
             />
     </LinearLayout>
 

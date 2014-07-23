@@ -177,7 +177,12 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private void handleViewValue(Transaction currentTransactionView)
     {
         if (mViewHolder.mExpenseValue != null)
+        {
+            if(mDateFont != null)
+                mViewHolder.mExpenseValue.setTypeface(mDateFont);
+
             mViewHolder.mExpenseValue.setText(currentTransactionView.mValue);
+        }
     }
 
     /**

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -55,6 +56,8 @@ public class ExpenseDetailFragment extends Fragment
     private View mView;
     private int mMonth;
     private String mMonthPrefix;
+    private Typeface mDescriptionFont;
+    private Typeface mDateFont;
 
     /**
      */
@@ -69,6 +72,7 @@ public class ExpenseDetailFragment extends Fragment
             args.putString(Transaction.TRANS_JSON, transactionJson);
             args.putBoolean(EXPENSE_EDIT_KEY, isEdit);
             args.putInt(ExpenseListFragment.MONTH_KEY, month);
+
         }
         fragment.setArguments(args);
         return fragment;
@@ -92,6 +96,9 @@ public class ExpenseDetailFragment extends Fragment
         {
             mIsEdit = getArguments().getBoolean(EXPENSE_EDIT_KEY);
             mMonth = getArguments().getInt(ExpenseListFragment.MONTH_KEY);
+
+            mDescriptionFont = Typeface.create(Utils.DESCRIPTION_FONT_DAY, Typeface.NORMAL);
+            mDateFont = Typeface.create(Utils.EXPENSE_FONT_DAY, Typeface.NORMAL);
 
             String transactionJson = getArguments().getString(Transaction.TRANS_JSON);
             mTempExpenseObject = JsonServiceYearTransactions.getInstance().fromJsonToTransaction(transactionJson);
@@ -190,6 +197,12 @@ public class ExpenseDetailFragment extends Fragment
         mExpenseIcon = (ImageButton) mView.findViewById(R.id.addExpenseImage);
         mExpenseNotes = (EditText) mView.findViewById(R.id.addExpenseNotes);
         mDetailDateMonth = (TextView) mView.findViewById(R.id.detail_date_month);
+
+        if(mDescriptionFont != null)
+        {
+            mExpenseDescription.setTypeface(mDescriptionFont);
+            mExpenseValue.setTypeface(mDescriptionFont);
+        }
     }
 
     /**

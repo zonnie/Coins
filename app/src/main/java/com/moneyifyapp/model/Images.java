@@ -4,130 +4,57 @@ package com.moneyifyapp.model;
 import com.moneyifyapp.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  */
 public class Images
 {
-    private static List<Integer> mImages;
-    private static List<String> mImageCaptions;
+    private static List<ImageWithCaption> mImages;
 
     static
     {
-        mImages = new ArrayList<Integer>();
-        mImageCaptions = new ArrayList<String>();
+        mImages = new ArrayList<ImageWithCaption>();
 
-        mImages.add(R.drawable.shop);
-        mImageCaptions.add("Shopping");
-
-        mImages.add(R.drawable.ice_cream);
-        mImageCaptions.add("Sweets");
-
-        mImages.add(R.drawable.internet);
-        mImageCaptions.add("Internet");
-
-        mImages.add(R.drawable.cell);
-        mImageCaptions.add("Celluar Charges");
-
-        mImages.add(R.drawable.gaming);
-        mImageCaptions.add("Gaming");
-
-        mImages.add(R.drawable.camera);
-        mImageCaptions.add("Camera Equipment");
-
-        mImages.add(R.drawable.trip);
-        mImageCaptions.add("Holidays");
-
-        mImages.add(R.drawable.drinks);
-        mImageCaptions.add("Drinks");
-
-        mImages.add(R.drawable.market);
-        mImageCaptions.add("Groceries");
-
-        mImages.add(R.drawable.transport);
-        mImageCaptions.add("Transportation");
-
-        mImages.add(R.drawable.movies);
-        mImageCaptions.add("Movies");
-
-        mImages.add(R.drawable.food_outside);
-        mImageCaptions.add("Restaurants");
-
-        mImages.add(R.drawable.home);
-        mImageCaptions.add("Home");
-
-        mImages.add(R.drawable.music);
-        mImageCaptions.add("Concerts");
-
-        mImages.add(R.drawable.bank);
-        mImageCaptions.add("Banking");
-
-        //mImages.add(R.drawable.savings);
-        //mImageCaptions.add("Savings");
-
-        mImages.add(R.drawable.tv);
-        mImageCaptions.add("TV");
-
-        mImages.add(R.drawable.computers);
-        mImageCaptions.add("Computer");
-
-        mImages.add(R.drawable.cloths);
-        mImageCaptions.add("Cloths");
-
-        mImages.add(R.drawable.car);
-        mImageCaptions.add("Car");
-
-        mImages.add(R.drawable.bike);
-        mImageCaptions.add("Bike");
-
-        mImages.add(R.drawable.book);
-        mImageCaptions.add("Books");
-
-        mImages.add(R.drawable.buds);
-        mImageCaptions.add("Music Downloads");
-
-        //mImages.add(R.drawable.chart);
-        //mImageCaptions.add("Invesments");
-
-        mImages.add(R.drawable.gift);
-        mImageCaptions.add("Gift");
-
-        mImages.add(R.drawable.insurance);
-        mImageCaptions.add("Insurance");
-
-        mImages.add(R.drawable.junk);
-        mImageCaptions.add("Junkfood");
-
-        mImages.add(R.drawable.lcd);
-        mImageCaptions.add("Electronics");
-
-        //mImages.add(R.drawable.mp3);
-        //mImageCaptions.add("Downloaded Music");
-
-        mImages.add(R.drawable.print);
-        mImageCaptions.add("Printing");
-
-        mImages.add(R.drawable.safe);
-        mImageCaptions.add("Savings");
-
-        mImages.add(R.drawable.saving);
-        mImageCaptions.add("Cash");
-
-        mImages.add(R.drawable.world);
-        mImageCaptions.add("Flights");
-
-        mImages.add(R.drawable.coffe);
-        mImageCaptions.add("Coffe");
-
-        mImages.add(R.drawable.parking);
-        mImageCaptions.add("Parking");
-
-        mImages.add(R.drawable.health);
-        mImageCaptions.add("Health");
-
-        mImages.add(R.drawable.sports);
-        mImageCaptions.add("Sports");
+        mImages.add(new ImageWithCaption(R.drawable.shop, "Shopping"));
+        mImages.add(new ImageWithCaption(R.drawable.ice_cream, "Sweets"));
+        mImages.add(new ImageWithCaption(R.drawable.internet, "Internet"));
+        mImages.add(new ImageWithCaption(R.drawable.cell, "Celluar Charges"));
+        mImages.add(new ImageWithCaption(R.drawable.gaming, "Gaming"));
+        mImages.add(new ImageWithCaption(R.drawable.camera, "Camera Equipment"));
+        mImages.add(new ImageWithCaption(R.drawable.trip, "Holidays"));
+        mImages.add(new ImageWithCaption(R.drawable.drinks, "Drinks"));
+        mImages.add(new ImageWithCaption(R.drawable.market, "Groceries"));
+        mImages.add(new ImageWithCaption(R.drawable.transport, "Transportation"));
+        mImages.add(new ImageWithCaption(R.drawable.movies, "Movies"));
+        mImages.add(new ImageWithCaption(R.drawable.food_outside, "Restaurants"));
+        mImages.add(new ImageWithCaption(R.drawable.home, "Rent"));
+        mImages.add(new ImageWithCaption(R.drawable.music, "Concerts"));
+        mImages.add(new ImageWithCaption(R.drawable.bank, "Banking"));
+        mImages.add(new ImageWithCaption(R.drawable.tv, "TV"));
+        mImages.add(new ImageWithCaption(R.drawable.computers, "Computer"));
+        mImages.add(new ImageWithCaption(R.drawable.cloths, "Cloths"));
+        mImages.add(new ImageWithCaption(R.drawable.car, "Car"));
+        mImages.add(new ImageWithCaption(R.drawable.book, "Books"));
+        mImages.add(new ImageWithCaption(R.drawable.buds, "Buds"));
+        mImages.add(new ImageWithCaption(R.drawable.invesment, "Invesments"));
+        mImages.add(new ImageWithCaption(R.drawable.gift, "Gift"));
+        mImages.add(new ImageWithCaption(R.drawable.insurance, "Insurance"));
+        mImages.add(new ImageWithCaption(R.drawable.junk, "Junkfood"));
+        mImages.add(new ImageWithCaption(R.drawable.lcd, "Electronics"));
+        mImages.add(new ImageWithCaption(R.drawable.save, "Savings"));
+        mImages.add(new ImageWithCaption(R.drawable.saving, "Cash"));
+        mImages.add(new ImageWithCaption(R.drawable.coffe, "Coffee"));
+        mImages.add(new ImageWithCaption(R.drawable.parking, "Parking"));
+        mImages.add(new ImageWithCaption(R.drawable.health, "Health"));
+        mImages.add(new ImageWithCaption(R.drawable.loan, "Loan"));
+        mImages.add(new ImageWithCaption(R.drawable.sports, "Sports"));
+        mImages.add(new ImageWithCaption(R.drawable.dev, "Development"));
+        mImages.add(new ImageWithCaption(R.drawable.gym, "Gym"));
+        mImages.add(new ImageWithCaption(R.drawable.hobby, "Hobbies"));
+        mImages.add(new ImageWithCaption(R.drawable.art, "Art"));
+        Collections.sort(mImages);
 
     }
 
@@ -142,11 +69,11 @@ public class Images
 
         try
         {
-            resource = mImages.get(position);
+            resource = mImages.get(position).getImage();
         }
         catch (IndexOutOfBoundsException e)
         {
-            resource = mImages.get(0);
+            resource = mImages.get(0).getImage();
         }
 
         return  resource;
@@ -167,7 +94,14 @@ public class Images
      */
     public static List<Integer> getImages()
     {
-        return mImages;
+        List<Integer> resources = new ArrayList<Integer>();
+
+        for(ImageWithCaption cur : mImages)
+        {
+            resources.add(cur.getImage());
+        }
+
+        return resources;
     }
 
     /**
@@ -176,7 +110,14 @@ public class Images
      */
     public static List<String> getCaptions()
     {
-        return  mImageCaptions;
+        List<String> resources = new ArrayList<String>();
+
+        for(ImageWithCaption cur : mImages)
+        {
+            resources.add(cur.getCaption());
+        }
+
+        return resources;
     }
 
     /**
@@ -192,5 +133,38 @@ public class Images
         }
 
         return caption;
+    }
+
+    /**
+     *
+     */
+    private static class ImageWithCaption implements Comparable<ImageWithCaption>
+    {
+        private Integer mImageResource;
+        private String mImageCaption;
+
+        ImageWithCaption(int resource, String caption)
+        {
+            this.mImageResource = resource;
+            this.mImageCaption = caption;
+        }
+
+        public Integer getImage()
+        {
+            return mImageResource;
+        }
+
+        public String getCaption()
+        {
+            return mImageCaption;
+        }
+
+        /**
+         */
+        @Override
+        public int compareTo(ImageWithCaption another)
+        {
+            return mImageCaption.toUpperCase().compareTo(another.getCaption().toUpperCase());
+        }
     }
 }

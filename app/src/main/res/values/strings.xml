@@ -43,7 +43,7 @@
     <string name="default_currency">"$"</string>
     <string name="init_total_value">"0"</string>
     <string name="add_item_description_hint">"What is this ?"</string>
-    <string name="item_value_hint">"What was it worth ?"</string>
+    <string name="item_value_hint">"What it\'s worth ?"</string>
     <string name="enter_note_hint">"Please enter a note"</string>
     <string name="drawer_top_title_text">"Coins</string>
     <string name="title_activity_analytics">Analytics</string>
