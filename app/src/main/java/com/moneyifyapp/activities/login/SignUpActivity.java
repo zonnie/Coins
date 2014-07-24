@@ -38,6 +38,8 @@ public class SignUpActivity extends Activity implements View.OnClickListener
 
         setContentView(R.layout.activity_sign_up);
 
+        getActionBar().setHomeButtonEnabled(true);
+
         mUserEditText = (EditText) findViewById(R.id.usernameEditText);
         mPassEditText = (EditText) findViewById(R.id.passEditText);
         mPassRepeatEditText = (EditText) findViewById(R.id.passVerifyEditText);
@@ -148,6 +150,7 @@ public class SignUpActivity extends Activity implements View.OnClickListener
                 {
                     goToLogin();
                     finish();
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                 } else
                 {
                     singUpFailed();
@@ -184,8 +187,8 @@ public class SignUpActivity extends Activity implements View.OnClickListener
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
             {
-                NavUtils.navigateUpFromSameTask(this);
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                NavUtils.navigateUpFromSameTask(this);
                 return true;
             }
         }
@@ -198,8 +201,7 @@ public class SignUpActivity extends Activity implements View.OnClickListener
     @Override
     public void onBackPressed()
     {
-        Intent mIntent = getIntent();
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 }

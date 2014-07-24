@@ -21,15 +21,15 @@
     </style>
 
     <style name="RobotoEditTextStyle" parent="android:Widget.EditText">
-        <!--<item name="android:fontFamily">sans-serif-thin</item>-->
-        <!--<item name="android:textStyle">bold</item>-->
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:textStyle">bold</item>
+        <!--<item name="android:fontFamily">sans-serif-light</item>-->
     </style>
 
     <style name="RobotoButtonStyle" parent="android:Widget.Holo.Button">
-        <!--<item name="android:fontFamily">sans-serif-thin</item>-->
-        <!--<item name="android:textStyle">bold</item>-->
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:textStyle">bold</item>
+        <!--<item name="android:fontFamily">sans-serif-light</item>-->
     </style>
 
     <style name="RobotoDatePickerStyle" parent="android:Widget.DatePicker">

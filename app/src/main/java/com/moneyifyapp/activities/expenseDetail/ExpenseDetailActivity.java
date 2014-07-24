@@ -47,7 +47,6 @@ public class ExpenseDetailActivity extends Activity
         Utils.initializeActionBar(this);
         Utils.setupBackButton(this);
         Utils.setLogo(this, R.drawable.transaction);
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
         if(getIntent().getExtras() != null)
         {

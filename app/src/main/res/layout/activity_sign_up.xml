@@ -6,6 +6,7 @@
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
+                android:background="@color/background"
                 tools:context=".MainActivity">
 
     <LinearLayout
@@ -36,6 +37,20 @@
             android:textColor="@android:color/darker_gray"
             android:textSize="@dimen/tiny_font"/>
 
+    <LinearLayout
+        android:id="@+id/loginbox_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/big_padding"
+        android:layout_marginRight="@dimen/big_padding"
+        android:background="@drawable/card"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:paddingBottom="@dimen/big_padding"
+        android:paddingTop="@dimen/drawable_left_pad"
+        android:paddingLeft="@dimen/drawable_left_pad"
+        android:paddingRight="@dimen/drawable_left_pad"
+        >
         <EditText
             android:id="@+id/usernameEditText"
             android:layout_width="match_parent"
@@ -51,7 +66,6 @@
             android:id="@+id/passEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-2dp"
             android:background="@android:color/transparent"
             android:drawableLeft="@drawable/lock_min"
             android:drawablePadding="@dimen/drawable_left_pad"
@@ -65,7 +79,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/drawable_left_pad"
-            android:layout_marginTop="-2dp"
             android:background="@android:color/transparent"
             android:drawableLeft="@drawable/lock_min"
             android:drawablePadding="@dimen/drawable_left_pad"
@@ -84,6 +97,7 @@
             android:text="@string/action_sing_up"
             android:textColor="@android:color/white"
             />
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>
