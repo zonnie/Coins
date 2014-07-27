@@ -146,7 +146,8 @@ public class ExpenseListFragment extends ListFragment
     {
         // Create a new month
         int pageId = getArguments().getInt(PAGE_ID_KEY);
-        mYearTransactions = mTransactionHandler.getYearTransactions(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+        String year = mYear == 0 ? String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) : String.valueOf(mYear);
+        mYearTransactions = mTransactionHandler.getYearTransactions(year);
         mYearTransactions.addMonth(pageId);
         mTransactions = mYearTransactions.get(pageId);
     }
@@ -162,7 +163,6 @@ public class ExpenseListFragment extends ListFragment
         storeViews();
 
         reFeatchDataIfWeResumed();
-
 
         initTotalsViews();
         updateTotalsForAllTransactions();
@@ -245,9 +245,7 @@ public class ExpenseListFragment extends ListFragment
             if (!Utils.getDefaultCurrency(getActivity()).equals(mTransactions.getItems().get(0).mCurrency))
             {
                 for (int i = 0; i < mTransactions.getItems().size(); ++i)
-                {
                     mTransactions.getItems().get(i).mCurrency = Utils.getDefaultCurrency(getActivity());
-                }
                 mAdapter.notifyDataSetChanged();
             }
         }
@@ -310,7 +308,8 @@ public class ExpenseListFragment extends ListFragment
      */
     public void buildExpenseListFromTransactionHandler()
     {
-        mYearTransactions = mTransactionHandler.getYearTransactions(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+        String year = mYear == 0 ? String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) : String.valueOf(mYear);
+        mYearTransactions = mTransactionHandler.getYearTransactions(year);
         mYearTransactions.addMonth(mPageId);
         mTransactions = mYearTransactions.get(mPageId);
 

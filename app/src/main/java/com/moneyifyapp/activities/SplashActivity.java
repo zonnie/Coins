@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.activities.login.LoginActivity;
+import com.moneyifyapp.database.TransactionSqlHelper;
 import com.moneyifyapp.model.TransactionHandler;
 import com.parse.ParseUser;
 
@@ -25,6 +26,7 @@ public class SplashActivity extends Activity
     private String SHARED_PREF_NAME = "com.moneyifyapp";
     private String FIRST_RUN_FLAG = "firstrun";
     private int SPLASH_DISPLAY_LENGTH = 1200;
+    private TransactionSqlHelper mLocalDb;
 
     /**
      */
@@ -41,7 +43,10 @@ public class SplashActivity extends Activity
         mTransactionHandler = TransactionHandler.getInstance(this);
 
         if (!firstrun)
+        {
             mTransactionHandler.registerListenerAndFetchTransactions(this, Calendar.getInstance().get(Calendar.YEAR));
+            initFromLocalDb();
+        }
         else
         {
             LinearLayout firstTimeLayout = (LinearLayout) findViewById(R.id.first_time_layout);
@@ -49,6 +54,13 @@ public class SplashActivity extends Activity
             startWithNoQuery();
         }
 
+    }
+
+    /**
+     */
+    private void initFromLocalDb()
+    {
+        mLocalDb = new TransactionSqlHelper(this);
     }
 
     /**

@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/expense_drawable_left_pad"
+        android:layout_marginBottom="@dimen/padding_start_currency"
         android:layout_marginLeft="@dimen/expense_drawable_left_pad"
         android:layout_marginRight="@dimen/expense_drawable_left_pad"
         android:layout_marginTop="@dimen/padding_start_currency"
@@ -54,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="@dimen/drawable_left_pad"
+                android:paddingTop="@dimen/padding_start_currency"
                 android:showDividers="none"
                 >
 
@@ -88,7 +88,7 @@
                         android:gravity="center|right"
                         android:singleLine="true"
                         android:text="@string/default_currency"
-                        android:textSize="@dimen/large_font"
+                        android:textSize="@dimen/medium_font"
                         android:textStyle="bold"
                         />
 
@@ -100,7 +100,7 @@
                         android:singleLine="true"
                         android:ellipsize="marquee"
                         android:text="@string/init_total_value"
-                        android:textSize="@dimen/large_font"
+                        android:textSize="@dimen/medium_font"
                         android:textStyle="bold"
                         />
 
@@ -125,7 +125,6 @@
                     android:paddingBottom="@dimen/padding_start_currency"
                     android:paddingEnd="@dimen/activity_vertical_margin"
                     android:paddingStart="@dimen/padding_start_currency"
-                    android:paddingTop="@dimen/padding_start_currency"
                     android:text="@string/enter_note_hint"
                     android:textSize="@dimen/tiny_font"
                     android:textColor="@android:color/darker_gray"

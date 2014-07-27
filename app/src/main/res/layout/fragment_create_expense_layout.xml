@@ -13,7 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:orientation="vertical"
-        android:layout_margin="@dimen/drawable_left_pad"
+        android:layout_marginLeft="@dimen/big_padding"
+        android:layout_marginRight="@dimen/big_padding"
+        android:layout_marginBottom="@dimen/big_padding"
+        android:layout_marginTop="@dimen/drawable_left_pad"
         android:background="@drawable/card"
         >
 

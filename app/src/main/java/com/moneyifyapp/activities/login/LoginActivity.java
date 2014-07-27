@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
+import com.moneyifyapp.database.TransactionSqlHelper;
 import com.moneyifyapp.model.TransactionHandler;
 import com.moneyifyapp.utils.Utils;
 import com.parse.LogInCallback;
@@ -43,6 +44,7 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
     private Button mEmailSignInButton;
     private Button mSignUpButton;
     private TransactionHandler mTransactionHandler;
+    private TransactionSqlHelper mLocalDb;
 
     /**
      */
@@ -68,8 +70,6 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
 
         mEmailView.setOnClickListener(this);
         mPasswordView.setOnClickListener(this);
-
-
 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener()
         {
@@ -187,13 +187,23 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
                     public void done(ParseUser user, ParseException e)
                     {
                         if (user != null)
+                        {
                             mTransactionHandler.fetchYearTransactions(Calendar.getInstance().get(Calendar.YEAR));
+                            initFromLocalDb();
+                        }
                         else
                             signInFailed();
 
                     }
                 }
         );
+    }
+
+    /**
+     */
+    private void initFromLocalDb()
+    {
+        mLocalDb = new TransactionSqlHelper(this);
     }
 
     /**
