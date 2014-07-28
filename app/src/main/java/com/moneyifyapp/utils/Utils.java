@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -186,5 +187,14 @@ public class Utils
 
         if(bar != null)
             bar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     *
+     * @param log
+     */
+    public static void writeLog(String log)
+    {
+        Log.d("Yoni", "DEBUG : " + log);
     }
 }

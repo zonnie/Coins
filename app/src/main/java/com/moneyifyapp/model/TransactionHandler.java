@@ -11,7 +11,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +33,7 @@ public class TransactionHandler
     private TransactionHandler(Activity context)
     {
         Utils.initializeParse(context);
-        mAllTransactions = new HashMap<String, YearTransactions>();
+        mAllTransactions = new LinkedHashMap<String, YearTransactions>();
         mFetchCompleteListeners = new LinkedList<onFetchingCompleteListener>();
         mIsFirstFatch = true;
     }
@@ -61,9 +61,7 @@ public class TransactionHandler
     public void fetchYearTransactions(int year)
     {
         if(!mFetchCompleteListeners.isEmpty())
-        {
             queryDatabaseAndBuildTransactions(year);
-        }
     }
 
     /**
@@ -83,12 +81,8 @@ public class TransactionHandler
             public void done(List<ParseObject> expenseList, ParseException e)
             {
                 if (e == null)
-                {
                     buildExpenseListFromParse(expenseList);
-                }
-                else
-                {
-                }
+                else{}
             }
         });
     }

@@ -82,6 +82,7 @@ public class ExpenseListFragment extends ListFragment
      */
     public static ExpenseListFragment newInstance(int pageId, int year)
     {
+        Utils.writeLog("ExpenseListFragment->newInstance, Page:" + pageId);
         ExpenseListFragment fragment = new ExpenseListFragment();
         Bundle args = new Bundle();
         args.putInt(YEAR_KEY, year);
@@ -110,13 +111,14 @@ public class ExpenseListFragment extends ListFragment
             mYear = getArguments().getInt(YEAR_KEY);
         }
 
+        Utils.writeLog("ExpenseListFragment->onCreate, Page:" + mPageId);
         // Init Parse for data storing
         mTransactionHandler = TransactionHandler.getInstance(getActivity());
-        //reFeatchDataIfWeResumed();
 
         if (mRemoveAnimation == null)
             mRemoveAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
         mRemoveQueue = new LinkedList<Integer>();
+
         setHasOptionsMenu(true);
 
         initDataFromIntentArgs();
@@ -124,12 +126,14 @@ public class ExpenseListFragment extends ListFragment
     }
 
     /**
-     *
      */
     private void reFeatchDataIfWeResumed()
     {
         if (mTransactionHandler.isFirstFeatch())
+        {
             mTransactionHandler.registerListenerAndFetchTransactions(this, mYear);
+            Utils.writeLog("DEBUG : Refetched data, Page:" + mPageId);
+        }
     }
 
     /**
@@ -158,15 +162,16 @@ public class ExpenseListFragment extends ListFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
+        Utils.writeLog("ExpenseListFragment->onCreateView, Page:" + mPageId);
         mView = inflater.inflate(R.layout.fragment_expenses, container, false);
 
         storeViews();
 
         reFeatchDataIfWeResumed();
+        buildListIfFetchNotDone();
 
         initTotalsViews();
         updateTotalsForAllTransactions();
-
 
         // On total's click go to month total
         mTotalLayout.setOnClickListener(new View.OnClickListener()
@@ -178,9 +183,19 @@ public class ExpenseListFragment extends ListFragment
             }
         });
 
-
-
         return mView;
+    }
+
+    /**
+     */
+    private void buildListIfFetchNotDone()
+    {
+        if(mAdapter.isEmpty() && mTransactions != null)
+        {
+            buildExpenseListFromTransactionHandler();
+            Utils.writeLog("DEBUG: Adapter was empty and we had transactions, Page:" + mPageId);
+        }
+
     }
 
     /**
@@ -203,9 +218,6 @@ public class ExpenseListFragment extends ListFragment
         mTotalSavings.setText(String.valueOf(0));
         mTotalIncome.setText(String.valueOf(0));
         mTotalExpense.setText(String.valueOf(0));
-
-        //hideTotalsIfTransactionListEmpty();
-        //showTotalsIfTransactionsExist();
     }
 
     /**
@@ -298,7 +310,7 @@ public class ExpenseListFragment extends ListFragment
                 Transaction transaction = createTransactionFromParseObject(curExpense);
                 // Normalize all currencies according to default
                 transaction.mCurrency = Utils.getDefaultCurrency(getActivity());
-                addNewTransactionAndUpdateTotals(transaction);
+                addNewTransactionToStartAndUpdateTotals(transaction);
             }
         }
     }
@@ -316,12 +328,12 @@ public class ExpenseListFragment extends ListFragment
         if (mTransactions != null && mTransactions.getItems() != null)
         {
             mAdapter.clear();
-
             for (Transaction transaction : mTransactions.getItems())
             {
                 // Normalize all currencies according to default
                 transaction.mCurrency = Utils.getDefaultCurrency(getActivity());
-                addNewTransactionAndUpdateTotals(transaction);
+                //addNewTransactionToStartAndUpdateTotals(transaction);
+                appendNewTransactionAndUpdateTotals(transaction);
             }
         }
     }
@@ -596,26 +608,6 @@ public class ExpenseListFragment extends ListFragment
 
     }
 
-    /*
-    private void showTotalsIfTransactionsExist()
-    {
-        if(!mAdapter.isEmpty() && mTotalEmptyHint.getVisibility() == View.VISIBLE)
-        {
-            mTotalEmptyHint.setVisibility(View.GONE);
-            mTotalLayout.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void hideTotalsIfTransactionListEmpty()
-    {
-        if(mAdapter.isEmpty())
-        {
-            mTotalEmptyHint.setVisibility(View.VISIBLE);
-            mTotalLayout.setVisibility(View.GONE);
-        }
-    }
-    */
-
     /**
      */
     public void createNewTransaction(String addDescription, String addSum, String currency, String note, int image, boolean isExpense)
@@ -635,11 +627,17 @@ public class ExpenseListFragment extends ListFragment
     /**
      * Add a transaction w/o creating a new instance and not saving in DB.
      */
-    public void addNewTransactionAndUpdateTotals(Transaction newTransaction)
+    public void addNewTransactionToStartAndUpdateTotals(Transaction newTransaction)
     {
         // The adapter will add the expense to the model collection so it can update observer
         // as well.
         mAdapter.insert(newTransaction, 0);
+        updateTotalsOnAddedTransaction(newTransaction, false);
+    }
+
+    public void appendNewTransactionAndUpdateTotals(Transaction newTransaction)
+    {
+        mAdapter.add(newTransaction);
         updateTotalsOnAddedTransaction(newTransaction, false);
     }
 

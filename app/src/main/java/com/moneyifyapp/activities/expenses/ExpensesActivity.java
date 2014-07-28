@@ -228,7 +228,6 @@ public class ExpensesActivity extends Activity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.expenses, menu);
         getMenuInflater().inflate(R.menu.logout_action, menu);
         return true;
@@ -241,9 +240,6 @@ public class ExpensesActivity extends Activity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         if (id == R.id.jump_today)
@@ -269,6 +265,7 @@ public class ExpensesActivity extends Activity
         // Logout user - this clears the disk from any user remains
         ParseUser currentUser = ParseUser.getCurrentUser();
         currentUser.logOut();
+
         mTransactionHadler.clearUserTransactions();
 
         // Got to login now
@@ -322,15 +319,10 @@ public class ExpensesActivity extends Activity
         @Override
         public Fragment getItem(int position)
         {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
             ExpenseListFragment fragment = ExpenseListFragment.newInstance(position, mCalender.get(Calendar.YEAR));
             return fragment;
 
         }
-
-
-
 
         /**
          * Determines the number of pages the view pages holds.

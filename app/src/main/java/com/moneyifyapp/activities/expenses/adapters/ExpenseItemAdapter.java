@@ -56,6 +56,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     public View getView(int position, View convertView, ViewGroup parent)
     {
         mMyView = convertView;
+        Utils.writeLog("DEBUG: Getting view, item: " + position + ", Month:" + mTransactions.mMonthNumber);
 
         if (mMyView == null)
         {
@@ -74,49 +75,56 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         else
             mViewHolder = (ViewHolder)mMyView.getTag();
 
-        return getRegularView(position);
+        return buildItemView(position);
     }
 
     /**
      */
-    private View getRegularView(int position)
+    private View buildItemView(int position)
     {
-        Transaction currentTransactionView = mTransactions.getItems().get(position);
+        Transaction currentTransaction = mTransactions.getItems().get(position);
 
         // Populate the current view according to collection item.
-        if (currentTransactionView != null)
+        if (currentTransaction != null)
         {
-            // Take care of click to layout to be able to edit item in view
-            mViewHolder.mItemLayout = (LinearLayout) mMyView.findViewById(R.id.transaction_data_layout);
-            mViewHolder.mItemLayout.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    mListener.showItem(v);
-                }
-            });
-
-            initTransactionLookType(position);
-            mViewHolder.mRemoveItemButton.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    mListener.removeFromFragmentList(v);
-                }
-            });
-
-            handleViewDate(currentTransactionView);
-            updateImage(Images.getImageByPosition(currentTransactionView.mImageResourceIndex));
-            handleViewDescription(currentTransactionView);
-            handleViewValue(currentTransactionView);
-            handleViewCurrency(currentTransactionView);
-            handleViewNote(currentTransactionView);
+            bindItemToEventListeners(position);
+            handleViewDate(currentTransaction);
+            handleViewImage(Images.getImageByPosition(currentTransaction.mImageResourceIndex));
+            handleViewDescription(currentTransaction);
+            handleViewValue(currentTransaction);
+            handleViewCurrency(currentTransaction);
+            handleViewNote(currentTransaction);
         }
         return mMyView;
     }
 
+    /**
+     */
+    private void bindItemToEventListeners(int position)
+    {
+        // Take care of click to layout to be able to edit item in view
+        mViewHolder.mItemLayout.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                mListener.showItem(v);
+            }
+        });
+
+        initTransactionLookType(position);
+        mViewHolder.mRemoveItemButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                mListener.removeFromFragmentList(v);
+            }
+        });
+    }
+
+    /**
+     */
     private void initTransactionLookType(int position)
     {
         // Update ht look of the the view accordingly
@@ -130,6 +138,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
      */
     private void storeViews()
     {
+        mViewHolder.mItemLayout = (LinearLayout) mMyView.findViewById(R.id.transaction_card_layout);
         mViewHolder.mExpenseDescription = (TextView) mMyView.findViewById(R.id.expenseDesc);
         mViewHolder.mExpenseValue = (TextView) mMyView.findViewById(R.id.expenseValue);
         mViewHolder.mExpenseCurrency = (TextView) mMyView.findViewById(R.id.currency);
@@ -207,10 +216,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     }
 
     /**
-     *
      * Updates the item to be expense/income item.
-     *
-     * @param view
      */
     private void updateViewToExpense(View view, int colorId)
     {
@@ -223,7 +229,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     }
 
     /**
-     * @param position
      */
     public void remove(int position)
     {
@@ -246,16 +251,12 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     public void removeAll()
     {
         for (Transaction expense : mTransactions.getItems())
-        {
             remove(expense);
-        }
 
         notifyDataSetChanged();
     }
 
     /**
-     * @param position
-     * @param expense
      */
     public void update(int position, Transaction expense)
     {
@@ -267,9 +268,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     }
 
     /**
-     *
-     * @param position
-     * @param expense
      */
     private void updateTransaction(int position, Transaction expense)
     {
@@ -283,7 +281,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             updatedExpense.mNotes = expense.mNotes;
             updatedExpense.mImageResourceIndex = expense.mImageResourceIndex;
             // Update image
-            updateImage(Images.getImageByPosition(updatedExpense.mImageResourceIndex));
+            handleViewImage(Images.getImageByPosition(updatedExpense.mImageResourceIndex));
 
             // Update the transaction look according to type
             updateViewType(updatedExpense, expense);
@@ -291,11 +289,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     }
 
     /**
-     *
      * Update the view look according to it's type.
-     *
-     * @param updatedExpense
-     * @param expense
      */
     private void updateViewType(Transaction updatedExpense, Transaction expense)
     {
@@ -326,9 +320,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     }
 
     /**
-     *
-     * @param transaction
-     * @param position
      */
     @Override
     public void insert(Transaction transaction, int position)
@@ -339,10 +330,8 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
 
     /**
      * Update the description's left drawable
-     *
-     * @param resourceIndex
      */
-    private void updateImage(int resourceIndex)
+    private void handleViewImage(int resourceIndex)
     {
         Drawable img = getContext().getResources().getDrawable(resourceIndex);
         img.setBounds( 0, 0, PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
