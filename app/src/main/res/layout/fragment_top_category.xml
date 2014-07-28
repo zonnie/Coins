@@ -7,22 +7,20 @@
 
     <LinearLayout
         android:id="@+id/month_analytics_top_category_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:visibility="gone"
+        android:background="@drawable/card"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/drawable_left_pad"
-            android:layout_marginRight="@dimen/drawable_left_pad"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingBottom="@dimen/padding_start_currency"
-            android:paddingLeft="@dimen/drawable_left_pad"
-            android:paddingRight="@dimen/drawable_left_pad"
+            android:paddingLeft="@dimen/expense_drawable_left_pad"
+            android:paddingRight="@dimen/expense_drawable_left_pad"
             android:paddingTop="@dimen/padding_start_currency"
             android:showDividers="none"
             >

@@ -25,8 +25,8 @@ public class Utils
 {
     public static String globalCurrencyList[] = {"$", "₪", "£", "€", "¥", "¥"};
     private static final String mEmailFormat = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-    public static final String EXPENSE_FONT_DAY = "sans-serif-condensed";
-    public static final String DESCRIPTION_FONT_DAY = "sans-serif-thin";
+    public static final String FONT_CONDENSED = "sans-serif-condensed";
+    public static final String FONT_THIN = "sans-serif-thin";
     private static DecimalFormat mFormater;
 
     /**

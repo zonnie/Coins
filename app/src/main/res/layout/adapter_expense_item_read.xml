@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/expense_drawable_left_pad"
+        android:layout_marginBottom="@dimen/padding_start_currency"
         android:layout_marginLeft="@dimen/expense_drawable_left_pad"
         android:layout_marginRight="@dimen/expense_drawable_left_pad"
         android:layout_marginTop="@dimen/padding_start_currency"
@@ -25,8 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="27"
             android:orientation="vertical"
-            android:background="@drawable/x_button"
-            android:paddingLeft="@dimen/padding_start_currency"
+            android:paddingStart="@dimen/padding_start_currency"
+            android:background="@drawable/general_item_card"
             >
 
 
@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="@dimen/drawable_left_pad"
+                android:paddingTop="@dimen/padding_start_currency"
                 android:showDividers="none"
                 >
 
@@ -43,8 +43,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingEnd="@dimen/activity_vertical_margin"
-                    android:paddingStart="@dimen/padding_start_currency"
+                    android:paddingEnd="@dimen/drawable_left_pad"
                     >
 
 
@@ -54,32 +53,35 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/email"
                         android:drawablePadding="@dimen/drawable_left_pad"
-                        android:maxLines="1"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
                         android:text="Stam"
-                        android:textSize="@dimen/large_font"
+                        android:textSize="@dimen/medium_font"
                         android:textStyle="bold"
                         />
 
-                    <TextView
+                    <com.moneyifyapp.views.CurrencyTextView
                         android:id="@+id/currency"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.4"
                         android:gravity="center|right"
-                        android:maxLines="1"
+                        android:singleLine="true"
                         android:text="@string/default_currency"
-                        android:textSize="@dimen/large_font"
+                        android:textSize="@dimen/medium_font"
                         android:textStyle="bold"
                         />
 
-                    <TextView
+                    <com.moneyifyapp.views.CondensedTextView
                         android:id="@+id/expenseValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center|right"
-                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
                         android:text="@string/init_total_value"
-                        android:textSize="@dimen/large_font"
+                        android:textSize="@dimen/medium_font"
                         android:textStyle="bold"
                         />
 
@@ -91,6 +93,7 @@
                 android:id="@+id/expenseItemNoteContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_start_currency"
                 android:orientation="vertical"
                 >
 
@@ -104,7 +107,6 @@
                     android:paddingBottom="@dimen/padding_start_currency"
                     android:paddingEnd="@dimen/activity_vertical_margin"
                     android:paddingStart="@dimen/padding_start_currency"
-                    android:paddingTop="@dimen/padding_start_currency"
                     android:text="@string/enter_note_hint"
                     android:textSize="@dimen/tiny_font"
                     android:textColor="@android:color/darker_gray"

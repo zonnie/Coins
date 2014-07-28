@@ -28,7 +28,7 @@ public class ImageAdapter extends BaseAdapter
     {
         super();
         mContext = context;
-        mCaptionFont = Typeface.create(Utils.DESCRIPTION_FONT_DAY, Typeface.NORMAL);
+        mCaptionFont = Typeface.create(Utils.FONT_THIN, Typeface.NORMAL);
 
     }
 

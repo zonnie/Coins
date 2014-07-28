@@ -97,8 +97,8 @@ public class ExpenseDetailFragment extends Fragment
             mIsEdit = getArguments().getBoolean(EXPENSE_EDIT_KEY);
             mMonth = getArguments().getInt(ExpenseListFragment.MONTH_KEY);
 
-            mDescriptionFont = Typeface.create(Utils.DESCRIPTION_FONT_DAY, Typeface.NORMAL);
-            mDateFont = Typeface.create(Utils.EXPENSE_FONT_DAY, Typeface.NORMAL);
+            mDescriptionFont = Typeface.create(Utils.FONT_THIN, Typeface.NORMAL);
+            mDateFont = Typeface.create(Utils.FONT_CONDENSED, Typeface.NORMAL);
 
             String transactionJson = getArguments().getString(Transaction.TRANS_JSON);
             mTempExpenseObject = JsonServiceYearTransactions.getInstance().fromJsonToTransaction(transactionJson);

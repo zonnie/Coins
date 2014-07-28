@@ -9,14 +9,13 @@ import com.moneyifyapp.utils.Utils;
 
 /**
  */
-public class CurrencyTextView extends TextView
+public class CondensedTextView extends TextView
 {
-    private String mCurrency;
     private Typeface mTypeFace;
 
     /**
      */
-    public CurrencyTextView(Context context)
+    public CondensedTextView(Context context)
     {
         super(context);
         init(context);
@@ -24,7 +23,7 @@ public class CurrencyTextView extends TextView
 
     /**
      */
-    public CurrencyTextView(Context context, AttributeSet attrs)
+    public CondensedTextView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
         init(context);
@@ -32,7 +31,7 @@ public class CurrencyTextView extends TextView
 
     /**
      */
-    public CurrencyTextView(Context context, AttributeSet attrs, int defStyle)
+    public CondensedTextView(Context context, AttributeSet attrs, int defStyle)
     {
         super(context, attrs, defStyle);
         init(context);
@@ -43,11 +42,6 @@ public class CurrencyTextView extends TextView
      */
     private void init(Context context)
     {
-        if (!isInEditMode())
-        {
-            mCurrency = Utils.getDefaultCurrency(context);
-            setText(mCurrency);
-        }
         mTypeFace = Typeface.create(Utils.FONT_CONDENSED, Typeface.NORMAL);
         this.setTypeface(mTypeFace);
     }

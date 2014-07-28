@@ -64,7 +64,9 @@ public class MonthAnalyticsFragment extends Fragment
         return fragment;
     }
 
-    public MonthAnalyticsFragment(){}
+    public MonthAnalyticsFragment()
+    {
+    }
 
     /**
      */
@@ -90,9 +92,7 @@ public class MonthAnalyticsFragment extends Fragment
     }
 
     /**
-     *
      * On create view
-     *
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,7 +100,7 @@ public class MonthAnalyticsFragment extends Fragment
     {
         mRootView = inflater.inflate(R.layout.fragment_analytics_total, container, false);
 
-        if(mYearTransactions != null && mMonthTransactions != null)
+        if (mYearTransactions != null && mMonthTransactions != null)
         {
             initTotalSums();
             initProfitOrLossLabels();
@@ -121,12 +121,11 @@ public class MonthAnalyticsFragment extends Fragment
     {
         // Get the month number, transaction and page id
         String yearTransJson = getArguments().getString(ExpenseListFragment.YEAR_JSON_KEY);
-        if(!yearTransJson.isEmpty())
+        if (!yearTransJson.isEmpty())
         {
             mYearTransactions = mJsonService.fromJsonToYearTransactions(yearTransJson);
             mMonthTransactions = mYearTransactions.get(mMonth);
-        }
-        else
+        } else
         {
             mYearTransactions = null;
             mMonthTransactions = null;
@@ -150,9 +149,9 @@ public class MonthAnalyticsFragment extends Fragment
 
     private void loadAnimations()
     {
-        if(mAppearAnimation == null)
+        if (mAppearAnimation == null)
             mAppearAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
-        if(mAppearAnimationLong == null)
+        if (mAppearAnimationLong == null)
             mAppearAnimationLong = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in_long);
     }
 
@@ -162,8 +161,8 @@ public class MonthAnalyticsFragment extends Fragment
     {
         String totalExepense = Utils.formatDoubleToTextCurrency(mMonthTransactions.sumTransactions(MonthTransactions.SubsetType.EXPENSE));
         String totalIncome = Utils.formatDoubleToTextCurrency(mMonthTransactions.sumTransactions(MonthTransactions.SubsetType.INCOME));
-        loadTextViewAndSetText(R.id.analytics_monthly_expense_sum,totalExepense);
-        loadTextViewAndSetText(R.id.analytics_monthly_income_sum,totalIncome);
+        loadTextViewAndSetText(R.id.analytics_monthly_expense_sum, totalExepense);
+        loadTextViewAndSetText(R.id.analytics_monthly_income_sum, totalIncome);
 
     }
 
@@ -171,17 +170,17 @@ public class MonthAnalyticsFragment extends Fragment
      */
     private void initWorstDay()
     {
-        MonthTransactions.Couple<Integer,Double> daySum = mMonthTransactions.getTopCategory(MonthTransactions.TopFilter.BUSIEST_DAY);
+        MonthTransactions.Couple<Integer, Double> daySum = mMonthTransactions.getTopCategory(MonthTransactions.TopFilter.BUSIEST_DAY);
 
-        if(daySum != null)
+        if (daySum != null)
         {
             updateHasInsignts();
 
-            LinearLayout worstDayLayout = (LinearLayout)mRootView.findViewById(R.id.month_analytics_worst_day_layout);
+            LinearLayout worstDayLayout = (LinearLayout) mRootView.findViewById(R.id.month_analytics_worst_day_layout);
             worstDayLayout.setVisibility(View.VISIBLE);
             String dayStr = String.valueOf(daySum.mFirstField);
             String suffix = Utils.generateDayInMonthSuffix(dayStr);
-            String month = Months.getMonthNameByNumber(mMonth + 1);
+            String month = Months.getMonthNameByNumber(mMonth);
 
             loadTextViewAndSetText(R.id.analytics_monthly_worst_day_date_label, month + " " + dayStr + suffix);
             loadTextViewAndSetText(R.id.analytics_monthly_worst_day_sum, Utils.formatDoubleToTextCurrency(daySum.mSecondField));
@@ -197,8 +196,8 @@ public class MonthAnalyticsFragment extends Fragment
         double totalProfit = totalRevenue - totalSpent;
 
         TextView profitTextView = loadTextViewAndSetText(R.id.analytics_monthly_profit_sum, String.valueOf(totalProfit));
-        TextView profitCurrency = (TextView)mRootView.findViewById(R.id.analytics_monthly_profit_currency);
-        TextView profitLabel = (TextView)mRootView.findViewById(R.id.analytics_monthly_profit_label);
+        TextView profitCurrency = (TextView) mRootView.findViewById(R.id.analytics_monthly_profit_currency);
+        TextView profitLabel = (TextView) mRootView.findViewById(R.id.analytics_monthly_profit_label);
 
         int color = getResources().getColor(android.R.color.black);
 
@@ -206,14 +205,12 @@ public class MonthAnalyticsFragment extends Fragment
         {
             color = getResources().getColor(R.color.income_color);
             profitLabel.setText(PROFITED_LABEL);
-        }
-        else if(totalProfit < 0)
+        } else if (totalProfit < 0)
         {
             color = getResources().getColor(R.color.expense_color);
             totalProfit = (-totalProfit);
             profitLabel.setText(LOST_LABEL);
-        }
-        else
+        } else
             profitLabel.setText(BROKE_EVEN);
 
         String profitStr = Utils.formatDoubleToTextCurrency(totalProfit);
@@ -238,13 +235,13 @@ public class MonthAnalyticsFragment extends Fragment
     {
         MonthTransactions expenses = mMonthTransactions.getTopFromSubset(MonthTransactions.SubsetType.EXPENSE);
 
-        if(expenses.getItems().size() > 0)
+        if (expenses.getItems().size() > 0)
         {
             updateHasInsignts();
 
-            mBiggestExpenseLayout = (LinearLayout)mRootView.findViewById(R.id.month_analytics_biggest_expense_layout);
+            mBiggestExpenseLayout = (LinearLayout) mRootView.findViewById(R.id.month_analytics_biggest_expense_layout);
             mBiggestExpenseLayout.setVisibility(View.VISIBLE);
-            mBiggestExpenseList = (ListView)mRootView.findViewById(R.id.month_analytics_biggest_expense_list);
+            mBiggestExpenseList = (ListView) mRootView.findViewById(R.id.month_analytics_biggest_expense_list);
             ExpenseItemAdapterRead expenseAdapter = new ExpenseItemAdapterRead(getActivity(), R.layout.adapter_expense_item_read, expenses);
             mBiggestExpenseList.setAdapter(expenseAdapter);
         }
@@ -256,13 +253,13 @@ public class MonthAnalyticsFragment extends Fragment
     {
         MonthTransactions incomes = mMonthTransactions.getTopFromSubset(MonthTransactions.SubsetType.INCOME);
 
-        if(incomes.getItems().size() > 0)
+        if (incomes.getItems().size() > 0)
         {
             updateHasInsignts();
 
-            mBiggestIncomeLayout = (LinearLayout)mRootView.findViewById(R.id.month_analytics_biggest_income_layout);
+            mBiggestIncomeLayout = (LinearLayout) mRootView.findViewById(R.id.month_analytics_biggest_income_layout);
             mBiggestIncomeLayout.setVisibility(View.VISIBLE);
-            mBiggestIncomeList = (ListView)mRootView.findViewById(R.id.month_analytics_biggest_income_list);
+            mBiggestIncomeList = (ListView) mRootView.findViewById(R.id.month_analytics_biggest_income_list);
             ExpenseItemAdapterRead incomeAdapter = new ExpenseItemAdapterRead(getActivity(), R.layout.adapter_expense_item_read, incomes);
             mBiggestIncomeList.setAdapter(incomeAdapter);
         }
@@ -270,7 +267,7 @@ public class MonthAnalyticsFragment extends Fragment
 
     private void updateHasInsignts()
     {
-        if(mNoInsights == false)
+        if (!mNoInsights)
         {
             mNoInsights = true;
             TextView insigntsLabel = (TextView) mRootView.findViewById(R.id.month_analytics_insignts_label);

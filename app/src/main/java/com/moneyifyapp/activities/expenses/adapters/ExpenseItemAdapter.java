@@ -45,8 +45,8 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         mListener = listener;
         mTransactions = expenses;
         mLayoutResourceId = resource;
-        mDateFont = Typeface.create(Utils.EXPENSE_FONT_DAY, Typeface.NORMAL);
-        mDescriptionFont = Typeface.create(Utils.DESCRIPTION_FONT_DAY, Typeface.NORMAL);
+        mDateFont = Typeface.create(Utils.FONT_CONDENSED, Typeface.NORMAL);
+        mDescriptionFont = Typeface.create(Utils.FONT_THIN, Typeface.NORMAL);
     }
 
     /**

@@ -6,22 +6,6 @@
               android:orientation="vertical">
 
     <!-- This is a must for a custom list in fragment listview -->
-    <!--<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/padding_start_currency"
-
-        >-->
-    <!--<TextView
-        android:id="@+id/totals_hint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/totals_hint_string"
-        android:textSize="@dimen/tiny_font"
-        android:textColor="@android:color/darker_gray"
-        android:layout_gravity="top"/>-->
     <LinearLayout
         android:id="@+id/totalLayout"
         android:layout_width="match_parent"
@@ -35,99 +19,106 @@
         android:paddingTop="@dimen/padding_start_currency"
         >
 
-        <!--<TextView
-            android:id="@+id/totals_hint"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/totals_hint_string"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="@dimen/tiny_font"
-            android:visibility="gone"
-            />-->
-
         <LinearLayout
-            android:id="@+id/totalSubBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             >
 
-            <com.moneyifyapp.views.CurrencyTextView
-                android:id="@+id/plusCurrency"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
-                android:text="@string/default_currency"
-                android:textColor="@color/income_color"
-                android:textSize="@dimen/huge_font"/>
-
             <TextView
-                android:id="@+id/plusAmount"
-                android:layout_width="wrap_content"
+                android:id="@+id/totals_hint"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
-                android:text="@string/init_total_value"
-                android:textColor="@color/income_color"
-                android:textSize="@dimen/huge_font"/>
-
-            <TextView
-                android:id="@+id/minusSign"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/max_add_height"
-                android:paddingStart="@dimen/max_add_height"
-                android:text="-"
-                android:textSize="@dimen/large_font"
+                android:gravity="center"
+                android:text="@string/totals_hint_string"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="@dimen/tiny_font"
                 />
 
-            <com.moneyifyapp.views.CurrencyTextView
-                android:id="@+id/minusCurrency"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/totalSubBarLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
-                android:text="@string/default_currency"
-                android:textColor="@color/expense_color"
-                android:textSize="@dimen/huge_font"/>
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/padding_start_currency"
+                >
 
-            <TextView
-                android:id="@+id/minusAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
-                android:text="@string/init_total_value"
-                android:textColor="@color/expense_color"
-                android:textSize="@dimen/huge_font"/>
+                <com.moneyifyapp.views.CurrencyTextView
+                    android:id="@+id/plusCurrency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/default_currency"
+                    android:textColor="@color/income_color"
+                    android:textSize="@dimen/huge_font"/>
 
-            <TextView
-                android:id="@+id/outComeSign"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/max_add_height"
-                android:paddingStart="@dimen/max_add_height"
-                android:text="="
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
+                <TextView
+                    android:id="@+id/plusAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/init_total_value"
+                    android:textColor="@color/income_color"
+                    android:textSize="@dimen/huge_font"/>
 
-            <com.moneyifyapp.views.CurrencyTextView
-                android:id="@+id/totalCurrency"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
-                android:text="@string/default_currency"
-                android:textColor="@color/income_color"
-                android:textSize="@dimen/huge_font"
-                android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/minusSign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="@dimen/max_add_height"
+                    android:paddingStart="@dimen/max_add_height"
+                    android:text="-"
+                    android:textSize="@dimen/large_font"
+                    />
 
-            <TextView
-                android:id="@+id/totalAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
-                android:text="@string/init_total_value"
-                android:textColor="@color/income_color"
-                android:textSize="@dimen/huge_font"
-                android:textStyle="bold"/>
+                <com.moneyifyapp.views.CurrencyTextView
+                    android:id="@+id/minusCurrency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/default_currency"
+                    android:textColor="@color/expense_color"
+                    android:textSize="@dimen/huge_font"/>
+
+                <TextView
+                    android:id="@+id/minusAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/init_total_value"
+                    android:textColor="@color/expense_color"
+                    android:textSize="@dimen/huge_font"/>
+
+                <TextView
+                    android:id="@+id/outComeSign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="@dimen/max_add_height"
+                    android:paddingStart="@dimen/max_add_height"
+                    android:text="="
+                    android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+                <com.moneyifyapp.views.CurrencyTextView
+                    android:id="@+id/totalCurrency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/default_currency"
+                    android:textColor="@color/income_color"
+                    android:textSize="@dimen/huge_font"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/totalAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/init_total_value"
+                    android:textColor="@color/income_color"
+                    android:textSize="@dimen/huge_font"
+                    android:textStyle="bold"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
@@ -137,12 +128,12 @@
         android:id="@id/android:list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/expense_drawable_left_pad"
+        android:layout_marginRight="@dimen/expense_drawable_left_pad"
         android:layout_weight="1"
         android:clipToPadding="false"
         android:drawSelectorOnTop="false"
         android:paddingBottom="@dimen/big_padding"
-        android:layout_marginLeft="@dimen/drawable_left_pad"
-        android:layout_marginRight="@dimen/drawable_left_pad"
         android:paddingTop="@dimen/drawable_left_pad"/>
 
     <LinearLayout
