@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:background="@drawable/card"
+        android:visibility="gone"
         >
 
         <LinearLayout

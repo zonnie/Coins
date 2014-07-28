@@ -22,7 +22,6 @@ import java.util.List;
 public class DrawerItemAdapter extends ArrayAdapter<DrawerItem>
 {
     private TextView mItemTitle;
-    private TextView mItemHint;
     private List<DrawerItem> mDrawerItems;
     private View mMyView;
     private int mLayoutResourceId;
@@ -44,17 +43,15 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItem>
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
+        mMyView = convertView;
 
-        View view = convertView;
-        mMyView = view;
-
-        if (view == null)
+        if (mMyView == null)
         {
 
             LayoutInflater viewInflator;
             viewInflator = LayoutInflater.from(getContext());
 
-            view = viewInflator.inflate(mLayoutResourceId, null);
+            mMyView = viewInflator.inflate(mLayoutResourceId, null);
 
             // Load animation lazy
             if(mItemsLoadAnimation == null)
@@ -62,44 +59,30 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItem>
                 mItemsLoadAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
             }
 
-            view.startAnimation(mItemsLoadAnimation);
+            mMyView.startAnimation(mItemsLoadAnimation);
         }
 
-        return getRegularView(position, view);
+        return getRegularView(position);
     }
 
     /**
-     *
-     * @param position
-     * @param view
-     * @return
      */
-    private View getRegularView(int position, View view)
+    private View getRegularView(int position)
     {
         DrawerItem currentTransactionView = mDrawerItems.get(position);
 
         // Populate the current view according to collection item.
         if (currentTransactionView != null)
         {
+            mItemTitle = (TextView) mMyView.findViewById(R.id.drawerItemText);
 
-            mItemTitle = (TextView) view.findViewById(R.id.drawerItemText);
-            mItemHint = (TextView) view.findViewById(R.id.drawer_menu_item_hint);
-
-            /**     Build the view **/
-
-            // Handle view's title
             handleDrawerItemTitle(currentTransactionView);
-            // Handle view's hint amount
-            handleDrawerItemHint(currentTransactionView);
-            // Handle view's left drawable
             updateImage(currentTransactionView.getmResourceId());
         }
-        return view;
+        return mMyView;
     }
 
     /**
-     *
-     * @param currentItem
      */
     private void handleDrawerItemTitle(DrawerItem currentItem)
     {
@@ -111,21 +94,6 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItem>
     }
 
     /**
-     *
-     * @param currentItem
-     */
-    private void handleDrawerItemHint(DrawerItem currentItem)
-    {
-        if (mItemHint != null)
-        {
-
-            mItemHint.setText(currentItem.getmItemHint());
-        }
-    }
-
-
-    /**
-     * @param position
      */
     public void remove(int position)
     {
@@ -142,8 +110,6 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItem>
     }
 
     /**
-     * @param position
-     * @param item
      */
     public void update(int position, DrawerItem item)
     {
@@ -155,9 +121,6 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItem>
     }
 
     /**
-     *
-     * @param position
-     * @param item
      */
     private void updateDrawerItem(int position, DrawerItem item)
     {
@@ -173,9 +136,6 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItem>
     }
 
     /**
-     *
-     * @param item
-     * @param position
      */
     @Override
     public void insert(DrawerItem item, int position)
@@ -188,8 +148,6 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItem>
 
     /**
      * Update the description's left drawable
-     *
-     * @param resourceIndex
      */
     private void updateImage(int resourceIndex)
     {

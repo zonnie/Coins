@@ -26,6 +26,7 @@
         <activity
             android:name=".activities.login.SignUpActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/action_sing_up"
             android:parentActivityName=".activities.login.LoginActivity"
             android:screenOrientation="portrait" >

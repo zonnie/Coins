@@ -1,14 +1,13 @@
 package com.moneyifyapp.activities.expenses.adapters;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
@@ -29,14 +28,11 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
     private TextView mExpenseCurrency;
     private TextView mExpenseDayOfMonth;
     private TextView mExpenseMonth;
+    private ImageView mExpenseImage;
     private int mLayoutResourceId;
     private MonthTransactions mTransactions;
     private View mMyView;
-    public static int PICK_IMAGE_DIMENSIONS = 100;
-    private final String EMPTY_NOTE_HINT = "Please enter a note...";
-    private Animation mItemsLoadAnimation;
-    private Typeface mDateFont;
-    private Typeface mDescriptionFont;
+    public static int PICK_IMAGE_DIMENSIONS = 150;
 
     /**
      *
@@ -46,12 +42,10 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
         super(context, resource, expenses.getItems());
         mTransactions = expenses;
         mLayoutResourceId = resource;
-        mDateFont = Typeface.create(Utils.FONT_CONDENSED, Typeface.NORMAL);
-        mDescriptionFont = Typeface.create(Utils.FONT_THIN, Typeface.NORMAL);
 
         // Load animation lazy
-        if (mItemsLoadAnimation == null)
-            mItemsLoadAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+        //if (mItemsLoadAnimation == null)
+        //    mItemsLoadAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
     }
 
     /**
@@ -79,7 +73,7 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
         LayoutInflater viewInflator;
         viewInflator = LayoutInflater.from(getContext());
         mMyView = viewInflator.inflate(mLayoutResourceId, null);
-        mMyView.startAnimation(mItemsLoadAnimation);
+        //mMyView.startAnimation(mItemsLoadAnimation);
     }
 
     /**
@@ -118,6 +112,7 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
         mExpenseCurrency = (TextView) mMyView.findViewById(R.id.currency);
         mExpenseDayOfMonth = (TextView) mMyView.findViewById(R.id.expense_item_date_text);
         mExpenseMonth = (TextView) mMyView.findViewById(R.id.expense_item_date_month);
+        mExpenseImage = (ImageView) mMyView.findViewById(R.id.expense_item_image);
     }
 
     /**
@@ -125,9 +120,7 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
     private void handleViewDescription(Transaction currentTransactionView)
     {
         if (mExpenseDescription != null)
-            if(mDescriptionFont != null)
-                mExpenseDescription.setTypeface(mDescriptionFont);
-        mExpenseDescription.setText(currentTransactionView.mDescription);
+            mExpenseDescription.setText(currentTransactionView.mDescription);
     }
 
     /**
@@ -163,9 +156,10 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
     private void updateDescriptionLeftDrawable(int resourceIndex)
     {
         Drawable img = getContext().getResources().getDrawable(resourceIndex);
-        img.setBounds(0, 0, PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
-        mExpenseDescription.setCompoundDrawables(img, null, null, null);
-    }
+        img.setBounds( 0, 0, PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
+        mExpenseImage.setImageDrawable(img);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
+        mExpenseImage.setLayoutParams(layoutParams);    }
 
     /**
      */
@@ -175,10 +169,6 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
         {
             String date = currentTransactionView.mTransactionDay;
             String dateSuffix = Utils.getMonthPrefixByIndex(mTransactions.mMonthNumber).toUpperCase();
-
-            // Change the font
-            if(mDateFont != null)
-                mExpenseDayOfMonth.setTypeface(mDateFont);
 
             mExpenseDayOfMonth.setText(date);
             mExpenseMonth.setText(dateSuffix);

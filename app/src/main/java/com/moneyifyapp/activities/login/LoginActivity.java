@@ -55,8 +55,10 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
 
         Utils.initializeActionBar(this);
         Utils.removeLogo(this);
+
         // Remove logo for this activity
-        getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+        if(getActionBar() != null)
+            getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
 
         // Set the content
         setContentView(R.layout.activity_login_layout);
@@ -64,13 +66,28 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
         mTransactionHandler = TransactionHandler.getInstance(this);
         mTransactionHandler.registerToFetchComplete(this);
 
-        // Set up the login form.
+        storeViews();
+        bindViewsToEventListeners();
+    }
+
+    /**
+     */
+    private void storeViews()
+    {
         mEmailView = (EditText) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
+        mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        mSignUpButton = (Button) findViewById(R.id.sign_up_button);
+        mLoginFormView = findViewById(R.id.login_form);
+        mProgressView = findViewById(R.id.login_progress);
+    }
 
+    /**
+     */
+    private void bindViewsToEventListeners()
+    {
         mEmailView.setOnClickListener(this);
         mPasswordView.setOnClickListener(this);
-
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener()
         {
             @Override
@@ -87,20 +104,17 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
             }
         });
 
-        mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mSignUpButton = (Button) findViewById(R.id.sign_up_button);
-
-        // Bind the login button
         mEmailSignInButton.setOnClickListener(new OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(mSignUpButton.getWindowToken(), 0);
                 attemptLogin();
             }
         });
 
-        // Bind the sign up button
         mSignUpButton.setOnClickListener(new OnClickListener()
         {
             @Override
@@ -110,9 +124,6 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
                 startActivity(intent);
             }
         });
-
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
     }
 
     /**
@@ -218,8 +229,8 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
      */
     private void signInFailed()
     {
-        Toast toast = Toast.makeText(this, "Failed signing in...Check your credentials", Toast.LENGTH_SHORT);
-        toast.show();
+        Toast.makeText(this, "We can't seem to know you, check your email and password", Toast.LENGTH_SHORT).show();
+        showProgress(false);
     }
 
     /**

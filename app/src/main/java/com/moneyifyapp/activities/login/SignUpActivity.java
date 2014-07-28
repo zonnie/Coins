@@ -1,14 +1,23 @@
 package com.moneyifyapp.activities.login;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.moneyifyapp.R;
@@ -19,9 +28,11 @@ import com.parse.SignUpCallback;
 
 public class SignUpActivity extends Activity implements View.OnClickListener
 {
-    EditText mUserEditText;
-    EditText mPassEditText;
-    EditText mPassRepeatEditText;
+    private EditText mUserEditText;
+    private EditText mPassEditText;
+    private EditText mPassRepeatEditText;
+    private View mProgressView;
+    private View mSignupForm;
 
     /**
      */
@@ -42,7 +53,24 @@ public class SignUpActivity extends Activity implements View.OnClickListener
 
         mUserEditText = (EditText) findViewById(R.id.usernameEditText);
         mPassEditText = (EditText) findViewById(R.id.passEditText);
+        mSignupForm = findViewById(R.id.signup_form);
+        mProgressView = findViewById(R.id.signup_progress);
         mPassRepeatEditText = (EditText) findViewById(R.id.passVerifyEditText);
+        mPassRepeatEditText.setOnEditorActionListener(new TextView.OnEditorActionListener()
+        {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+            {
+                if (actionId == EditorInfo.IME_ACTION_DONE ||
+                        actionId == EditorInfo.IME_ACTION_UNSPECIFIED)
+                {
+                    signUpHandle();
+                    return true;
+                }
+                return false;
+            }
+        });
+
         Button signUpButton = (Button) findViewById(R.id.confirm_signup);
 
         mUserEditText.setOnClickListener(this);
@@ -55,13 +83,24 @@ public class SignUpActivity extends Activity implements View.OnClickListener
             @Override
             public void onClick(View v)
             {
-                if (isSignUpValid())
-                {
-                    signUp();
-                }
+                signUpHandle();
             }
         });
 
+    }
+
+    /**
+     */
+    private void signUpHandle()
+    {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mPassRepeatEditText.getWindowToken(), 0);
+
+        if (isSignUpValid())
+        {
+            showProgress(true);
+            signUp();
+        }
     }
 
     /**
@@ -150,10 +189,12 @@ public class SignUpActivity extends Activity implements View.OnClickListener
                 {
                     goToLogin();
                     finish();
+                    showProgress(false);
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                 } else
                 {
                     singUpFailed();
+                    showProgress(false);
                 }
             }
         });
@@ -203,5 +244,42 @@ public class SignUpActivity extends Activity implements View.OnClickListener
     {
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
+
+    /**
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    public void showProgress(final boolean show)
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2)
+        {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            mSignupForm.setVisibility(show ? View.GONE : View.VISIBLE);
+            mSignupForm.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter()
+            {
+                @Override
+                public void onAnimationEnd(Animator animation)
+                {
+                    mSignupForm.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter()
+            {
+                @Override
+                public void onAnimationEnd(Animator animation)
+                {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else
+        {
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mSignupForm.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
     }
 }

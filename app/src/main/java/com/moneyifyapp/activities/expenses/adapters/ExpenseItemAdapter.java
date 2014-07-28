@@ -1,7 +1,6 @@
 package com.moneyifyapp.activities.expenses.adapters;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,11 +29,9 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private ListItemHandler mListener;
     private int mLayoutResourceId;
     private MonthTransactions mTransactions;
-    public static int PICK_IMAGE_DIMENSIONS = 110;
+    public static int PICK_IMAGE_DIMENSIONS = 150;
     private Animation mItemsLoadAnimation;
     public View mMyView;
-    private Typeface mDateFont;
-    private Typeface mDescriptionFont;
     private ViewHolder mViewHolder;
 
 
@@ -45,8 +43,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         mListener = listener;
         mTransactions = expenses;
         mLayoutResourceId = resource;
-        mDateFont = Typeface.create(Utils.FONT_CONDENSED, Typeface.NORMAL);
-        mDescriptionFont = Typeface.create(Utils.FONT_THIN, Typeface.NORMAL);
     }
 
     /**
@@ -56,7 +52,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     public View getView(int position, View convertView, ViewGroup parent)
     {
         mMyView = convertView;
-        Utils.writeLog("DEBUG: Getting view, item: " + position + ", Month:" + mTransactions.mMonthNumber);
 
         if (mMyView == null)
         {
@@ -69,7 +64,8 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             if(mItemsLoadAnimation == null)
                 mItemsLoadAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
 
-            mMyView.startAnimation(mItemsLoadAnimation);
+            //TODO animation
+            //mMyView.startAnimation(mItemsLoadAnimation);
             mMyView.setTag(mViewHolder);
         }
         else
@@ -146,8 +142,8 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         mViewHolder.mExpenseDayOfMonth = (TextView)mMyView.findViewById(R.id.expense_item_date_text);
         mViewHolder.mExpenseMonth = (TextView)mMyView.findViewById(R.id.expense_item_date_month);
         mViewHolder.mRemoveItemButton = (Button) mMyView.findViewById(R.id.expenseRemove);
-        mViewHolder.mExpenseNoteContainer = (LinearLayout)mMyView.findViewById(R.id.expenseItemNoteContainer);
         mViewHolder.mRemoveItemLayout = (LinearLayout) mMyView.findViewById(R.id.remove_item_button_layout);
+        mViewHolder.mExpenseImage = (ImageView) mMyView.findViewById(R.id.expense_item_image);
     }
 
     /**
@@ -156,8 +152,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     {
         if (mViewHolder.mExpenseDescription != null)
         {
-            if(mDescriptionFont != null)
-                mViewHolder.mExpenseDescription.setTypeface(mDescriptionFont);
             mViewHolder.mExpenseDescription.setText(currentTransactionView.mDescription);
         }
     }
@@ -170,11 +164,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         {
             String date = currentTransactionView.mTransactionDay;
             String dateSuffix = Utils.getMonthPrefixByIndex(mTransactions.mMonthNumber).toUpperCase();
-
-            // Change the font
-            if(mDateFont != null)
-                mViewHolder.mExpenseDayOfMonth.setTypeface(mDateFont);
-
             mViewHolder.mExpenseDayOfMonth.setText(date);
             mViewHolder.mExpenseMonth.setText(dateSuffix);
         }
@@ -186,12 +175,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private void handleViewValue(Transaction currentTransactionView)
     {
         if (mViewHolder.mExpenseValue != null)
-        {
-            if(mDateFont != null)
-                mViewHolder.mExpenseValue.setTypeface(mDateFont);
-
             mViewHolder.mExpenseValue.setText(currentTransactionView.mValue);
-        }
     }
 
     /**
@@ -210,8 +194,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         {
             if (!currentTransactionView.mNotes.isEmpty())
                 mViewHolder.mExpenseNote.setText(currentTransactionView.mNotes);
-            else
-                mViewHolder.mExpenseNote.setText("Please enter a note...");
         }
     }
 
@@ -335,7 +317,11 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     {
         Drawable img = getContext().getResources().getDrawable(resourceIndex);
         img.setBounds( 0, 0, PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
-        mViewHolder.mExpenseDescription.setCompoundDrawables(img, null, null, null);
+        //mViewHolder.mExpenseDescription.setCompoundDrawables(img, null, null, null);
+        mViewHolder.mExpenseImage.setImageDrawable(img);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
+        mViewHolder.mExpenseImage.setLayoutParams(layoutParams);
+
     }
 
     /**
@@ -355,13 +341,13 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         public TextView mExpenseDescription;
         public LinearLayout mItemLayout;
         public LinearLayout mRemoveItemLayout;
-        public LinearLayout mExpenseNoteContainer;
         public TextView mExpenseValue;
         public TextView mExpenseCurrency;
         public TextView mExpenseNote;
         public TextView mExpenseDayOfMonth;
         public TextView mExpenseMonth;
         public Button mRemoveItemButton;
+        public ImageView mExpenseImage;
     }
 
 }

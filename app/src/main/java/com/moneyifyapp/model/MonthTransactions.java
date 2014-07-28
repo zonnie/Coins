@@ -154,9 +154,9 @@ public class MonthTransactions
      */
     public Couple getTopCategory(TopFilter filter)
     {
-        int arrLength = 0;
-        int fillIndex = 0;
-        int checkIndex = 0;
+        int arrLength;
+        int fillIndex;
+        int checkIndex;
         switch (filter)
         {
             case BUSIEST_DAY:
@@ -233,6 +233,11 @@ public class MonthTransactions
             this.mFirstField = resouceId;
             this.mSecondField = sum;
         }
+    }
+
+    public List<Couple<String, Integer>> getTopCategoriesValues(int n)
+    {
+        return null;
     }
 
     /**

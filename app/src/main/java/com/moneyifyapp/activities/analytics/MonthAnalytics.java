@@ -31,6 +31,8 @@ public class MonthAnalytics extends Activity
     private int mMonth;
     private int mYear;
     private YearTransactions mYearTransactions;
+    private final String MONTH_BAR_GRAPH_TITLE = "Top Categories";
+    private final String MONTH_BAR_GRAPH_X_LABELS = "Categories";
 
     /**
      * On create
@@ -122,10 +124,10 @@ public class MonthAnalytics extends Activity
      */
     private BarGraphFragment.BarGraphParameters buildGraph()
     {
-        BarGraphFragment.BarGraphParameters params = new BarGraphFragment.BarGraphParameters("Top Categories");
+        BarGraphFragment.BarGraphParameters params = new BarGraphFragment.BarGraphParameters(MONTH_BAR_GRAPH_TITLE);
         params.setValues(createMaxListByType(MonthTransactions.SubsetType.EXPENSE));
         params.setYLabels(new ArrayList<String>());
-        params.setXAxisTitle("Categories");
+        params.setXAxisTitle(MONTH_BAR_GRAPH_X_LABELS);
         params.mResourceId =  R.drawable.graph_bar_back_red;
         params.setXLabels(new ArrayList<String>());
 

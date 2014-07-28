@@ -31,7 +31,7 @@
             >
 
 
-            <TextView
+            <com.moneyifyapp.views.CondensedTextView
                 android:id="@+id/drawerItemText"
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
@@ -40,22 +40,9 @@
                 android:drawablePadding="@dimen/big_padding"
                 android:gravity="center"
                 android:text=""
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="@dimen/large_font"
                 android:textColor="@android:color/white"
                 />
-
-            <TextView
-                android:id="@+id/drawer_menu_item_hint"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingBottom="@dimen/drawable_left_pad"
-                android:paddingEnd="@dimen/activity_vertical_margin"
-                android:paddingStart="@dimen/big_padding"
-                android:paddingTop="@dimen/drawable_left_pad"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/lighter_gray"
-                android:visibility="gone"/>
 
         </LinearLayout>
     </LinearLayout>

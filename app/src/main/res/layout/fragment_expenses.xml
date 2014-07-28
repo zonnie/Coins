@@ -134,6 +134,7 @@
         android:clipToPadding="false"
         android:drawSelectorOnTop="false"
         android:paddingBottom="@dimen/big_padding"
+        android:scrollbars="none"
         android:paddingTop="@dimen/drawable_left_pad"/>
 
     <LinearLayout

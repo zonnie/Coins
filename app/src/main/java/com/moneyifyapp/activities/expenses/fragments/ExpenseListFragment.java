@@ -82,7 +82,6 @@ public class ExpenseListFragment extends ListFragment
      */
     public static ExpenseListFragment newInstance(int pageId, int year)
     {
-        Utils.writeLog("ExpenseListFragment->newInstance, Page:" + pageId);
         ExpenseListFragment fragment = new ExpenseListFragment();
         Bundle args = new Bundle();
         args.putInt(YEAR_KEY, year);
@@ -111,7 +110,6 @@ public class ExpenseListFragment extends ListFragment
             mYear = getArguments().getInt(YEAR_KEY);
         }
 
-        Utils.writeLog("ExpenseListFragment->onCreate, Page:" + mPageId);
         // Init Parse for data storing
         mTransactionHandler = TransactionHandler.getInstance(getActivity());
 
@@ -130,10 +128,7 @@ public class ExpenseListFragment extends ListFragment
     private void reFeatchDataIfWeResumed()
     {
         if (mTransactionHandler.isFirstFeatch())
-        {
             mTransactionHandler.registerListenerAndFetchTransactions(this, mYear);
-            Utils.writeLog("DEBUG : Refetched data, Page:" + mPageId);
-        }
     }
 
     /**
@@ -162,7 +157,6 @@ public class ExpenseListFragment extends ListFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        Utils.writeLog("ExpenseListFragment->onCreateView, Page:" + mPageId);
         mView = inflater.inflate(R.layout.fragment_expenses, container, false);
 
         storeViews();
@@ -193,7 +187,6 @@ public class ExpenseListFragment extends ListFragment
         if(mAdapter.isEmpty() && mTransactions != null)
         {
             buildExpenseListFromTransactionHandler();
-            Utils.writeLog("DEBUG: Adapter was empty and we had transactions, Page:" + mPageId);
         }
 
     }

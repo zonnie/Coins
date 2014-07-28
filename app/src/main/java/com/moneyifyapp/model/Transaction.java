@@ -64,7 +64,7 @@ public class Transaction implements Comparable<Transaction>
         this.mDescription = "";
         this.mValue = "";
         this.mCurrency = "";
-        this.mImageResourceIndex = 0;
+        this.mImageResourceIndex = Images.getDefaultImage();
         this.mNotes = "";
         this.mIsExpense = true;
         this.mTransactionDay = String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));

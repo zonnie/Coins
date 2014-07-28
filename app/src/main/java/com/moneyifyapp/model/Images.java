@@ -138,7 +138,7 @@ public class Images
     /**
      *
      */
-    private static class ImageWithCaption implements Comparable<ImageWithCaption>
+    public static class ImageWithCaption implements Comparable<ImageWithCaption>
     {
         private Integer mImageResource;
         private String mImageCaption;
@@ -166,5 +166,20 @@ public class Images
         {
             return mImageCaption.toUpperCase().compareTo(another.getCaption().toUpperCase());
         }
+    }
+
+    /**
+     */
+    public static int getDefaultImage()
+    {
+        int imageIndex = 0;
+
+        for(int i = 0; i < mImages.size(); ++i)
+        {
+            if(mImages.get(i).mImageResource == R.drawable.shop)
+                imageIndex = i;
+        }
+
+        return imageIndex;
     }
 }
