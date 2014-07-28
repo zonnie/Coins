@@ -77,6 +77,17 @@
                         android:src="@drawable/email"
                         />
 
+                    <View
+                        android:id="@+id/seperator"
+                        android:layout_width="0.6px"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/drawable_left_pad"
+                        android:background="@android:color/darker_gray"
+                        android:layout_toRightOf="@+id/categoryImage"
+                        android:fadingEdge="vertical"
+                        android:fadingEdgeLength="@dimen/drawable_left_pad"
+                        />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
