@@ -34,13 +34,13 @@
                 android:textSize="@dimen/medium_font"
                 />
 
-            <TextView
+            <com.moneyifyapp.views.ThinTextView
                 android:id="@+id/month_analytics_top_category_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/padding_start_currency"
                 android:text="Category Name"
-                android:textSize="@dimen/medium_font"
+                android:textSize="@dimen/large_font"
                 android:textStyle="bold"
                 />
 
@@ -72,7 +72,7 @@
                     android:textSize="@dimen/large_font"
                     />
 
-                <TextView
+                <com.moneyifyapp.views.CondensedTextView
                     android:id="@+id/month_analytics_top_category_sum"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

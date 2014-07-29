@@ -389,6 +389,7 @@ public class ExpenseListFragment extends ListFragment
     {
         super.onActivityCreated(savedState);
         getListView().setDivider(null);
+        getListView().setTextFilterEnabled(true);
     }
 
     /**
@@ -581,9 +582,9 @@ public class ExpenseListFragment extends ListFragment
                     Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
                     if (getListView().getChildCount() > 0)
                         getListView().getChildAt(0).startAnimation(anim);
-                    //showTotalsIfTransactionsExist();
 
-                } else if (requestCode == ExpensesActivity.REQ_EDIT_ITEM)
+                }
+                else if (requestCode == ExpensesActivity.REQ_EDIT_ITEM)
                 {
                     // Remove the old transaction from the totals
                     updateTotalsOnAddedTransaction(mTransactions.getItems().get(position), true);

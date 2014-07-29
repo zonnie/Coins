@@ -3,17 +3,22 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:orientation="vertical"
-              android:weightSum="20"
+              android:background="@color/background"
     >
 
-    <TextView
+    <com.moneyifyapp.views.ThinEditText
+        android:id="@+id/image_picker_filter"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.4"
-        android:background="@drawable/back_regualr"
-        android:gravity="center"
-        android:text="@string/image_gallery_hint"
-        android:textColor="@android:color/white"
+        android:layout_height="wrap_content"
+        android:gravity="start|center_vertical"
+        android:background="@drawable/card"
+        android:drawableEnd="@drawable/search"
+        android:paddingStart="@dimen/big_padding"
+        android:paddingEnd="@dimen/big_padding"
+        android:hint="Search"
+        android:paddingBottom="@dimen/padding_start_currency"
+        android:paddingTop="@dimen/padding_start_currency"
+        android:textColor="@android:color/darker_gray"
         />
 
     <ListView
@@ -21,7 +26,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null"
-        >
+        />
 
-        </ListView>
 </LinearLayout>

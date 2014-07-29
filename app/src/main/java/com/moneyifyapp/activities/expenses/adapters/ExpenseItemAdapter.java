@@ -29,7 +29,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private ListItemHandler mListener;
     private int mLayoutResourceId;
     private MonthTransactions mTransactions;
-    public static int PICK_IMAGE_DIMENSIONS = 150;
+    public static int PICK_IMAGE_DIMENSIONS = 130;
     private Animation mItemsLoadAnimation;
     public View mMyView;
     private ViewHolder mViewHolder;
@@ -191,10 +191,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private void handleViewNote(Transaction currentTransactionView)
     {
         if (mViewHolder.mExpenseNote != null)
-        {
-            if (!currentTransactionView.mNotes.isEmpty())
-                mViewHolder.mExpenseNote.setText(currentTransactionView.mNotes);
-        }
+            mViewHolder.mExpenseNote.setText(currentTransactionView.mNotes);
     }
 
     /**
@@ -204,10 +201,8 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     {
         TextView amount = (TextView)view.findViewById(R.id.expenseValue);
         amount.setTextColor(view.getResources().getColor(colorId));
-
         TextView currency = (TextView)view.findViewById(R.id.currency);
         currency.setTextColor(view.getResources().getColor(colorId));
-
     }
 
     /**
@@ -245,7 +240,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         // Update a single transaction
         updateTransaction(position, expense);
 
-        // Reflect on display
         notifyDataSetChanged();
     }
 
@@ -262,10 +256,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             updatedExpense.mCurrency = expense.mCurrency;
             updatedExpense.mNotes = expense.mNotes;
             updatedExpense.mImageResourceIndex = expense.mImageResourceIndex;
-            // Update image
             handleViewImage(Images.getImageByPosition(updatedExpense.mImageResourceIndex));
-
-            // Update the transaction look according to type
             updateViewType(updatedExpense, expense);
         }
     }
@@ -278,26 +269,19 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         boolean changeTextColor = false;
 
         if(updatedExpense.mIsExpense != expense.mIsExpense)
-        {
             changeTextColor = true;
-        }
 
         updatedExpense.mIsExpense = expense.mIsExpense;
-
         // Update the amount color according to transaction type
         if(expense.mIsExpense && changeTextColor)
         {
             if(mMyView != null)
-            {
                 updateViewToExpense(mMyView, R.color.expense_color);
-            }
         }
         else if(!expense.mIsExpense && changeTextColor)
         {
             if(mMyView != null)
-            {
                 updateViewToExpense(mMyView, R.color.income_color);
-            }
         }
     }
 
@@ -317,7 +301,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     {
         Drawable img = getContext().getResources().getDrawable(resourceIndex);
         img.setBounds( 0, 0, PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
-        //mViewHolder.mExpenseDescription.setCompoundDrawables(img, null, null, null);
         mViewHolder.mExpenseImage.setImageDrawable(img);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
         mViewHolder.mExpenseImage.setLayoutParams(layoutParams);
@@ -349,5 +332,4 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         public Button mRemoveItemButton;
         public ImageView mExpenseImage;
     }
-
 }

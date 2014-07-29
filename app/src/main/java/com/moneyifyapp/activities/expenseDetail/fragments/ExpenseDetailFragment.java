@@ -4,16 +4,17 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -36,14 +37,11 @@ import com.moneyifyapp.utils.Utils;
  */
 public class ExpenseDetailFragment extends Fragment
 {
-    private Button mSubmitButton;
     private TextView mDetailDateDay;
     private TextView mDetailDateMonth;
-    private Button mCancelButton;
     private EditText mExpenseDescription;
     private EditText mExpenseValue;
     private ImageButton mExpenseIcon;
-    private TextView mExpenseCurrency;
     private EditText mExpenseNotes;
     private ToggleButton mToggleIsExpense;
     private OnFragmentInteractionListener mListener;
@@ -56,8 +54,6 @@ public class ExpenseDetailFragment extends Fragment
     private View mView;
     private int mMonth;
     private String mMonthPrefix;
-    private Typeface mDescriptionFont;
-    private Typeface mDateFont;
 
     /**
      */
@@ -92,13 +88,11 @@ public class ExpenseDetailFragment extends Fragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         if (getArguments() != null)
         {
             mIsEdit = getArguments().getBoolean(EXPENSE_EDIT_KEY);
             mMonth = getArguments().getInt(ExpenseListFragment.MONTH_KEY);
-
-            mDescriptionFont = Typeface.create(Utils.FONT_THIN, Typeface.NORMAL);
-            mDateFont = Typeface.create(Utils.FONT_CONDENSED, Typeface.NORMAL);
 
             String transactionJson = getArguments().getString(Transaction.TRANS_JSON);
             mTempExpenseObject = JsonServiceYearTransactions.getInstance().fromJsonToTransaction(transactionJson);
@@ -121,7 +115,32 @@ public class ExpenseDetailFragment extends Fragment
         mView = inflater.inflate(R.layout.fragment_create_expense_layout, container, false);
 
         storeViews();
+        bindViewsToEventListeners();
 
+        initImageView();
+        initDataIfTransactionEdited();
+        initDetailDateLabels();
+
+        return mView;
+    }
+
+    /**
+     */
+    private void storeViews()
+    {
+        mDetailDateDay = (TextView) mView.findViewById(R.id.detail_date_day);
+        mExpenseDescription = (EditText) mView.findViewById(R.id.addExpenseDescription);
+        mExpenseValue = (EditText) mView.findViewById(R.id.addExpenseSum);
+        mExpenseIcon = (ImageButton) mView.findViewById(R.id.addExpenseImage);
+        mExpenseNotes = (EditText) mView.findViewById(R.id.addExpenseNotes);
+        mDetailDateMonth = (TextView) mView.findViewById(R.id.detail_date_month);
+        mToggleIsExpense = (ToggleButton) mView.findViewById(R.id.isExpenseToggle);
+    }
+
+    /**
+     */
+    private void bindViewsToEventListeners()
+    {
         mExpenseNotes.setOnEditorActionListener(new TextView.OnEditorActionListener()
         {
             @Override
@@ -137,28 +156,6 @@ public class ExpenseDetailFragment extends Fragment
                 return handled;
             }
         });
-
-        mToggleIsExpense = (ToggleButton) mView.findViewById(R.id.isExpenseToggle);
-
-        // Bind listener
-        mSubmitButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                onSumbitPressed();
-            }
-        });
-        mCancelButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                onCancelPressed();
-            }
-        });
-        // Set default image
-        mExpenseIcon.setImageResource(Images.getImageByPosition(mTempExpenseObject.mImageResourceIndex));
         mExpenseIcon.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -171,38 +168,33 @@ public class ExpenseDetailFragment extends Fragment
             }
         });
 
-        initDataIfTransactionEdited();
-        initDetailDateLabels();
-
-        return mView;
     }
 
-    private void onKeyboardDoneClicked()
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
     {
-        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(mExpenseValue.getWindowToken(), 0);
-        onSumbitPressed();
+        int id = item.getItemId();
+
+        if (id == R.id.submit_item)
+            onSumbitPressed();
+        else if(id == android.R.id.home)
+            onCancelPressed();
+
+        return true;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        inflater.inflate(R.menu.expense_detail, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     /**
      */
-    private void storeViews()
+    private void initImageView()
     {
-        mDetailDateDay = (TextView) mView.findViewById(R.id.detail_date_day);
-        mSubmitButton = (Button) mView.findViewById(R.id.submitButton);
-        mCancelButton = (Button) mView.findViewById(R.id.cancelAddButton);
-        mExpenseDescription = (EditText) mView.findViewById(R.id.addExpenseDescription);
-        mExpenseCurrency = (TextView) mView.findViewById(R.id.addExpenseCurrency);
-        mExpenseValue = (EditText) mView.findViewById(R.id.addExpenseSum);
-        mExpenseIcon = (ImageButton) mView.findViewById(R.id.addExpenseImage);
-        mExpenseNotes = (EditText) mView.findViewById(R.id.addExpenseNotes);
-        mDetailDateMonth = (TextView) mView.findViewById(R.id.detail_date_month);
-
-        if(mDescriptionFont != null)
-        {
-            mExpenseDescription.setTypeface(mDescriptionFont);
-            mExpenseValue.setTypeface(mDescriptionFont);
-        }
+        mExpenseIcon.setImageResource(Images.getImageByPosition(mTempExpenseObject.mImageResourceIndex));
     }
 
     /**
@@ -243,10 +235,6 @@ public class ExpenseDetailFragment extends Fragment
             mCurrentImage = data.getExtras().getInt(Transaction.KEY_IMAGE_NAME);
             mExpenseIcon.setImageResource(Images.getImageByPosition(mCurrentImage));
         }
-        else if (resultCode == ExpensesActivity.IMAGE_PICK_CANCEL)
-        {
-            //Nothing yet
-        }
     }
 
 
@@ -260,7 +248,7 @@ public class ExpenseDetailFragment extends Fragment
             int imageName = mCurrentImage;
             String note = mExpenseNotes.getText().toString();
             String sum = mExpenseValue.getText().toString();
-            String currency = mExpenseCurrency.getText().toString();
+            String currency = Utils.getDefaultCurrency(getActivity());
             boolean isExpense = !mToggleIsExpense.isChecked();  // If it's un-toggled this means this is an expense
 
             if (description.isEmpty() || sum.isEmpty())

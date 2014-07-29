@@ -182,4 +182,9 @@ public class Images
 
         return imageIndex;
     }
+
+    public static List<ImageWithCaption> getImageWithCaptions()
+    {
+        return mImages;
+    }
 }

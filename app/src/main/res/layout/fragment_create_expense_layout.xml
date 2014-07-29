@@ -63,6 +63,7 @@
             android:orientation="vertical"
             android:paddingLeft="@dimen/big_padding"
             android:paddingRight="@dimen/big_padding"
+            android:paddingBottom="@dimen/big_padding"
             >
 
             <LinearLayout
@@ -202,7 +203,7 @@
                 android:orientation="vertical"
                 >
 
-                <EditText
+                <com.moneyifyapp.views.ThinEditText
                     android:id="@+id/addExpenseDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -216,7 +217,7 @@
                     android:maxLength="@integer/max_desc_len"
                     android:paddingBottom="@dimen/padding_start_currency"
                     android:singleLine="true"
-                    android:textSize="@dimen/large_font"
+                    android:textSize="@dimen/medium_font"
                     />
 
                 <LinearLayout
@@ -226,9 +227,9 @@
                     android:paddingBottom="@dimen/padding_start_currency"
                     >
 
-                    <EditText
+                    <com.moneyifyapp.views.ThinEditText
                         android:id="@+id/addExpenseSum"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:drawableLeft="@drawable/sum"
@@ -240,25 +241,14 @@
                         android:inputType="numberDecimal"
                         android:maxLength="7"
                         android:singleLine="true"
-                        android:textSize="@dimen/large_font"
+                        android:textSize="@dimen/medium_font"
 
 
                         />
 
-                    <com.moneyifyapp.views.CurrencyTextView
-                        android:id="@+id/addExpenseCurrency"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical|right"
-                        android:gravity="center_vertical"
-                        android:text="@string/default_currency"
-                        android:textColor="@android:color/darker_gray"
-                        android:layout_marginLeft="@dimen/padding_start_currency"
-                        android:textSize="@dimen/huge_font"/>
-
                 </LinearLayout>
 
-                <EditText
+                <com.moneyifyapp.views.ThinEditText
                     android:id="@+id/addExpenseNotes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -279,47 +269,12 @@
 
                 <!-- Seperator -->
 
-                <View
+                <!--<View
                     android:layout_width="match_parent"
                     android:layout_height="0.3dp"
                     android:background="@android:color/darker_gray"
-                    />
+                    />-->
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:layout_marginTop="@dimen/padding_start_currency"
-                    >
-
-                    <Button
-                        android:id="@+id/cancelAddButton"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/max_add_width"
-                        android:layout_weight="1"
-                        android:background="@drawable/stanard_button_drawable"
-                        android:text="@string/item_details_cancel"
-                        android:textColor="@android:color/white"/>
-
-                    <Button
-                        android:id="@+id/submitButton"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/max_add_width"
-                        android:layout_weight="1"
-                        android:background="@drawable/stanard_button_drawable"
-                        android:scaleType="fitCenter"
-                        android:text="@string/item_details_submit"
-                        android:textColor="@android:color/white"/>
-
-
-                </LinearLayout>
             </LinearLayout>
 
 

@@ -42,7 +42,7 @@
             android:fadingEdgeLength="@dimen/drawable_left_pad"
             />
 
-    <TextView
+    <com.moneyifyapp.views.ThinTextView
         android:id="@+id/categoryCaption"
         android:layout_width="match_parent"
         android:layout_height="60dp"

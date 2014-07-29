@@ -4,9 +4,9 @@
     >
 
     <item
-        android:id="@+id/delete_item"
+        android:id="@+id/submit_item"
         android:showAsAction="always"
         android:title="@string/item_list_delete"
-        android:icon="@drawable/empty_2"
+        android:icon="@drawable/accept"
         />
 </menu>
