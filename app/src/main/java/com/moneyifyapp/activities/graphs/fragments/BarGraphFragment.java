@@ -43,7 +43,7 @@ public class BarGraphFragment extends Fragment
     public static final String GRAPH_ARGS = "graphArgs";
     private Animation mBarAnimation;
     private BarGraphParameters mParameters;
-    private boolean mNoInsights = false;
+    private boolean mNoInsights;
 
     /**
      * Factory to pass some data for different fragments creation.
@@ -70,6 +70,8 @@ public class BarGraphFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
+        mNoInsights = false;
+
         if (getArguments() != null)
         {
             String json = getArguments().getString(GRAPH_ARGS);

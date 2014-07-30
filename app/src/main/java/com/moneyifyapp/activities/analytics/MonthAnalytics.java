@@ -81,24 +81,21 @@ public class MonthAnalytics extends Activity
      */
     private MonthAnalyticsFragment initMonthlyOverviewFragment()
     {
-        MonthAnalyticsFragment fragment = MonthAnalyticsFragment.newInstance(mMonth, mYear, mYearTransactions);
-        return fragment;
+        return MonthAnalyticsFragment.newInstance(mMonth, mYear, mYearTransactions);
     }
 
     /**
      */
     private TopCategoryFragment initTopFragment()
     {
-        TopCategoryFragment topFragment = TopCategoryFragment.newInstance(mMonth, mYear, mYearTransactions);
-        return topFragment;
+        return TopCategoryFragment.newInstance(mMonth, mYear, mYearTransactions);
     }
 
     /**
      */
     private BarGraphFragment initGraphFragment()
     {
-        BarGraphFragment graphFragment = BarGraphFragment.newInstance(buildGraph());
-        return graphFragment;
+        return BarGraphFragment.newInstance(buildGraph());
     }
 
     /**
@@ -169,9 +166,7 @@ public class MonthAnalytics extends Activity
      */
     private TextView loadTextViewAndSetText(int resourceId, String text)
     {
-        TextView textView = null;
-
-        textView = (TextView) findViewById(resourceId);
+        TextView textView = (TextView) findViewById(resourceId);
         textView.setText(text);
 
         return textView;
