@@ -40,7 +40,7 @@
             >
 
             <ImageView
-                android:id="@+id/signUpMainImage"
+                android:id="@+id/accountMainImage"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:contentDescription="Main image"

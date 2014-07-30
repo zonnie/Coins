@@ -178,6 +178,15 @@ public class MonthAnalytics extends Activity
                 result.add(0);
         }
 
+        // Clear list if all values are 0's
+        boolean allZeros = true;
+        for(Integer cur : result)
+            if(cur != 0)
+                allZeros = false;
+
+        if(allZeros)
+            result.clear();
+
         return result;
     }
 

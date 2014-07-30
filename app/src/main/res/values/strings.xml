@@ -18,6 +18,7 @@
     <string name="action_sign_in_short">Sign In</string>
     <string name="action_sign_in">Sign In</string>
     <string name="action_sing_up">Sign Up</string>
+    <string name="action_update_account">Update</string>
     <string name="Email">Email</string>
     <string name="password_hint">Password</string>
     <string name="verify_pass_hint">Verify Password</string>
@@ -26,6 +27,7 @@
     <string name="login_welcome">Welcome!</string>
     <string name="login_welcome_2nd_line">Sign in and save some Coins</string>
     <string name="signup_welcome">Some info that we\'ll know you in the future</string>
+    <string name="account_hint">Update us on any account changes</string>
     <string name="image_picker_hint_text">Select category</string>
     <string name="toggle_hint_text">Tap to change</string>
     <string name="drawer_open">Open</string>
@@ -61,5 +63,6 @@
     <string name="spending_string">"Spending</string>
     <string name="spent_string">"Spent</string>
     <string name="title_activity_dashboard">Dashboard</string>
+    <string name="title_activity_user_account">Account</string>
 
 </resources>

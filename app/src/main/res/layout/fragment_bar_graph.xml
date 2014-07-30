@@ -8,44 +8,83 @@
     >
 
     <LinearLayout
-        android:id="@+id/bar_graph_root"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/drawable_left_pad"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         >
 
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/month_analytics_graph_hint"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/card"
+            android:gravity="center"
+            android:paddingTop="@dimen/mongo_padding"
+            android:text="@string/analytics_str_top_graph_hint"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/medium_font"
+            />
+
+        <LinearLayout
+            android:id="@+id/bar_graph_root"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/drawable_left_pad"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/expense_drawable_left_pad"
-            android:paddingLeft="@dimen/expense_drawable_left_pad"
-            android:paddingRight="@dimen/expense_drawable_left_pad"
-            android:weightSum="12"
+            android:visibility="gone"
             >
 
-            <TextView
-                android:id="@+id/graph_bar_title_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/drawable_left_pad"
-                android:layout_marginTop="@dimen/padding_start_currency"
-                android:gravity="center"
-                android:text="@string/dashboard_bar_expense_chart_title"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="@dimen/medium_font"
-                />
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/card"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/expense_drawable_left_pad"
+                android:paddingLeft="@dimen/expense_drawable_left_pad"
+                android:paddingRight="@dimen/expense_drawable_left_pad"
+                android:weightSum="12"
                 >
 
+                <TextView
+                    android:id="@+id/graph_bar_title_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/drawable_left_pad"
+                    android:layout_marginTop="@dimen/padding_start_currency"
+                    android:gravity="center"
+                    android:text="@string/dashboard_bar_expense_chart_title"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/medium_font"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/linearChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="bottom"
+                        android:orientation="horizontal"
+                        >
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_below="@id/linearChart"
+                        android:background="@android:color/darker_gray"
+                        />
+
+                </RelativeLayout>
+
                 <LinearLayout
-                    android:id="@+id/linearChart"
+                    android:id="@+id/xAxisLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="bottom"
@@ -54,38 +93,18 @@
 
                 </LinearLayout>
 
-
-                <View
-                    android:id="@+id/view"
+                <TextView
+                    android:id="@+id/graph_x_axis_title"
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_below="@id/linearChart"
-                    android:background="@android:color/darker_gray"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_start_currency"
+                    android:gravity="center"
+                    android:text="Month"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/tiny_font"
                     />
 
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/xAxisLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:orientation="horizontal"
-                >
-
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/graph_x_axis_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_start_currency"
-                android:gravity="center"
-                android:text="Month"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="@dimen/tiny_font"
-                />
-
         </LinearLayout>
     </LinearLayout>
 

@@ -40,6 +40,7 @@
             android:theme="@style/Theme.CustomizedAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -79,9 +80,17 @@
         </activity>
         <activity
             android:name=".activities.graphs.DashboardActivity"
-            android:label="@string/title_activity_dashboard"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_dashboard"
             android:parentActivityName=".activities.expenses.ExpensesActivity">
+        </activity>
+        <activity
+            android:name=".activities.login.AccountActivity"
+            android:label="@string/title_activity_user_account"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden"
+            android:parentActivityName=".activities.expenses.ExpensesActivity"
+            >
         </activity>
     </application>
 

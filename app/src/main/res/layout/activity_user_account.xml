@@ -11,7 +11,7 @@
     >
 
     <ProgressBar
-        android:id="@+id/signup_progress"
+        android:id="@+id/account_progress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         />
 
     <ScrollView
-        android:id="@+id/signup_form"
+        android:id="@+id/account_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
@@ -39,12 +39,12 @@
             >
 
             <ImageView
-                android:id="@+id/signupMainImage"
+                android:id="@+id/accountMainImage"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/padding_start_currency"
-                android:src="@drawable/sign_up"/>
+                android:src="@drawable/account"/>
 
             <TextView
                 android:id="@+id/sign_up_welcome"
@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/expense_drawable_left_pad"
-                android:text="@string/signup_welcome"
+                android:text="@string/account_hint"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="@dimen/tiny_font"/>
 
@@ -71,8 +71,8 @@
                 android:paddingTop="@dimen/drawable_left_pad"
                 >
 
-                <EditText
-                    android:id="@+id/usernameEditText"
+                <com.moneyifyapp.views.ThinEditText
+                    android:id="@+id/update_username_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
@@ -85,8 +85,8 @@
                     android:inputType="textEmailAddress"
                     android:textColorHint="#bbbbbb"/>
 
-                <EditText
-                    android:id="@+id/passEditText"
+                <com.moneyifyapp.views.ThinEditText
+                    android:id="@+id/update_pass_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
@@ -100,8 +100,8 @@
                     android:singleLine="true"
                     android:textColorHint="#bbbbbb"/>
 
-                <EditText
-                    android:id="@+id/passVerifyEditText"
+                <com.moneyifyapp.views.ThinEditText
+                    android:id="@+id/update_pass_verify_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/drawable_left_pad"
@@ -118,13 +118,13 @@
                     android:textColorHint="#bbbbbb"/>
 
                 <Button
-                    android:id="@+id/confirm_signup"
+                    android:id="@+id/confirm_update"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
                     android:background="@drawable/stanard_button_drawable"
                     android:padding="10dp"
-                    android:text="@string/action_sing_up"
+                    android:text="@string/action_update_account"
                     android:textColor="@android:color/white"
                     />
             </LinearLayout>

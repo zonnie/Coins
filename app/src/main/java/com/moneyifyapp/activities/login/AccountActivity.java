@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -22,11 +21,9 @@ import android.widget.Toast;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.utils.Utils;
-import com.parse.ParseException;
 import com.parse.ParseUser;
-import com.parse.SignUpCallback;
 
-public class SignUpActivity extends Activity implements View.OnClickListener
+public class AccountActivity extends Activity implements View.OnClickListener
 {
     private EditText mUserEditText;
     private EditText mPassEditText;
@@ -45,12 +42,10 @@ public class SignUpActivity extends Activity implements View.OnClickListener
         Utils.initializeParse(this);
         Utils.setupBackButton(this);
         Utils.removeLogo(this);
+
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-
-        setContentView(R.layout.activity_sign_up);
-
+        setContentView(R.layout.activity_user_account);
         getActionBar().setHomeButtonEnabled(true);
-
         storeViews();
         bindEventListenersToViews();
     }
@@ -59,11 +54,11 @@ public class SignUpActivity extends Activity implements View.OnClickListener
      */
     private void storeViews()
     {
-        mUserEditText = (EditText) findViewById(R.id.usernameEditText);
-        mPassEditText = (EditText) findViewById(R.id.passEditText);
-        mSignupForm = findViewById(R.id.signup_form);
-        mProgressView = findViewById(R.id.signup_progress);
-        mPassRepeatEditText = (EditText) findViewById(R.id.passVerifyEditText);
+        mUserEditText = (EditText) findViewById(R.id.update_username_edittext);
+        mPassEditText = (EditText) findViewById(R.id.update_pass_edittext);
+        mSignupForm = findViewById(R.id.account_form);
+        mProgressView = findViewById(R.id.account_progress);
+        mPassRepeatEditText = (EditText) findViewById(R.id.update_pass_verify_edittext);
 
     }
 
@@ -89,7 +84,7 @@ public class SignUpActivity extends Activity implements View.OnClickListener
         mUserEditText.setOnClickListener(this);
         mPassEditText.setOnClickListener(this);
         mPassRepeatEditText.setOnClickListener(this);
-        Button signUpButton = (Button) findViewById(R.id.confirm_signup);
+        Button signUpButton = (Button) findViewById(R.id.confirm_update);
         signUpButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -111,7 +106,7 @@ public class SignUpActivity extends Activity implements View.OnClickListener
         if (isSignUpValid())
         {
             showProgress(true);
-            signUp();
+            updateAccount();
         }
     }
 
@@ -124,9 +119,6 @@ public class SignUpActivity extends Activity implements View.OnClickListener
     }
 
     /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
      */
     public boolean isSignUpValid()
     {
@@ -173,52 +165,22 @@ public class SignUpActivity extends Activity implements View.OnClickListener
 
         if (cancel)
         {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
             return false;
         }
         else
-        {
             return true;
-        }
     }
 
     /**
      * Sign up using Parse API.
      */
-    private void signUp()
+    private void updateAccount()
     {
         ParseUser user = new ParseUser();
         user.setUsername(mUserEditText.getText().toString());
         user.setPassword(mPassEditText.getText().toString());
 
-        user.signUpInBackground(new SignUpCallback()
-        {
-            public void done(ParseException e)
-            {
-                if (e == null)
-                {
-                    goToLogin();
-                    finish();
-                    showProgress(false);
-                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                } else
-                {
-                    singUpFailed();
-                    showProgress(false);
-                }
-            }
-        });
-    }
-
-    /**
-     * Go to sign in activity, this occurs when sign up was successful.
-     */
-    private void goToLogin()
-    {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
     }
 
     /**

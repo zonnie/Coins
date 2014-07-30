@@ -25,7 +25,7 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItem>
     private List<DrawerItem> mDrawerItems;
     private View mMyView;
     private int mLayoutResourceId;
-    public static int PICK_IMAGE_DIMENSIONS = 120;
+    public static int PICK_IMAGE_DIMENSIONS = 130;
     private Animation mItemsLoadAnimation;
 
     /**
@@ -141,9 +141,6 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItem>
     public void insert(DrawerItem item, int position)
     {
         super.insert(item, position);
-        //Animation animation = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in);
-        //View view = getView(position, null, null);
-        //view.startAnimation(animation);
     }
 
     /**
@@ -154,6 +151,5 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItem>
         Drawable img = getContext().getResources().getDrawable(resourceIndex);
         img.setBounds( 0, 0, PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
         mItemTitle.setCompoundDrawables(img, null, null, null);
-        //Image.setImageResource(resourceIndex);
     }
 }

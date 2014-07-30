@@ -6,7 +6,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -19,13 +18,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.analytics.FullAnalyticsActivity;
 import com.moneyifyapp.activities.expenses.drawer.DrawerItemAdapter;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.activities.graphs.DashboardActivity;
+import com.moneyifyapp.activities.login.AccountActivity;
 import com.moneyifyapp.activities.login.LoginActivity;
 import com.moneyifyapp.activities.preferences.PrefActivity;
 import com.moneyifyapp.model.Transaction;
@@ -66,7 +65,6 @@ public class ExpensesActivity extends Activity
     private ActionBarDrawerToggle mDrawerToggle;
     private YearTransactions mYearTransactions;
     private Activity mActivity;
-    private Typeface mHeadLineTypeFace;
 
     /**
      * Called once every life cycle.
@@ -88,14 +86,34 @@ public class ExpensesActivity extends Activity
         Utils.initializeActionBar(this);
         Utils.setupBackButton(this);
 
+        initViewPager();
+        initDrawer();
+        initActionBarDisplay();
+    }
+
+    /**
+     */
+    private void initActionBarDisplay()
+    {
+        if (getActionBar() != null)
+            getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP);
+    }
+
+    /**
+     */
+    private void initViewPager()
+    {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setCurrentItem(mCalender.get(Calendar.MONTH));
         mViewPager.setOnPageChangeListener(this);
+    }
 
-        /** Drawer **/
-
+    /**
+     */
+    private void initDrawer()
+    {
         mDrawerTopListLayout = (LinearLayout) findViewById(R.id.top_list_layout);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -104,12 +122,6 @@ public class ExpensesActivity extends Activity
         mDrawerToggle = createDrawerToggle();
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP);
-
-
-        mHeadLineTypeFace = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
-        TextView title = (TextView)findViewById(R.id.top_drawer_title);
-        title.setTypeface(mHeadLineTypeFace);
     }
 
     /**
@@ -125,16 +137,16 @@ public class ExpensesActivity extends Activity
         )
         {
 
-            /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view)
             {
-                getActionBar().setTitle(DRAWER_TITLE);
+                if (getActionBar() != null)
+                    getActionBar().setTitle(DRAWER_TITLE);
             }
 
-            /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView)
             {
-                getActionBar().setTitle(DRAWER_TITLE);
+                if (getActionBar() != null)
+                    getActionBar().setTitle(DRAWER_TITLE);
             }
         };
 
@@ -181,49 +193,59 @@ public class ExpensesActivity extends Activity
     public void onPageScrollStateChanged(int state){}
 
     /**
-     *
      */
     private class DrawerItemClickListener implements ListView.OnItemClickListener
     {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id)
         {
-            // Highlight the selected item, update the title, and close the drawer
             mDrawerList.setItemChecked(position, true);
             mDrawerLayout.closeDrawer(mDrawerTopListLayout);
 
-            //TODO This is temp, should be done for every drawer item
             if (position == 0)
-            {
-                Intent intent = new Intent(mActivity, FullAnalyticsActivity.class);
-                startActivity(intent);
-            }
+                startAnalyticsActivity();
             else if (position == 1)
-            {
-                return;
-            }
+                startPrefActivity();
             else if (position == 2)
-            {
-                Intent intent = new Intent(mActivity, PrefActivity.class);
-                startActivityForResult(intent, REQ_PREFS);
-            }
-            else if(position == 3)
-            {
-                Intent intent = new Intent(mActivity, DashboardActivity.class);
-                startActivity(intent);
-            }
+                startAccountActivity();
+            else if (position == 3)
+                startDashboardActivity();
         }
     }
 
-    @Override
-    protected void onResume()
+    /**
+     */
+    private void startAnalyticsActivity()
     {
-        super.onResume();
+        Intent intent = new Intent(mActivity, FullAnalyticsActivity.class);
+        startActivity(intent);
     }
 
     /**
-     * @param menu
-     * @return
+     */
+    private void startPrefActivity()
+    {
+        Intent intent = new Intent(mActivity, PrefActivity.class);
+        startActivityForResult(intent, REQ_PREFS);
+    }
+
+    /**
+     */
+    private void startAccountActivity()
+    {
+        Intent intent = new Intent(mActivity, AccountActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     */
+    private void startDashboardActivity()
+    {
+        Intent intent = new Intent(mActivity, DashboardActivity.class);
+        startActivity(intent);
+    }
+
+    /**
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -234,8 +256,6 @@ public class ExpensesActivity extends Activity
     }
 
     /**
-     * @param item
-     * @return
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -246,13 +266,11 @@ public class ExpensesActivity extends Activity
         {
             mViewPager.setCurrentItem(mCalender.get(Calendar.MONTH));
             return true;
-        }
-        else if (id == R.id.logout)
+        } else if (id == R.id.logout)
         {
             logOutUser();
             return true;
-        }
-        else if (mDrawerToggle.onOptionsItemSelected(item))
+        } else if (mDrawerToggle.onOptionsItemSelected(item))
             return true;
 
         return super.onOptionsItemSelected(item);
@@ -262,13 +280,16 @@ public class ExpensesActivity extends Activity
      */
     private void logOutUser()
     {
-        // Logout user - this clears the disk from any user remains
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        currentUser.logOut();
+        ParseUser.logOut();
 
         mTransactionHadler.clearUserTransactions();
+        startLoginActivity();
+    }
 
-        // Got to login now
+    /**
+     */
+    private void startLoginActivity()
+    {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
@@ -299,7 +320,7 @@ public class ExpensesActivity extends Activity
     private void updateFragmentOnCurrencyPrefChange(int id)
     {
         //TODO : This is will not be future-proof
-        ExpenseListFragment frag = (ExpenseListFragment)getFragmentManager().findFragmentByTag("android:switcher:"+R.id.pager+":"+id);
+        ExpenseListFragment frag = (ExpenseListFragment) getFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + id);
         frag.updateFragmentCurrency();
         frag.updateTotalCurrencyToPrefDefault();
     }
@@ -308,7 +329,6 @@ public class ExpensesActivity extends Activity
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter
     {
-
         public SectionsPagerAdapter(FragmentManager fm)
         {
             super(fm);
@@ -330,7 +350,6 @@ public class ExpensesActivity extends Activity
         @Override
         public int getCount()
         {
-            // Show 12 pages
             return Months.values().length;
         }
 

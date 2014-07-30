@@ -84,9 +84,13 @@ public class BarGraphFragment extends Fragment
         mView = inflater.inflate(R.layout.fragment_bar_graph, container, false);
 
         initViewsByParameters();
-        mMaxHeight = Collections.max(mValues);
-        drawBars();
-        drawXLabels();
+
+        if(!mValues.isEmpty())
+        {
+            mMaxHeight = Collections.max(mValues);
+            drawBars();
+            drawXLabels();
+        }
 
         return mView;
     }
@@ -98,16 +102,17 @@ public class BarGraphFragment extends Fragment
         int weigtSum = mValues.size();
 
         if(!mValues.isEmpty())
+        {
             updateHasInsignts();
-        mLinearChart = (LinearLayout) mView.findViewById(R.id.linearChart);
-        mLinearChart.setWeightSum(weigtSum);
-        mXAxisContainer = (LinearLayout) mView.findViewById(R.id.xAxisLayout);
-        mXAxisContainer.setWeightSum(weigtSum);
-        TextView title = (TextView) mView.findViewById(R.id.graph_bar_title_label);
-        title.setText(mParameters.mTitle);
-        TextView xTitle = (TextView) mView.findViewById(R.id.graph_x_axis_title);
-        xTitle.setText(mParameters.mXAxisTitle);
-
+            mLinearChart = (LinearLayout) mView.findViewById(R.id.linearChart);
+            mLinearChart.setWeightSum(weigtSum);
+            mXAxisContainer = (LinearLayout) mView.findViewById(R.id.xAxisLayout);
+            mXAxisContainer.setWeightSum(weigtSum);
+            TextView title = (TextView) mView.findViewById(R.id.graph_bar_title_label);
+            title.setText(mParameters.mTitle);
+            TextView xTitle = (TextView) mView.findViewById(R.id.graph_x_axis_title);
+            xTitle.setText(mParameters.mXAxisTitle);
+        }
     }
 
     /**
@@ -196,6 +201,9 @@ public class BarGraphFragment extends Fragment
             LinearLayout layout = (LinearLayout) mView.findViewById(R.id.bar_graph_root);
             if(layout != null)
                 layout.setVisibility(View.VISIBLE);
+            TextView hint = (TextView) mView.findViewById(R.id.month_analytics_graph_hint);
+            if(hint != null)
+                hint.setVisibility(View.GONE);
         }
     }
 

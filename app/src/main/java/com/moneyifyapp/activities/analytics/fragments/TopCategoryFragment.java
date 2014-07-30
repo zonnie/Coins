@@ -81,9 +81,7 @@ public class TopCategoryFragment extends Fragment
         }
 
         if (mYearTransactions != null && mMonthTransactions != null)
-        {
             initTopCategory();
-        }
 
         return mRootView;
     }
@@ -97,9 +95,6 @@ public class TopCategoryFragment extends Fragment
         if (categorySum != null)
         {
             updateHasInsignts();
-
-            LinearLayout topCategoryLayout = (LinearLayout) mRootView.findViewById(R.id.month_analytics_top_category_layout);
-            topCategoryLayout.setVisibility(View.VISIBLE);
 
             String sum = Utils.formatDoubleToTextCurrency(categorySum.mSecondField);
             int resource = categorySum.mFirstField;
@@ -119,6 +114,9 @@ public class TopCategoryFragment extends Fragment
             LinearLayout layout = (LinearLayout) mRootView.findViewById(R.id.month_analytics_top_category_layout);
             if(layout != null)
                 layout.setVisibility(View.VISIBLE);
+            TextView hint = (TextView) mRootView.findViewById(R.id.month_analytics_top_category_hint);
+            if(hint != null)
+                hint.setVisibility(View.GONE);
         }
     }
 

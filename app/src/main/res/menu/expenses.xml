@@ -12,6 +12,6 @@
         android:id="@+id/add_expense"
         android:title="@string/new_expense_button_caption"
         android:showAsAction="always"
-        android:icon="@drawable/add_2"
+        android:icon="@drawable/add"
         />
 </menu>
