@@ -1,23 +1,23 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/background"
             android:orientation="vertical"
             android:scrollbars="none"
-
+            android:fillViewport="true"
     >
 
     <!-- Top Category -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="fill_parent"
         android:orientation="vertical"
         >
 
         <TextView
             android:id="@+id/month_analytics_top_category_hint"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingTop="@dimen/mongo_padding"
             android:text="@string/analytics_str_top_category_hint"
@@ -25,90 +25,16 @@
             android:textSize="@dimen/medium_font"
             />
 
-        <LinearLayout
+        <GridView
             android:id="@+id/month_analytics_top_category_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@android:color/transparent"
-            android:orientation="horizontal"
-            android:visibility="gone"
+            android:numColumns="auto_fit"
+            android:columnWidth="120dp"
+            android:stretchMode="columnWidth"
+            android:scrollbars="none"
             >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/drawable_left_pad"
-                android:background="@drawable/card"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/padding_start_currency"
-                android:paddingLeft="@dimen/expense_drawable_left_pad"
-                android:paddingRight="@dimen/expense_drawable_left_pad"
-                android:paddingTop="@dimen/padding_start_currency"
-                android:showDividers="none"
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/analytics_str_top_category_label"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="@dimen/medium_font"
-                    />
-
-                <com.moneyifyapp.views.ThinTextView
-                    android:id="@+id/month_analytics_top_category_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/padding_start_currency"
-                    android:text="Category Name"
-                    android:textSize="@dimen/large_font"
-                    android:textStyle="bold"
-                    />
-
-                <ImageView
-                    android:id="@+id/month_analytics_top_category_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/padding_start_currency"
-                    android:src="@drawable/empty_2"
-                    />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/padding_start_currency"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    >
-
-                    <com.moneyifyapp.views.CurrencyTextView
-                        android:id="@+id/month_analytics_top_category_currency"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:text="@string/default_currency"
-                        android:textColor="@color/expense_color"
-                        android:textSize="@dimen/large_font"
-                        />
-
-                    <com.moneyifyapp.views.CondensedTextView
-                        android:id="@+id/month_analytics_top_category_sum"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="start"
-                        android:text="@string/init_total_value"
-                        android:textColor="@color/expense_color"
-                        android:textSize="@dimen/large_font"
-                        />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
+        </GridView>
     </LinearLayout>
-</ScrollView>
+</LinearLayout>

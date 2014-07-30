@@ -2,7 +2,10 @@ package com.moneyifyapp.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Helper class for providing sample content for user interfaces created by
@@ -221,7 +224,6 @@ public class MonthTransactions
     }
 
     /**
-     *
      */
     public class Couple<T, M>
     {
@@ -235,9 +237,57 @@ public class MonthTransactions
         }
     }
 
-    public List<Couple<String, Integer>> getTopCategoriesValues(int n)
+    /**
+     */
+    public int getNumberOfExpenses()
     {
-        return null;
+        int result = 0;
+
+        for(Transaction cur : mTransactions)
+        {
+            if(cur.mIsExpense)
+                result++;
+        }
+
+        return result;
+    }
+
+    /**
+     */
+    public List<Couple<Integer, Double>> getTopCategoriesValues()
+    {
+        List<Couple<Integer, Double>> result = new ArrayList<Couple<Integer, Double>>();
+        Map<Integer, Double> expenseMap = new HashMap<Integer, Double>();
+
+        for(Transaction cur : mTransactions)
+            if(cur.mIsExpense)
+                expenseMap.put(cur.mImageResourceIndex, Double.parseDouble(cur.mValue));
+
+        for(Integer key : expenseMap.keySet())
+            result.add(new Couple<Integer, Double>(key, expenseMap.get(key)));
+
+        Collections.sort(result, new Comparator<Couple<Integer, Double>>()
+        {
+            @Override
+            public int compare(Couple<Integer, Double> lhs, Couple<Integer, Double> rhs)
+            {
+                return lhs.mSecondField.intValue() - rhs.mSecondField.intValue();
+            }
+        });
+        Collections.reverse(result);
+
+        return result;
+    }
+
+    /**
+     */
+    public List<Couple<Integer, Double>> getTopCategoriesValues(int n)
+    {
+        List<Couple<Integer,Double>> list = getTopCategoriesValues();
+        if(list.size() <= n)
+            return getTopCategoriesValues().subList(0,n);
+        else
+            return getTopCategoriesValues().subList(0,5);
     }
 
     /**

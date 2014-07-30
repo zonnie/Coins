@@ -15,6 +15,7 @@ import com.moneyifyapp.activities.analytics.fragments.MonthAnalyticsFragment;
 import com.moneyifyapp.activities.analytics.fragments.TopCategoryFragment;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.activities.graphs.fragments.BarGraphFragment;
+import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.YearTransactions;
 import com.moneyifyapp.model.enums.Months;
@@ -38,6 +39,7 @@ public class MonthAnalytics extends Activity
     private final String MONTH_BAR_GRAPH_X_LABELS = "Categories";
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+    private int MAX_CATEGORY_NUM = 5;
 
     /**
      * On create
@@ -47,6 +49,7 @@ public class MonthAnalytics extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_month_analytics);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
         if (savedInstanceState == null)
         {
@@ -59,7 +62,6 @@ public class MonthAnalytics extends Activity
 
             // Instantiate a fragment and load with fragment manager
             mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
-            // Set up the ViewPager with the sections adapter.
             mViewPager = (ViewPager) findViewById(R.id.pager);
             mViewPager.setAdapter(mSectionsPagerAdapter);
             initDateLabels();
@@ -131,12 +133,25 @@ public class MonthAnalytics extends Activity
      */
     private BarGraphFragment.BarGraphParameters buildGraph()
     {
+        MonthTransactions transactions = mYearTransactions.get(mMonth);
+        int topNumber = Math.min(MAX_CATEGORY_NUM, transactions.getNumberOfExpenses());
+        List<MonthTransactions.Couple<Integer, Double>> coupleValues = transactions.getTopCategoriesValues(topNumber);
+
+        List<Integer> values = new ArrayList<Integer>();
+        List<String> xValues = new ArrayList<String>();
+
+        for(MonthTransactions.Couple<Integer,Double> cur : coupleValues)
+            values.add(cur.mSecondField.intValue());
+
+        for(MonthTransactions.Couple<Integer,Double> cur : coupleValues)
+            xValues.add(Images.getCaptionByImage(Images.getImageByPosition(cur.mFirstField)));
+
         BarGraphFragment.BarGraphParameters params = new BarGraphFragment.BarGraphParameters(MONTH_BAR_GRAPH_TITLE);
-        params.setValues(createMaxListByType(MonthTransactions.SubsetType.EXPENSE));
+        params.setValues(values);
         params.setYLabels(new ArrayList<String>());
         params.setXAxisTitle(MONTH_BAR_GRAPH_X_LABELS);
         params.mResourceId = R.drawable.graph_bar_back_red;
-        params.setXLabels(new ArrayList<String>());
+        params.setXLabels(xValues);
 
         return params;
     }
@@ -178,7 +193,7 @@ public class MonthAnalytics extends Activity
                 result.add(0);
         }
 
-        // Clear list if all values are 0's
+
         boolean allZeros = true;
         for(Integer cur : result)
             if(cur != 0)
@@ -237,9 +252,9 @@ public class MonthAnalytics extends Activity
                 case 0:
                     return getString(R.string.analytics_monthly_overview_title).toUpperCase(l);
                 case 1:
-                    return getString(R.string.analytics_monthly_Insights_title).toUpperCase(l);
-                case 2:
                     return getString(R.string.analytics_monthly_categories_title).toUpperCase(l);
+                case 2:
+                    return getString(R.string.analytics_monthly_Insights_title).toUpperCase(l);
 
             }
             return null;

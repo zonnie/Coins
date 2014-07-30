@@ -20,9 +20,9 @@ public class Images
         mImages.add(new ImageWithCaption(R.drawable.shop, "Shopping"));
         mImages.add(new ImageWithCaption(R.drawable.ice_cream, "Sweets"));
         mImages.add(new ImageWithCaption(R.drawable.internet, "Internet"));
-        mImages.add(new ImageWithCaption(R.drawable.cell, "Celluar Charges"));
+        mImages.add(new ImageWithCaption(R.drawable.cell, "Cellphone"));
         mImages.add(new ImageWithCaption(R.drawable.gaming, "Gaming"));
-        mImages.add(new ImageWithCaption(R.drawable.camera, "Camera Equipment"));
+        mImages.add(new ImageWithCaption(R.drawable.camera, "Camera Stuff"));
         mImages.add(new ImageWithCaption(R.drawable.trip, "Holidays"));
         mImages.add(new ImageWithCaption(R.drawable.drinks, "Drinks"));
         mImages.add(new ImageWithCaption(R.drawable.market, "Groceries"));

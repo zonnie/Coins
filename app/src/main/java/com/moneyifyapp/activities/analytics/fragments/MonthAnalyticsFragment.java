@@ -40,7 +40,6 @@ public class MonthAnalyticsFragment extends Fragment
     private ListView mBiggestIncomeList;
     private LinearLayout mBiggestIncomeLayout;
     private View mRootView;
-    private static JsonServiceYearTransactions mJsonService;
     private boolean mNoInsights;
 
 
@@ -52,8 +51,7 @@ public class MonthAnalyticsFragment extends Fragment
      */
     public static MonthAnalyticsFragment newInstance(int month, int year, YearTransactions transactions)
     {
-        mJsonService = JsonServiceYearTransactions.getInstance();
-        String yearTransJson = mJsonService.toJson(transactions);
+        String yearTransJson = JsonServiceYearTransactions.getInstance().toJson(transactions);
 
         MonthAnalyticsFragment fragment = new MonthAnalyticsFragment();
         Bundle args = new Bundle();
@@ -118,7 +116,7 @@ public class MonthAnalyticsFragment extends Fragment
         String yearTransJson = getArguments().getString(ExpenseListFragment.YEAR_JSON_KEY);
         if (!yearTransJson.isEmpty())
         {
-            mYearTransactions = mJsonService.fromJsonToYearTransactions(yearTransJson);
+            mYearTransactions = JsonServiceYearTransactions.getInstance().fromJsonToYearTransactions(yearTransJson);
             mMonthTransactions = mYearTransactions.get(mMonth);
         } else
         {
