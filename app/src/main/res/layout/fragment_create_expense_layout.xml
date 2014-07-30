@@ -146,7 +146,7 @@
                             android:paddingTop="@dimen/drawable_left_pad"
                             android:textOff="@string/spent_string"
                             android:textOn="@string/revenue_string"
-                            android:textSize="@dimen/medium_font"
+                            android:textSize="@dimen/large_font"
                             android:textColor="@android:color/white"
                             />
 
@@ -217,7 +217,7 @@
                     android:maxLength="@integer/max_desc_len"
                     android:paddingBottom="@dimen/padding_start_currency"
                     android:singleLine="true"
-                    android:textSize="@dimen/medium_font"
+                    android:textSize="@dimen/large_font"
                     />
 
                 <LinearLayout
@@ -241,7 +241,7 @@
                         android:inputType="numberDecimal"
                         android:maxLength="7"
                         android:singleLine="true"
-                        android:textSize="@dimen/medium_font"
+                        android:textSize="@dimen/large_font"
 
 
                         />

@@ -14,4 +14,7 @@
     <string name="dashboard_bar_income_chart_title">Revenue Trends</string>
     <string name="analytics_str_no_income">Nothing earned :(</string>
     <string name="analytics_str_no_expense">Noting spent, hooray :)</string>
+    <string name="analytics_monthly_overview_title">Overview</string>
+    <string name="analytics_monthly_Insights_title">Insights</string>
+    <string name="analytics_monthly_categories_title">Categories</string>
 </resources>

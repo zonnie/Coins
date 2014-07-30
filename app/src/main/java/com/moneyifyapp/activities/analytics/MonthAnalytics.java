@@ -1,8 +1,12 @@
 package com.moneyifyapp.activities.analytics;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -19,12 +23,11 @@ import com.moneyifyapp.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
- *
  * This is the per-month analytics activity.
  * It is used to detail the transactions and some insights on that month.
- *
  */
 public class MonthAnalytics extends Activity
 {
@@ -33,6 +36,8 @@ public class MonthAnalytics extends Activity
     private YearTransactions mYearTransactions;
     private final String MONTH_BAR_GRAPH_TITLE = "Top Categories";
     private final String MONTH_BAR_GRAPH_X_LABELS = "Categories";
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private ViewPager mViewPager;
 
     /**
      * On create
@@ -48,40 +53,50 @@ public class MonthAnalytics extends Activity
             // Init Parse for data storing
             Utils.initializeParse(this);
             Utils.initializeActionBar(this);
-            Utils.setLogo(this,R.drawable.chart);
+            Utils.setLogo(this, R.drawable.chart);
 
             initYearTransactiosnFromIntent();
-            initDateLabels();
 
             // Instantiate a fragment and load with fragment manager
-            initMonthlyOverviewFragment();
-            initTopFragment();
-            initGraphFragment();
+            mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+            // Set up the ViewPager with the sections adapter.
+            mViewPager = (ViewPager) findViewById(R.id.pager);
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+            initDateLabels();
         }
     }
 
     /**
      */
-    private void initMonthlyOverviewFragment()
+    private void initDateLabels()
+    {
+        loadTextViewAndSetText(R.id.analytics_month_label, Months.getMonthNameByNumber(mMonth));
+        loadTextViewAndSetText(R.id.analytics_year_label, String.valueOf(mYear));
+    }
+
+
+    /**
+     */
+    private MonthAnalyticsFragment initMonthlyOverviewFragment()
     {
         MonthAnalyticsFragment fragment = MonthAnalyticsFragment.newInstance(mMonth, mYear, mYearTransactions);
-        getFragmentManager().beginTransaction().add(R.id.container,fragment).commit();
+        return fragment;
     }
 
     /**
      */
-    private void initTopFragment()
+    private TopCategoryFragment initTopFragment()
     {
         TopCategoryFragment topFragment = TopCategoryFragment.newInstance(mMonth, mYear, mYearTransactions);
-        getFragmentManager().beginTransaction().add(R.id.analytics_monthly_top_category_container, topFragment).commit();
+        return topFragment;
     }
 
     /**
      */
-    private void initGraphFragment()
+    private BarGraphFragment initGraphFragment()
     {
         BarGraphFragment graphFragment = BarGraphFragment.newInstance(buildGraph());
-        getFragmentManager().beginTransaction().add(R.id.analytics_monthly_top_category_graph, graphFragment).commit();
+        return graphFragment;
     }
 
     /**
@@ -92,14 +107,6 @@ public class MonthAnalytics extends Activity
         mYear = getIntent().getExtras().getInt(ExpenseListFragment.YEAR_KEY);
         String yearTransString = getIntent().getExtras().getString(ExpenseListFragment.YEAR_JSON_KEY);
         mYearTransactions = JsonServiceYearTransactions.getInstance().fromJsonToYearTransactions(yearTransString);
-    }
-
-    /**
-     */
-    private void initDateLabels()
-    {
-        loadTextViewAndSetText(R.id.analytics_month_label, Months.getMonthNameByNumber(mMonth));
-        loadTextViewAndSetText(R.id.analytics_year_label, String.valueOf(mYear));
     }
 
     /**
@@ -128,7 +135,7 @@ public class MonthAnalytics extends Activity
         params.setValues(createMaxListByType(MonthTransactions.SubsetType.EXPENSE));
         params.setYLabels(new ArrayList<String>());
         params.setXAxisTitle(MONTH_BAR_GRAPH_X_LABELS);
-        params.mResourceId =  R.drawable.graph_bar_back_red;
+        params.mResourceId = R.drawable.graph_bar_back_red;
         params.setXLabels(new ArrayList<String>());
 
         return params;
@@ -149,8 +156,8 @@ public class MonthAnalytics extends Activity
     {
         TextView textView = null;
 
-            textView = (TextView)findViewById(resourceId);
-            textView.setText(text);
+        textView = (TextView) findViewById(resourceId);
+        textView.setText(text);
 
         return textView;
     }
@@ -161,17 +168,72 @@ public class MonthAnalytics extends Activity
     {
         List<Integer> result = new ArrayList<Integer>();
 
-        for(MonthTransactions month : mYearTransactions.getItems())
+        for (MonthTransactions month : mYearTransactions.getItems())
         {
-            if(month != null)
+            if (month != null)
             {
                 int sum = (int) (month.sumTransactions(type));
                 result.add(sum);
-            }
-            else
+            } else
                 result.add(0);
         }
 
         return result;
+    }
+
+    /**
+     */
+    public class SectionsPagerAdapter extends FragmentPagerAdapter
+    {
+
+        /**
+         */
+        public SectionsPagerAdapter(FragmentManager fm)
+        {
+            super(fm);
+        }
+
+        /**
+         */
+        @Override
+        public Fragment getItem(int position)
+        {
+            if (position == 0)
+                return initMonthlyOverviewFragment();
+            else if (position == 1)
+                return initTopFragment();
+            else if (position == 2)
+                return initGraphFragment();
+            else
+                return initMonthlyOverviewFragment();
+        }
+
+        /**
+         */
+        @Override
+        public int getCount()
+        {
+            // Show 3 total pages.
+            return 3;
+        }
+
+        /**
+         */
+        @Override
+        public CharSequence getPageTitle(int position)
+        {
+            Locale l = Locale.getDefault();
+            switch (position)
+            {
+                case 0:
+                    return getString(R.string.analytics_monthly_overview_title).toUpperCase(l);
+                case 1:
+                    return getString(R.string.analytics_monthly_Insights_title).toUpperCase(l);
+                case 2:
+                    return getString(R.string.analytics_monthly_categories_title).toUpperCase(l);
+
+            }
+            return null;
+        }
     }
 }

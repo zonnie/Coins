@@ -86,9 +86,7 @@ public class MonthAnalyticsFragment extends Fragment
         loadAnimations();
 
         if (getArguments() != null)
-        {
             initYearTransactionsFromJson();
-        }
     }
 
     /**
@@ -105,9 +103,6 @@ public class MonthAnalyticsFragment extends Fragment
             initTotalSums();
             initProfitOrLossLabels();
             initWorstDay();
-
-            //startAppearanceAnimations();
-
             loadBiggestExpense();
             loadBiggestIncome();
         }
@@ -187,6 +182,7 @@ public class MonthAnalyticsFragment extends Fragment
         }
     }
 
+
     /**
      */
     private void initProfitOrLossLabels()
@@ -265,6 +261,8 @@ public class MonthAnalyticsFragment extends Fragment
         }
     }
 
+    /**
+     */
     private void updateHasInsignts()
     {
         if (!mNoInsights)
@@ -273,5 +271,14 @@ public class MonthAnalyticsFragment extends Fragment
             TextView insigntsLabel = (TextView) mRootView.findViewById(R.id.month_analytics_insignts_label);
             insigntsLabel.setText("Some Insights we Found");
         }
+    }
+
+    /**
+     */
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        mNoInsights = false;
     }
 }

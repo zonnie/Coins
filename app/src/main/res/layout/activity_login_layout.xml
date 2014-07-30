@@ -42,9 +42,7 @@
             <ImageView
                 android:id="@+id/signUpMainImage"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginBottom="@dimen/padding_start_currency"
-                android:layout_weight="0.1"
+                android:layout_height="150dp"
                 android:contentDescription="Main image"
                 android:scaleType="fitCenter"
                 android:src="@drawable/coin_large"/>

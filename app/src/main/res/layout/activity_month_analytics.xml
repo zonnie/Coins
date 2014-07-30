@@ -1,17 +1,16 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Title -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            android:background="@color/background"
-            android:clipToPadding="false"
-            android:paddingBottom="@dimen/huge_padding"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:scrollbars="none"
     >
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         >
-        <!-- Title -->
 
         <LinearLayout
             android:id="@+id/month_analytics_date_layout"
@@ -49,58 +48,29 @@
                 />
         </LinearLayout>
 
-
-
-        <!-- General Analytics -->
-
-        <FrameLayout
-            android:id="@+id/container"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/month_analytics_date_layout"
-            android:layout_marginLeft="@dimen/expense_drawable_left_pad"
-            android:layout_marginRight="@dimen/expense_drawable_left_pad"
-            />
-
-        <!-- Top Category-->
-
-        <LinearLayout
-            android:id="@+id/month_analytics_top_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/container"
-            android:orientation="horizontal"
-            android:weightSum="2"
+            android:layout_height="match_parent"
+            tools:context="com.moneyifyapp.activities.analytics.FullAnalyticsActivity"
             >
 
-            <FrameLayout
-                android:id="@+id/analytics_monthly_top_category_container"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginTop="@dimen/padding_start_currency"
-                android:layout_marginBottom="@dimen/padding_start_currency"
-                android:layout_marginLeft="@dimen/expense_drawable_left_pad"
-                />
+            <android.support.v4.view.PagerTitleStrip
+                android:id="@+id/pager_title_strip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:background="@drawable/back_regualr"
+                android:paddingBottom="4dp"
+                android:paddingTop="8dp"
+                android:textColor="#fff"/>
 
-            <FrameLayout
-                android:id="@+id/analytics_monthly_top_category_graph"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="@dimen/padding_start_currency"
-                android:layout_marginBottom="@dimen/padding_start_currency"
-                android:layout_marginLeft="@dimen/expense_drawable_left_pad"
-                android:layout_marginRight="@dimen/expense_drawable_left_pad"
-                />
+        </android.support.v4.view.ViewPager>
+    </LinearLayout>
 
-        </LinearLayout>
-
-    </RelativeLayout>
-
-
-</ScrollView>
+</LinearLayout>
 
 
 

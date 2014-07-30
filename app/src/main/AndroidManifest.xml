@@ -67,17 +67,20 @@
         </activity>
         <activity
             android:name=".activities.analytics.FullAnalyticsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_analytics"
             android:parentActivityName=".activities.expenses.ExpensesActivity">
         </activity>
         <activity
             android:name=".activities.analytics.MonthAnalytics"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_analytics_month_overview"
             android:parentActivityName=".activities.expenses.ExpensesActivity">
         </activity>
         <activity
             android:name=".activities.graphs.DashboardActivity"
             android:label="@string/title_activity_dashboard"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".activities.expenses.ExpensesActivity">
         </activity>
     </application>

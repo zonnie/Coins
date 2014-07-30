@@ -81,7 +81,9 @@ public class TopCategoryFragment extends Fragment
         }
 
         if (mYearTransactions != null && mMonthTransactions != null)
+        {
             initTopCategory();
+        }
 
         return mRootView;
     }
@@ -141,16 +143,14 @@ public class TopCategoryFragment extends Fragment
     {
         // Get the month number, transaction and page id
         String yearTransJson = getArguments().getString(ExpenseListFragment.YEAR_JSON_KEY);
-        if(!yearTransJson.isEmpty())
+        if (!yearTransJson.isEmpty())
         {
             mYearTransactions = mJsonService.fromJsonToYearTransactions(yearTransJson);
             mMonthTransactions = mYearTransactions.get(mMonth);
-        }
-        else
+        } else
         {
             mYearTransactions = null;
             mMonthTransactions = null;
         }
     }
-
 }
