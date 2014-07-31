@@ -20,10 +20,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.moneyifyapp.R;
+import com.moneyifyapp.activities.analytics.DashboardActivity;
 import com.moneyifyapp.activities.analytics.FullAnalyticsActivity;
 import com.moneyifyapp.activities.expenses.drawer.DrawerItemAdapter;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
-import com.moneyifyapp.activities.graphs.DashboardActivity;
 import com.moneyifyapp.activities.login.AccountActivity;
 import com.moneyifyapp.activities.login.LoginActivity;
 import com.moneyifyapp.activities.preferences.PrefActivity;

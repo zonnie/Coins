@@ -77,14 +77,17 @@ public class MonthAnalyticsFragment extends Fragment
         Utils.initializeParse(getActivity());
         Utils.initializeActionBar(getActivity());
         Utils.setLogo(getActivity(), R.drawable.chart);
-        mMonth = getArguments().getInt(ExpenseListFragment.MONTH_KEY);
-        mYear = getArguments().getInt(ExpenseListFragment.YEAR_KEY);
 
         // Load animations
         loadAnimations();
 
         if (getArguments() != null)
+        {
+            mMonth = getArguments().getInt(ExpenseListFragment.MONTH_KEY);
+            mYear = getArguments().getInt(ExpenseListFragment.YEAR_KEY);
             initYearTransactionsFromJson();
+        }
+
     }
 
     /**

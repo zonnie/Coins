@@ -11,10 +11,10 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
+import com.moneyifyapp.activities.analytics.fragments.BarGraphFragment;
 import com.moneyifyapp.activities.analytics.fragments.MonthAnalyticsFragment;
 import com.moneyifyapp.activities.analytics.fragments.TopCategoryFragment;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
-import com.moneyifyapp.activities.graphs.fragments.BarGraphFragment;
 import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.YearTransactions;
@@ -24,7 +24,6 @@ import com.moneyifyapp.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * This is the per-month analytics activity.
@@ -36,7 +35,6 @@ public class MonthAnalytics extends Activity
     private int mYear;
     private YearTransactions mYearTransactions;
     private final String MONTH_BAR_GRAPH_TITLE = "Top Categories";
-    private final String MONTH_BAR_GRAPH_X_LABELS = "Categories";
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private int MAX_CATEGORY_NUM = 5;
@@ -136,7 +134,11 @@ public class MonthAnalytics extends Activity
 
         List<Integer> values = new ArrayList<Integer>();
         List<String> xValues = new ArrayList<String>();
+        List<Integer> xIcons = new ArrayList<Integer>();
 
+        // Build the graph details
+        for(MonthTransactions.Couple<Integer,Double> cur : coupleValues)
+            xIcons.add(Images.getImageByPosition(cur.mFirstField));
         for(MonthTransactions.Couple<Integer,Double> cur : coupleValues)
             values.add(cur.mSecondField.intValue());
 
@@ -145,8 +147,9 @@ public class MonthAnalytics extends Activity
 
         BarGraphFragment.BarGraphParameters params = new BarGraphFragment.BarGraphParameters(MONTH_BAR_GRAPH_TITLE);
         params.setValues(values);
+        params.setXIcons(xIcons);
+        params.mUseIcons = true;
         params.setYLabels(new ArrayList<String>());
-        params.setXAxisTitle(MONTH_BAR_GRAPH_X_LABELS);
         params.mResourceId = R.drawable.graph_bar_back_red;
         params.setXLabels(xValues);
 
@@ -200,6 +203,13 @@ public class MonthAnalytics extends Activity
         return result;
     }
 
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        finish();
+    }
+
     /**
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter
@@ -241,16 +251,14 @@ public class MonthAnalytics extends Activity
         @Override
         public CharSequence getPageTitle(int position)
         {
-            Locale l = Locale.getDefault();
             switch (position)
             {
                 case 0:
-                    return getString(R.string.analytics_monthly_overview_title).toUpperCase(l);
+                    return getString(R.string.analytics_monthly_overview_title);
                 case 1:
-                    return getString(R.string.analytics_monthly_categories_title).toUpperCase(l);
+                    return getString(R.string.analytics_monthly_categories_title);
                 case 2:
-                    return getString(R.string.analytics_monthly_Insights_title).toUpperCase(l);
-
+                    return getString(R.string.analytics_monthly_Insights_title);
             }
             return null;
         }

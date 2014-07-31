@@ -1,4 +1,4 @@
-package com.moneyifyapp.activities.graphs;
+package com.moneyifyapp.activities.analytics;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
-import com.moneyifyapp.activities.graphs.fragments.BarGraphFragment;
+import com.moneyifyapp.activities.analytics.fragments.BarGraphFragment;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.TransactionHandler;
 import com.moneyifyapp.model.YearTransactions;

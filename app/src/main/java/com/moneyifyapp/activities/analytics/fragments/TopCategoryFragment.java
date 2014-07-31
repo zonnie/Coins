@@ -28,7 +28,6 @@ public class TopCategoryFragment extends Fragment
     private MonthTransactions mMonthTransactions;
     private YearTransactions mYearTransactions;
     private View mRootView;
-    private static JsonServiceYearTransactions mJsonService;
     private boolean mNoInsights = false;
     private GridView mGridView;
 
@@ -36,8 +35,7 @@ public class TopCategoryFragment extends Fragment
      */
     public static TopCategoryFragment newInstance(int month, int year, YearTransactions transactions)
     {
-        mJsonService = JsonServiceYearTransactions.getInstance();
-        String yearTransJson = mJsonService.toJson(transactions);
+        String yearTransJson = JsonServiceYearTransactions.getInstance().toJson(transactions);
 
         TopCategoryFragment fragment = new TopCategoryFragment();
         Bundle args = new Bundle();
@@ -120,7 +118,7 @@ public class TopCategoryFragment extends Fragment
         String yearTransJson = getArguments().getString(ExpenseListFragment.YEAR_JSON_KEY);
         if (!yearTransJson.isEmpty())
         {
-            mYearTransactions = mJsonService.fromJsonToYearTransactions(yearTransJson);
+            mYearTransactions = JsonServiceYearTransactions.getInstance().fromJsonToYearTransactions(yearTransJson);
             mMonthTransactions = mYearTransactions.get(mMonth);
         } else
         {

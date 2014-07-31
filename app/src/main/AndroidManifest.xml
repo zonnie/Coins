@@ -78,7 +78,7 @@
             android:parentActivityName=".activities.expenses.ExpensesActivity">
         </activity>
         <activity
-            android:name=".activities.graphs.DashboardActivity"
+            android:name=".activities.analytics.DashboardActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_dashboard"
             android:parentActivityName=".activities.expenses.ExpensesActivity">

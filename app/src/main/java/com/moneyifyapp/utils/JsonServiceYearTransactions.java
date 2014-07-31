@@ -1,7 +1,7 @@
 package com.moneyifyapp.utils;
 
 import com.google.gson.Gson;
-import com.moneyifyapp.activities.graphs.fragments.BarGraphFragment;
+import com.moneyifyapp.activities.analytics.fragments.BarGraphFragment;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.model.YearTransactions;

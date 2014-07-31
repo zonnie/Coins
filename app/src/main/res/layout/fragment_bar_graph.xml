@@ -30,7 +30,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/drawable_left_pad"
             android:orientation="vertical"
-            android:visibility="gone"
             >
 
 
@@ -39,7 +38,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/card"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/expense_drawable_left_pad"
+                android:paddingBottom="@dimen/padding_start_currency"
                 android:paddingLeft="@dimen/expense_drawable_left_pad"
                 android:paddingRight="@dimen/expense_drawable_left_pad"
                 android:weightSum="12"

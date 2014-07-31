@@ -261,11 +261,20 @@ public class MonthTransactions
 
         for(Transaction cur : mTransactions)
             if(cur.mIsExpense)
-                expenseMap.put(cur.mImageResourceIndex, Double.parseDouble(cur.mValue));
+            {
+                Double curValue = expenseMap.get(cur.mImageResourceIndex);
+                // Sum with previous values
+                if(curValue == null)
+                    curValue = 0.0;
+                curValue += Double.parseDouble(cur.mValue);
+                expenseMap.put(cur.mImageResourceIndex, curValue);
+            }
 
+        // Group in list
         for(Integer key : expenseMap.keySet())
             result.add(new Couple<Integer, Double>(key, expenseMap.get(key)));
 
+        // Sort and reverse for descending order
         Collections.sort(result, new Comparator<Couple<Integer, Double>>()
         {
             @Override
@@ -284,10 +293,10 @@ public class MonthTransactions
     public List<Couple<Integer, Double>> getTopCategoriesValues(int n)
     {
         List<Couple<Integer,Double>> list = getTopCategoriesValues();
-        if(list.size() <= n)
+        if(list.size() >= n)
             return getTopCategoriesValues().subList(0,n);
         else
-            return getTopCategoriesValues().subList(0,5);
+            return getTopCategoriesValues().subList(0,list.size());
     }
 
     /**

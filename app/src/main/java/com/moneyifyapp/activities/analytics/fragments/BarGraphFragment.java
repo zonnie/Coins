@@ -1,4 +1,4 @@
-package com.moneyifyapp.activities.graphs.fragments;
+package com.moneyifyapp.activities.analytics.fragments;
 
 import android.app.Fragment;
 import android.graphics.drawable.Drawable;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -30,8 +31,10 @@ public class BarGraphFragment extends Fragment
     private List<Integer> mValues;
     private List<String> mXAxisLabels;
     private List<String> mYAxisLabels;
+    private List<Integer> mXAxisIcons;
     private String mXAxisTitle;
-    public static final int BAR_MARGIN = 5;
+    public int mBarMargin = 80;
+    public int mXItemTopMargin = 20;
     private int mMaxHeight;
     private int mMaxBarHeight = 300;
     public static final int BIG_GRAPH = 300;
@@ -47,7 +50,6 @@ public class BarGraphFragment extends Fragment
 
     /**
      * Factory to pass some data for different fragments creation.
-     *
      * @param parameters - Parameters to draw the graph.
      */
     public static BarGraphFragment newInstance(BarGraphParameters parameters)
@@ -81,13 +83,15 @@ public class BarGraphFragment extends Fragment
             mXAxisLabels = mParameters.mXAxisLabels;
             mYAxisLabels = mParameters.mYAxisLabels;
             mXAxisTitle = mParameters.mXAxisTitle;
+            mBarMargin = mMaxBarHeight/mValues.size();
+            mXAxisIcons = mParameters.mXAxisIcons;
         }
 
         mView = inflater.inflate(R.layout.fragment_bar_graph, container, false);
 
         initViewsByParameters();
 
-        if(!mValues.isEmpty())
+        if(shouldDraw())
         {
             mMaxHeight = Collections.max(mValues);
             drawBars();
@@ -103,7 +107,7 @@ public class BarGraphFragment extends Fragment
     {
         int weigtSum = mValues.size();
 
-        if(!mValues.isEmpty())
+        if(shouldDraw())
         {
             updateHasInsignts();
             mLinearChart = (LinearLayout) mView.findViewById(R.id.linearChart);
@@ -117,6 +121,11 @@ public class BarGraphFragment extends Fragment
         }
     }
 
+    private boolean shouldDraw()
+    {
+        return mValues.size() > 2;
+    }
+
     /**
      */
     private void drawBars()
@@ -125,8 +134,9 @@ public class BarGraphFragment extends Fragment
         {
             for (int j = 0; j < mValues.size(); j++)
             {
+                int leftMargin = (j == 0) ? 0 : mBarMargin;
                 int height = mValues.get(j);
-                drawSingleBar(height);
+                drawSingleBar(height, leftMargin, mXItemTopMargin);
             }
         }
     }
@@ -138,13 +148,19 @@ public class BarGraphFragment extends Fragment
         if(!mXAxisLabels.isEmpty())
         {
             for (int j = 0; j < mValues.size(); j++)
-                createXvalue(mXAxisLabels.get(j));
+            {
+                int leftMargin = (j == 0) ? 0 : mBarMargin;
+                if (!mParameters.mUseIcons)
+                    createXvalue(mXAxisLabels.get(j), leftMargin, mXItemTopMargin);
+                else
+                    createXicon(mXAxisIcons.get(j), leftMargin, mXItemTopMargin);
+            }
         }
     }
 
     /**
      */
-    public void drawSingleBar(int height)
+    public void drawSingleBar(int height, int leftMargin, int topMargin)
     {
         // Default background
         Drawable resourceId = (mParameters.mResourceId != 0) ?
@@ -156,12 +172,14 @@ public class BarGraphFragment extends Fragment
         final int normHeight = normalizeHeight(height);
         view.setLayoutParams(new LinearLayout.LayoutParams(0, normHeight, 1));
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
-        params.setMargins(BAR_MARGIN, BAR_MARGIN, 0, 0);
+        params.setMargins(leftMargin, topMargin, 0, 0);
         startBarAnimation(view);
         mLinearChart.addView(view);
     }
 
-    private void createXvalue(String xValue)
+    /**
+     */
+    private void createXvalue(String xValue, int leftMargin, int topMargin)
     {
         TextView textView = new TextView(getActivity());
         textView.setTextSize(DEFAULT_TEXT_SIZE);
@@ -169,8 +187,20 @@ public class BarGraphFragment extends Fragment
         textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) textView.getLayoutParams();
         textView.setGravity(Gravity.CENTER);
-        params.setMargins(BAR_MARGIN, BAR_MARGIN, 0, 0);
+        params.setMargins(leftMargin, topMargin, 0, 0);
         mXAxisContainer.addView(textView);
+    }
+
+    /**
+     */
+    private void createXicon(Integer xIcon, int leftMargin, int topMargin)
+    {
+        ImageView imageView = new ImageView(getActivity());
+        imageView.setImageResource(xIcon);
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
+        params.setMargins(leftMargin, topMargin, 0, 0);
+        mXAxisContainer.addView(imageView);
     }
 
     /**
@@ -185,6 +215,8 @@ public class BarGraphFragment extends Fragment
 
     }
 
+    /**
+     */
     private void startBarAnimation(View view)
     {
         if (mBarAnimation == null)
@@ -195,6 +227,8 @@ public class BarGraphFragment extends Fragment
         view.startAnimation(mBarAnimation);
     }
 
+    /**
+     */
     private void updateHasInsignts()
     {
         if(mNoInsights == false)
@@ -217,20 +251,25 @@ public class BarGraphFragment extends Fragment
         public int mResourceId;
         public List<Integer> mValues;
         public List<String> mXAxisLabels;
+        public List<Integer> mXAxisIcons;
         public List<String> mYAxisLabels;
         public int mGraphSize;
         public String mTitle;
         public String mXAxisTitle;
         public List<Integer> mSpecialBarsId;
+        public boolean mUseIcons;
 
         public BarGraphParameters(String title)
         {
             mValues = new ArrayList<Integer>();
             mXAxisLabels = new ArrayList<String>();
             mYAxisLabels = new ArrayList<String>();
+            mXAxisIcons = new ArrayList<Integer>();
             mGraphSize = BIG_GRAPH;
             mTitle = title;
             mSpecialBarsId = new ArrayList<Integer>();
+            mUseIcons = false;
+            mXAxisTitle = "";
         }
 
         /**
@@ -251,6 +290,13 @@ public class BarGraphFragment extends Fragment
 
             for(String value : list)
                 mXAxisLabels.add(value);
+        }
+
+        public void setXIcons(List<Integer> list)
+        {
+            mXAxisIcons.clear();
+            for(Integer image : list)
+                mXAxisIcons.add(image);
         }
 
         /**
