@@ -148,6 +148,7 @@ public class MonthAnalytics extends Activity
         BarGraphFragment.BarGraphParameters params = new BarGraphFragment.BarGraphParameters(MONTH_BAR_GRAPH_TITLE);
         params.setValues(values);
         params.setXIcons(xIcons);
+        params.mGraphSize = BarGraphFragment.MEDIUM_GRAPH;
         params.mUseIcons = true;
         params.setYLabels(new ArrayList<String>());
         params.mResourceId = R.drawable.graph_bar_back_red;

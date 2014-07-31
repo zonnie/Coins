@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/drawable_left_pad"
             android:orientation="vertical"
+            android:visibility="gone"
             >
 
 
@@ -44,7 +45,7 @@
                 android:weightSum="12"
                 >
 
-                <TextView
+                <com.moneyifyapp.views.ThinTextView
                     android:id="@+id/graph_bar_title_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -53,7 +54,7 @@
                     android:gravity="center"
                     android:text="@string/dashboard_bar_expense_chart_title"
                     android:textColor="@android:color/darker_gray"
-                    android:textSize="@dimen/medium_font"
+                    android:textSize="@dimen/large_font"
                     />
 
                 <RelativeLayout

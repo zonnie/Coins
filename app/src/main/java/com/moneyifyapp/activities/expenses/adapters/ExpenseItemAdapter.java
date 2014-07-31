@@ -64,8 +64,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             if(mItemsLoadAnimation == null)
                 mItemsLoadAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
 
-            //TODO animation
-            //mMyView.startAnimation(mItemsLoadAnimation);
             mMyView.setTag(mViewHolder);
         }
         else

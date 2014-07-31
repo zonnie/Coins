@@ -33,7 +33,7 @@ public class BarGraphFragment extends Fragment
     private List<String> mYAxisLabels;
     private List<Integer> mXAxisIcons;
     private String mXAxisTitle;
-    public int mBarMargin = 80;
+    public int mBarMargin = 140;
     public int mXItemTopMargin = 20;
     private int mMaxHeight;
     private int mMaxBarHeight = 300;
@@ -41,8 +41,6 @@ public class BarGraphFragment extends Fragment
     public static final int MEDIUM_GRAPH = 200;
     public static final int SMALL_GRAPH = 150;
     private int DEFAULT_TEXT_SIZE = 9;
-    public static final String GRAPH_SIZE_ARG = "graphSize";
-    public static final String GRAPH_COLOR_ARG = "color";
     public static final String GRAPH_ARGS = "graphArgs";
     private Animation mBarAnimation;
     private BarGraphParameters mParameters;
@@ -167,7 +165,7 @@ public class BarGraphFragment extends Fragment
                 getResources().getDrawable(mParameters.mResourceId) :
                 getResources().getDrawable(R.drawable.graph_bar_back_yellow);
 
-        final View view = new View(getActivity());
+        final LinearLayout view = new LinearLayout(getActivity());
         view.setBackground(resourceId);
         final int normHeight = normalizeHeight(height);
         view.setLayoutParams(new LinearLayout.LayoutParams(0, normHeight, 1));
@@ -207,7 +205,6 @@ public class BarGraphFragment extends Fragment
      */
     private int normalizeHeight(int height)
     {
-        //return (1-alpha)&height + alpha*target;
         if(mMaxHeight != 0)
             return (mMaxBarHeight * height)/mMaxHeight;
         else
@@ -231,7 +228,7 @@ public class BarGraphFragment extends Fragment
      */
     private void updateHasInsignts()
     {
-        if(mNoInsights == false)
+        if(!mNoInsights)
         {
             mNoInsights = true;
             LinearLayout layout = (LinearLayout) mView.findViewById(R.id.bar_graph_root);

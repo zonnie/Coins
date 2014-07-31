@@ -588,8 +588,6 @@ public class ExpenseListFragment extends ListFragment
                 {
                     // Remove the old transaction from the totals
                     updateTotalsOnAddedTransaction(mTransactions.getItems().get(position), true);
-
-                    // Update adapter
                     Transaction tempExpense = new Transaction("0", desc, sum, currency, note, image, isExpense);
                     mAdapter.update(position, tempExpense);
                     // ! We now MUST pass the item from the collection to preserve
@@ -608,7 +606,12 @@ public class ExpenseListFragment extends ListFragment
     {
         String newId = generateId(addDescription, addSum, currency);
 
-        Transaction newTransaction = new Transaction(newId, addDescription, addSum, currency, note, image, isExpense);
+        int curMonth = Calendar.getInstance().get(Calendar.MONTH);
+        int curDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        String transactionDay = (mTransactions.mMonthNumber != curMonth) ? "1" : String.valueOf(curDay);
+
+        // If not current month, add transaction to 1st of month
+        Transaction newTransaction = new Transaction(newId, addDescription, addSum, currency, note, image, isExpense, transactionDay);
         ParseObject expenseObject = new ParseObject(Transaction.CLASS_NAME);
         saveDataInBackground(newTransaction, expenseObject);
 
