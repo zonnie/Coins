@@ -32,6 +32,7 @@ public class ExpenseDetailActivity extends Activity
     private String mTransactionDay;
     private int mImageName;
     private boolean mIsExpense;
+    private boolean mSaved;
     private int mMonth;
 
     /**
@@ -90,19 +91,24 @@ public class ExpenseDetailActivity extends Activity
         mNotes = getIntent().getExtras().getString(Transaction.KEY_NOTES);
         mImageName = getIntent().getExtras().getInt(Transaction.KEY_IMAGE_NAME);
         mIsExpense = getIntent().getExtras().getBoolean(Transaction.KEY_TYPE);
+        mSaved = getIntent().getExtras().getBoolean(ExpenseListFragment.TEMPLATE_KEY);
 
         // Get the default currency
         mCurrency = PreferenceManager.getDefaultSharedPreferences(this).getString(PrefActivity.PREF_LIST_NAME, "$");
 
-        return new Transaction(Transaction.DEFUALT_TRANSCATION_ID, mDescription, mValue,
+        Transaction transaction = new Transaction(Transaction.DEFUALT_TRANSCATION_ID, mDescription, mValue,
                 mCurrency, mNotes, mImageName, mIsExpense, mTransactionDay);
+        transaction.mSaved = mSaved;
+
+        return transaction;
     }
 
     /**
      *
      */
     @Override
-    public void onAddExpense(String addDescription, String addSum, String addCurrency, String addNote, int addImage, boolean isExpense)
+    public void onAddExpense(String addDescription, String addSum, String addCurrency,
+                             String addNote, int addImage, boolean isExpense, boolean isSaved)
     {
         Intent data = getIntent();
 
@@ -114,6 +120,7 @@ public class ExpenseDetailActivity extends Activity
         data.putExtra(ExpenseListFragment.ITEM_POS_KEY, mItemPosition);
         data.putExtra(ExpenseListFragment.MONTH_KEY, mMonth);
         data.putExtra(Transaction.KEY_TYPE, isExpense);
+        data.putExtra(ExpenseListFragment.TEMPLATE_KEY, isSaved);
 
         setResult(ExpensesActivity.EXPENSE_RESULT_OK, data);
         finish();

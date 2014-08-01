@@ -119,7 +119,7 @@ public class TransactionHandler
      */
     private Transaction createTransactionFromParseObject(ParseObject curExpense)
     {
-        return new Transaction(curExpense.getString(Transaction.KEY_ID),
+        Transaction transaction =  new Transaction(curExpense.getString(Transaction.KEY_ID),
                 curExpense.getString(Transaction.KEY_DESCRIPTION),
                 curExpense.getString(Transaction.KEY_VALUE),
                 curExpense.getString(Transaction.KEY_CURRENCY),
@@ -127,6 +127,9 @@ public class TransactionHandler
                 curExpense.getInt(Transaction.KEY_IMAGE_NAME),
                 curExpense.getBoolean(Transaction.KEY_TYPE),
                 curExpense.getString(ExpenseListFragment.DAY_KEY));
+        transaction.mSaved = curExpense.getBoolean(ExpenseListFragment.TEMPLATE_KEY);
+
+        return transaction;
     }
 
     /**

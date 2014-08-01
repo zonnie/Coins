@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -11,274 +9,364 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:orientation="vertical"
         android:layout_marginLeft="@dimen/big_padding"
         android:layout_marginRight="@dimen/big_padding"
-        android:layout_marginBottom="@dimen/big_padding"
         android:layout_marginTop="@dimen/drawable_left_pad"
-        android:background="@drawable/card"
+        android:paddingBottom="@dimen/huge_padding"
+        android:orientation="vertical"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/date_header"
-            android:orientation="horizontal"
-            >
-
-            <TextView
-                android:id="@+id/detail_date_month"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:fontFamily="sans-serif-condensed"
-                android:gravity="start|center_vertical"
-                android:paddingLeft="@dimen/big_padding"
-                android:paddingRight="@dimen/padding_start_currency"
-                android:text="March"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/huge_font"
-                android:textStyle="bold"
-                />
-
-            <TextView
-                android:id="@+id/detail_date_day"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="sans-serif-condensed"
-                android:gravity="start"
-                android:paddingBottom="@dimen/padding_start_currency"
-                android:paddingTop="@dimen/padding_start_currency"
-                android:text="24th"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/huge_font"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/padding_start_currency"
-            android:gravity="center|top"
+            android:layout_gravity="end"
+            android:background="@drawable/card"
+            android:layout_marginBottom="@dimen/drawable_left_pad"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/big_padding"
-            android:paddingRight="@dimen/big_padding"
-            android:paddingBottom="@dimen/big_padding"
             >
+
+            <!-- Date -->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/drawable_left_pad"
-                android:gravity="center"
+                android:background="@drawable/date_header"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/detail_date_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="start|center_vertical"
+                    android:paddingLeft="@dimen/big_padding"
+                    android:paddingRight="@dimen/padding_start_currency"
+                    android:text="March"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/huge_font"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:id="@+id/detail_date_day"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="start"
+                    android:paddingBottom="@dimen/padding_start_currency"
+                    android:paddingTop="@dimen/padding_start_currency"
+                    android:text="24th"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/huge_font"
+                    />
+            </LinearLayout>
+
+            <!-- Body -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/padding_start_currency"
+                android:gravity="center|top"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/drawable_left_pad"
+                android:paddingLeft="@dimen/big_padding"
+                android:paddingRight="@dimen/big_padding"
                 >
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:orientation="vertical"
-                    android:weightSum="6"
+                    android:layout_marginBottom="@dimen/drawable_left_pad"
+                    android:gravity="center"
                     >
 
                     <LinearLayout
-                        android:id="@+id/detail_date_category_layout"
                         android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="5"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
                         android:orientation="vertical"
-                        android:paddingLeft="@dimen/big_padding"
-                        android:paddingRight="@dimen/big_padding"
+                        android:weightSum="6"
                         >
 
-                        <TextView
-                            android:id="@+id/image_picker_hint"
+                        <!-- Image -->
+
+                        <LinearLayout
+                            android:id="@+id/detail_date_category_layout"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="0dp"
                             android:layout_gravity="center"
-                            android:text="@string/image_picker_hint_text"
-                            android:textColor="@android:color/darker_gray"
-                            android:textSize="@dimen/tiny_font"
-                            />
+                            android:layout_weight="5"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/big_padding"
+                            android:paddingRight="@dimen/big_padding"
+                            >
 
-                        <ImageButton
-                            android:id="@+id/addExpenseImage"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginBottom="@dimen/padding_start_currency"
-                            android:layout_marginTop="@dimen/padding_start_currency"
-                            android:background="@android:color/transparent"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/shop"
-                            />
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/image_picker_hint"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="@string/image_picker_hint_text"
+                                android:textColor="@android:color/darker_gray"
+                                android:textSize="@dimen/tiny_font"
+                                />
+
+                            <ImageButton
+                                android:id="@+id/addExpenseImage"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_marginBottom="@dimen/padding_start_currency"
+                                android:layout_marginTop="@dimen/padding_start_currency"
+                                android:background="@android:color/transparent"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/shop"
+                                />
+                        </LinearLayout>
+
+                        <!-- Expense/Income -->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            >
+
+                            <TextView
+                                android:id="@+id/toggle_expense_hint"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/padding_start_currency"
+                                android:gravity="center"
+                                android:text="@string/toggle_hint_text"
+                                android:textColor="@android:color/darker_gray"
+                                android:textSize="@dimen/tiny_font"
+                                />
+
+                            <ToggleButton
+                                android:id="@+id/isExpenseToggle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:background="@drawable/expense_toggle"
+                                android:paddingBottom="@dimen/drawable_left_pad"
+                                android:paddingEnd="@dimen/big_padding"
+                                android:paddingStart="@dimen/big_padding"
+                                android:paddingTop="@dimen/drawable_left_pad"
+                                android:textColor="@android:color/white"
+                                android:textOff="@string/spent_string"
+                                android:textOn="@string/revenue_string"
+                                android:textSize="@dimen/large_font"
+                                />
+
+                        </LinearLayout>
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        >
-
-                        <TextView
-                            android:id="@+id/toggle_expense_hint"
+                        <LinearLayout
+                            android:id="@+id/detail_right_pane_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/toggle_hint_text"
-                            android:textColor="@android:color/darker_gray"
-                            android:textSize="@dimen/tiny_font"
-                            android:layout_marginBottom="@dimen/padding_start_currency"
-                            />
+                            android:layout_toRightOf="@+id/detail_date_category_layout"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            >
 
-                        <ToggleButton
-                            android:id="@+id/isExpenseToggle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:background="@drawable/expense_toggle"
-                            android:paddingBottom="@dimen/drawable_left_pad"
-                            android:paddingEnd="@dimen/big_padding"
-                            android:paddingStart="@dimen/big_padding"
-                            android:paddingTop="@dimen/drawable_left_pad"
-                            android:textOff="@string/spent_string"
-                            android:textOn="@string/revenue_string"
-                            android:textSize="@dimen/large_font"
-                            android:textColor="@android:color/white"
-                            />
+                            <CheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="Repeat"
+                                android:typeface="normal"
+                                />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
 
-                    <LinearLayout
-                        android:id="@+id/detail_right_pane_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/detail_date_category_layout"
-                        android:orientation="vertical"
+                    <!-- Seperator -->
+
+                    <View
+                        android:layout_width="0.3dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/drawable_left_pad"
+                        android:layout_marginTop="@dimen/padding_start_currency"
+                        android:background="@android:color/darker_gray"
                         android:visibility="gone"
-                        >
-
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="Repeat"
-                            android:typeface="normal"
-                            />
-
-                    </LinearLayout>
+                        />
 
                 </LinearLayout>
-
 
                 <!-- Seperator -->
 
                 <View
-                    android:layout_width="0.3dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/drawable_left_pad"
-                    android:layout_marginTop="@dimen/padding_start_currency"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
                     android:background="@android:color/darker_gray"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_start_currency"
+                    android:orientation="vertical"
+                    >
+
+                    <!-- Description -->
+
+                    <com.moneyifyapp.views.ThinEditText
+                        android:id="@+id/addExpenseDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@android:color/transparent"
+                        android:drawableLeft="@drawable/desc"
+                        android:drawablePadding="@dimen/expense_drawable_left_pad"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:hint="@string/add_item_description_hint"
+                        android:maxLength="@integer/max_desc_len"
+                        android:paddingBottom="@dimen/padding_start_currency"
+                        android:singleLine="true"
+                        android:textSize="@dimen/large_font"
+                        />
+
+                    <!-- Value -->
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/padding_start_currency"
+                        >
+
+                        <com.moneyifyapp.views.ThinEditText
+                            android:id="@+id/addExpenseSum"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:drawableLeft="@drawable/sum"
+                            android:drawablePadding="@dimen/expense_drawable_left_pad"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:hint="@string/item_value_hint"
+                            android:imeOptions="actionNext"
+                            android:inputType="numberDecimal"
+                            android:maxLength="7"
+                            android:singleLine="true"
+                            android:textSize="@dimen/large_font"
+
+
+                            />
+
+                    </LinearLayout>
+
+                    <!-- Notes -->
+
+                    <com.moneyifyapp.views.ThinEditText
+                        android:id="@+id/addExpenseNotes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/padding_start_currency"
+                        android:background="@android:color/transparent"
+                        android:drawableLeft="@drawable/notes_2"
+                        android:drawablePadding="@dimen/expense_drawable_left_pad"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:hint="Notes..."
+                        android:imeOptions="actionNext"
+                        android:maxLength="@integer/max_note_len"
+                        android:singleLine="true"
+                        android:textSize="@dimen/medium_font"
+
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Second Section -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@drawable/card"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/padding_start_currency"
+            android:paddingBottom="@dimen/expense_drawable_left_pad"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                >
+
+                <ToggleButton
+                    android:id="@+id/toggle_template_save_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/expense_toggle"
+                    android:paddingBottom="@dimen/drawable_left_pad"
+                    android:paddingEnd="@dimen/big_padding"
+                    android:paddingStart="@dimen/big_padding"
+                    android:paddingTop="@dimen/drawable_left_pad"
+                    android:textColor="@android:color/white"
+                    android:textOff="@string/spent_string"
+                    android:textOn="@string/revenue_string"
+                    android:textSize="@dimen/large_font"
                     android:visibility="gone"
                     />
 
             </LinearLayout>
 
-            <!-- Seperator -->
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.3dp"
-                android:background="@android:color/darker_gray"
-                />
 
             <LinearLayout
+                android:id="@+id/detail_save_template_toggle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_start_currency"
+                android:layout_toRightOf="@+id/detail_date_category_layout"
                 android:orientation="vertical"
+                android:layout_marginTop="@dimen/padding_start_currency"
+                android:layout_marginBottom="@dimen/padding_start_currency"
                 >
 
-                <com.moneyifyapp.views.ThinEditText
-                    android:id="@+id/addExpenseDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@android:color/transparent"
-                    android:drawableLeft="@drawable/desc"
-                    android:drawablePadding="@dimen/expense_drawable_left_pad"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:hint="@string/add_item_description_hint"
-                    android:maxLength="@integer/max_desc_len"
-                    android:paddingBottom="@dimen/padding_start_currency"
-                    android:singleLine="true"
-                    android:textSize="@dimen/large_font"
-                    />
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="@dimen/padding_start_currency"
-                    >
-
-                    <com.moneyifyapp.views.ThinEditText
-                        android:id="@+id/addExpenseSum"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:drawableLeft="@drawable/sum"
-                        android:drawablePadding="@dimen/expense_drawable_left_pad"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:hint="@string/item_value_hint"
-                        android:imeOptions="actionNext"
-                        android:inputType="numberDecimal"
-                        android:maxLength="7"
-                        android:singleLine="true"
-                        android:textSize="@dimen/large_font"
-
-
-                        />
-
-                </LinearLayout>
-
-                <com.moneyifyapp.views.ThinEditText
-                    android:id="@+id/addExpenseNotes"
+                <TextView
+                    android:id="@+id/toggle_template_save_hint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/padding_start_currency"
-                    android:background="@android:color/transparent"
-                    android:drawableLeft="@drawable/notes_2"
-                    android:drawablePadding="@dimen/expense_drawable_left_pad"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:hint="Notes..."
-                    android:imeOptions="actionNext"
-                    android:maxLength="@integer/max_note_len"
-                    android:singleLine="true"
-                    android:textSize="@dimen/medium_font"
-
+                    android:gravity="center"
+                    android:text="@string/checkbox_template_hint_text"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/tiny_font"
                     />
 
-
-                <!-- Seperator -->
-
-                <!--<View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.3dp"
-                    android:background="@android:color/darker_gray"
-                    />-->
+                <ToggleButton
+                    android:id="@+id/toggle_template_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textOff="@string/checkbox_save"
+                    android:textOn="@string/checkbox_saved"
+                    android:textColor="@android:color/white"
+                    android:typeface="normal"
+                    android:textSize="@dimen/large_font"
+                    android:paddingTop="@dimen/padding_start_currency"
+                    android:paddingBottom="@dimen/drawable_left_pad"
+                    android:paddingLeft="@dimen/expense_drawable_left_pad"
+                    android:paddingRight="@dimen/expense_drawable_left_pad"
+                    android:background="@drawable/template_background"
+                    />
 
             </LinearLayout>
-
-
         </LinearLayout>
-
     </LinearLayout>
 </ScrollView>

@@ -64,6 +64,8 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             if(mItemsLoadAnimation == null)
                 mItemsLoadAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
 
+            //TODO animation
+            //mMyView.startAnimation(mItemsLoadAnimation);
             mMyView.setTag(mViewHolder);
         }
         else
@@ -237,7 +239,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     {
         // Update a single transaction
         updateTransaction(position, expense);
-
         notifyDataSetChanged();
     }
 
@@ -256,6 +257,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             updatedExpense.mImageResourceIndex = expense.mImageResourceIndex;
             handleViewImage(Images.getImageByPosition(updatedExpense.mImageResourceIndex));
             updateViewType(updatedExpense, expense);
+            updatedExpense.mSaved = expense.mSaved;
         }
     }
 

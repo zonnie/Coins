@@ -15,6 +15,7 @@ public class Transaction implements Comparable<Transaction>
     public String mNotes;
     public boolean mIsExpense;
     public String mTransactionDay;
+    public boolean mSaved;
     public static final String TRANS_JSON = "transactionJson";
     public static final String CLASS_NAME = "expense";
     public static final String KEY_ID = "code";
@@ -42,6 +43,7 @@ public class Transaction implements Comparable<Transaction>
         this.mNotes = note;
         this.mIsExpense = isExpense;
         this.mTransactionDay = String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        this.mSaved = false;
     }
 
     /**
@@ -68,6 +70,7 @@ public class Transaction implements Comparable<Transaction>
         this.mNotes = "";
         this.mIsExpense = true;
         this.mTransactionDay = String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        this.mSaved = false;
     }
 
     /**

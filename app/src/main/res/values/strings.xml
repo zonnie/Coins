@@ -30,6 +30,7 @@
     <string name="account_hint">Update us on any account changes</string>
     <string name="image_picker_hint_text">Select category</string>
     <string name="toggle_hint_text">Tap to change</string>
+    <string name="checkbox_template_hint_text">Tap to save</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="item_details_submit">"Done !"</string>
@@ -64,5 +65,7 @@
     <string name="spent_string">"Spent</string>
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="title_activity_user_account">Account</string>
+    <string name="checkbox_saved">"Saved</string>
+    <string name="checkbox_save">"Save</string>
 
 </resources>

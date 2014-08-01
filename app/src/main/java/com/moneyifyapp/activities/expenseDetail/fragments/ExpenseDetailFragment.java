@@ -44,6 +44,7 @@ public class ExpenseDetailFragment extends Fragment
     private ImageButton mExpenseIcon;
     private EditText mExpenseNotes;
     private ToggleButton mToggleIsExpense;
+    private ToggleButton mToggleSave;
     private OnFragmentInteractionListener mListener;
     private Transaction mTempExpenseObject;
     private boolean mIsEdit;
@@ -135,6 +136,7 @@ public class ExpenseDetailFragment extends Fragment
         mExpenseNotes = (EditText) mView.findViewById(R.id.addExpenseNotes);
         mDetailDateMonth = (TextView) mView.findViewById(R.id.detail_date_month);
         mToggleIsExpense = (ToggleButton) mView.findViewById(R.id.isExpenseToggle);
+        mToggleSave = (ToggleButton)mView.findViewById(R.id.toggle_template_save);
     }
 
     /**
@@ -218,6 +220,7 @@ public class ExpenseDetailFragment extends Fragment
             mExpenseNotes.setText(mTempExpenseObject.mNotes);
             mExpenseIcon.setImageResource(Images.getImageByPosition(mTempExpenseObject.mImageResourceIndex));
             mToggleIsExpense.setChecked(!mTempExpenseObject.mIsExpense);
+            mToggleSave.setChecked(mTempExpenseObject.mSaved);
         }
     }
 
@@ -250,13 +253,14 @@ public class ExpenseDetailFragment extends Fragment
             String sum = mExpenseValue.getText().toString();
             String currency = Utils.getDefaultCurrency(getActivity());
             boolean isExpense = !mToggleIsExpense.isChecked();  // If it's un-toggled this means this is an expense
+            boolean isSaved = mToggleSave.isChecked();
 
             if (description.isEmpty() || sum.isEmpty())
             {
                 Toast.makeText(getActivity(), "Please fill all required info", Toast.LENGTH_SHORT).show();
             } else
             {
-                mListener.onAddExpense(description, sum, currency, note, imageName, isExpense);
+                mListener.onAddExpense(description, sum, currency, note, imageName, isExpense, isSaved);
             }
         }
     }
@@ -292,7 +296,8 @@ public class ExpenseDetailFragment extends Fragment
      */
     public interface OnFragmentInteractionListener
     {
-        public void onAddExpense(String addDescription, String addSum, String currency, String addNote, int addImage, boolean isExpense);
+        public void onAddExpense(String addDescription, String addSum, String currency,
+                                 String addNote, int addImage, boolean isExpense, boolean isSaved);
 
         public void cancel();
     }

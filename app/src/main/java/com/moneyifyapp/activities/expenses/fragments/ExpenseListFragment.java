@@ -56,6 +56,7 @@ public class ExpenseListFragment extends ListFragment
     public static final String DAY_KEY = "day";
     public static final String YEAR_JSON_KEY = "yearJson";
     public static final String YEAR_KEY = "year";
+    public static final String TEMPLATE_KEY = "template";
     public static final String PARSE_DATE_KEY = "createdAt";
     public static final String REQ_CODE_KEY = "req";
     public static final String REMOVE_ITEM_PROMPT_MSG = "Are you sure you want to remove this?";
@@ -548,6 +549,7 @@ public class ExpenseListFragment extends ListFragment
             intent.putExtra(Transaction.KEY_TYPE, expense.mIsExpense);
             intent.putExtra(Transaction.KEY_IMAGE_NAME, expense.mImageResourceIndex);
             intent.putExtra(REQ_CODE_KEY, ExpensesActivity.REQ_EDIT_ITEM);
+            intent.putExtra(TEMPLATE_KEY, expense.mSaved);
 
             startActivityForResult(intent, ExpensesActivity.REQ_EDIT_ITEM);
 
@@ -570,6 +572,7 @@ public class ExpenseListFragment extends ListFragment
             String currency = data.getExtras().getString(Transaction.KEY_CURRENCY);
             String note = data.getExtras().getString(Transaction.KEY_NOTES);
             Boolean isExpense = data.getExtras().getBoolean(Transaction.KEY_TYPE);
+            Boolean isSaved = data.getExtras().getBoolean(TEMPLATE_KEY);
 
             int position = data.getExtras().getInt(ITEM_POS_KEY);
 
@@ -578,7 +581,7 @@ public class ExpenseListFragment extends ListFragment
                 if (requestCode == ExpensesActivity.REQ_NEW_ITEM)
                 {
                     currency = Transaction.CURRENCY_DEFAULT;
-                    createNewTransaction(desc, sum, currency, note, image, isExpense);
+                    createNewTransaction(desc, sum, currency, note, image, isExpense, isSaved);
                     Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
                     if (getListView().getChildCount() > 0)
                         getListView().getChildAt(0).startAnimation(anim);
@@ -589,6 +592,7 @@ public class ExpenseListFragment extends ListFragment
                     // Remove the old transaction from the totals
                     updateTotalsOnAddedTransaction(mTransactions.getItems().get(position), true);
                     Transaction tempExpense = new Transaction("0", desc, sum, currency, note, image, isExpense);
+                    tempExpense.mSaved = isSaved;
                     mAdapter.update(position, tempExpense);
                     // ! We now MUST pass the item from the collection to preserve
                     // the ID, the tempExpense object has an 'empty' ID.
@@ -602,7 +606,8 @@ public class ExpenseListFragment extends ListFragment
 
     /**
      */
-    public void createNewTransaction(String addDescription, String addSum, String currency, String note, int image, boolean isExpense)
+    public void createNewTransaction(String addDescription, String addSum, String currency,
+                                     String note, int image, boolean isExpense, boolean isSaved)
     {
         String newId = generateId(addDescription, addSum, currency);
 
@@ -612,6 +617,7 @@ public class ExpenseListFragment extends ListFragment
 
         // If not current month, add transaction to 1st of month
         Transaction newTransaction = new Transaction(newId, addDescription, addSum, currency, note, image, isExpense, transactionDay);
+        newTransaction.mSaved = isSaved;
         ParseObject expenseObject = new ParseObject(Transaction.CLASS_NAME);
         saveDataInBackground(newTransaction, expenseObject);
 
@@ -664,6 +670,7 @@ public class ExpenseListFragment extends ListFragment
         expenseObject.put(MONTH_KEY, mTransactions.mMonthNumber);
         expenseObject.put(DAY_KEY, newTransaction.mTransactionDay);
         expenseObject.put(YEAR_KEY, mYearTransactions.mYear);
+        expenseObject.put(TEMPLATE_KEY, newTransaction.mSaved);
 
         expenseObject.saveInBackground();
     }
