@@ -16,6 +16,7 @@
     <dimen name="mongo_padding">40dp</dimen>
     <dimen name="image_dimen">72dp</dimen>
     <dimen name="list_bottom_margin">80dp</dimen>
+    <dimen name="mongo_font">35sp</dimen>
     <dimen name="huge_font">25sp</dimen>
     <dimen name="large_font">20sp</dimen>
     <dimen name="tiny_font">12sp</dimen>

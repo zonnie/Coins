@@ -45,6 +45,8 @@ public class SignUpActivity extends Activity implements View.OnClickListener
         Utils.initializeParse(this);
         Utils.setupBackButton(this);
         Utils.removeLogo(this);
+        Utils.removeActionBar(this);
+
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
         setContentView(R.layout.activity_sign_up);

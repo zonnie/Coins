@@ -84,6 +84,14 @@ public class Utils
 
     /**
      */
+    public static void removeActionBar(Activity context)
+    {
+        if(context.getActionBar() != null)
+            context.getActionBar().hide();
+    }
+
+    /**
+     */
     public static void setLogo(Activity context, int resourceId)
     {
         if(context.getActionBar() != null)

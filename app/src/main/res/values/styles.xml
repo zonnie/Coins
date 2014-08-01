@@ -51,7 +51,7 @@
     </style>
 
     <style name="myActionBar" parent="android:style/Widget.Holo.ActionBar">
-        <item name="android:background">@drawable/button_alternate</item>
+        <item name="android:background">@drawable/back_regualr</item>
         <item name="android:fontFamily">sans-serif-thin</item>
         <item name="android:textStyle">bold</item>
         <!--<item name="android:fontFamily">sans-serif-light</item>-->
@@ -80,4 +80,5 @@
         <!--<item name="android:fontFamily">sans-serif-thin</item>-->
         <!--<item name="android:textStyle">bold</item>-->
     </style>
+
 </resources>

@@ -20,14 +20,14 @@
         <activity
             android:name=".activities.login.LoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/action_sign_in"
+            android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".activities.login.SignUpActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/action_sing_up"
+            android:label=""
             android:parentActivityName=".activities.login.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
@@ -35,7 +35,7 @@
         <activity
             android:name=".activities.SplashActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/main_title"
+            android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CustomizedAppTheme">
             <intent-filter>
@@ -44,48 +44,48 @@
             </intent-filter>
         </activity>
         <activity
+            android:label=""
             android:name=".activities.expenseDetail.ExpenseDetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_create_expense"
             android:parentActivityName=".activities.expenses.ExpensesActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
+            android:label=""
             android:name=".activities.expenseDetail.ImagePickerActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_image_picker"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".activities.preferences.PrefActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_pref"
+            android:label=""
             android:parentActivityName=".activities.expenses.ExpensesActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
+            android:label=""
             android:name=".activities.analytics.FullAnalyticsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_analytics"
             android:parentActivityName=".activities.expenses.ExpensesActivity">
         </activity>
         <activity
+            android:label=""
             android:name=".activities.analytics.MonthAnalytics"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_analytics_month_overview"
             android:parentActivityName=".activities.expenses.ExpensesActivity">
         </activity>
         <activity
+            android:label=""
             android:name=".activities.analytics.DashboardActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_dashboard"
             android:parentActivityName=".activities.expenses.ExpensesActivity">
         </activity>
         <activity
             android:name=".activities.login.AccountActivity"
-            android:label="@string/title_activity_user_account"
+            android:label=""
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateHidden"
             android:parentActivityName=".activities.expenses.ExpensesActivity"

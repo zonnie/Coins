@@ -38,12 +38,25 @@
             android:orientation="vertical"
             >
 
+            <com.moneyifyapp.views.ThinTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/expense_drawable_left_pad"
+                android:text="@string/action_sing_up"
+                android:textColor="@android:color/darker_gray"
+                android:gravity="center"
+                android:textSize="@dimen/mongo_font"
+                />
+
             <ImageView
-                android:id="@+id/signupMainImage"
+                android:id="@+id/accountMainImage"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/padding_start_currency"
+                android:layout_marginTop="@dimen/padding_start_currency"
+                android:paddingTop="@dimen/expense_drawable_left_pad"
+                android:paddingBottom="@dimen/expense_drawable_left_pad"
+                android:contentDescription="Main image"
+                android:scaleType="fitCenter"
                 android:src="@drawable/sign_up"/>
 
             <TextView

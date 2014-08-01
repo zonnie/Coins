@@ -34,8 +34,6 @@ import com.moneyifyapp.utils.Utils;
  */
 public class ExpenseDetailFragment extends Fragment
 {
-    private TextView mDetailDateDay;
-    private TextView mDetailDateMonth;
     private EditText mExpenseDescription;
     private EditText mExpenseValue;
     private ImageButton mExpenseIcon;
@@ -50,7 +48,6 @@ public class ExpenseDetailFragment extends Fragment
     private AlphaAnimation mAlphaUp;
     private View mView;
     private int mMonth;
-    private String mMonthPrefix;
 
     /**
      */
@@ -94,7 +91,6 @@ public class ExpenseDetailFragment extends Fragment
             String transactionJson = getArguments().getString(Transaction.TRANS_JSON);
             mTempExpenseObject = JsonServiceYearTransactions.getInstance().fromJsonToTransaction(transactionJson);
 
-            mMonthPrefix = Utils.getMonthNameByIndex(mMonth);
             mCurrentImage = mTempExpenseObject.mImageResourceIndex;
 
             mAlphaDown = AnimationUtils.getAlphaDownAnimation();
@@ -116,7 +112,6 @@ public class ExpenseDetailFragment extends Fragment
 
         initImageView();
         initDataIfTransactionEdited();
-        initDetailDateLabels();
 
         return mView;
     }
@@ -125,12 +120,10 @@ public class ExpenseDetailFragment extends Fragment
      */
     private void storeViews()
     {
-        mDetailDateDay = (TextView) mView.findViewById(R.id.detail_date_day);
         mExpenseDescription = (EditText) mView.findViewById(R.id.addExpenseDescription);
         mExpenseValue = (EditText) mView.findViewById(R.id.addExpenseSum);
         mExpenseIcon = (ImageButton) mView.findViewById(R.id.addExpenseImage);
         mExpenseNotes = (EditText) mView.findViewById(R.id.addExpenseNotes);
-        mDetailDateMonth = (TextView) mView.findViewById(R.id.detail_date_month);
         mToggleIsExpense = (ToggleButton) mView.findViewById(R.id.isExpenseToggle);
     }
 
@@ -172,16 +165,6 @@ public class ExpenseDetailFragment extends Fragment
     private void initImageView()
     {
         mExpenseIcon.setImageResource(Images.getImageByPosition(mTempExpenseObject.mImageResourceIndex));
-    }
-
-    /**
-     */
-    private void initDetailDateLabels()
-    {
-        String date = mTempExpenseObject.mTransactionDay;
-        mDetailDateDay.setText(date);
-        if(mMonth >= 0)
-            mDetailDateMonth.setText(mMonthPrefix.toUpperCase());
     }
 
     /**

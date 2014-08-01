@@ -23,11 +23,13 @@
         android:id="@+id/account_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/drawable_left_pad"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:scrollbars="none"
         android:layout_gravity="center"
         >
 
@@ -37,96 +39,108 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
+            <com.moneyifyapp.views.ThinTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/expense_drawable_left_pad"
+                android:text="@string/account_title_text"
+                android:gravity="center"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="@dimen/mongo_font"
+                />
 
             <ImageView
                 android:id="@+id/accountMainImage"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="120dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="@dimen/drawable_left_pad"
                 android:layout_marginBottom="@dimen/padding_start_currency"
                 android:src="@drawable/account"/>
 
-            <TextView
-                android:id="@+id/sign_up_welcome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/expense_drawable_left_pad"
-                android:text="@string/account_hint"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="@dimen/tiny_font"/>
-
             <LinearLayout
-                android:id="@+id/loginbox_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/big_padding"
-                android:layout_marginRight="@dimen/big_padding"
-                android:background="@drawable/card"
+                android:layout_marginTop="@dimen/expense_drawable_left_pad"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/big_padding"
-                android:paddingLeft="@dimen/drawable_left_pad"
-                android:paddingRight="@dimen/drawable_left_pad"
-                android:paddingTop="@dimen/drawable_left_pad"
                 >
 
-                <com.moneyifyapp.views.ThinEditText
-                    android:id="@+id/update_username_edittext"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:drawableLeft="@drawable/email"
-                    android:drawablePadding="@dimen/drawable_left_pad"
-                    android:hint="@string/Email"
-                    android:imeOptions="actionNext"
-                    android:padding="@dimen/drawable_left_pad"
-                    android:singleLine="true"
-                    android:inputType="textEmailAddress"
-                    android:textColorHint="#bbbbbb"/>
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/padding_start_currency"
+                    android:text="@string/change_info_hint"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/tiny_font"/>
 
-                <com.moneyifyapp.views.ThinEditText
-                    android:id="@+id/update_pass_edittext"
+                <LinearLayout
+                    android:id="@+id/change_user_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:drawableLeft="@drawable/lock_min"
-                    android:drawablePadding="@dimen/drawable_left_pad"
-                    android:hint="@string/password_hint"
-                    android:imeOptions="actionNext"
-                    android:padding="@dimen/drawable_left_pad"
-                    android:inputType="textPassword"
-                    android:password="true"
-                    android:singleLine="true"
-                    android:textColorHint="#bbbbbb"/>
-
-                <com.moneyifyapp.views.ThinEditText
-                    android:id="@+id/update_pass_verify_edittext"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/drawable_left_pad"
-                    android:background="@android:color/transparent"
-                    android:drawableLeft="@drawable/lock_min"
-                    android:drawablePadding="@dimen/drawable_left_pad"
-                    android:hint="@string/verify_pass_hint"
-                    android:imeActionLabel="Sign Up"
-                    android:imeOptions="actionDone"
-                    android:padding="@dimen/drawable_left_pad"
-                    android:password="true"
-                    android:inputType="textPassword"
-                    android:singleLine="true"
-                    android:textColorHint="#bbbbbb"/>
+                    android:layout_marginLeft="@dimen/big_padding"
+                    android:layout_marginRight="@dimen/big_padding"
+                    android:background="@drawable/card"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/padding_start_currency"
+                    android:paddingLeft="@dimen/drawable_left_pad"
+                    android:paddingRight="@dimen/drawable_left_pad"
+                    android:paddingTop="@dimen/padding_start_currency"
+                    >
 
-                <Button
-                    android:id="@+id/confirm_update"
+                    <com.moneyifyapp.views.ThinTextView
+                        android:id="@+id/change_username_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:drawableLeft="@drawable/email"
+                        android:drawablePadding="@dimen/drawable_left_pad"
+                        android:hint="@string/Email"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress"
+                        android:padding="@dimen/drawable_left_pad"
+                        android:singleLine="true"
+                        android:textColorHint="#bbbbbb"
+                        android:textSize="@dimen/large_font"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/change_password_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/stanard_button_drawable"
-                    android:padding="10dp"
-                    android:text="@string/action_update_account"
-                    android:textColor="@android:color/white"
-                    />
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/drawable_left_pad"
+                    android:layout_marginLeft="@dimen/big_padding"
+                    android:layout_marginRight="@dimen/big_padding"
+                    android:background="@drawable/card"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/padding_start_currency"
+                    android:paddingLeft="@dimen/drawable_left_pad"
+                    android:paddingRight="@dimen/drawable_left_pad"
+                    android:paddingTop="@dimen/padding_start_currency"
+                    >
+
+                    <com.moneyifyapp.views.ThinTextView
+                        android:id="@+id/change_password_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:drawableLeft="@drawable/lock_min"
+                        android:drawablePadding="@dimen/drawable_left_pad"
+                        android:hint="@string/password_hint"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPassword"
+                        android:padding="@dimen/drawable_left_pad"
+                        android:password="true"
+                        android:singleLine="true"
+                        android:textSize="@dimen/large_font"
+                        android:textColorHint="#bbbbbb"/>
+
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

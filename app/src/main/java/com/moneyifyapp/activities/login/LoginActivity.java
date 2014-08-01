@@ -55,6 +55,7 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
 
         Utils.initializeActionBar(this);
         Utils.removeLogo(this);
+        Utils.removeActionBar(this);
 
         // Remove logo for this activity
         if(getActionBar() != null)

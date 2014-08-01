@@ -33,6 +33,7 @@ public class ImagePickerActivity extends ListActivity
         setContentView(R.layout.activity_image_picker);
         Utils.initializeActionBar(this);
         Utils.setLogo(this, R.drawable.pic);
+        Utils.removeActionBar(this);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
         // Instance of ImageAdapter Class
@@ -63,15 +64,10 @@ public class ImagePickerActivity extends ListActivity
 
             @Override
             public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-                                          int arg3)
-            {
-            }
+                                          int arg3){}
 
             @Override
-            public void afterTextChanged(Editable arg0)
-            {
-
-            }
+            public void afterTextChanged(Editable arg0){}
         });
     }
 

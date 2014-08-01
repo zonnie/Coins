@@ -38,6 +38,7 @@ public class FullAnalyticsActivity extends Activity
         Utils.initializeActionBar(this);
         Utils.setupBackButton(this);
         Utils.setLogo(this, R.drawable.dashboard);
+        Utils.removeActionBar(this);
 
         mCalender = Calendar.getInstance();
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());

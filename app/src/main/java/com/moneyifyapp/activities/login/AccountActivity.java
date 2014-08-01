@@ -5,20 +5,15 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,14 +32,15 @@ import java.util.List;
 
 public class AccountActivity extends Activity implements View.OnClickListener
 {
-    private EditText mUserEditText;
-    private EditText mPassEditText;
-    private EditText mPassRepeatEditText;
     private View mProgressView;
     private View mSignupForm;
     public static final int ACCOUNT_DELETED = 323;
     public static final int ACCOUNT_SAME = 32323;
     public int mItemsCounter;
+    private TextView mUsernameTextView;
+    private TextView mPasswordTextView;
+    private LinearLayout mUsernameLayout;
+    private LinearLayout mPasswordLayout;
     private final String DELETE_MSG = "Are you sure you want to delete your account ?" +
             "                       \nThis will also delete all your transactions";
 
@@ -63,7 +59,9 @@ public class AccountActivity extends Activity implements View.OnClickListener
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         setContentView(R.layout.activity_user_account);
         getActionBar().setHomeButtonEnabled(true);
+
         storeViews();
+        initUserAndPassword();
         bindEventListenersToViews();
     }
 
@@ -71,60 +69,44 @@ public class AccountActivity extends Activity implements View.OnClickListener
      */
     private void storeViews()
     {
-        mUserEditText = (EditText) findViewById(R.id.update_username_edittext);
-        mPassEditText = (EditText) findViewById(R.id.update_pass_edittext);
         mSignupForm = findViewById(R.id.account_form);
         mProgressView = findViewById(R.id.account_progress);
-        mPassRepeatEditText = (EditText) findViewById(R.id.update_pass_verify_edittext);
+        mUsernameLayout = (LinearLayout) findViewById(R.id.change_user_layout);
+        mUsernameTextView = (TextView) findViewById(R.id.change_username_textview);
+        mPasswordLayout = (LinearLayout) findViewById(R.id.change_password_layout);
+        mPasswordTextView = (TextView) findViewById(R.id.change_password_textview);
+    }
 
+    /**
+     */
+    private void initUserAndPassword()
+    {
+        mUsernameTextView.setText(ParseUser.getCurrentUser().getUsername());
+        mPasswordTextView.setText(ParseUser.getCurrentUser().getUsername());
     }
 
     /**
      */
     private void bindEventListenersToViews()
     {
-        mPassRepeatEditText.setOnEditorActionListener(new TextView.OnEditorActionListener()
-        {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
-            {
-                if (actionId == EditorInfo.IME_ACTION_DONE ||
-                        actionId == EditorInfo.IME_ACTION_UNSPECIFIED)
-                {
-                    signUpHandle();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        mUserEditText.setOnClickListener(this);
-        mPassEditText.setOnClickListener(this);
-        mPassRepeatEditText.setOnClickListener(this);
-        Button signUpButton = (Button) findViewById(R.id.confirm_update);
-        signUpButton.setOnClickListener(new View.OnClickListener()
+        mUsernameTextView.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                signUpHandle();
+                Toast.makeText(AccountActivity.this, "Clicked Username", Toast.LENGTH_SHORT).show();
             }
         });
 
-    }
-
-    /**
-     */
-    private void signUpHandle()
-    {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(mPassRepeatEditText.getWindowToken(), 0);
-
-        if (isSignUpValid())
+        mPasswordTextView.setOnClickListener(new View.OnClickListener()
         {
-            showProgress(true);
-            updateAccount();
-        }
+            @Override
+            public void onClick(View v)
+            {
+                Toast.makeText(AccountActivity.this, "Clicked Password", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     /**
@@ -136,65 +118,13 @@ public class AccountActivity extends Activity implements View.OnClickListener
     }
 
     /**
-     */
-    public boolean isSignUpValid()
-    {
-        // Reset errors.
-        mUserEditText.setError(null);
-        mPassEditText.setError(null);
-        mPassRepeatEditText.setError(null);
-
-        // Store values at the time of the login attempt.
-        String email = mUserEditText.getText().toString();
-        String password = mPassEditText.getText().toString();
-        String verifyPass = mPassRepeatEditText.getText().toString();
-
-        boolean cancel = false;
-        View focusView = null;
-
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email))
-        {
-            mUserEditText.setError(getString(R.string.error_field_required));
-            focusView = mUserEditText;
-            cancel = true;
-        } else if (!Utils.isEmailValid(email))
-        {
-            mUserEditText.setError(getString(R.string.error_invalid_email));
-            focusView = mUserEditText;
-            cancel = true;
-        }
-        // Check for a valid password, if the user entered one.
-        else if (TextUtils.isEmpty(password) || !Utils.isPasswordValid(password))
-        {
-            mPassEditText.setError(getString(R.string.error_invalid_password));
-            focusView = mPassEditText;
-            cancel = true;
-        }
-        // Check for a verified paassword matching
-        else if (TextUtils.isEmpty(password) || !(password.equals(verifyPass)))
-        {
-            mPassRepeatEditText.setError(getString(R.string.error_password_not_match));
-            focusView = mPassRepeatEditText;
-            cancel = true;
-        }
-
-        if (cancel)
-        {
-            focusView.requestFocus();
-            return false;
-        } else
-            return true;
-    }
-
-    /**
      * Sign up using Parse API.
      */
     private void updateAccount()
     {
         ParseUser user = new ParseUser();
-        user.setUsername(mUserEditText.getText().toString());
-        user.setPassword(mPassEditText.getText().toString());
+        //user.setUsername(mUserEditText.getText().toString());
+        //user.setPassword(mPassEditText.getText().toString());
 
     }
 

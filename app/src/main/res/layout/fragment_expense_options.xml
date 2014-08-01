@@ -34,9 +34,11 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/date_header"
                 android:orientation="horizontal"
+                android:paddingTop="@dimen/padding_start_currency"
+                android:paddingBottom="@dimen/padding_start_currency"
                 >
 
-                <TextView
+                <com.moneyifyapp.views.ThinTextView
                     android:id="@+id/detail_date_month"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -46,7 +48,7 @@
                     android:paddingRight="@dimen/padding_start_currency"
                     android:text="@string/title_expense_reuse"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/huge_font"
+                    android:textSize="@dimen/large_font"
                     android:textStyle="bold"
                     />
 

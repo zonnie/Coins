@@ -69,8 +69,9 @@
     <string name="title_activity_user_account">Account</string>
     <string name="checkbox_saved">"Saved</string>
     <string name="checkbox_save">"Save</string>
-    <string name="title_expense_detail_page">Details</string>
-    <string name="title_expense_options_page">Options</string>
+    <string name="title_expense_detail_page">The Details</string>
+    <string name="title_expense_options_page">Advanced Options</string>
     <string name="title_expense_reuse">Reuse</string>
-
+    <string name="change_info_hint">Tap below details to change them</string>
+    <string name="account_title_text">Account</string>
 </resources>
