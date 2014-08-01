@@ -50,6 +50,7 @@ public class ExpensesActivity extends Activity
     public static final int IMAGE_PICK_OK = 423;
     public static final int IMAGE_PICK_CANCEL = 563;
     public static final int EXPENSE_RESULT_OK = 222;
+    public static final int ACCOUNT_HANDLE = 2345;
     public static final int EXPENSE_RESULT_CANCELED = 333;
     public static final int REQ_NEW_ITEM = 42;
     public static final int REQ_PREFS = 532;
@@ -234,7 +235,7 @@ public class ExpensesActivity extends Activity
     private void startAccountActivity()
     {
         Intent intent = new Intent(mActivity, AccountActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, ACCOUNT_HANDLE);
     }
 
     /**
@@ -309,9 +310,21 @@ public class ExpensesActivity extends Activity
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
+        if(requestCode == ACCOUNT_HANDLE && resultCode == AccountActivity.ACCOUNT_DELETED)
+            handleAccountDelete();
         super.onActivityResult(requestCode, resultCode, data);
         int position = mViewPager.getCurrentItem();
         updateFragmentOnCurrencyPrefChange(position);
+    }
+
+    /**
+     */
+    private void handleAccountDelete()
+    {
+        startLoginActivity();
+        ParseUser.getCurrentUser().deleteInBackground();
+        logOutUser();
+        finish();
     }
 
     /**

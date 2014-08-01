@@ -53,6 +53,7 @@
     <string name="title_activity_analytics">Analytics</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="account_delete_title">Dump</string>
     <string name="title_analytics_by_date">By Date</string>
     <string name="title_analytics_by_category">By Category</string>
     <string name="title_analytics_general">General</string>

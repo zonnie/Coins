@@ -4,12 +4,15 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -20,8 +23,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.moneyifyapp.R;
+import com.moneyifyapp.activities.expenses.ExpensesActivity;
+import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.utils.Utils;
+import com.parse.DeleteCallback;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.util.List;
 
 public class AccountActivity extends Activity implements View.OnClickListener
 {
@@ -30,6 +42,11 @@ public class AccountActivity extends Activity implements View.OnClickListener
     private EditText mPassRepeatEditText;
     private View mProgressView;
     private View mSignupForm;
+    public static final int ACCOUNT_DELETED = 323;
+    public static final int ACCOUNT_SAME = 32323;
+    public int mItemsCounter;
+    private final String DELETE_MSG = "Are you sure you want to delete your account ?" +
+            "                       \nThis will also delete all your transactions";
 
     /**
      */
@@ -100,7 +117,7 @@ public class AccountActivity extends Activity implements View.OnClickListener
      */
     private void signUpHandle()
     {
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mPassRepeatEditText.getWindowToken(), 0);
 
         if (isSignUpValid())
@@ -141,8 +158,7 @@ public class AccountActivity extends Activity implements View.OnClickListener
             mUserEditText.setError(getString(R.string.error_field_required));
             focusView = mUserEditText;
             cancel = true;
-        }
-        else if (!Utils.isEmailValid(email))
+        } else if (!Utils.isEmailValid(email))
         {
             mUserEditText.setError(getString(R.string.error_invalid_email));
             focusView = mUserEditText;
@@ -167,8 +183,7 @@ public class AccountActivity extends Activity implements View.OnClickListener
         {
             focusView.requestFocus();
             return false;
-        }
-        else
+        } else
             return true;
     }
 
@@ -192,6 +207,14 @@ public class AccountActivity extends Activity implements View.OnClickListener
         toast.show();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.user_account, menu);
+        return true;
+    }
+
     /**
      */
     @Override
@@ -206,8 +229,70 @@ public class AccountActivity extends Activity implements View.OnClickListener
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                 return true;
             }
+            case R.id.delete_account:
+                promptAccountDelete();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     */
+    private void promptAccountDelete()
+    {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        deleteAccount();
+                        break;
+                }
+            }
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(DELETE_MSG).setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+    }
+
+    /**
+     */
+    private void deleteAccount()
+    {
+        ParseUser user = ParseUser.getCurrentUser();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(Transaction.CLASS_NAME);
+        query.whereEqualTo(ExpensesActivity.PARSE_USER_KEY, user);
+        query.findInBackground(new FindCallback<ParseObject>()
+        {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e)
+            {
+                mItemsCounter = parseObjects.size();
+                deleteAccountTransactions(parseObjects);
+            }
+        });
+    }
+
+    /**
+     */
+    private void deleteAccountTransactions(List<ParseObject> parseObjects)
+    {
+        for (ParseObject object : parseObjects)
+        {
+            object.deleteInBackground(new DeleteCallback()
+            {
+                @Override
+                public void done(ParseException e)
+                {
+                    mItemsCounter--;
+                    if (mItemsCounter == 0)
+                    {
+                        setResult(ACCOUNT_DELETED);
+                        finish();
+                    }
+                }
+            });
+        }
     }
 
     /**

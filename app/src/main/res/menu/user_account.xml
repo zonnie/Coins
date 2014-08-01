@@ -1,8 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.moneyifyapp.activities.login.AccountActivity" >
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never" />
+
+    <item android:id="@+id/delete_account"
+        android:title="@string/account_delete_title"
+        android:showAsAction="always"
+        android:icon="@drawable/delete"
+        />
 </menu>
