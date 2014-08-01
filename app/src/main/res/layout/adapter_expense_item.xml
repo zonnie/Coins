@@ -62,8 +62,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingEnd="@dimen/drawable_left_pad"
                     android:paddingBottom="@dimen/padding_start_currency"
+                    android:paddingEnd="@dimen/drawable_left_pad"
                     android:paddingTop="@dimen/padding_start_currency"
                     >
 
@@ -72,8 +72,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:scaleType="fitCenter"
                         android:background="@android:color/transparent"
+                        android:scaleType="fitCenter"
                         android:src="@drawable/email"
                         />
 
@@ -82,8 +82,8 @@
                         android:layout_width="0.6px"
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/drawable_left_pad"
-                        android:background="@android:color/darker_gray"
                         android:layout_toRightOf="@+id/categoryImage"
+                        android:background="@android:color/darker_gray"
                         android:fadingEdge="vertical"
                         android:fadingEdgeLength="@dimen/drawable_left_pad"
                         />
@@ -91,10 +91,10 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/drawable_left_pad"
-                        android:orientation="vertical"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/drawable_left_pad"
                         android:gravity="center_horizontal"
+                        android:orientation="vertical"
                         >
 
                         <LinearLayout
@@ -114,7 +114,7 @@
                                 android:textStyle="bold"
                                 />
 
-                            <TextView
+                            <com.moneyifyapp.views.CondensedTextView
                                 android:id="@+id/currency"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
                                 android:textStyle="bold"
                                 />
 
-                            <TextView
+                            <com.moneyifyapp.views.CondensedTextView
                                 android:id="@+id/expenseValue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -156,12 +156,8 @@
                             />
 
                     </LinearLayout>
-
                 </LinearLayout>
-
             </LinearLayout>
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -173,7 +169,6 @@
             android:orientation="vertical"
             android:weightSum="20"
             >
-
             <com.moneyifyapp.views.CondensedTextView
                 android:id="@+id/expense_item_date_text"
                 android:layout_width="match_parent"
@@ -186,7 +181,6 @@
                 android:textSize="@dimen/huge_font"
                 android:textStyle="bold"
                 />
-
             <com.moneyifyapp.views.CondensedTextView
                 android:id="@+id/expense_item_date_month"
                 android:layout_width="match_parent"
@@ -197,11 +191,6 @@
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/medium_font"
                 />
-
-
         </LinearLayout>
-
-
     </LinearLayout>
-    <!--</LinearLayout>-->
 </LinearLayout>

@@ -12,16 +12,16 @@
         android:layout_marginLeft="@dimen/big_padding"
         android:layout_marginRight="@dimen/big_padding"
         android:layout_marginTop="@dimen/drawable_left_pad"
-        android:paddingBottom="@dimen/huge_padding"
         android:orientation="vertical"
+        android:paddingBottom="@dimen/huge_padding"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:background="@drawable/card"
             android:layout_marginBottom="@dimen/drawable_left_pad"
+            android:background="@drawable/card"
             android:orientation="vertical"
             >
 
@@ -83,7 +83,7 @@
                     >
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:orientation="vertical"
@@ -130,40 +130,45 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:orientation="vertical"
                             >
 
-                            <TextView
-                                android:id="@+id/toggle_expense_hint"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/padding_start_currency"
-                                android:gravity="center"
-                                android:text="@string/toggle_hint_text"
-                                android:textColor="@android:color/darker_gray"
-                                android:textSize="@dimen/tiny_font"
-                                />
-
-                            <ToggleButton
-                                android:id="@+id/isExpenseToggle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:background="@drawable/expense_toggle"
-                                android:paddingBottom="@dimen/drawable_left_pad"
-                                android:paddingEnd="@dimen/big_padding"
-                                android:paddingStart="@dimen/big_padding"
-                                android:paddingTop="@dimen/drawable_left_pad"
-                                android:textColor="@android:color/white"
-                                android:textOff="@string/spent_string"
-                                android:textOn="@string/revenue_string"
-                                android:textSize="@dimen/large_font"
-                                />
+                                android:orientation="vertical"
+                                >
 
+                                <TextView
+                                    android:id="@+id/toggle_expense_hint"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/padding_start_currency"
+                                    android:gravity="center"
+                                    android:text="@string/toggle_hint_text"
+                                    android:textColor="@android:color/darker_gray"
+                                    android:textSize="@dimen/tiny_font"
+                                    />
+
+                                <ToggleButton
+                                    android:id="@+id/isExpenseToggle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/expense_toggle"
+                                    android:paddingBottom="@dimen/drawable_left_pad"
+                                    android:paddingEnd="@dimen/big_padding"
+                                    android:paddingStart="@dimen/big_padding"
+                                    android:paddingTop="@dimen/drawable_left_pad"
+                                    android:textColor="@android:color/white"
+                                    android:textOff="@string/spent_string"
+                                    android:textOn="@string/revenue_string"
+                                    android:textSize="@dimen/large_font"
+                                    />
+
+                            </LinearLayout>
                         </LinearLayout>
-
 
                         <LinearLayout
                             android:id="@+id/detail_right_pane_layout"
@@ -288,85 +293,5 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Second Section -->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:background="@drawable/card"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/padding_start_currency"
-            android:paddingBottom="@dimen/expense_drawable_left_pad"
-            >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                >
-
-                <ToggleButton
-                    android:id="@+id/toggle_template_save_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@drawable/expense_toggle"
-                    android:paddingBottom="@dimen/drawable_left_pad"
-                    android:paddingEnd="@dimen/big_padding"
-                    android:paddingStart="@dimen/big_padding"
-                    android:paddingTop="@dimen/drawable_left_pad"
-                    android:textColor="@android:color/white"
-                    android:textOff="@string/spent_string"
-                    android:textOn="@string/revenue_string"
-                    android:textSize="@dimen/large_font"
-                    android:visibility="gone"
-                    />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/detail_save_template_toggle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/detail_date_category_layout"
-                android:orientation="vertical"
-                android:layout_marginTop="@dimen/padding_start_currency"
-                android:layout_marginBottom="@dimen/padding_start_currency"
-                >
-
-                <TextView
-                    android:id="@+id/toggle_template_save_hint"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/padding_start_currency"
-                    android:gravity="center"
-                    android:text="@string/checkbox_template_hint_text"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="@dimen/tiny_font"
-                    />
-
-                <ToggleButton
-                    android:id="@+id/toggle_template_save"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textOff="@string/checkbox_save"
-                    android:textOn="@string/checkbox_saved"
-                    android:textColor="@android:color/white"
-                    android:typeface="normal"
-                    android:textSize="@dimen/large_font"
-                    android:paddingTop="@dimen/padding_start_currency"
-                    android:paddingBottom="@dimen/drawable_left_pad"
-                    android:paddingLeft="@dimen/expense_drawable_left_pad"
-                    android:paddingRight="@dimen/expense_drawable_left_pad"
-                    android:background="@drawable/template_background"
-                    />
-
-            </LinearLayout>
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>

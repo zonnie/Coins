@@ -270,7 +270,7 @@ public class MonthAnalyticsFragment extends Fragment
         {
             mNoInsights = true;
             TextView insigntsLabel = (TextView) mRootView.findViewById(R.id.month_analytics_insignts_label);
-            insigntsLabel.setText("Some Insights we Found");
+            insigntsLabel.setVisibility(View.GONE);
         }
     }
 

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/background"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/big_padding"
+        android:layout_marginRight="@dimen/big_padding"
+        android:layout_marginTop="@dimen/drawable_left_pad"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/huge_padding"
+        >
+
+
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="end"
+                      android:background="@drawable/card"
+                      android:orientation="vertical"
+                      android:paddingBottom="@dimen/expense_drawable_left_pad"
+            >
+
+            <!-- title -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/date_header"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/detail_date_month"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="start|center_vertical"
+                    android:paddingLeft="@dimen/big_padding"
+                    android:paddingRight="@dimen/padding_start_currency"
+                    android:text="@string/title_expense_reuse"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/huge_font"
+                    android:textStyle="bold"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/detail_save_template_toggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_start_currency"
+                android:layout_marginLeft="@dimen/big_padding"
+                android:layout_marginRight="@dimen/big_padding"
+                android:layout_marginTop="@dimen/padding_start_currency"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/toggle_template_save_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/padding_start_currency"
+                    android:gravity="center"
+                    android:text="@string/checkbox_template_hint_text"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/tiny_font"
+                    />
+
+                <ToggleButton
+                    android:id="@+id/toggle_template_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/template_background"
+                    android:paddingBottom="@dimen/drawable_left_pad"
+                    android:paddingLeft="@dimen/expense_drawable_left_pad"
+                    android:paddingRight="@dimen/expense_drawable_left_pad"
+                    android:paddingTop="@dimen/padding_start_currency"
+                    android:textColor="@android:color/white"
+                    android:textOff="@string/checkbox_save"
+                    android:textOn="@string/checkbox_saved"
+                    android:textSize="@dimen/large_font"
+                    android:typeface="normal"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

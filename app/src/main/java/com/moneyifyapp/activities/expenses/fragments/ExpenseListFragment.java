@@ -505,7 +505,7 @@ public class ExpenseListFragment extends ListFragment
         catch (ClassCastException e)
         {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnDetailFragmentSubmit");
         }
     }
 

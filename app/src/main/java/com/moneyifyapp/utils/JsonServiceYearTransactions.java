@@ -12,7 +12,7 @@ import com.moneyifyapp.model.YearTransactions;
  * This service creates an object from JSON and vice-versa.
  *
  */
-public class JsonServiceYearTransactions<T>
+public class JsonServiceYearTransactions
 {
     private static JsonServiceYearTransactions mInstance;
     private Gson mGson;
@@ -35,7 +35,7 @@ public class JsonServiceYearTransactions<T>
 
     /**
      */
-    public String toJson(T transactions)
+    public String toJson(Object transactions)
     {
         Gson gson = new Gson();
         String json = "";

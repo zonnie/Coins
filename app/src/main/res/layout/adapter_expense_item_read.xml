@@ -11,8 +11,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/padding_start_currency"
-        android:layout_marginTop="@dimen/padding_start_currency"
         android:orientation="horizontal"
         android:weightSum="30"
         >
@@ -93,7 +91,7 @@
                                 android:textStyle="bold"
                                 />
 
-                            <TextView
+                            <com.moneyifyapp.views.CondensedTextView
                                 android:id="@+id/currency"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -106,7 +104,7 @@
                                 android:textStyle="bold"
                                 />
 
-                            <TextView
+                            <com.moneyifyapp.views.CondensedTextView
                                 android:id="@+id/expenseValue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

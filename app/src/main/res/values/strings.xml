@@ -22,7 +22,7 @@
     <string name="Email">Email</string>
     <string name="password_hint">Password</string>
     <string name="verify_pass_hint">Verify Password</string>
-    <string name="title_activity_create_expense">Details</string>
+    <string name="title_activity_create_expense">Transaction</string>
     <string name="title_activity_image_picker">Category</string>
     <string name="login_welcome">Welcome!</string>
     <string name="login_welcome_2nd_line">Sign in and save some Coins</string>
@@ -30,7 +30,7 @@
     <string name="account_hint">Update us on any account changes</string>
     <string name="image_picker_hint_text">Select category</string>
     <string name="toggle_hint_text">Tap to change</string>
-    <string name="checkbox_template_hint_text">Tap to save</string>
+    <string name="checkbox_template_hint_text">Tap to save as template</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="item_details_submit">"Done !"</string>
@@ -38,6 +38,7 @@
     <string name="item_list_refresh">"Refresh"</string>
     <string name="item_list_edit">"Edit"</string>
     <string name="item_list_delete">"Delete"</string>
+    <string name="item_details_save">"Save"</string>
     <string name="image_gallery_hint">"Tap the category image to pick one"</string>
     <string name="splash_slogan">"Save some Coins"</string>
     <string name="splash_first_time_title">"Welcome to Coins !"</string>
@@ -67,5 +68,8 @@
     <string name="title_activity_user_account">Account</string>
     <string name="checkbox_saved">"Saved</string>
     <string name="checkbox_save">"Save</string>
+    <string name="title_expense_detail_page">Details</string>
+    <string name="title_expense_options_page">Options</string>
+    <string name="title_expense_reuse">Reuse</string>
 
 </resources>

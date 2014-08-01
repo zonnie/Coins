@@ -6,7 +6,14 @@
     <item
         android:id="@+id/submit_item"
         android:showAsAction="always"
-        android:title="@string/item_list_delete"
+        android:title="@string/item_details_submit"
         android:icon="@drawable/accept"
         />
+
+    <!--<item
+        android:id="@+id/save_item"
+        android:showAsAction="always"
+        android:title="@string/item_details_save"
+        android:icon="@drawable/save_template"
+        />-->
 </menu>

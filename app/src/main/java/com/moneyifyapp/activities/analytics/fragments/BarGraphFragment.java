@@ -81,7 +81,7 @@ public class BarGraphFragment extends Fragment
             mXAxisLabels = mParameters.mXAxisLabels;
             mYAxisLabels = mParameters.mYAxisLabels;
             mXAxisTitle = mParameters.mXAxisTitle;
-            mBarMargin = mMaxBarHeight/mValues.size();
+            mBarMargin = (mValues.size() > 0 ) ? mMaxBarHeight/mValues.size() : 0;
             mXAxisIcons = mParameters.mXAxisIcons;
         }
 

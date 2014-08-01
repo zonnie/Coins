@@ -7,7 +7,7 @@
     <string name="analytics_str_biggest_income_label">Top Income</string>
     <string name="analytics_str_worst_day_label">Busiest Day this Month</string>
     <string name="analytics_str_top_category_label">You spend a lot on</string>
-    <string name="analytics_str_totals_hint">Monthly bottom line</string>
+    <string name="analytics_str_totals_hint">Bottom Line</string>
     <string name="analytics_str_intrest_hint">Can\'t jump to conclusion yet, add some transactions</string>
     <string name="analytics_str_top_category_hint">Can\'t say anything on categories, add some transactions</string>
     <string name="analytics_str_top_graph_hint">Can\'t draw any doodles yet, add some transactions</string>

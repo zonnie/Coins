@@ -1,8 +1,32 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:id="@+id/container"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.moneyifyapp.activities.expenseDetail.ExpenseDetailActivity"
-             android:background="@color/background"
-             tools:ignore="MergeRootFrame"/>
+<!-- Title -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:scrollbars="none"
+    >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.moneyifyapp.activities.analytics.FullAnalyticsActivity"
+        >
+
+        <android.support.v4.view.PagerTitleStrip
+            android:id="@+id/pager_title_strip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@drawable/back_regualr"
+            android:paddingBottom="4dp"
+            android:paddingTop="8dp"
+            android:textColor="#fff"/>
+
+    </android.support.v4.view.ViewPager>
+</LinearLayout>
+
+
+

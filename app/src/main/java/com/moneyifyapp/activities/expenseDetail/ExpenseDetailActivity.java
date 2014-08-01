@@ -1,14 +1,20 @@
 package com.moneyifyapp.activities.expenseDetail;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.ViewPager;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenseDetail.fragments.ExpenseDetailFragment;
+import com.moneyifyapp.activities.expenseDetail.fragments.ExpenseOptionsFragment;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.activities.preferences.PrefActivity;
@@ -21,7 +27,8 @@ import com.moneyifyapp.utils.Utils;
  * This is used for both addition of new transactions and editing existing ones.
  */
 public class ExpenseDetailActivity extends Activity
-        implements ExpenseDetailFragment.OnFragmentInteractionListener
+        implements ExpenseDetailFragment.OnDetailFragmentSubmit,
+        ExpenseOptionsFragment.OnOptionsFragmentSubmit
 {
     private int mRequestCode;
     private int mItemPosition;
@@ -34,9 +41,14 @@ public class ExpenseDetailActivity extends Activity
     private boolean mIsExpense;
     private boolean mSaved;
     private int mMonth;
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private ViewPager mViewPager;
+    private boolean mIsEdit;
+    private Transaction mTransaction;
+    private ExpenseDetailFragment mDetailFragment;
+    private ExpenseOptionsFragment mOptionsFragment;
 
     /**
-     *
      */
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -57,29 +69,29 @@ public class ExpenseDetailActivity extends Activity
                 mMonth = getIntent().getExtras().getInt(ExpenseListFragment.MONTH_KEY);
         }
 
-        boolean isEdit = false;
+        mIsEdit = false;
 
         if (mRequestCode == ExpensesActivity.REQ_EDIT_ITEM)
-            isEdit = true;
+            mIsEdit = true;
 
         if (savedInstanceState == null)
         {
-            Transaction tempExpense;
-
             // If this is not an edit, clone the transcation for edit
-            if (!isEdit)
-                tempExpense = new Transaction(Transaction.DEFUALT_TRANSCATION_ID);
+            if (!mIsEdit)
+                mTransaction = new Transaction(Transaction.DEFUALT_TRANSCATION_ID);
             else
-                tempExpense = createTransactionFromIntent();
-
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, ExpenseDetailFragment.newInstance(isEdit, tempExpense, mMonth))
-                    .commit();
+                mTransaction = createTransactionFromIntent();
         }
+
+        mDetailFragment = ExpenseDetailFragment.newInstance(mIsEdit, mTransaction, mMonth);
+        mOptionsFragment = ExpenseOptionsFragment.newInstance(mIsEdit, mTransaction);
+
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
     }
 
     /**
-     *
      */
     private Transaction createTransactionFromIntent()
     {
@@ -104,27 +116,29 @@ public class ExpenseDetailActivity extends Activity
     }
 
     /**
-     *
      */
     @Override
-    public void onAddExpense(String addDescription, String addSum, String addCurrency,
-                             String addNote, int addImage, boolean isExpense, boolean isSaved)
+    public void onTransactionSubmit(Transaction transaction)
     {
         Intent data = getIntent();
 
-        data.putExtra(Transaction.KEY_DESCRIPTION, addDescription);
-        data.putExtra(Transaction.KEY_VALUE, addSum);
-        data.putExtra(Transaction.KEY_IMAGE_NAME, addImage);
-        data.putExtra(Transaction.KEY_CURRENCY, addCurrency);
-        data.putExtra(Transaction.KEY_NOTES, addNote);
+        data.putExtra(Transaction.KEY_DESCRIPTION, transaction.mDescription);
+        data.putExtra(Transaction.KEY_VALUE, transaction.mValue);
+        data.putExtra(Transaction.KEY_IMAGE_NAME, transaction.mImageResourceIndex);
+        data.putExtra(Transaction.KEY_CURRENCY, transaction.mCurrency);
+        data.putExtra(Transaction.KEY_NOTES, transaction.mNotes);
         data.putExtra(ExpenseListFragment.ITEM_POS_KEY, mItemPosition);
         data.putExtra(ExpenseListFragment.MONTH_KEY, mMonth);
-        data.putExtra(Transaction.KEY_TYPE, isExpense);
-        data.putExtra(ExpenseListFragment.TEMPLATE_KEY, isSaved);
+        data.putExtra(Transaction.KEY_TYPE, transaction.mIsExpense);
 
-        setResult(ExpensesActivity.EXPENSE_RESULT_OK, data);
-        finish();
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
+
+    @Override
+    public void OnOptionsSubmit(Transaction transaction)
+    {
+        Intent data = getIntent();
+        data.putExtra(ExpenseListFragment.TEMPLATE_KEY, transaction.mSaved);
+
     }
 
     /**
@@ -137,7 +151,6 @@ public class ExpenseDetailActivity extends Activity
 
         finish();
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-
     }
 
     /**
@@ -154,9 +167,28 @@ public class ExpenseDetailActivity extends Activity
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                 return true;
             }
+            case R.id.submit_item:
+            {
+                mDetailFragment.onSumbitPressed();
+                mOptionsFragment.onSumbitPressed();
+                setResult(ExpensesActivity.EXPENSE_RESULT_OK, getIntent());
+                finish();
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            }
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.expense_detail, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
 
     /**
      */
@@ -165,5 +197,55 @@ public class ExpenseDetailActivity extends Activity
     {
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
+
+    /**
+     */
+    public class SectionsPagerAdapter extends FragmentPagerAdapter
+    {
+
+        /**
+         */
+        public SectionsPagerAdapter(FragmentManager fm)
+        {
+            super(fm);
+        }
+
+        /**
+         */
+        @Override
+        public Fragment getItem(int position)
+        {
+            if (position == 0)
+                return mDetailFragment;
+            else if (position == 1)
+                return mOptionsFragment;
+            else
+                return mDetailFragment;
+        }
+
+        /**
+         */
+        @Override
+        public int getCount()
+        {
+            return 2;
+        }
+
+        /**
+         */
+        @Override
+        public CharSequence getPageTitle(int position)
+        {
+            switch (position)
+            {
+                case 0:
+                    return getString(R.string.title_expense_detail_page);
+                case 1:
+                    return getString(R.string.title_expense_options_page);
+                default:
+                    return getString(R.string.title_expense_detail_page);
+            }
+        }
     }
 }

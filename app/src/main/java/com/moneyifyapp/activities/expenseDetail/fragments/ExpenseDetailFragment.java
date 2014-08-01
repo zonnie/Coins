@@ -7,9 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -44,8 +41,7 @@ public class ExpenseDetailFragment extends Fragment
     private ImageButton mExpenseIcon;
     private EditText mExpenseNotes;
     private ToggleButton mToggleIsExpense;
-    private ToggleButton mToggleSave;
-    private OnFragmentInteractionListener mListener;
+    private OnDetailFragmentSubmit mListener;
     private Transaction mTempExpenseObject;
     private boolean mIsEdit;
     private int mCurrentImage;
@@ -136,7 +132,6 @@ public class ExpenseDetailFragment extends Fragment
         mExpenseNotes = (EditText) mView.findViewById(R.id.addExpenseNotes);
         mDetailDateMonth = (TextView) mView.findViewById(R.id.detail_date_month);
         mToggleIsExpense = (ToggleButton) mView.findViewById(R.id.isExpenseToggle);
-        mToggleSave = (ToggleButton)mView.findViewById(R.id.toggle_template_save);
     }
 
     /**
@@ -172,26 +167,6 @@ public class ExpenseDetailFragment extends Fragment
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        int id = item.getItemId();
-
-        if (id == R.id.submit_item)
-            onSumbitPressed();
-        else if(id == android.R.id.home)
-            onCancelPressed();
-
-        return true;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-    {
-        inflater.inflate(R.menu.expense_detail, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
     /**
      */
     private void initImageView()
@@ -220,7 +195,6 @@ public class ExpenseDetailFragment extends Fragment
             mExpenseNotes.setText(mTempExpenseObject.mNotes);
             mExpenseIcon.setImageResource(Images.getImageByPosition(mTempExpenseObject.mImageResourceIndex));
             mToggleIsExpense.setChecked(!mTempExpenseObject.mIsExpense);
-            mToggleSave.setChecked(mTempExpenseObject.mSaved);
         }
     }
 
@@ -252,15 +226,19 @@ public class ExpenseDetailFragment extends Fragment
             String note = mExpenseNotes.getText().toString();
             String sum = mExpenseValue.getText().toString();
             String currency = Utils.getDefaultCurrency(getActivity());
-            boolean isExpense = !mToggleIsExpense.isChecked();  // If it's un-toggled this means this is an expense
-            boolean isSaved = mToggleSave.isChecked();
+            boolean isExpense = !mToggleIsExpense.isChecked();
 
             if (description.isEmpty() || sum.isEmpty())
-            {
                 Toast.makeText(getActivity(), "Please fill all required info", Toast.LENGTH_SHORT).show();
-            } else
+            else
             {
-                mListener.onAddExpense(description, sum, currency, note, imageName, isExpense, isSaved);
+                mTempExpenseObject.mDescription = description;
+                mTempExpenseObject.mImageResourceIndex = imageName;
+                mTempExpenseObject.mNotes = note;
+                mTempExpenseObject.mValue = sum;
+                mTempExpenseObject.mCurrency = currency;
+                mTempExpenseObject.mIsExpense = isExpense;
+                mListener.onTransactionSubmit(mTempExpenseObject);
             }
         }
     }
@@ -273,12 +251,12 @@ public class ExpenseDetailFragment extends Fragment
         super.onAttach(activity);
         try
         {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (OnDetailFragmentSubmit) activity;
         }
         catch (ClassCastException e)
         {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnDetailFragmentSubmit");
         }
     }
 
@@ -294,11 +272,9 @@ public class ExpenseDetailFragment extends Fragment
     /**
      * Interface for containing activity.
      */
-    public interface OnFragmentInteractionListener
+    public interface OnDetailFragmentSubmit
     {
-        public void onAddExpense(String addDescription, String addSum, String currency,
-                                 String addNote, int addImage, boolean isExpense, boolean isSaved);
-
+        public void onTransactionSubmit(Transaction transaction);
         public void cancel();
     }
 
