@@ -5,9 +5,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
-import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
@@ -55,6 +54,7 @@ public class MonthAnalytics extends Activity
             Utils.initializeParse(this);
             Utils.initializeActionBar(this);
             Utils.setLogo(this, R.drawable.chart);
+            Utils.removeActionBar(this);
 
             initYearTransactiosnFromIntent();
 
@@ -64,6 +64,13 @@ public class MonthAnalytics extends Activity
             mViewPager.setAdapter(mSectionsPagerAdapter);
             initDateLabels();
         }
+    }
+
+    /**
+     */
+    public void onBackClicked(View view)
+    {
+        onBackPressed();
     }
 
     /**
@@ -104,24 +111,6 @@ public class MonthAnalytics extends Activity
         mYear = getIntent().getExtras().getInt(ExpenseListFragment.YEAR_KEY);
         String yearTransString = getIntent().getExtras().getString(ExpenseListFragment.YEAR_JSON_KEY);
         mYearTransactions = JsonServiceYearTransactions.getInstance().fromJsonToYearTransactions(yearTransString);
-    }
-
-    /**
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-            {
-                NavUtils.navigateUpFromSameTask(this);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                return true;
-            }
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -210,6 +199,8 @@ public class MonthAnalytics extends Activity
         super.onPause();
         finish();
     }
+
+
 
     /**
      */

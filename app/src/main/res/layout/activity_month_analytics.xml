@@ -6,6 +6,8 @@
             android:scrollbars="none"
     >
 
+    <!-- Custom Action Bar -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,29 +20,43 @@
             android:layout_height="wrap_content"
             android:background="@drawable/back_regualr"
             android:orientation="horizontal"
+            android:weightSum="6.3"
             >
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:scaleType="center"
+                android:background="@drawable/back_regular_drawable"
+                android:src="@drawable/back_2"
+                android:onClick="onBackClicked"
+                android:layout_weight="0.6"
+                />
 
             <TextView
                 android:id="@+id/analytics_month_label"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/padding_start_currency"
+                android:drawableStart="@drawable/chart_small"
                 android:fontFamily="sans-serif-condensed"
-                android:paddingLeft="@dimen/big_padding"
-                android:paddingRight="@dimen/padding_start_currency"
+                android:gravity="center"
                 android:text="December"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/huge_font"
                 android:textStyle="bold"
+                android:layout_weight="2.5"
                 />
 
             <TextView
                 android:id="@+id/analytics_year_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
                 android:fontFamily="sans-serif-condensed"
                 android:paddingBottom="@dimen/padding_start_currency"
                 android:paddingTop="@dimen/padding_start_currency"
+                android:gravity="center_vertical"
                 android:text="2014"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/huge_font"

@@ -3,12 +3,14 @@
       android:layout_height="fill_parent"
     >
 
+    <!--
     <item
         android:id="@+id/submit_item"
         android:showAsAction="always"
         android:title="@string/item_details_submit"
         android:icon="@drawable/accept"
         />
+        -->
 
     <!--<item
         android:id="@+id/save_item"

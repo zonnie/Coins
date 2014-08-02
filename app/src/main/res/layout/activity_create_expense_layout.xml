@@ -6,6 +6,72 @@
               android:scrollbars="none"
     >
 
+    <!-- Custom Action Bar -->
+
+    <LinearLayout
+        android:id="@+id/month_analytics_date_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back_regualr"
+        android:orientation="horizontal"
+        android:weightSum="6.3"
+        >
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:paddingStart="@dimen/drawable_left_pad"
+            android:paddingEnd="@dimen/drawable_left_pad"
+            android:scaleType="center"
+            android:layout_weight="0.6"
+            android:background="@drawable/back_regular_drawable"
+            android:src="@drawable/back_2"
+            android:onClick="OnBackClicked"
+            />
+
+        <TextView
+            android:id="@+id/detail_date_month"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/transaction"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:text="December"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/huge_font"
+            android:textStyle="bold"
+            android:layout_weight="2.5"
+            />
+
+        <TextView
+            android:id="@+id/detail_date_day"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:fontFamily="sans-serif-condensed"
+            android:paddingBottom="@dimen/padding_start_currency"
+            android:paddingTop="@dimen/padding_start_currency"
+            android:gravity="center_vertical"
+            android:text="24th"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/huge_font"
+
+            />
+
+        <ImageButton
+            android:id="@+id/submit_item"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/back_regular_drawable"
+            android:layout_gravity="center_vertical|right"
+            android:layout_weight="1.2"
+            android:gravity="end"
+            android:src="@drawable/accept"
+            android:onClick="onAcceptClicked"
+            />
+    </LinearLayout>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         xmlns:android="http://schemas.android.com/apk/res/android"

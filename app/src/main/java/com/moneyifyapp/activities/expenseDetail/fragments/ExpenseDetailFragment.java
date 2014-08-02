@@ -21,7 +21,6 @@ import android.widget.ToggleButton;
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenseDetail.ImagePickerActivity;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
-import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.utils.AnimationUtils;
@@ -47,11 +46,10 @@ public class ExpenseDetailFragment extends Fragment
     private AlphaAnimation mAlphaDown;
     private AlphaAnimation mAlphaUp;
     private View mView;
-    private int mMonth;
 
     /**
      */
-    public static ExpenseDetailFragment newInstance(boolean isEdit, Transaction expense, int month)
+    public static ExpenseDetailFragment newInstance(boolean isEdit, Transaction expense)
     {
         ExpenseDetailFragment fragment = new ExpenseDetailFragment();
         Bundle args = new Bundle();
@@ -61,7 +59,6 @@ public class ExpenseDetailFragment extends Fragment
 
             args.putString(Transaction.TRANS_JSON, transactionJson);
             args.putBoolean(EXPENSE_EDIT_KEY, isEdit);
-            args.putInt(ExpenseListFragment.MONTH_KEY, month);
 
         }
         fragment.setArguments(args);
@@ -86,7 +83,6 @@ public class ExpenseDetailFragment extends Fragment
         if (getArguments() != null)
         {
             mIsEdit = getArguments().getBoolean(EXPENSE_EDIT_KEY);
-            mMonth = getArguments().getInt(ExpenseListFragment.MONTH_KEY);
 
             String transactionJson = getArguments().getString(Transaction.TRANS_JSON);
             mTempExpenseObject = JsonServiceYearTransactions.getInstance().fromJsonToTransaction(transactionJson);

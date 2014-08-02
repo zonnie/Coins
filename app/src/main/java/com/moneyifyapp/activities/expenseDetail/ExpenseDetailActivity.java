@@ -7,10 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v13.app.FragmentPagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenseDetail.fragments.ExpenseDetailFragment;
@@ -40,13 +39,15 @@ public class ExpenseDetailActivity extends Activity
     private int mImageName;
     private boolean mIsExpense;
     private boolean mSaved;
-    private int mMonth;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private boolean mIsEdit;
     private Transaction mTransaction;
     private ExpenseDetailFragment mDetailFragment;
     private ExpenseOptionsFragment mOptionsFragment;
+    private int mMonth;
+    private TextView mDetailDateDay;
+    private TextView mDetailDateMonth;
 
     /**
      */
@@ -60,6 +61,7 @@ public class ExpenseDetailActivity extends Activity
         Utils.initializeActionBar(this);
         Utils.setupBackButton(this);
         Utils.setLogo(this, R.drawable.transaction);
+        Utils.removeActionBar(this);
 
         if(getIntent().getExtras() != null)
         {
@@ -83,8 +85,11 @@ public class ExpenseDetailActivity extends Activity
                 mTransaction = createTransactionFromIntent();
         }
 
-        mDetailFragment = ExpenseDetailFragment.newInstance(mIsEdit, mTransaction, mMonth);
+        mDetailDateDay = (TextView) findViewById(R.id.detail_date_day);
+        mDetailDateMonth = (TextView) findViewById(R.id.detail_date_month);
+        mDetailFragment = ExpenseDetailFragment.newInstance(mIsEdit, mTransaction);
         mOptionsFragment = ExpenseOptionsFragment.newInstance(mIsEdit, mTransaction);
+        initDetailDateLabels();
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -155,40 +160,19 @@ public class ExpenseDetailActivity extends Activity
 
     /**
      */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
+    public void onAcceptClicked(View view)
     {
-        switch (item.getItemId())
-        {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-            {
-                NavUtils.navigateUpFromSameTask(this);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                return true;
-            }
-            case R.id.submit_item:
-            {
-                mDetailFragment.onSumbitPressed();
-                mOptionsFragment.onSumbitPressed();
-                setResult(ExpensesActivity.EXPENSE_RESULT_OK, getIntent());
-                finish();
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-            }
-        }
-        return super.onOptionsItemSelected(item);
+        mDetailFragment.onSumbitPressed();
+        mOptionsFragment.onSumbitPressed();
+        setResult(ExpensesActivity.EXPENSE_RESULT_OK, getIntent());
+        finish();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
-    /**
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
+    public void OnBackClicked(View view)
     {
-        getMenuInflater().inflate(R.menu.expense_detail, menu);
-        return super.onCreateOptionsMenu(menu);
+        onBackPressed();
     }
-
-
 
     /**
      */
@@ -198,6 +182,18 @@ public class ExpenseDetailActivity extends Activity
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
+
+    /**
+     */
+    private void initDetailDateLabels()
+    {
+        String date = mTransaction.mTransactionDay;
+        date += Utils.generateDayInMonthSuffix(date);
+        mDetailDateDay.setText(date);
+        if(mMonth >= 0)
+            mDetailDateMonth.setText(Utils.getMonthNameByIndex(mMonth));
+    }
+
 
     /**
      */

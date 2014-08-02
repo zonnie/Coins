@@ -7,7 +7,6 @@
               android:orientation="vertical"
               android:paddingLeft="@dimen/activity_horizontal_margin"
               android:paddingRight="@dimen/activity_horizontal_margin"
-              android:paddingTop="@dimen/padding_start_currency"
     >
 
     <ProgressBar
@@ -51,7 +50,7 @@
             <ImageView
                 android:id="@+id/accountMainImage"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="120dp"
                 android:layout_marginTop="@dimen/padding_start_currency"
                 android:paddingTop="@dimen/expense_drawable_left_pad"
                 android:paddingBottom="@dimen/expense_drawable_left_pad"
@@ -59,12 +58,23 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/sign_up"/>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.3dp"
+                android:layout_below="@+id/month_analytics_top_layout"
+                android:layout_marginTop="@dimen/drawable_left_pad"
+                android:layout_marginBottom="@dimen/drawable_left_pad"
+                android:layout_marginStart="@dimen/big_padding"
+                android:layout_marginEnd="@dimen/big_padding"
+                android:background="@android:color/darker_gray"
+                />
+
             <TextView
                 android:id="@+id/sign_up_welcome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/expense_drawable_left_pad"
+                android:layout_marginBottom="@dimen/drawable_left_pad"
                 android:text="@string/signup_welcome"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="@dimen/tiny_font"/>
