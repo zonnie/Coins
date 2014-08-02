@@ -19,6 +19,7 @@
     <string name="action_sign_in">Sign In</string>
     <string name="new_password_change_button_text">Change</string>
     <string name="action_sing_up">Sign Up</string>
+    <string name="action_forgot_pass">Forgot Password</string>
     <string name="action_update_account">Update</string>
     <string name="Email">Email</string>
     <string name="change_email_button_text">Change Username</string>

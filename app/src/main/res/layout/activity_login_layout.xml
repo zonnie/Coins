@@ -2,9 +2,9 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/background"
+              android:clipToPadding="false"
               android:gravity="center"
               android:orientation="vertical"
-              android:clipToPadding="false"
               android:paddingLeft="@dimen/activity_horizontal_margin"
               android:paddingRight="@dimen/activity_horizontal_margin"
     >
@@ -22,12 +22,13 @@
         android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:scrollbars="none"
         >
 
         <LinearLayout
@@ -42,17 +43,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/expense_drawable_left_pad"
+                android:gravity="center"
                 android:text="@string/app_name"
                 android:textColor="@android:color/darker_gray"
-                android:gravity="center"
                 android:textSize="@dimen/mongo_font"
                 />
+
+            <com.moneyifyapp.views.ThinTextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/login_welcome_2nd_line"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="@dimen/tiny_font"
+                />
+
 
             <ImageView
                 android:id="@+id/accountMainImage"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_marginTop="@dimen/padding_start_currency"
+                android:layout_height="110dp"
                 android:contentDescription="Main image"
                 android:scaleType="fitCenter"
                 android:src="@drawable/coin_large"/>
@@ -61,23 +72,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.3dp"
                 android:layout_below="@+id/month_analytics_top_layout"
-                android:layout_marginTop="@dimen/drawable_left_pad"
                 android:layout_marginBottom="@dimen/drawable_left_pad"
-                android:layout_marginStart="@dimen/big_padding"
                 android:layout_marginEnd="@dimen/big_padding"
+                android:layout_marginStart="@dimen/big_padding"
+                android:layout_marginTop="@dimen/drawable_left_pad"
                 android:background="@android:color/darker_gray"
                 />
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/drawable_left_pad"
-                android:text="@string/login_welcome_2nd_line"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="@dimen/tiny_font"
-                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -89,16 +90,16 @@
                     android:id="@+id/loginbox_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/big_padding"
                     android:layout_marginRight="@dimen/big_padding"
                     android:layout_weight="4"
                     android:background="@drawable/card"
                     android:orientation="vertical"
-                    android:layout_gravity="center"
                     android:paddingBottom="@dimen/big_padding"
-                    android:paddingTop="@dimen/drawable_left_pad"
                     android:paddingLeft="@dimen/drawable_left_pad"
                     android:paddingRight="@dimen/drawable_left_pad"
+                    android:paddingTop="@dimen/drawable_left_pad"
                     >
 
                     <EditText
@@ -136,31 +137,42 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_gravity="center"
+                        android:orientation="vertical"
                         >
 
-                    <Button
-                        android:id="@+id/email_sign_in_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/stanard_button_drawable"
-                        android:text="@string/action_sign_in"
-                        android:textColor="@android:color/white"
-                        android:padding="@dimen/drawable_left_pad"
-                        android:textStyle="bold"/>
+                        <Button
+                            android:id="@+id/email_sign_in_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/stanard_button_drawable"
+                            android:text="@string/action_sign_in"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold"/>
 
-                    <Button
-                        android:id="@+id/sign_up_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/stanard_button_drawable"
-                        android:text="@string/action_sing_up"
-                        android:textColor="@android:color/white"
-                        android:padding="@dimen/drawable_left_pad"
-                        android:textStyle="bold"/>
+                        <Button
+                            android:id="@+id/sign_up_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/stanard_button_drawable"
+                            android:text="@string/action_sing_up"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold"/>
+
+                        <Button
+                            android:id="@+id/forgot_button"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/template_background"
+                            android:text="@string/action_forgot_pass"
+                            android:padding="@dimen/padding_start_currency"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/tiny_font"
+                            android:textStyle="bold"/>
 
                     </LinearLayout>
 
