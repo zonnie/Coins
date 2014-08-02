@@ -15,7 +15,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.moneyifyapp.R;
@@ -46,6 +45,8 @@ public class ExpenseDetailFragment extends Fragment
     private AlphaAnimation mAlphaDown;
     private AlphaAnimation mAlphaUp;
     private View mView;
+    private final String ERROR_MISSING_DESC = "What is this transaction";
+    private final String ERROR_MISSING_SUM = "How much did it cost";
 
     /**
      */
@@ -196,8 +197,11 @@ public class ExpenseDetailFragment extends Fragment
 
     /**
      */
-    public void onSumbitPressed()
+    public boolean onSumbitPressed()
     {
+        mExpenseDescription.setError(null);
+        mExpenseValue.setError(null);
+
         if (mListener != null)
         {
             String description = mExpenseDescription.getText().toString();
@@ -208,7 +212,13 @@ public class ExpenseDetailFragment extends Fragment
             boolean isExpense = !mToggleIsExpense.isChecked();
 
             if (description.isEmpty() || sum.isEmpty())
-                Toast.makeText(getActivity(), "Please fill all required info", Toast.LENGTH_SHORT).show();
+            {
+                if(description.isEmpty())
+                    mExpenseDescription.setError(ERROR_MISSING_DESC);
+                else if(sum.isEmpty())
+                    mExpenseValue.setError(ERROR_MISSING_SUM);
+                return false;
+            }
             else
             {
                 mTempExpenseObject.mDescription = description;
@@ -218,8 +228,11 @@ public class ExpenseDetailFragment extends Fragment
                 mTempExpenseObject.mCurrency = currency;
                 mTempExpenseObject.mIsExpense = isExpense;
                 mListener.onTransactionSubmit(mTempExpenseObject);
+                return true;
             }
         }
+
+        return false;
     }
 
     /**
@@ -255,12 +268,5 @@ public class ExpenseDetailFragment extends Fragment
     {
         public void onTransactionSubmit(Transaction transaction);
         public void cancel();
-    }
-
-    /**
-     */
-    private void onCancelPressed()
-    {
-        mListener.cancel();
     }
 }

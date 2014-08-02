@@ -123,6 +123,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginLeft="@dimen/drawable_left_pad"
+                android:layout_marginRight="@dimen/drawable_left_pad"
                 >
 
                 <TextView
@@ -155,7 +157,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
-                        android:drawableLeft="@drawable/email"
                         android:hint="@string/change_email_button_text"
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
@@ -190,7 +191,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
-                        android:drawableLeft="@drawable/lock_min"
                         android:hint="@string/change_password_button_text"
                         android:imeOptions="actionNext"
                         android:inputType="textPassword"

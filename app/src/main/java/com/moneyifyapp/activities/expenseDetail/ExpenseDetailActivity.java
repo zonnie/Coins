@@ -162,11 +162,13 @@ public class ExpenseDetailActivity extends Activity
      */
     public void onAcceptClicked(View view)
     {
-        mDetailFragment.onSumbitPressed();
-        mOptionsFragment.onSumbitPressed();
-        setResult(ExpensesActivity.EXPENSE_RESULT_OK, getIntent());
-        finish();
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        if(mDetailFragment.onSumbitPressed())
+        {
+            mOptionsFragment.onSumbitPressed();
+            setResult(ExpensesActivity.EXPENSE_RESULT_OK, getIntent());
+            finish();
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        }
     }
 
     public void OnBackClicked(View view)

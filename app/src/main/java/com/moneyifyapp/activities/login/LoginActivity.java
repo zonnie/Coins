@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
+import com.moneyifyapp.activities.login.dialogs.ResetPasswordDialog;
 import com.moneyifyapp.database.TransactionSqlHelper;
 import com.moneyifyapp.model.TransactionHandler;
 import com.moneyifyapp.utils.Utils;
@@ -43,6 +44,7 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
     private View mLoginFormView;
     private Button mEmailSignInButton;
     private Button mSignUpButton;
+    private Button mResetPasswordButton;
     private TransactionHandler mTransactionHandler;
     private TransactionSqlHelper mLocalDb;
 
@@ -79,6 +81,7 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
         mPasswordView = (EditText) findViewById(R.id.password);
         mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mSignUpButton = (Button) findViewById(R.id.sign_up_button);
+        mResetPasswordButton = (Button) findViewById(R.id.forgot_button);
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
@@ -123,6 +126,18 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
             {
                 Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        mResetPasswordButton.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(mSignUpButton.getWindowToken(), 0);
+                ResetPasswordDialog dialog = new ResetPasswordDialog(LoginActivity.this);
+                dialog.show();
             }
         });
     }

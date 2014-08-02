@@ -24,6 +24,8 @@
     <string name="Email">Email</string>
     <string name="change_email_button_text">Change Username</string>
     <string name="change_username_hint">New Username</string>
+    <string name="reset_password_hint">Enter Username</string>
+    <string name="reset_password_button">Reset Password</string>
     <string name="change_password_button_text">Change Password</string>
     <string name="new_password_hint">New Password</string>
     <string name="new_password_repeat_hint">Verify Password</string>
