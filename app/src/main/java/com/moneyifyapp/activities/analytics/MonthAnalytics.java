@@ -17,7 +17,6 @@ import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.YearTransactions;
-import com.moneyifyapp.model.enums.Months;
 import com.moneyifyapp.utils.JsonServiceYearTransactions;
 import com.moneyifyapp.utils.Utils;
 
@@ -77,7 +76,7 @@ public class MonthAnalytics extends Activity
      */
     private void initDateLabels()
     {
-        loadTextViewAndSetText(R.id.analytics_month_label, Months.getMonthNameByNumber(mMonth));
+        loadTextViewAndSetText(R.id.analytics_month_label, Utils.getMonthPrefixByIndex(mMonth).toUpperCase());
         loadTextViewAndSetText(R.id.analytics_year_label, String.valueOf(mYear));
     }
 
