@@ -101,7 +101,7 @@ public class ExpenseDetailFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        mView = inflater.inflate(R.layout.fragment_create_expense_layout, container, false);
+        mView = inflater.inflate(R.layout.fragment_expense_detail, container, false);
 
         storeViews();
         bindViewsToEventListeners();

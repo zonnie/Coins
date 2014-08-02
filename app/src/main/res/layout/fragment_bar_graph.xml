@@ -50,11 +50,11 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/date_header"
                     android:orientation="vertical"
-                    android:paddingBottom="@dimen/padding_start_currency"
+                    android:paddingBottom="@dimen/drawable_left_pad"
                     android:paddingTop="@dimen/padding_start_currency"
                     >
 
-                    <com.moneyifyapp.views.ThinTextView
+                    <com.moneyifyapp.views.CondensedTextView
                         android:id="@+id/graph_bar_title_label"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -63,7 +63,6 @@
                         android:text="@string/dashboard_bar_expense_chart_title"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/large_font"
-                        android:textStyle="bold"
                         />
 
                 </LinearLayout>

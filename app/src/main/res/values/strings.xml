@@ -17,9 +17,15 @@
     <string name="prompt_password">Password</string>
     <string name="action_sign_in_short">Sign In</string>
     <string name="action_sign_in">Sign In</string>
+    <string name="new_password_change_button_text">Change</string>
     <string name="action_sing_up">Sign Up</string>
     <string name="action_update_account">Update</string>
     <string name="Email">Email</string>
+    <string name="change_email_button_text">Change Username</string>
+    <string name="change_username_hint">New Username</string>
+    <string name="change_password_button_text">Change Password</string>
+    <string name="new_password_hint">New Password</string>
+    <string name="new_password_repeat_hint">Verify Password</string>
     <string name="password_hint">Password</string>
     <string name="verify_pass_hint">Verify Password</string>
     <string name="title_activity_create_expense">Transaction</string>
@@ -72,6 +78,7 @@
     <string name="title_expense_detail_page">The Details</string>
     <string name="title_expense_options_page">Advanced Options</string>
     <string name="title_expense_reuse">Reuse</string>
+    <string name="title_expense_repeat">Repeat</string>
     <string name="change_info_hint">Tap below details to change them</string>
     <string name="account_title_text">Account</string>
 </resources>

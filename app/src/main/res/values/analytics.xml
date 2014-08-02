@@ -3,9 +3,9 @@
     <string name="analytics_str_total_expense_label">Spent</string>
     <string name="analytics_str_total_income_label">Earned</string>
     <string name="analytics_str_total_profit_label">Profit</string>
-    <string name="analytics_str_biggest_expense_label">Top Spent</string>
-    <string name="analytics_str_biggest_income_label">Top Income</string>
-    <string name="analytics_str_worst_day_label">Busiest Day this Month</string>
+    <string name="analytics_str_biggest_expense_label">Biggest Expense</string>
+    <string name="analytics_str_biggest_income_label">Highest Income</string>
+    <string name="analytics_str_worst_day_label">Busiest Day</string>
     <string name="analytics_str_top_category_label">You spend a lot on</string>
     <string name="analytics_str_totals_hint">Bottom Line</string>
     <string name="analytics_str_intrest_hint">Can\'t jump to conclusion yet, add some transactions</string>

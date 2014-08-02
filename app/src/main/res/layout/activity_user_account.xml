@@ -140,8 +140,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/drawable_left_pad"
-                    android:layout_marginLeft="@dimen/big_padding"
-                    android:layout_marginRight="@dimen/big_padding"
+                    android:layout_marginLeft="@dimen/padding_start_currency"
+                    android:layout_marginRight="@dimen/padding_start_currency"
                     android:background="@drawable/card"
                     android:orientation="vertical"
                     android:paddingBottom="@dimen/padding_start_currency"
@@ -151,18 +151,19 @@
                     >
 
                     <com.moneyifyapp.views.ThinTextView
-                        android:id="@+id/change_username_textview"
+                        android:id="@+id/change_username_field"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:drawableLeft="@drawable/email"
-                        android:drawablePadding="@dimen/drawable_left_pad"
-                        android:hint="@string/Email"
+                        android:hint="@string/change_email_button_text"
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
                         android:padding="@dimen/drawable_left_pad"
                         android:singleLine="true"
                         android:textColorHint="#bbbbbb"
+                        android:onClick="changeUserClicked"
+                        android:gravity="center"
                         android:textSize="@dimen/large_font"/>
 
                 </LinearLayout>
@@ -174,8 +175,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/drawable_left_pad"
-                    android:layout_marginLeft="@dimen/big_padding"
-                    android:layout_marginRight="@dimen/big_padding"
+                    android:layout_marginLeft="@dimen/padding_start_currency"
+                    android:layout_marginRight="@dimen/padding_start_currency"
                     android:background="@drawable/card"
                     android:orientation="vertical"
                     android:paddingBottom="@dimen/padding_start_currency"
@@ -185,19 +186,20 @@
                     >
 
                     <com.moneyifyapp.views.ThinTextView
-                        android:id="@+id/change_password_textview"
+                        android:id="@+id/change_password_field"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:drawableLeft="@drawable/lock_min"
-                        android:drawablePadding="@dimen/drawable_left_pad"
-                        android:hint="@string/password_hint"
+                        android:hint="@string/change_password_button_text"
                         android:imeOptions="actionNext"
                         android:inputType="textPassword"
                         android:padding="@dimen/drawable_left_pad"
                         android:password="true"
                         android:singleLine="true"
                         android:textSize="@dimen/large_font"
+                        android:gravity="center"
+                        android:onClick="changePasswordClicked"
                         android:textColorHint="#bbbbbb"/>
 
                 </LinearLayout>

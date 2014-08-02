@@ -54,6 +54,9 @@ public class Images
         mImages.add(new ImageWithCaption(R.drawable.gym, "Gym"));
         mImages.add(new ImageWithCaption(R.drawable.hobby, "Hobbies"));
         mImages.add(new ImageWithCaption(R.drawable.art, "Art"));
+        mImages.add(new ImageWithCaption(R.drawable.salary, "Salary"));
+        mImages.add(new ImageWithCaption(R.drawable.in_app, "In-App "));
+        mImages.add(new ImageWithCaption(R.drawable.stationery, "Stationary"));
         Collections.sort(mImages);
 
     }

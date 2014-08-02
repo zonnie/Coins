@@ -11,12 +11,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
+import com.moneyifyapp.activities.login.dialogs.ChangePasswordDialog;
+import com.moneyifyapp.activities.login.dialogs.ChangeUserDialog;
 import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.utils.Utils;
 import com.parse.DeleteCallback;
@@ -35,10 +35,6 @@ public class AccountActivity extends Activity implements View.OnClickListener
     public static final int ACCOUNT_DELETED = 323;
     public static final int ACCOUNT_SAME = 32323;
     public int mItemsCounter;
-    private TextView mUsernameTextView;
-    private TextView mPasswordTextView;
-    private LinearLayout mUsernameLayout;
-    private LinearLayout mPasswordLayout;
     private final String DELETE_MSG = "Are you sure you want to delete your account ?" +
             "                       \nThis will also delete all your transactions";
 
@@ -60,8 +56,6 @@ public class AccountActivity extends Activity implements View.OnClickListener
         getActionBar().setHomeButtonEnabled(true);
 
         storeViews();
-        initUserAndPassword();
-        bindEventListenersToViews();
     }
 
     /**
@@ -70,42 +64,36 @@ public class AccountActivity extends Activity implements View.OnClickListener
     {
         mSignupForm = findViewById(R.id.account_form);
         mProgressView = findViewById(R.id.account_progress);
-        mUsernameLayout = (LinearLayout) findViewById(R.id.change_user_layout);
-        mUsernameTextView = (TextView) findViewById(R.id.change_username_textview);
-        mPasswordLayout = (LinearLayout) findViewById(R.id.change_password_layout);
-        mPasswordTextView = (TextView) findViewById(R.id.change_password_textview);
     }
 
     /**
      */
-    private void initUserAndPassword()
+    public void changeUserClicked(View view)
     {
-        mUsernameTextView.setText(ParseUser.getCurrentUser().getUsername());
-        mPasswordTextView.setText(ParseUser.getCurrentUser().getUsername());
+        promptChangeUserDialog();
     }
 
     /**
      */
-    private void bindEventListenersToViews()
+    private void promptChangeUserDialog()
     {
-        mUsernameTextView.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Toast.makeText(AccountActivity.this, "Clicked Username", Toast.LENGTH_SHORT).show();
-            }
-        });
+        ChangeUserDialog dialog = new ChangeUserDialog(this);
+        dialog.show();
+    }
 
-        mPasswordTextView.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Toast.makeText(AccountActivity.this, "Clicked Password", Toast.LENGTH_SHORT).show();
-            }
-        });
+    /**
+     */
+    public void changePasswordClicked(View view)
+    {
+        promptChangePasswordDialog();
+    }
 
+    /**
+    */
+    private void promptChangePasswordDialog()
+    {
+        ChangePasswordDialog dialog = new ChangePasswordDialog(this);
+        dialog.show();
     }
 
     /**
@@ -151,8 +139,10 @@ public class AccountActivity extends Activity implements View.OnClickListener
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener()
         {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which){
+            public void onClick(DialogInterface dialog, int which)
+            {
+                switch (which)
+                {
                     case DialogInterface.BUTTON_POSITIVE:
                         deleteAccount();
                         break;
