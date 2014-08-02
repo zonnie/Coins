@@ -8,9 +8,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -55,6 +53,7 @@ public class AccountActivity extends Activity implements View.OnClickListener
         Utils.initializeParse(this);
         Utils.setupBackButton(this);
         Utils.removeLogo(this);
+        Utils.removeActionBar(this);
 
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         setContentView(R.layout.activity_user_account);
@@ -147,27 +146,7 @@ public class AccountActivity extends Activity implements View.OnClickListener
 
     /**
      */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-            {
-                NavUtils.navigateUpFromSameTask(this);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                return true;
-            }
-            case R.id.delete_account:
-                promptAccountDelete();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     */
-    private void promptAccountDelete()
+    public void promptAccountDelete(View view)
     {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener()
         {
@@ -223,6 +202,13 @@ public class AccountActivity extends Activity implements View.OnClickListener
                 }
             });
         }
+    }
+
+    /**
+     */
+    public void OnBackClicked(View view)
+    {
+        onBackPressed();
     }
 
     /**

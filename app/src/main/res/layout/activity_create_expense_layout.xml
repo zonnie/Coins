@@ -23,7 +23,6 @@
             android:layout_gravity="center"
             android:paddingStart="@dimen/drawable_left_pad"
             android:paddingEnd="@dimen/drawable_left_pad"
-            android:scaleType="center"
             android:layout_weight="0.6"
             android:background="@drawable/back_regular_drawable"
             android:src="@drawable/back_2"

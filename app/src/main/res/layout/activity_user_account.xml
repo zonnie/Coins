@@ -5,9 +5,6 @@
               android:clipToPadding="false"
               android:gravity="center"
               android:orientation="vertical"
-              android:paddingLeft="@dimen/activity_horizontal_margin"
-              android:paddingRight="@dimen/activity_horizontal_margin"
-              android:paddingTop="@dimen/padding_start_currency"
     >
 
     <ProgressBar
@@ -23,7 +20,6 @@
         android:id="@+id/account_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/drawable_left_pad"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
@@ -33,12 +29,66 @@
         android:layout_gravity="center"
         >
 
+
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            >
+
+            <!-- Custom Action Bar -->
+
+            <LinearLayout
+                android:id="@+id/month_analytics_date_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/back_regualr"
+                android:orientation="horizontal"
+                android:weightSum="6.3"
+                >
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:paddingStart="@dimen/drawable_left_pad"
+                    android:paddingEnd="@dimen/drawable_left_pad"
+                    android:layout_weight="0.6"
+                    android:background="@drawable/back_regular_drawable"
+                    android:src="@drawable/back_2"
+                    android:onClick="OnBackClicked"
+                    />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4.7"
+                    />
+
+                <ImageButton
+                    android:id="@+id/delete_account"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/delete"
+                    android:background="@drawable/back_regular_drawable"
+                    android:onClick="promptAccountDelete"
+                    />
+            </LinearLayout>
+
+            <!-- body -->
+
+            <LinearLayout
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            >
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/padding_start_currency"
+
+                >
             <com.moneyifyapp.views.ThinTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -152,6 +202,8 @@
 
                 </LinearLayout>
             </LinearLayout>
+        </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 
