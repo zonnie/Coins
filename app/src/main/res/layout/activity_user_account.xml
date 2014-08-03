@@ -142,8 +142,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/drawable_left_pad"
-                    android:layout_marginLeft="@dimen/padding_start_currency"
-                    android:layout_marginRight="@dimen/padding_start_currency"
+                    android:layout_marginLeft="@dimen/drawable_left_pad"
+                    android:layout_marginRight="@dimen/drawable_left_pad"
                     android:background="@drawable/card"
                     android:orientation="vertical"
                     android:paddingBottom="@dimen/padding_start_currency"
@@ -162,7 +162,6 @@
                         android:inputType="textEmailAddress"
                         android:padding="@dimen/drawable_left_pad"
                         android:singleLine="true"
-                        android:textColorHint="#bbbbbb"
                         android:onClick="changeUserClicked"
                         android:gravity="center"
                         android:textSize="@dimen/large_font"/>
@@ -176,8 +175,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/drawable_left_pad"
-                    android:layout_marginLeft="@dimen/padding_start_currency"
-                    android:layout_marginRight="@dimen/padding_start_currency"
+                    android:layout_marginLeft="@dimen/drawable_left_pad"
+                    android:layout_marginRight="@dimen/drawable_left_pad"
                     android:background="@drawable/card"
                     android:orientation="vertical"
                     android:paddingBottom="@dimen/padding_start_currency"
@@ -200,7 +199,7 @@
                         android:textSize="@dimen/large_font"
                         android:gravity="center"
                         android:onClick="changePasswordClicked"
-                        android:textColorHint="#bbbbbb"/>
+                        />
 
                 </LinearLayout>
             </LinearLayout>

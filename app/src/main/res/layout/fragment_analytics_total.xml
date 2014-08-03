@@ -51,8 +51,9 @@
                     >
 
                     <com.moneyifyapp.views.CondensedTextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:drawableStart="@drawable/bottom_line"
                         android:gravity="center"
                         android:text="@string/analytics_str_totals_hint"
                         android:textColor="@android:color/white"
@@ -276,12 +277,13 @@
                         >
 
                         <com.moneyifyapp.views.CondensedTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="@string/analytics_str_worst_day_label"
+                            android:drawableStart="@drawable/cal"
                             android:textColor="@android:color/white"
-                            android:textSize="@dimen/medium_font"
+                            android:textSize="@dimen/large_font"
                             />
 
                     </LinearLayout>
@@ -301,7 +303,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="24"
-                            android:textSize="@dimen/medium_font"
+                            android:textSize="@dimen/large_font"
                             />
 
                         <com.moneyifyapp.views.CurrencyTextView
@@ -354,12 +356,13 @@
                     >
 
                     <com.moneyifyapp.views.CondensedTextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:drawableStart="@drawable/high_income"
                         android:gravity="center"
                         android:text="@string/analytics_str_biggest_income_label"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/medium_font"
+                        android:textSize="@dimen/large_font"
                         />
 
                 </LinearLayout>
@@ -396,12 +399,13 @@
                     >
 
                     <com.moneyifyapp.views.CondensedTextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
+                        android:drawableStart="@drawable/high_expense"
                         android:text="@string/analytics_str_biggest_expense_label"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/medium_font"
+                        android:textSize="@dimen/large_font"
                         />
 
                 </LinearLayout>

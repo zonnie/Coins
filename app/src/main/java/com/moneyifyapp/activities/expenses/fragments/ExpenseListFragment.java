@@ -57,6 +57,7 @@ public class ExpenseListFragment extends ListFragment
     public static final String YEAR_JSON_KEY = "yearJson";
     public static final String YEAR_KEY = "year";
     public static final String TEMPLATE_KEY = "template";
+    public static final String REPEAT_KEY = "repeat";
     public static final String PARSE_DATE_KEY = "createdAt";
     public static final String REQ_CODE_KEY = "req";
     public static final String REMOVE_ITEM_PROMPT_MSG = "Are you sure you want to remove this?";
@@ -164,6 +165,8 @@ public class ExpenseListFragment extends ListFragment
 
         reFeatchDataIfWeResumed();
         buildListIfFetchNotDone();
+        //TODO implement this
+        handleRepeatedTasks();
 
         initTotalsViews();
         updateTotalsForAllTransactions();
@@ -179,6 +182,13 @@ public class ExpenseListFragment extends ListFragment
         });
 
         return mView;
+    }
+
+    private void handleRepeatedTasks()
+    {
+        for(Transaction cur : mYearTransactions.getRepeatTransactions())
+        {
+        }
     }
 
     /**
@@ -550,6 +560,7 @@ public class ExpenseListFragment extends ListFragment
             intent.putExtra(Transaction.KEY_IMAGE_NAME, expense.mImageResourceIndex);
             intent.putExtra(REQ_CODE_KEY, ExpensesActivity.REQ_EDIT_ITEM);
             intent.putExtra(TEMPLATE_KEY, expense.mSaved);
+            intent.putExtra(REPEAT_KEY, expense.mRepeatType);
 
             startActivityForResult(intent, ExpensesActivity.REQ_EDIT_ITEM);
 
@@ -573,41 +584,81 @@ public class ExpenseListFragment extends ListFragment
             String note = data.getExtras().getString(Transaction.KEY_NOTES);
             Boolean isExpense = data.getExtras().getBoolean(Transaction.KEY_TYPE);
             Boolean isSaved = data.getExtras().getBoolean(TEMPLATE_KEY);
-
+            Transaction.REPEAT_TYPE repeatType = Transaction.REPEAT_TYPE.valueOf(data.getExtras().getString(REPEAT_KEY));
             int position = data.getExtras().getInt(ITEM_POS_KEY);
 
             if (!desc.isEmpty() && !sum.isEmpty())
             {
                 if (requestCode == ExpensesActivity.REQ_NEW_ITEM)
-                {
-                    currency = Transaction.CURRENCY_DEFAULT;
-                    createNewTransaction(desc, sum, currency, note, image, isExpense, isSaved);
-                    Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
-                    if (getListView().getChildCount() > 0)
-                        getListView().getChildAt(0).startAnimation(anim);
-
-                }
+                    handleNewTransaction(desc, sum, note, image, isExpense, isSaved, repeatType);
                 else if (requestCode == ExpensesActivity.REQ_EDIT_ITEM)
-                {
-                    // Remove the old transaction from the totals
-                    updateTotalsOnAddedTransaction(mTransactions.getItems().get(position), true);
-                    Transaction tempExpense = new Transaction("0", desc, sum, currency, note, image, isExpense);
-                    tempExpense.mSaved = isSaved;
-                    mAdapter.update(position, tempExpense);
-                    // ! We now MUST pass the item from the collection to preserve
-                    // the ID, the tempExpense object has an 'empty' ID.
-                    updateDataInBackground(mAdapter.getItems().get(position));
-                    updateTotalsOnAddedTransaction(tempExpense, false);
-                }
+                    handleEditTransaction(desc, sum, currency, note, image, isExpense, isSaved, repeatType,
+                            position);
             }
         }
 
     }
 
+    //TODO this has WAAAAY to many arguments
     /**
      */
-    public void createNewTransaction(String addDescription, String addSum, String currency,
-                                     String note, int image, boolean isExpense, boolean isSaved)
+    private void handleNewTransaction(String desc, String sum, String note, int image, boolean isExpense,
+                                      boolean isSaved, Transaction.REPEAT_TYPE repeatType)
+    {
+        String currency = Transaction.CURRENCY_DEFAULT;
+        Transaction createTransaction = createNewTransaction(desc, sum, currency, note, image, isExpense, isSaved, repeatType);
+        Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
+
+        if (getListView().getChildCount() > 0)
+            getListView().getChildAt(0).startAnimation(anim);
+
+        handleNewTransactionRepeat(repeatType, createTransaction);
+    }
+
+    //TODO this has WAAAAY to many arguments
+    /**
+     */
+    private void handleEditTransaction(String desc, String sum, String currency, String note,
+                                       int image, boolean isExpense, boolean isSaved, Transaction.REPEAT_TYPE repeatType, int position)
+    {
+        // Remove the old transaction from the totals
+        updateTotalsOnAddedTransaction(mTransactions.getItems().get(position), true);
+        Transaction tempExpense = new Transaction("0", desc, sum, currency, note, image, isExpense);
+        tempExpense.mSaved = isSaved;
+        tempExpense.mRepeatType = repeatType;
+        mAdapter.update(position, tempExpense);
+        // ! We now MUST pass the item from the collection to preserve
+        // the ID, the tempExpense object has an 'empty' ID.
+        updateDataInBackground(mAdapter.getItems().get(position));
+        updateTotalsOnAddedTransaction(tempExpense, false);
+
+        handleEditedTransactionRepeat(repeatType, position);
+    }
+
+    /**
+     */
+    private void handleNewTransactionRepeat(Transaction.REPEAT_TYPE repeatType, Transaction createTransaction)
+    {
+        if(repeatType != Transaction.REPEAT_TYPE.NONE)
+            mYearTransactions.addRepeatedTransaction(createTransaction);
+    }
+
+    /**
+     */
+    private void handleEditedTransactionRepeat(Transaction.REPEAT_TYPE repeatType, int position)
+    {
+        Transaction updatedTransaction = mTransactions.getItems().get(position);
+
+        if(repeatType == Transaction.REPEAT_TYPE.NONE)
+            mYearTransactions.removeRepeatedTransaction(updatedTransaction.mId);
+        else
+            mYearTransactions.addRepeatedTransaction(updatedTransaction);
+    }
+
+    /**
+     */
+    public Transaction createNewTransaction(String addDescription, String addSum, String currency,
+                                     String note, int image, boolean isExpense, boolean isSaved, Transaction.REPEAT_TYPE repeatType)
     {
         String newId = generateId(addDescription, addSum, currency);
 
@@ -618,6 +669,7 @@ public class ExpenseListFragment extends ListFragment
         // If not current month, add transaction to 1st of month
         Transaction newTransaction = new Transaction(newId, addDescription, addSum, currency, note, image, isExpense, transactionDay);
         newTransaction.mSaved = isSaved;
+        newTransaction.mRepeatType = repeatType;
         ParseObject expenseObject = new ParseObject(Transaction.CLASS_NAME);
         saveDataInBackground(newTransaction, expenseObject);
 
@@ -625,6 +677,8 @@ public class ExpenseListFragment extends ListFragment
         // as well.
         mAdapter.insert(newTransaction, 0);
         updateTotalsOnAddedTransaction(newTransaction, false);
+
+        return newTransaction;
     }
 
     /**
@@ -671,6 +725,7 @@ public class ExpenseListFragment extends ListFragment
         expenseObject.put(DAY_KEY, newTransaction.mTransactionDay);
         expenseObject.put(YEAR_KEY, mYearTransactions.mYear);
         expenseObject.put(TEMPLATE_KEY, newTransaction.mSaved);
+        expenseObject.put(REPEAT_KEY, newTransaction.mRepeatType.toString());
 
         expenseObject.saveInBackground();
     }

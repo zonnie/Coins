@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 import android.widget.ToggleButton;
 
 import com.moneyifyapp.R;
@@ -21,6 +22,7 @@ public class ExpenseOptionsFragment extends Fragment
     private ToggleButton mToggleSave;
     private OnOptionsFragmentSubmit mListener;
     private Transaction mTempExpenseObject;
+    private RadioGroup mRepeatGroup;
     private boolean mIsEdit;
     public static final String EXPENSE_EDIT_KEY = "edit";
     private View mView;
@@ -77,6 +79,7 @@ public class ExpenseOptionsFragment extends Fragment
 
         storeViews();
         initDataIfTransactionEdited();
+        initRepeatRadioButton();
 
         return mView;
     }
@@ -86,6 +89,19 @@ public class ExpenseOptionsFragment extends Fragment
     private void storeViews()
     {
         mToggleSave = (ToggleButton)mView.findViewById(R.id.toggle_template_save);
+        mRepeatGroup = (RadioGroup)mView.findViewById(R.id.detail_reoccur_group);
+        mRepeatGroup.setOnCheckedChangeListener(
+                new RadioGroup.OnCheckedChangeListener() {
+                    public void onCheckedChanged(RadioGroup group,
+                                                 int checkedId)
+                    {
+                        switch (checkedId)
+                        {
+                            case R.id.detail_reoccur_none_radio:
+
+                        }
+                    }
+                });
     }
 
     /**
@@ -93,8 +109,41 @@ public class ExpenseOptionsFragment extends Fragment
     private void initDataIfTransactionEdited()
     {
         if (mIsEdit)
-        {
             mToggleSave.setChecked(mTempExpenseObject.mSaved);
+    }
+
+    /**
+     */
+    private void initRepeatRadioButton()
+    {
+        if (mIsEdit)
+        {
+            if(mTempExpenseObject.mRepeatType != null)
+            {
+                switch (mTempExpenseObject.mRepeatType)
+                {
+                    case NONE:
+                        mRepeatGroup.check(R.id.detail_reoccur_none_radio);
+                        break;
+                    case DAILY:
+                        mRepeatGroup.check(R.id.detail_reoccur_daily_radio);
+                        break;
+                    case WEEKLY:
+                        mRepeatGroup.check(R.id.detail_reoccur_weekly_radio);
+                        break;
+                    case MONTHLY:
+                        mRepeatGroup.check(R.id.detail_reoccur_monthly_radio);
+                        break;
+                    case YEARLY:
+                        mRepeatGroup.check(R.id.detail_reoccur_yearly_radio);
+                        break;
+                }
+            }
+            else
+            {
+                mRepeatGroup.check(R.id.detail_reoccur_none_radio);
+                mTempExpenseObject.mRepeatType = Transaction.REPEAT_TYPE.NONE;
+            }
         }
     }
 
@@ -106,6 +155,7 @@ public class ExpenseOptionsFragment extends Fragment
         {
             boolean isSaved = mToggleSave.isChecked();
             mTempExpenseObject.mSaved = isSaved;
+            mTempExpenseObject.mRepeatType = Transaction.REPEAT_TYPE.getTypeById(mRepeatGroup.getCheckedRadioButtonId());
             mListener.OnOptionsSubmit(mTempExpenseObject);
         }
     }

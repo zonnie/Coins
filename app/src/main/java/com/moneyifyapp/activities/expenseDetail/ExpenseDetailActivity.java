@@ -39,6 +39,7 @@ public class ExpenseDetailActivity extends Activity
     private int mImageName;
     private boolean mIsExpense;
     private boolean mSaved;
+    private Transaction.REPEAT_TYPE mRepeatType;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private boolean mIsEdit;
@@ -109,6 +110,7 @@ public class ExpenseDetailActivity extends Activity
         mImageName = getIntent().getExtras().getInt(Transaction.KEY_IMAGE_NAME);
         mIsExpense = getIntent().getExtras().getBoolean(Transaction.KEY_TYPE);
         mSaved = getIntent().getExtras().getBoolean(ExpenseListFragment.TEMPLATE_KEY);
+        mRepeatType = (Transaction.REPEAT_TYPE)getIntent().getExtras().get(ExpenseListFragment.REPEAT_KEY);
 
         // Get the default currency
         mCurrency = PreferenceManager.getDefaultSharedPreferences(this).getString(PrefActivity.PREF_LIST_NAME, "$");
@@ -116,6 +118,7 @@ public class ExpenseDetailActivity extends Activity
         Transaction transaction = new Transaction(Transaction.DEFUALT_TRANSCATION_ID, mDescription, mValue,
                 mCurrency, mNotes, mImageName, mIsExpense, mTransactionDay);
         transaction.mSaved = mSaved;
+        transaction.mRepeatType = mRepeatType;
 
         return transaction;
     }
@@ -143,7 +146,7 @@ public class ExpenseDetailActivity extends Activity
     {
         Intent data = getIntent();
         data.putExtra(ExpenseListFragment.TEMPLATE_KEY, transaction.mSaved);
-
+        data.putExtra(ExpenseListFragment.REPEAT_KEY, transaction.mRepeatType.toString());
     }
 
     /**

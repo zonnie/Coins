@@ -128,6 +128,8 @@ public class TransactionHandler
                 curExpense.getBoolean(Transaction.KEY_TYPE),
                 curExpense.getString(ExpenseListFragment.DAY_KEY));
         transaction.mSaved = curExpense.getBoolean(ExpenseListFragment.TEMPLATE_KEY);
+        transaction.mRepeatType = (curExpense.getString(ExpenseListFragment.REPEAT_KEY) == null)
+                ? Transaction.REPEAT_TYPE.NONE : Transaction.REPEAT_TYPE.valueOf(curExpense.getString(ExpenseListFragment.REPEAT_KEY));
 
         return transaction;
     }

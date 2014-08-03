@@ -258,6 +258,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             handleViewImage(Images.getImageByPosition(updatedExpense.mImageResourceIndex));
             updateViewType(updatedExpense, expense);
             updatedExpense.mSaved = expense.mSaved;
+            updatedExpense.mRepeatType = expense.mRepeatType;
         }
     }
 

@@ -25,7 +25,7 @@
             android:layout_gravity="end"
             android:background="@drawable/card"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/expense_drawable_left_pad"
+            android:paddingBottom="@dimen/padding_start_currency"
             >
 
             <!-- title -->
@@ -41,8 +41,9 @@
 
                 <com.moneyifyapp.views.CondensedTextView
                     android:id="@+id/detail_date_month"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:drawableStart="@drawable/repeat"
                     android:gravity="center"
                     android:text="@string/title_expense_repeat"
                     android:textColor="@android:color/white"
@@ -55,15 +56,16 @@
                 android:id="@+id/detail_reoccur_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/padding_start_currency"
                 android:layout_marginLeft="@dimen/big_padding"
                 android:layout_marginRight="@dimen/big_padding"
                 android:layout_marginTop="@dimen/padding_start_currency"
+                android:layout_marginBottom="@dimen/drawable_left_pad"
                 android:orientation="vertical"
                 >
 
 
                 <RadioGroup
+                    android:id="@+id/detail_reoccur_group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -96,7 +98,7 @@
                         android:layout_marginBottom="@dimen/drawable_left_pad"
                         android:background="@drawable/template_background"
                         android:button="@null"
-                        android:checked="true"
+                        android:checked="false"
                         android:gravity="center"
                         android:paddingBottom="@dimen/drawable_left_pad"
                         android:paddingLeft="@dimen/expense_drawable_left_pad"
@@ -115,7 +117,7 @@
                         android:layout_marginBottom="@dimen/drawable_left_pad"
                         android:background="@drawable/template_background"
                         android:button="@null"
-                        android:checked="true"
+                        android:checked="false"
                         android:gravity="center"
                         android:paddingBottom="@dimen/drawable_left_pad"
                         android:paddingLeft="@dimen/expense_drawable_left_pad"
@@ -134,7 +136,7 @@
                         android:layout_marginBottom="@dimen/drawable_left_pad"
                         android:background="@drawable/template_background"
                         android:button="@null"
-                        android:checked="true"
+                        android:checked="false"
                         android:gravity="center"
                         android:paddingBottom="@dimen/drawable_left_pad"
                         android:paddingLeft="@dimen/expense_drawable_left_pad"
@@ -145,20 +147,27 @@
                         android:textSize="@dimen/medium_font"
                         android:typeface="normal"
                         />
+
+                    <RadioButton
+                        android:id="@+id/detail_reoccur_yearly_radio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/template_background"
+                        android:button="@null"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/drawable_left_pad"
+                        android:paddingLeft="@dimen/expense_drawable_left_pad"
+                        android:paddingRight="@dimen/expense_drawable_left_pad"
+                        android:paddingTop="@dimen/padding_start_currency"
+                        android:text="Yearly"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/medium_font"
+                        android:typeface="normal"
+                        />
                 </RadioGroup>
 
             </LinearLayout>
-
-
-            <!-- Seperator -->
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.3dp"
-                android:layout_marginLeft="@dimen/big_padding"
-                android:layout_marginRight="@dimen/big_padding"
-                android:background="@android:color/darker_gray"
-                />
 
 
         </LinearLayout>
@@ -187,8 +196,9 @@
                 >
 
                 <com.moneyifyapp.views.CondensedTextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:drawableStart="@drawable/save_template"
                     android:gravity="center"
                     android:text="@string/title_expense_reuse"
                     android:textColor="@android:color/white"
