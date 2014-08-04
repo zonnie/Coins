@@ -20,5 +20,5 @@
     <string name="analytics_monthly_overview_title">Overview</string>
     <string name="analytics_monthly_Insights_title">Insights</string>
     <string name="analytics_monthly_categories_title">Categories</string>
-    <string name="analytics_graphs_activity_title">Some Graphes</string>
+    <string name="analytics_graphs_activity_title">Analytics</string>
 </resources>

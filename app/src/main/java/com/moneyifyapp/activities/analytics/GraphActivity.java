@@ -148,6 +148,7 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
             params.setYLabels(new ArrayList<String>());
             params.mResourceId = R.drawable.graph_bar_back_red;
             params.setXLabels(xValues);
+            params.mGraphTitleImage = R.drawable.top_small;
         }
 
         return params;
@@ -169,7 +170,7 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         }
 
         expenseParams = buildGraphParams(YEARLY_GRAPH_TITLE, MonthTransactions.SubsetType.EXPENSE, xLabels,
-                new ArrayList<String>(), R.drawable.graph_bar_back_red, X_AXIS_TITLE, xIcons, R.drawable.chart);
+                new ArrayList<String>(), R.drawable.graph_bar_back_red, X_AXIS_TITLE, xIcons, R.drawable.top_small);
 
         for(Integer cur : expenseParams.mValues)
         {

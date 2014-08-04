@@ -115,6 +115,8 @@ public class BarGraphFragment extends Fragment
             mXAxisContainer.setWeightSum(weigtSum);
             TextView title = (TextView) mView.findViewById(R.id.graph_bar_title_label);
             title.setText(mParameters.mTitle);
+            if(mParameters.mGraphTitleImage > 0)
+                title.setCompoundDrawables(getResources().getDrawable(mParameters.mGraphTitleImage), null, null, null);
             mXAxisTitleTextView = (TextView) mView.findViewById(R.id.graph_x_axis_title);
             mXAxisTitleTextView.setText(mParameters.mXAxisTitle);
         }
@@ -245,6 +247,9 @@ public class BarGraphFragment extends Fragment
             LinearLayout layout = (LinearLayout) mView.findViewById(R.id.category_bar_graph_root);
             if(layout != null)
                 layout.setVisibility(View.VISIBLE);
+            TextView hint = (TextView) mView.findViewById(R.id.month_analytics_graph_hint);
+            if(hint != null)
+                hint.setVisibility(View.GONE);
         }
     }
 

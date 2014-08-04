@@ -15,6 +15,17 @@
         >
         <!-- Category Bar Graph -->
 
+        <TextView
+            android:id="@+id/month_analytics_graph_hint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingTop="@dimen/mongo_padding"
+            android:text="@string/analytics_str_top_graph_hint"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/medium_font"
+            />
+
         <LinearLayout
             android:id="@+id/category_bar_graph_root"
             android:layout_width="match_parent"

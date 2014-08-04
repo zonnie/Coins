@@ -3,6 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
+              android:background="@color/background"
     >
     <!-- Custom Action Bar -->
 
@@ -51,11 +52,43 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/pick_month"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@android:color/transparent"
+        android:paddingBottom="@dimen/padding_start_currency"
+        >
+        <Button
+            android:id="@+id/graph_pick_month_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/other_button"
+            android:gravity="center"
+            android:text="@string/change_pick_month_button_text"
+            android:onClick="pickMonthClicked"
+            android:padding="@dimen/padding_start_currency"
+            android:textSize="@dimen/large_font"
+            android:textColor="@android:color/white"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tap to pick a date"
+            android:gravity="center"
+            android:textColor="@android:color/darker_gray"
+            android:background="@android:color/transparent"
+            android:textSize="@dimen/tiny_font"
+            />
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center"
-        android:background="@color/background"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/huge_padding"
         android:scrollbars="none"
@@ -66,46 +99,10 @@
             android:layout_height="match_parent"
             >
 
-            <LinearLayout
-                android:id="@+id/pick_month"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/padding_start_currency"
-                android:paddingLeft="@dimen/drawable_left_pad"
-                android:paddingRight="@dimen/drawable_left_pad"
-                android:paddingTop="@dimen/padding_start_currency"
-                >
-                <Button
-                    android:id="@+id/graph_pick_month_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/other_button"
-                    android:gravity="center"
-                    android:text="@string/change_pick_month_button_text"
-                    android:onClick="pickMonthClicked"
-                    android:padding="@dimen/padding_start_currency"
-                    android:textSize="@dimen/large_font"
-                    android:textColor="@android:color/white"
-                    />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Tap to pick a date"
-                    android:gravity="center"
-                    android:textColor="@android:color/darker_gray"
-                    android:layout_marginBottom="@dimen/padding_start_currency"
-                    android:textSize="@dimen/tiny_font"
-                    />
-            </LinearLayout>
-
             <TextView
                 android:id="@+id/graph_empty_hint_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/pick_month"
                 android:layout_marginTop="@dimen/padding_start_currency"
                 android:gravity="center"
                 android:paddingLeft="@dimen/drawable_left_pad"
@@ -120,7 +117,6 @@
                 android:id="@+id/graphs_category_graph_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/pick_month"
                 android:visibility="gone"
                 />
 
@@ -131,7 +127,6 @@
                 android:layout_below="@+id/graphs_category_graph_container"
                 android:visibility="gone"
                 />
-
 
         </RelativeLayout>
     </ScrollView>
