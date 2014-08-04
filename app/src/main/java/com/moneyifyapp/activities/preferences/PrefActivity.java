@@ -40,10 +40,10 @@ public class PrefActivity extends PreferenceActivity
         super.onCreate(savedInstanceState);
         sPrefChanges = new HashMap<String, Boolean>();
 
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         Utils.initializeActionBar(this);
         Utils.setLogo(this, R.drawable.contorls);
         Utils.setupBackButton(this);
+        Utils.animateForward(this);
 
         PreferenceManager.setDefaultValues(this, R.xml.activity_pref_layout, false);
     }
@@ -259,7 +259,7 @@ public class PrefActivity extends PreferenceActivity
             case android.R.id.home:
             {
                 NavUtils.navigateUpFromSameTask(this);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                Utils.animateBack(this);
                 updateActivityResults();
                 return true;
             }
@@ -272,7 +272,7 @@ public class PrefActivity extends PreferenceActivity
     @Override
     public void onBackPressed()
     {
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         super.onBackPressed();
+        Utils.animateBack(this);
     }
 }

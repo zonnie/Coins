@@ -20,7 +20,6 @@ public enum Months
     }
 
     /**
-     * @return
      */
     public int getMonthNumber()
     {
@@ -28,8 +27,6 @@ public enum Months
     }
 
     /**
-     * @param number
-     * @return
      */
     public static String getMonthNameByNumber(int number)
     {
@@ -42,6 +39,8 @@ public enum Months
         return month;
     }
 
+    /**
+     */
     public static List<String> getMonthList()
     {
         List<String> list = new ArrayList<String>();
@@ -50,5 +49,18 @@ public enum Months
             list.add(curMonth.toString());
 
         return list;
+    }
+
+    /**
+     */
+    public static int getMonthByName(String name)
+    {
+        int month = 0;
+
+        for(Months cur : Months.values())
+            if(cur.toString().equals(name))
+                month = cur.getMonthNumber();
+
+        return month;
     }
 }

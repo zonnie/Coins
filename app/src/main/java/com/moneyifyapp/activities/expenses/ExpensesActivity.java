@@ -20,8 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.moneyifyapp.R;
-import com.moneyifyapp.activities.analytics.DashboardActivity;
-import com.moneyifyapp.activities.analytics.FullAnalyticsActivity;
+import com.moneyifyapp.activities.analytics.GraphActivity;
 import com.moneyifyapp.activities.expenses.drawer.DrawerItemAdapter;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.activities.login.AccountActivity;
@@ -209,8 +208,8 @@ public class ExpensesActivity extends Activity
                 startPrefActivity();
             else if (position == 2)
                 startAccountActivity();
-            else if (position == 3)
-                startDashboardActivity();
+//            else if (position == 3)
+//                startDashboardActivity();
         }
     }
 
@@ -218,7 +217,7 @@ public class ExpensesActivity extends Activity
      */
     private void startAnalyticsActivity()
     {
-        Intent intent = new Intent(mActivity, FullAnalyticsActivity.class);
+        Intent intent = new Intent(mActivity, GraphActivity.class);
         startActivity(intent);
     }
 
@@ -236,14 +235,6 @@ public class ExpensesActivity extends Activity
     {
         Intent intent = new Intent(mActivity, AccountActivity.class);
         startActivityForResult(intent, ACCOUNT_HANDLE);
-    }
-
-    /**
-     */
-    private void startDashboardActivity()
-    {
-        Intent intent = new Intent(mActivity, DashboardActivity.class);
-        startActivity(intent);
     }
 
     /**

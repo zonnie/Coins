@@ -32,9 +32,8 @@ public class ImagePickerActivity extends ListActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_picker);
         Utils.initializeActionBar(this);
-        Utils.setLogo(this, R.drawable.pic);
         Utils.removeActionBar(this);
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        Utils.animateForward(this);
 
         // Instance of ImageAdapter Class
         mImageAdapter = new ImageAdapter(this, Images.getImageWithCaptions());
@@ -83,7 +82,7 @@ public class ImagePickerActivity extends ListActivity
         data.putExtra(Transaction.KEY_IMAGE_NAME, position);
         setResult(ExpensesActivity.IMAGE_PICK_OK, data);
         finish();
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     /**
@@ -95,6 +94,6 @@ public class ImagePickerActivity extends ListActivity
         super.onBackPressed();
         Intent mIntent = getIntent();
         setResult(ExpensesActivity.IMAGE_PICK_CANCEL, mIntent);
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        Utils.animateBack(this);
     }
 }

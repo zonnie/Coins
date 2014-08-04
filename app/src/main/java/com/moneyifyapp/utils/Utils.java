@@ -205,4 +205,18 @@ public class Utils
     {
         Log.d("Yoni", "DEBUG : " + log);
     }
+
+    /**
+     */
+    public static void animateForward(Activity activity)
+    {
+        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    /**
+     */
+    public static void animateBack(Activity activity)
+    {
+        activity.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 }

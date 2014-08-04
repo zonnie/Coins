@@ -18,11 +18,13 @@
     <string name="action_sign_in_short">Sign In</string>
     <string name="action_sign_in">Sign In</string>
     <string name="new_password_change_button_text">Change</string>
+    <string name="month_pick_button_text">Pick</string>
     <string name="action_sing_up">Sign Up</string>
     <string name="action_forgot_pass">Forgot Password</string>
     <string name="action_update_account">Update</string>
     <string name="Email">Email</string>
     <string name="change_email_button_text">Change Username</string>
+    <string name="change_pick_month_button_text">Pick a Month</string>
     <string name="change_username_hint">New Username</string>
     <string name="reset_password_hint">Enter Username</string>
     <string name="reset_password_button">Reset Password</string>
@@ -84,4 +86,6 @@
     <string name="title_expense_repeat">Repeat</string>
     <string name="change_info_hint">Tap below details to change them</string>
     <string name="account_title_text">Account</string>
+    <string name="title_activity_graph">Stats</string>
+
 </resources>

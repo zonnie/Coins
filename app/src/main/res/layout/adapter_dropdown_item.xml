@@ -1,0 +1,32 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:showDividers="none"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_start_currency"
+        android:layout_marginLeft="@dimen/expense_drawable_left_pad"
+        android:layout_marginRight="@dimen/expense_drawable_left_pad"
+        android:layout_marginTop="@dimen/padding_start_currency"
+        android:orientation="horizontal"
+        android:weightSum="30"
+        >
+
+        <com.moneyifyapp.views.ThinTextView
+            android:id="@+id/dropdown_item_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="September"
+            android:gravity="center"
+            android:paddingBottom="@dimen/padding_start_currency"
+            android:paddingTop="@dimen/padding_start_currency"
+            android:textSize="@dimen/large_font"
+            />
+
+    </LinearLayout>
+</LinearLayout>

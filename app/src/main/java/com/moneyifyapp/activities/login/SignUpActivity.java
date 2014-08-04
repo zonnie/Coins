@@ -46,8 +46,7 @@ public class SignUpActivity extends Activity implements View.OnClickListener
         Utils.setupBackButton(this);
         Utils.removeLogo(this);
         Utils.removeActionBar(this);
-
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        Utils.animateForward(this);
 
         setContentView(R.layout.activity_sign_up);
 
@@ -204,7 +203,7 @@ public class SignUpActivity extends Activity implements View.OnClickListener
                     goToLogin();
                     finish();
                     showProgress(false);
-                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 } else
                 {
                     singUpFailed();
@@ -243,7 +242,7 @@ public class SignUpActivity extends Activity implements View.OnClickListener
             case android.R.id.home:
             {
                 NavUtils.navigateUpFromSameTask(this);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 return true;
             }
         }
@@ -257,7 +256,7 @@ public class SignUpActivity extends Activity implements View.OnClickListener
     public void onBackPressed()
     {
         super.onBackPressed();
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        Utils.animateBack(this);
     }
 
     /**

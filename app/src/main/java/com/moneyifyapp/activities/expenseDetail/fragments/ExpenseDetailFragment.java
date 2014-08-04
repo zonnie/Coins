@@ -150,7 +150,7 @@ public class ExpenseDetailFragment extends Fragment
             {
                 Intent intent = new Intent(getActivity(), ImagePickerActivity.class);
                 startActivityForResult(intent, ExpensesActivity.IMAGE_PICK_REQ);
-                getActivity().overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 mExpenseIcon.startAnimation(mAlphaDown);
             }
         });

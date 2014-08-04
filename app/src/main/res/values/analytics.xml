@@ -11,7 +11,8 @@
     <string name="analytics_str_intrest_hint">Can\'t jump to conclusion yet, add some transactions</string>
     <string name="analytics_str_top_category_hint">Can\'t say anything on categories, add some transactions</string>
     <string name="analytics_str_top_graph_hint">Can\'t draw any doodles yet, add some transactions</string>
-    <string name="dashboard_bar_expense_chart_title">Spending Trends</string>
+    <string name="dashboard_bar_expense_chart_title">Category Trends</string>
+    <string name="dashboard_year_bar_expense_chart_title">Yearly Trends</string>
     <string name="dashboard_empty_hint">You ain\'t spending or earning - get busy :)</string>
     <string name="dashboard_bar_income_chart_title">Revenue Trends</string>
     <string name="analytics_str_no_income">Nothing earned :(</string>
@@ -19,4 +20,5 @@
     <string name="analytics_monthly_overview_title">Overview</string>
     <string name="analytics_monthly_Insights_title">Insights</string>
     <string name="analytics_monthly_categories_title">Categories</string>
+    <string name="analytics_graphs_activity_title">Some Graphes</string>
 </resources>

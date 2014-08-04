@@ -33,6 +33,7 @@ public class BarGraphFragment extends Fragment
     private List<String> mYAxisLabels;
     private List<Integer> mXAxisIcons;
     private String mXAxisTitle;
+    private TextView mXAxisTitleTextView;
     public int mBarMargin = 140;
     public int mXItemTopMargin = 20;
     private int mMaxHeight;
@@ -114,11 +115,13 @@ public class BarGraphFragment extends Fragment
             mXAxisContainer.setWeightSum(weigtSum);
             TextView title = (TextView) mView.findViewById(R.id.graph_bar_title_label);
             title.setText(mParameters.mTitle);
-            TextView xTitle = (TextView) mView.findViewById(R.id.graph_x_axis_title);
-            xTitle.setText(mParameters.mXAxisTitle);
+            mXAxisTitleTextView = (TextView) mView.findViewById(R.id.graph_x_axis_title);
+            mXAxisTitleTextView.setText(mParameters.mXAxisTitle);
         }
     }
 
+    /**
+     */
     private boolean shouldDraw()
     {
         return mValues.size() > 2;
@@ -134,7 +137,10 @@ public class BarGraphFragment extends Fragment
             {
                 int leftMargin = (j == 0) ? 0 : mBarMargin;
                 int height = mValues.get(j);
-                drawSingleBar(height, leftMargin, mXItemTopMargin);
+                int barBackground = mParameters.mResourceId;
+                if(j == mParameters.mSpecialBarsId)
+                    barBackground = R.drawable.graph_bar_back_yellow;
+                drawSingleBar(height, leftMargin, mXItemTopMargin, barBackground);
             }
         }
     }
@@ -143,6 +149,9 @@ public class BarGraphFragment extends Fragment
      */
     private void drawXLabels()
     {
+        if(mParameters.mUseIcons)
+            mXAxisTitleTextView.setVisibility(View.GONE);
+
         if(!mXAxisLabels.isEmpty())
         {
             for (int j = 0; j < mValues.size(); j++)
@@ -151,18 +160,20 @@ public class BarGraphFragment extends Fragment
                 if (!mParameters.mUseIcons)
                     createXvalue(mXAxisLabels.get(j), leftMargin, mXItemTopMargin);
                 else
+                {
                     createXicon(mXAxisIcons.get(j), leftMargin, mXItemTopMargin);
+                }
             }
         }
     }
 
     /**
      */
-    public void drawSingleBar(int height, int leftMargin, int topMargin)
+    public void drawSingleBar(int height, int leftMargin, int topMargin, int drawable)
     {
         // Default background
         Drawable resourceId = (mParameters.mResourceId != 0) ?
-                getResources().getDrawable(mParameters.mResourceId) :
+                getResources().getDrawable(drawable) :
                 getResources().getDrawable(R.drawable.graph_bar_back_yellow);
 
         final LinearLayout view = new LinearLayout(getActivity());
@@ -231,12 +242,9 @@ public class BarGraphFragment extends Fragment
         if(!mNoInsights)
         {
             mNoInsights = true;
-            LinearLayout layout = (LinearLayout) mView.findViewById(R.id.bar_graph_root);
+            LinearLayout layout = (LinearLayout) mView.findViewById(R.id.category_bar_graph_root);
             if(layout != null)
                 layout.setVisibility(View.VISIBLE);
-            TextView hint = (TextView) mView.findViewById(R.id.month_analytics_graph_hint);
-            if(hint != null)
-                hint.setVisibility(View.GONE);
         }
     }
 
@@ -253,8 +261,9 @@ public class BarGraphFragment extends Fragment
         public int mGraphSize;
         public String mTitle;
         public String mXAxisTitle;
-        public List<Integer> mSpecialBarsId;
+        public int mSpecialBarsId;
         public boolean mUseIcons;
+        public int mGraphTitleImage;
 
         public BarGraphParameters(String title)
         {
@@ -264,7 +273,6 @@ public class BarGraphFragment extends Fragment
             mXAxisIcons = new ArrayList<Integer>();
             mGraphSize = BIG_GRAPH;
             mTitle = title;
-            mSpecialBarsId = new ArrayList<Integer>();
             mUseIcons = false;
             mXAxisTitle = "";
         }
@@ -311,13 +319,6 @@ public class BarGraphFragment extends Fragment
         public void setXAxisTitle(String title)
         {
             this.mXAxisTitle = title;
-        }
-
-        /**
-         */
-        public void addSpecialBar(int barNumber)
-        {
-            mSpecialBarsId.add(barNumber);
         }
     }
 }

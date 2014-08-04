@@ -59,7 +59,7 @@ public class FullAnalyticsActivity extends Activity
             case android.R.id.home:
             {
                 NavUtils.navigateUpFromSameTask(this);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 return true;
             }
         }
@@ -120,6 +120,6 @@ public class FullAnalyticsActivity extends Activity
     public void onBackPressed()
     {
         super.onBackPressed();
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }

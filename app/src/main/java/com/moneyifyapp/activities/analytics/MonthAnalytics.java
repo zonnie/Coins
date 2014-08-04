@@ -45,7 +45,7 @@ public class MonthAnalytics extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_month_analytics);
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        Utils.animateForward(this);
 
         if (savedInstanceState == null)
         {
@@ -126,7 +126,7 @@ public class MonthAnalytics extends Activity
 
         // Build the graph details
         for(MonthTransactions.Couple<Integer,Double> cur : coupleValues)
-            xIcons.add(Images.getImageByPosition(cur.mFirstField));
+            xIcons.add(Images.getSmallImageByPosition(cur.mFirstField));
         for(MonthTransactions.Couple<Integer,Double> cur : coupleValues)
             values.add(cur.mSecondField.intValue());
 
@@ -151,7 +151,7 @@ public class MonthAnalytics extends Activity
     public void onBackPressed()
     {
         super.onBackPressed();
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        Utils.animateBack(this);
     }
 
     /**

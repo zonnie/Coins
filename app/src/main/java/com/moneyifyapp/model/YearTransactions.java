@@ -1,6 +1,7 @@
 package com.moneyifyapp.model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -25,7 +26,10 @@ public class YearTransactions
      */
     public MonthTransactions get(int month)
     {
-        return  mYearTransactions[month];
+        if(month >= 0)
+            return  mYearTransactions[month];
+        else
+            return mYearTransactions[Calendar.getInstance().get(Calendar.MONTH)];
     }
 
     public MonthTransactions[] getItems() {return mYearTransactions;}

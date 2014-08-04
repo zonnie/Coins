@@ -2,6 +2,7 @@ package com.moneyifyapp.utils;
 
 import com.google.gson.Gson;
 import com.moneyifyapp.activities.analytics.fragments.BarGraphFragment;
+import com.moneyifyapp.activities.analytics.fragments.PrecentageGraphFragment;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.model.YearTransactions;
@@ -72,4 +73,10 @@ public class JsonServiceYearTransactions
         return mGson.fromJson(parameters, BarGraphFragment.BarGraphParameters.class);
     }
 
+    /**
+     */
+    public PrecentageGraphFragment.PrecentageParameters fromJsonToPrecentageParams(String parameters)
+    {
+        return mGson.fromJson(parameters, PrecentageGraphFragment.PrecentageParameters.class);
+    }
 }

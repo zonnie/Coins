@@ -1,0 +1,138 @@
+<!-- Title -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+    >
+    <!-- Custom Action Bar -->
+
+    <LinearLayout
+        android:id="@+id/month_analytics_date_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back_regualr"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/padding_start_currency"
+        android:weightSum="6.3"
+        >
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="0.6"
+            android:background="@drawable/back_regular_drawable"
+            android:onClick="OnBackClicked"
+            android:paddingEnd="@dimen/drawable_left_pad"
+            android:paddingStart="@dimen/drawable_left_pad"
+            android:src="@drawable/back_2"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:scaleType="fitCenter"
+            android:src="@drawable/dashboard_small"
+            />
+
+        <TextView
+            android:id="@+id/detail_date_month"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4.9"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center_vertical|start"
+            android:text="@string/analytics_graphs_activity_title"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/huge_font"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:background="@color/background"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/huge_padding"
+        android:scrollbars="none"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <LinearLayout
+                android:id="@+id/pick_month"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/padding_start_currency"
+                android:paddingLeft="@dimen/drawable_left_pad"
+                android:paddingRight="@dimen/drawable_left_pad"
+                android:paddingTop="@dimen/padding_start_currency"
+                >
+                <Button
+                    android:id="@+id/graph_pick_month_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/other_button"
+                    android:gravity="center"
+                    android:text="@string/change_pick_month_button_text"
+                    android:onClick="pickMonthClicked"
+                    android:padding="@dimen/padding_start_currency"
+                    android:textSize="@dimen/large_font"
+                    android:textColor="@android:color/white"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tap to pick a date"
+                    android:gravity="center"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_marginBottom="@dimen/padding_start_currency"
+                    android:textSize="@dimen/tiny_font"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/graph_empty_hint_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pick_month"
+                android:layout_marginTop="@dimen/padding_start_currency"
+                android:gravity="center"
+                android:paddingLeft="@dimen/drawable_left_pad"
+                android:paddingRight="@dimen/drawable_left_pad"
+                android:text="@string/analytics_str_top_graph_hint"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="@dimen/medium_font"
+                android:visibility="gone"
+                />
+
+            <FrameLayout
+                android:id="@+id/graphs_category_graph_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pick_month"
+                android:visibility="gone"
+                />
+
+            <FrameLayout
+                android:id="@+id/graphs_year_graph_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/graphs_category_graph_container"
+                android:visibility="gone"
+                />
+
+
+        </RelativeLayout>
+    </ScrollView>
+</LinearLayout>

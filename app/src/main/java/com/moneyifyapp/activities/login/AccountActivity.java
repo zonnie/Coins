@@ -50,8 +50,8 @@ public class AccountActivity extends Activity implements View.OnClickListener
         Utils.setupBackButton(this);
         Utils.removeLogo(this);
         Utils.removeActionBar(this);
+        Utils.animateForward(this);
 
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         setContentView(R.layout.activity_user_account);
         getActionBar().setHomeButtonEnabled(true);
 
@@ -208,7 +208,7 @@ public class AccountActivity extends Activity implements View.OnClickListener
     public void onBackPressed()
     {
         super.onBackPressed();
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        Utils.animateBack(this);
     }
 
     /**

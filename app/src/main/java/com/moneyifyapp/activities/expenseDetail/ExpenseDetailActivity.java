@@ -57,7 +57,8 @@ public class ExpenseDetailActivity extends Activity
     {
         super.onCreate(savedInstanceState);
 
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        Utils.animateForward(this);
+
         setContentView(R.layout.activity_create_expense_layout);
         Utils.initializeActionBar(this);
         Utils.setupBackButton(this);
@@ -156,9 +157,8 @@ public class ExpenseDetailActivity extends Activity
     {
         Intent data = getIntent();
         setResult(ExpensesActivity.EXPENSE_RESULT_CANCELED, data);
-
         finish();
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     /**
@@ -170,7 +170,7 @@ public class ExpenseDetailActivity extends Activity
             mOptionsFragment.onSumbitPressed();
             setResult(ExpensesActivity.EXPENSE_RESULT_OK, getIntent());
             finish();
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            Utils.animateBack(this);
         }
     }
 
@@ -185,7 +185,7 @@ public class ExpenseDetailActivity extends Activity
     public void onBackPressed()
     {
         super.onBackPressed();
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        Utils.animateBack(this);
     }
 
     /**

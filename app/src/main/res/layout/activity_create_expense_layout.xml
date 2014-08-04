@@ -39,7 +39,7 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/huge_font"
             android:textStyle="bold"
-            android:layout_weight="0.8"
+            android:layout_weight="0.9"
             />
 
         <TextView

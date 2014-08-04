@@ -17,54 +17,51 @@ public class Images
     {
         mImages = new ArrayList<ImageWithCaption>();
 
-        mImages.add(new ImageWithCaption(R.drawable.shop, "Shopping"));
-        mImages.add(new ImageWithCaption(R.drawable.ice_cream, "Sweets"));
-        mImages.add(new ImageWithCaption(R.drawable.internet, "Internet"));
-        mImages.add(new ImageWithCaption(R.drawable.cell, "Cellphone"));
-        mImages.add(new ImageWithCaption(R.drawable.gaming, "Gaming"));
-        mImages.add(new ImageWithCaption(R.drawable.camera, "Camera Stuff"));
-        mImages.add(new ImageWithCaption(R.drawable.trip, "Holidays"));
-        mImages.add(new ImageWithCaption(R.drawable.drinks, "Drinks"));
-        mImages.add(new ImageWithCaption(R.drawable.market, "Groceries"));
-        mImages.add(new ImageWithCaption(R.drawable.transport, "Transportation"));
-        mImages.add(new ImageWithCaption(R.drawable.movies, "Movies"));
-        mImages.add(new ImageWithCaption(R.drawable.food_outside, "Restaurants"));
-        mImages.add(new ImageWithCaption(R.drawable.home, "Rent"));
-        mImages.add(new ImageWithCaption(R.drawable.music, "Concerts"));
-        mImages.add(new ImageWithCaption(R.drawable.bank, "Banking"));
-        mImages.add(new ImageWithCaption(R.drawable.tv, "TV"));
-        mImages.add(new ImageWithCaption(R.drawable.computers, "Computer"));
-        mImages.add(new ImageWithCaption(R.drawable.cloths, "Cloths"));
-        mImages.add(new ImageWithCaption(R.drawable.car, "Car"));
-        mImages.add(new ImageWithCaption(R.drawable.book, "Books"));
-        mImages.add(new ImageWithCaption(R.drawable.buds, "Buds"));
-        mImages.add(new ImageWithCaption(R.drawable.invesment, "Invesments"));
-        mImages.add(new ImageWithCaption(R.drawable.gift, "Gift"));
-        mImages.add(new ImageWithCaption(R.drawable.insurance, "Insurance"));
-        mImages.add(new ImageWithCaption(R.drawable.junk, "Junkfood"));
-        mImages.add(new ImageWithCaption(R.drawable.lcd, "Electronics"));
-        mImages.add(new ImageWithCaption(R.drawable.save, "Savings"));
-        mImages.add(new ImageWithCaption(R.drawable.saving, "Cash"));
-        mImages.add(new ImageWithCaption(R.drawable.coffe, "Coffee"));
-        mImages.add(new ImageWithCaption(R.drawable.parking, "Parking"));
-        mImages.add(new ImageWithCaption(R.drawable.health, "Health"));
-        mImages.add(new ImageWithCaption(R.drawable.loan, "Loan"));
-        mImages.add(new ImageWithCaption(R.drawable.sports, "Sports"));
-        mImages.add(new ImageWithCaption(R.drawable.dev, "Development"));
-        mImages.add(new ImageWithCaption(R.drawable.gym, "Gym"));
-        mImages.add(new ImageWithCaption(R.drawable.hobby, "Hobbies"));
-        mImages.add(new ImageWithCaption(R.drawable.art, "Art"));
-        mImages.add(new ImageWithCaption(R.drawable.salary, "Salary"));
-        mImages.add(new ImageWithCaption(R.drawable.in_app, "In-App "));
-        mImages.add(new ImageWithCaption(R.drawable.stationery, "Stationary"));
+        mImages.add(new ImageWithCaption(R.drawable.shop, "Shopping", R.drawable.shop_small));
+        mImages.add(new ImageWithCaption(R.drawable.ice_cream, "Sweets", R.drawable.ice_cream_small));
+        mImages.add(new ImageWithCaption(R.drawable.internet, "Internet", R.drawable.internet_small));
+        mImages.add(new ImageWithCaption(R.drawable.cell, "Cellphone", R.drawable.cell_small));
+        mImages.add(new ImageWithCaption(R.drawable.gaming, "Gaming", R.drawable.gaming_small));
+        mImages.add(new ImageWithCaption(R.drawable.camera, "Camera Stuff", R.drawable.camera_small));
+        mImages.add(new ImageWithCaption(R.drawable.trip, "Holidays", R.drawable.trip_small));
+        mImages.add(new ImageWithCaption(R.drawable.drinks, "Drinks", R.drawable.drinks_small));
+        mImages.add(new ImageWithCaption(R.drawable.market, "Groceries", R.drawable.market_small));
+        mImages.add(new ImageWithCaption(R.drawable.transport, "Transportation", R.drawable.transport_small));
+        mImages.add(new ImageWithCaption(R.drawable.movies, "Movies", R.drawable.movies_small));
+        mImages.add(new ImageWithCaption(R.drawable.food_outside, "Restaurants", R.drawable.food_outside_small));
+        mImages.add(new ImageWithCaption(R.drawable.home, "Rent",R.drawable.home_small));
+        mImages.add(new ImageWithCaption(R.drawable.music, "Concerts",R.drawable.music_small));
+        mImages.add(new ImageWithCaption(R.drawable.bank, "Banking",R.drawable.bank_small));
+        mImages.add(new ImageWithCaption(R.drawable.tv, "TV",R.drawable.tv_small));
+        mImages.add(new ImageWithCaption(R.drawable.computers, "Computer", R.drawable.computers_small));
+        mImages.add(new ImageWithCaption(R.drawable.cloths, "Cloths",R.drawable.cloths_small));
+        mImages.add(new ImageWithCaption(R.drawable.car, "Car",R.drawable.car_small));
+        mImages.add(new ImageWithCaption(R.drawable.book, "Books",R.drawable.book_small));
+        mImages.add(new ImageWithCaption(R.drawable.buds, "Buds",R.drawable.buds_small));
+        mImages.add(new ImageWithCaption(R.drawable.invesment, "Invesments",R.drawable.invesment_small));
+        mImages.add(new ImageWithCaption(R.drawable.gift, "Gift",R.drawable.gift_small));
+        mImages.add(new ImageWithCaption(R.drawable.insurance, "Insurance",R.drawable.insurance_small));
+        mImages.add(new ImageWithCaption(R.drawable.junk, "Junkfood",R.drawable.junk_small));
+        mImages.add(new ImageWithCaption(R.drawable.lcd, "Electronics",R.drawable.lcd_small));
+        mImages.add(new ImageWithCaption(R.drawable.save, "Savings",R.drawable.save_small));
+        mImages.add(new ImageWithCaption(R.drawable.saving, "Cash",R.drawable.saving_small));
+        mImages.add(new ImageWithCaption(R.drawable.coffe, "Coffee",R.drawable.coffe_small));
+        mImages.add(new ImageWithCaption(R.drawable.parking, "Parking",R.drawable.parking_small));
+        mImages.add(new ImageWithCaption(R.drawable.health, "Health",R.drawable.health_small));
+        mImages.add(new ImageWithCaption(R.drawable.loan, "Loan",R.drawable.loan_small));
+        mImages.add(new ImageWithCaption(R.drawable.sports, "Sports",R.drawable.sports_small));
+        mImages.add(new ImageWithCaption(R.drawable.dev, "Development",R.drawable.dev_small));
+        mImages.add(new ImageWithCaption(R.drawable.gym, "Gym",R.drawable.gym_small));
+        mImages.add(new ImageWithCaption(R.drawable.hobby, "Hobbies",R.drawable.hobby_small));
+        mImages.add(new ImageWithCaption(R.drawable.art, "Art",  R.drawable.art_small));
+        mImages.add(new ImageWithCaption(R.drawable.salary, "Salary",R.drawable.salary_small));
+        mImages.add(new ImageWithCaption(R.drawable.in_app, "In-App",R.drawable.in_app_small));
+        mImages.add(new ImageWithCaption(R.drawable.stationery, "Stationary",R.drawable.stationery_small));
         Collections.sort(mImages);
 
     }
 
     /**
-     *
-     * @param position
-     * @return
      */
     public static int getImageByPosition(int position)
     {
@@ -73,6 +70,24 @@ public class Images
         try
         {
             resource = mImages.get(position).getImage();
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            resource = mImages.get(0).getImage();
+        }
+
+        return  resource;
+    }
+
+    /**
+     */
+    public static int getSmallImageByPosition(int position)
+    {
+        int resource = 0;
+
+        try
+        {
+            resource = mImages.get(position).getImageSmall();
         }
         catch (IndexOutOfBoundsException e)
         {
@@ -144,12 +159,14 @@ public class Images
     public static class ImageWithCaption implements Comparable<ImageWithCaption>
     {
         private Integer mImageResource;
+        private Integer mImageSmall;
         private String mImageCaption;
 
-        ImageWithCaption(int resource, String caption)
+        ImageWithCaption(int resource, String caption, int imageSmall)
         {
             this.mImageResource = resource;
             this.mImageCaption = caption;
+            this.mImageSmall = imageSmall;
         }
 
         public Integer getImage()
@@ -161,6 +178,8 @@ public class Images
         {
             return mImageCaption;
         }
+
+        public Integer getImageSmall(){return mImageSmall;}
 
         /**
          */
