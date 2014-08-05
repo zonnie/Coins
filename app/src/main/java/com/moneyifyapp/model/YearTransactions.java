@@ -59,11 +59,12 @@ public class YearTransactions
     {
         for(MonthTransactions month : getItems())
         {
-            for(Transaction curTransaction : month.getItems())
-            {
-                if(curTransaction.mId.equals(id))
-                    return curTransaction;
-            }
+            if(month != null)
+                for (Transaction curTransaction : month.getItems())
+                {
+                    if (curTransaction.mId.equals(id))
+                        return curTransaction;
+                }
         }
 
         return null;

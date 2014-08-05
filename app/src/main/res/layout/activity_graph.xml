@@ -68,16 +68,17 @@
         android:gravity="center"
         android:orientation="vertical"
         >
-        
+
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/graph_scrollview"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center"
         android:clipToPadding="false"
-        android:paddingTop="@dimen/drawable_left_pad"
         android:paddingBottom="@dimen/huge_padding"
+        android:paddingTop="@dimen/drawable_left_pad"
         android:scrollbars="none"
         >
 
@@ -112,38 +113,122 @@
                     android:background="@android:color/darker_gray"
                     />
 
+                <TextView
+                    android:id="@+id/graph_empty_hint_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/month_title_layout"
+                    android:layout_marginTop="@dimen/padding_start_currency"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/drawable_left_pad"
+                    android:paddingRight="@dimen/drawable_left_pad"
+                    android:text="@string/analytics_str_top_graph_hint"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/medium_font"
+                    android:visibility="gone"
+                    />
+
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/graph_empty_hint_textview"
+            <!-- Expand Graph -->
+
+            <LinearLayout
+                android:id="@+id/expend_graph_button_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/month_title_layout"
-                android:layout_marginTop="@dimen/padding_start_currency"
+                android:layout_below="@+id/month_title_layout"
                 android:gravity="center"
-                android:paddingLeft="@dimen/drawable_left_pad"
-                android:paddingRight="@dimen/drawable_left_pad"
-                android:text="@string/analytics_str_top_graph_hint"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="@dimen/medium_font"
-                android:visibility="gone"
-                />
+                android:layout_marginTop="@dimen/drawable_left_pad"
+                >
 
-            <FrameLayout
-                android:id="@+id/graphs_category_graph_container"
+                <Button
+                    android:id="@+id/expend_graph_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/expandable_regular_drawable"
+                    android:layout_marginLeft="@dimen/drawable_left_pad"
+                    android:layout_marginRight="@dimen/drawable_left_pad"
+                    android:drawableRight="@drawable/collapse"
+                    android:paddingLeft="@dimen/big_padding"
+                    android:onClick="clickGraphExpand"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/large_font"
+                    android:gravity="center"
+                    android:text="Graphs"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/graph_layout_to_expand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/graph_empty_hint_textview"
-                android:visibility="gone"
-                />
+                android:layout_below="@+id/expend_graph_button_layout"
+                android:orientation="vertical"
+                >
 
-            <FrameLayout
-                android:id="@+id/graphs_year_graph_container"
+                <FrameLayout
+                    android:id="@+id/graphs_category_graph_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/month_title_layout"
+                    android:visibility="gone"
+                    />
+
+                <FrameLayout
+                    android:id="@+id/graphs_year_graph_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/graphs_category_graph_container"
+                    android:visibility="gone"
+                    />
+            </LinearLayout>
+
+
+            <!-- Expand Monthly -->
+
+            <LinearLayout
+                android:id="@+id/expend_button_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/graphs_category_graph_container"
-                android:visibility="gone"
-                />
+                android:layout_below="@+id/graph_layout_to_expand"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/drawable_left_pad"
+                >
+
+                <Button
+                    android:id="@+id/expend_monthly_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/expandable_regular_drawable"
+                    android:layout_marginLeft="@dimen/drawable_left_pad"
+                    android:layout_marginRight="@dimen/drawable_left_pad"
+                    android:drawableRight="@drawable/collapse"
+                    android:paddingLeft="@dimen/big_padding"
+                    android:onClick="clickMonthlyExpand"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/large_font"
+                    android:gravity="center"
+                    android:text="Monthly Report"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/monthly_layout_to_expand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/expend_button_layout"
+                >
+
+                <FrameLayout
+                    android:id="@+id/graphs_month_report_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    />
+            </LinearLayout>
+
+
+
 
         </RelativeLayout>
     </ScrollView>

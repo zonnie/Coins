@@ -231,9 +231,30 @@ public class Utils
 
     /**
      */
+    public static void animateTowards(Activity activity)
+    {
+        activity.overridePendingTransition(R.anim.slide_in_left, R.anim.zoom_exit);
+    }
+
+    /**
+     */
     public static Animation loadFadeInAnimation(Activity activity)
     {
         return android.view.animation.AnimationUtils.loadAnimation(activity, R.anim.fade_in);
+    }
+
+    /**
+     */
+    public static void animateUp(Activity activity)
+    {
+        activity.overridePendingTransition(R.anim.slide_up, R.anim.zoom_exit);
+    }
+
+    /**
+     */
+    public static void animateDown(Activity activity)
+    {
+        activity.overridePendingTransition(R.anim.zoom_in, R.anim.slide_down);
     }
 
     /**

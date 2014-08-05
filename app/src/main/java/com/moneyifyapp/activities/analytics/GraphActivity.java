@@ -1,9 +1,12 @@
 package com.moneyifyapp.activities.analytics;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -12,6 +15,7 @@ import android.widget.TextView;
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.analytics.dialogs.PickDateDialog;
 import com.moneyifyapp.activities.analytics.fragments.BarGraphFragment;
+import com.moneyifyapp.activities.analytics.fragments.MonthAnalyticsFragment;
 import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.TransactionHandler;
@@ -38,12 +42,19 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
     private String CATEGORY_GRAPH_TITLE = "Top Categories";
     private FrameLayout mCategoryLayout;
     private FrameLayout mYearlyLayout;
+    private FrameLayout mMonthlyReport;
+    private LinearLayout mMonthlyReportExpandable;
+    private LinearLayout mGraphsExpandable;
+    private Button mExpandMonthlyButton;
+    private Button mExpandGraphButton;
     private ImageButton mPickDateButton;
     private TextView mCurrentDate;
     private LinearLayout mTitleLayout;
     private Animation mFadeInAnimation;
     private int YEAR_FONT_SIZE = 8;
     private int CAT_FONT_SIZE = 15;
+    private Drawable mCollapseDrawable;
+    private Drawable mExpandDrawable;
 
     /**
      *
@@ -60,6 +71,8 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         mFadeInAnimation = Utils.loadFadeInAnimation(this);
 
         mMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
+        mExpandDrawable = getResources().getDrawable(R.drawable.expand);
+        mCollapseDrawable = getResources().getDrawable(R.drawable.collapse);
 
         TransactionHandler mTransactionHandler = TransactionHandler.getInstance(this);
         mYearTransactions = mTransactionHandler.getYearTransactions(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
@@ -68,12 +81,30 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         mTitleLayout.startAnimation(mFadeInAnimation);
         mCategoryLayout = (FrameLayout)findViewById(R.id.graphs_category_graph_container);
         mYearlyLayout = (FrameLayout)findViewById(R.id.graphs_year_graph_container);
+        mMonthlyReport = (FrameLayout) findViewById(R.id.graphs_month_report_container);
+        mMonthlyReportExpandable = (LinearLayout)findViewById(R.id.monthly_layout_to_expand);
+        mGraphsExpandable = (LinearLayout)findViewById(R.id.graph_layout_to_expand);
         mPickDateButton = (ImageButton)findViewById(R.id.graph_pick_month_button);
         mCurrentDate = (TextView)findViewById(R.id.graph_activity_title);
         mCurrentDate.setText(Months.getMonthNameByNumber(mMonth-1));
 
+        // Animations
+        mExpandMonthlyButton = (Button)findViewById(R.id.expend_monthly_button);
+        mExpandMonthlyButton.startAnimation(mFadeInAnimation);
+        mExpandGraphButton = (Button)findViewById(R.id.expend_graph_button);
+        mExpandGraphButton.startAnimation(mFadeInAnimation);
+
         if (savedInstanceState == null)
-            buildGraphs();
+        {
+            new Handler().postDelayed(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    buildGraphs();
+                }
+            }, 200);
+        }
     }
 
     /**
@@ -84,9 +115,31 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
 
         buildCategoryGraphAndReplaceFragment();
         buildYearGraphAndReplaceFragment();
+        buildMonthlyOverviewAndReplaceFragment();
+
+        mExpandGraphButton.startAnimation(mFadeInAnimation);
+        mExpandMonthlyButton.startAnimation(mFadeInAnimation);
 
         if(mNoYearExpense && mNoMonthExpense)
             hint.setVisibility(View.VISIBLE);
+        else
+            hint.setVisibility(View.GONE);
+    }
+
+    private void buildMonthlyOverviewAndReplaceFragment()
+    {
+        MonthAnalyticsFragment monthly = MonthAnalyticsFragment.newInstance(mMonth-1, mYearTransactions.mYear, mYearTransactions);
+
+        if(mYearTransactions.get(mMonth) != null)
+        {
+            getFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_object, R.anim.slide_out_object)
+                    .replace(R.id.graphs_month_report_container, monthly)
+                    .commit();
+            mMonthlyReport.setVisibility(View.VISIBLE);
+        }
+        else
+            mMonthlyReport.setVisibility(View.GONE);
     }
 
     /**
@@ -96,9 +149,9 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         int categoryVisibility = mCategoryLayout.getVisibility();
 
         BarGraphFragment.BarGraphParameters categoryParams = buildCategoryGraph();
-        categoryParams.mFontSize = CAT_FONT_SIZE;
         if(!mNoMonthExpense)
         {
+            categoryParams.mFontSize = CAT_FONT_SIZE;
             mCategoryLayout.setVisibility((categoryVisibility == View.GONE) ? View.VISIBLE : View.VISIBLE);
 
             getFragmentManager().beginTransaction()
@@ -117,9 +170,9 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         int yearlyVisibility = mCategoryLayout.getVisibility();
 
         BarGraphFragment.BarGraphParameters yearParams = buildYearGraph();
-        yearParams.mFontSize = YEAR_FONT_SIZE;
         if(!mNoYearExpense)
         {
+            yearParams.mFontSize = YEAR_FONT_SIZE;
             mYearlyLayout.setVisibility((yearlyVisibility == View.GONE) ? View.VISIBLE : View.VISIBLE);
 
             getFragmentManager().beginTransaction()
@@ -196,14 +249,8 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         expenseParams = buildGraphParams(YEARLY_GRAPH_TITLE, MonthTransactions.SubsetType.EXPENSE, xLabels,
                                 R.drawable.graph_bar_back_red, X_AXIS_TITLE, xIcons, R.drawable.top_small);
 
-        for(Integer cur : expenseParams.mValues)
-        {
-            if(cur > 0)
-            {
-                mNoYearExpense = false;
-                break;
-            }
-        }
+        if(expenseParams.mValues.get(mMonth-1) > 0)
+            mNoYearExpense = false;
 
         return expenseParams;
     }
@@ -275,6 +322,8 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
             mMonth = Months.getMonthByName(selected);
             mCurrentDate.setText(selected);
             mTitleLayout.startAnimation(mFadeInAnimation);
+            mMonthlyReportExpandable.startAnimation(mFadeInAnimation);
+            mGraphsExpandable.startAnimation(mFadeInAnimation);
             if (mMonth > 0)
                 buildGraphs();
         }
@@ -287,4 +336,51 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         PickDateDialog dialog = new PickDateDialog(this);
         dialog.show();
     }
+
+    /**
+     */
+    public void clickMonthlyExpand(View view)
+    {
+        if(mMonthlyReportExpandable.getVisibility() == View.VISIBLE)
+            collapseMonthly();
+        else
+            expandMonthly();
+
+    }
+
+    public void expandMonthly()
+    {
+        mMonthlyReportExpandable.setVisibility(View.VISIBLE);
+        mExpandMonthlyButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.collapse, 0);
+    }
+
+    public void collapseMonthly()
+    {
+        mMonthlyReportExpandable.setVisibility(View.GONE);
+        mExpandMonthlyButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.expand, 0);
+    }
+
+    /**
+     */
+    public void clickGraphExpand(View view)
+    {
+        if(mGraphsExpandable.getVisibility() == View.VISIBLE)
+            collapseGraphs();
+        else
+            expandGraphs();
+
+    }
+
+    public void expandGraphs()
+    {
+        mGraphsExpandable.setVisibility(View.VISIBLE);
+        mExpandGraphButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.collapse, 0);
+    }
+
+    public void collapseGraphs()
+    {
+        mGraphsExpandable.setVisibility(View.GONE);
+        mExpandGraphButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.expand, 0);
+    }
+
 }
