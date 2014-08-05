@@ -9,12 +9,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/padding_start_currency"
-        android:layout_marginLeft="@dimen/expense_drawable_left_pad"
-        android:layout_marginRight="@dimen/expense_drawable_left_pad"
-        android:layout_marginTop="@dimen/padding_start_currency"
         android:orientation="horizontal"
         android:weightSum="30"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/padding_start_currency"
+        android:layout_marginBottom="@dimen/padding_start_currency"
         >
 
         <com.moneyifyapp.views.ThinTextView
@@ -22,9 +21,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="September"
+            android:background="@drawable/other_button_standard"
             android:gravity="center"
+            android:textColor="@android:color/white"
             android:paddingBottom="@dimen/padding_start_currency"
             android:paddingTop="@dimen/padding_start_currency"
+            android:paddingStart="@dimen/drawable_left_pad"
+            android:paddingEnd="@dimen/drawable_left_pad"
             android:textSize="@dimen/large_font"
             />
 

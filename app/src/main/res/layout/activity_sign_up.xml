@@ -47,6 +47,16 @@
                 android:textSize="@dimen/mongo_font"
                 />
 
+            <TextView
+                android:id="@+id/sign_up_welcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/drawable_left_pad"
+                android:text="@string/signup_welcome"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="@dimen/tiny_font"/>
+
             <ImageView
                 android:id="@+id/accountMainImage"
                 android:layout_width="match_parent"
@@ -69,16 +79,6 @@
                 android:background="@android:color/darker_gray"
                 />
 
-            <TextView
-                android:id="@+id/sign_up_welcome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/drawable_left_pad"
-                android:text="@string/signup_welcome"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="@dimen/tiny_font"/>
-
             <LinearLayout
                 android:id="@+id/loginbox_layout"
                 android:layout_width="match_parent"
@@ -88,7 +88,7 @@
                 android:layout_marginRight="@dimen/big_padding"
                 android:background="@drawable/card"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/big_padding"
+                android:paddingBottom="@dimen/drawable_left_pad"
                 android:paddingLeft="@dimen/drawable_left_pad"
                 android:paddingRight="@dimen/drawable_left_pad"
                 android:paddingTop="@dimen/drawable_left_pad"

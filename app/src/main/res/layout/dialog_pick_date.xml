@@ -1,71 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:background="@android:color/transparent"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/card"
+              android:orientation="vertical"
     >
 
     <LinearLayout
-        android:id="@+id/dialog_root_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:layout_marginRight="@dimen/big_padding"
-        android:layout_marginLeft="@dimen/big_padding"
-        android:layout_marginTop="@dimen/mongo_padding"
-        android:layout_marginBottom="@dimen/big_padding"
-        android:background="@drawable/card"
+        android:background="@drawable/date_header"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/big_padding"
-        android:paddingLeft="@dimen/drawable_left_pad"
-        android:paddingRight="@dimen/drawable_left_pad"
-        android:paddingTop="@dimen/big_padding"
+        android:paddingBottom="@dimen/drawable_left_pad"
+        android:paddingTop="@dimen/padding_start_currency"
         >
 
-        <Spinner
-            android:id="@+id/select_month_spinner"
+        <com.moneyifyapp.views.CondensedTextView
+            android:id="@+id/graph_bar_title_label"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:text="@string/dashboard_date_pick_title"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/large_font"
             />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            >
-
-            <Button
-                android:id="@+id/change_user_cancel"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/expense_drawable_left_pad"
-                android:layout_marginTop="16dp"
-                android:layout_weight="1"
-                android:background="@drawable/stanard_button_drawable"
-                android:padding="@dimen/drawable_left_pad"
-                android:text="@string/item_details_cancel"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/medium_font"
-                />
-
-            <Button
-                android:id="@+id/dialog_pick_date_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/expense_drawable_left_pad"
-                android:layout_marginLeft="@dimen/drawable_left_pad"
-                android:layout_marginTop="16dp"
-                android:layout_weight="1"
-                android:background="@drawable/stanard_button_drawable"
-                android:padding="@dimen/drawable_left_pad"
-                android:text="@string/month_pick_button_text"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/medium_font"
-                />
-        </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/mongo_padding"
+        android:paddingRight="@dimen/mongo_padding"
+        >
+
+        <ListView
+            android:id="@+id/dialog_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:orientation="vertical"
+            android:scrollbars="none"
+            >
+
+        </ListView>
+    </LinearLayout>
 
 </LinearLayout>

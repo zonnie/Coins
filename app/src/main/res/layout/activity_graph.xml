@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/back_regualr"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/padding_start_currency"
         android:weightSum="6.3"
         >
 
@@ -24,8 +23,6 @@
             android:layout_weight="0.6"
             android:background="@drawable/back_regular_drawable"
             android:onClick="OnBackClicked"
-            android:paddingEnd="@dimen/drawable_left_pad"
-            android:paddingStart="@dimen/drawable_left_pad"
             android:src="@drawable/back_2"
             />
 
@@ -56,7 +53,6 @@
         android:id="@+id/pick_month"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:gravity="center"
         android:orientation="vertical"
         android:background="@android:color/transparent"
@@ -64,17 +60,18 @@
         >
         <Button
             android:id="@+id/graph_pick_month_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/other_button"
             android:gravity="center"
             android:text="@string/change_pick_month_button_text"
             android:onClick="pickMonthClicked"
-            android:padding="@dimen/padding_start_currency"
+            android:padding="@dimen/drawable_left_pad"
+            android:layout_marginTop="@dimen/padding_start_currency"
             android:textSize="@dimen/large_font"
             android:textColor="@android:color/white"
             />
-        <TextView
+        <!--<TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Tap to pick a date"
@@ -82,7 +79,7 @@
             android:textColor="@android:color/darker_gray"
             android:background="@android:color/transparent"
             android:textSize="@dimen/tiny_font"
-            />
+            />-->
     </LinearLayout>
 
     <ScrollView

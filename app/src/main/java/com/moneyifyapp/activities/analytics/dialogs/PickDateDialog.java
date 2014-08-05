@@ -7,8 +7,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.Spinner;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.analytics.adapters.DropdownAdapter;
@@ -20,8 +21,8 @@ public class PickDateDialog extends Dialog
 {
     private Dialog mDialog;
     private Context mContext;
-    private Spinner mMonthSelect;
     private WindowManager.LayoutParams mLayoutParams;
+    private ListView mListView;
 
     /**
      */
@@ -32,10 +33,6 @@ public class PickDateDialog extends Dialog
 
         buildDialog();
 
-        mMonthSelect = (Spinner) mDialog.findViewById(R.id.select_month_spinner);
-        DropdownAdapter adapter = new DropdownAdapter(mContext, Months.getMonthList());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mMonthSelect.setAdapter(adapter);
 
         bindCallbacksToButtons();
 
@@ -54,16 +51,20 @@ public class PickDateDialog extends Dialog
         mDialog.setContentView(R.layout.dialog_pick_date);
         mLayoutParams = new WindowManager.LayoutParams();
         mLayoutParams.copyFrom(mDialog.getWindow().getAttributes());
-        mLayoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-        mLayoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+        mLayoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        mLayoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        mListView = (ListView) mDialog.findViewById(R.id.dialog_listview);
+        DropdownAdapter adapter = new DropdownAdapter(mContext, Months.getMonthList());
+        mListView.setAdapter(adapter);
     }
 
     /**
      */
-    public void clickedPick()
+    public void clickedPick(View view)
     {
-        String month = mMonthSelect.getSelectedItem().toString();
-        ((DialogClicked)mContext).onDialogClick(month);
+        TextView textView = (TextView)view.findViewById(R.id.dropdown_item_textview);
+        if(textView != null)
+            ((DialogClicked)mContext).onDialogClick(textView.getText().toString());
         mDialog.dismiss();
     }
 
@@ -72,27 +73,14 @@ public class PickDateDialog extends Dialog
      */
     private void bindCallbacksToButtons()
     {
-        Button changePassButton = (Button) mDialog.findViewById(R.id.dialog_pick_date_button);
-        changePassButton.setOnClickListener(new View.OnClickListener()
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
-            public void onClick(View v)
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(mMonthSelect.getWindowToken(), 0);
-                clickedPick();
-            }
-        });
-
-        Button cancelButton = (Button) mDialog.findViewById(R.id.change_user_cancel);
-        cancelButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(mMonthSelect.getWindowToken(), 0);
-                clickedCancel();
+                imm.hideSoftInputFromWindow(mListView.getWindowToken(), 0);
+                clickedPick(view);
             }
         });
     }

@@ -45,6 +45,7 @@ public class DropdownAdapter extends ArrayAdapter<String>
 
         TextView dropdownText = (TextView) mView.findViewById(R.id.dropdown_item_textview);
         dropdownText.setText(mItems.get(position));
+        dropdownText.setTextColor(mContext.getResources().getColor(android.R.color.white));
 
         return mView;
     }

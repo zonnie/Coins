@@ -49,7 +49,7 @@
                 android:textSize="@dimen/mongo_font"
                 />
 
-            <com.moneyifyapp.views.ThinTextView
+            <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
                     android:layout_weight="4"
                     android:background="@drawable/card"
                     android:orientation="vertical"
-                    android:paddingBottom="@dimen/big_padding"
+                    android:paddingBottom="@dimen/drawable_left_pad"
                     android:paddingLeft="@dimen/drawable_left_pad"
                     android:paddingRight="@dimen/drawable_left_pad"
                     android:paddingTop="@dimen/drawable_left_pad"
@@ -161,22 +161,26 @@
                             android:textColor="@android:color/white"
                             android:textStyle="bold"/>
 
-                        <Button
-                            android:id="@+id/forgot_button"
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:background="@drawable/template_background"
-                            android:text="@string/action_forgot_pass"
-                            android:padding="@dimen/padding_start_currency"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/tiny_font"
-                            android:textStyle="bold"/>
+
 
                     </LinearLayout>
 
+
                 </LinearLayout>
+
+                <Button
+                    android:id="@+id/forgot_button"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_start_currency"
+                    android:layout_marginBottom="@dimen/drawable_left_pad"
+                    android:background="@drawable/template_background"
+                    android:text="@string/action_forgot_pass"
+                    android:padding="@dimen/drawable_left_pad"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/medium_font"
+                    android:textStyle="bold"/>
 
             </LinearLayout>
 

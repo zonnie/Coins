@@ -247,10 +247,13 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
     @Override
     public void onDialogClick(String selected)
     {
-        mMonth = Months.getMonthByName(selected);
-        mPickDateButton.setText(selected);
-        if(mMonth > 0)
-            buildGraphs();
+        if(mMonth != Months.getMonthByName(selected))
+        {
+            mMonth = Months.getMonthByName(selected);
+            mPickDateButton.setText(selected);
+            if (mMonth > 0)
+                buildGraphs();
+        }
     }
 
     /**

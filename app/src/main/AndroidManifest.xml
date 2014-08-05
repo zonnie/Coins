@@ -39,7 +39,6 @@
             android:theme="@style/Theme.CustomizedAppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -86,7 +85,10 @@
         </activity>
         <activity
             android:name=".activities.analytics.GraphActivity"
-            android:label="@string/title_activity_graph" >
+            android:label=""
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden"
+            >
         </activity>
     </application>
 
