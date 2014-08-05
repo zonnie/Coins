@@ -15,24 +15,12 @@
         >
         <!-- Category Bar Graph -->
 
-        <TextView
-            android:id="@+id/month_analytics_graph_hint"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingTop="@dimen/mongo_padding"
-            android:text="@string/analytics_str_top_graph_hint"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="@dimen/medium_font"
-            />
-
         <LinearLayout
             android:id="@+id/category_bar_graph_root"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/drawable_left_pad"
             android:orientation="vertical"
-            android:visibility="gone"
             >
 
 
@@ -72,10 +60,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginTop="@dimen/padding_start_currency"
-                    android:paddingEnd="@dimen/big_padding"
-                    android:paddingStart="@dimen/big_padding"
+                    android:orientation="vertical"
+                    android:paddingEnd="@dimen/drawable_left_pad"
+                    android:paddingStart="@dimen/drawable_left_pad"
                     >
 
                     <RelativeLayout
@@ -93,41 +81,22 @@
 
                         </LinearLayout>
 
-
-                        <View
-                            android:id="@+id/view"
-                            android:layout_width="match_parent"
-                            android:layout_height="0.5dp"
-                            android:layout_below="@id/linearChart"
-                            android:background="@android:color/darker_gray"
-                            />
-
                     </RelativeLayout>
 
-                    <LinearLayout
-                        android:id="@+id/xAxisLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="bottom"
-                        android:orientation="horizontal"
-                        >
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/graph_x_axis_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/padding_start_currency"
-                        android:gravity="center"
-                        android:text="Month"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="@dimen/tiny_font"
-                        />
-
                 </LinearLayout>
-            </LinearLayout>
 
+                <TextView
+                    android:id="@+id/graph_x_axis_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_start_currency"
+                    android:gravity="center"
+                    android:text="Month"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/tiny_font"
+                    />
+
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

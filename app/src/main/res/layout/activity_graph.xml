@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical"
               android:background="@color/background"
+              android:orientation="vertical"
     >
     <!-- Custom Action Bar -->
 
@@ -38,7 +38,7 @@
             android:id="@+id/detail_date_month"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="4.9"
+            android:layout_weight="3.9"
             android:fontFamily="sans-serif-condensed"
             android:gravity="center_vertical|start"
             android:text="@string/analytics_graphs_activity_title"
@@ -47,39 +47,28 @@
             android:textStyle="bold"
             />
 
+        <ImageButton
+            android:id="@+id/graph_pick_month_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/back_regualr"
+            android:onClick="pickMonthClicked"
+            android:src="@drawable/cal"
+            />
+
+
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/pick_month"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         android:gravity="center"
         android:orientation="vertical"
-        android:background="@android:color/transparent"
-        android:paddingBottom="@dimen/padding_start_currency"
         >
-        <Button
-            android:id="@+id/graph_pick_month_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/other_button"
-            android:gravity="center"
-            android:text="@string/change_pick_month_button_text"
-            android:onClick="pickMonthClicked"
-            android:padding="@dimen/drawable_left_pad"
-            android:layout_marginTop="@dimen/padding_start_currency"
-            android:textSize="@dimen/large_font"
-            android:textColor="@android:color/white"
-            />
-        <!--<TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tap to pick a date"
-            android:gravity="center"
-            android:textColor="@android:color/darker_gray"
-            android:background="@android:color/transparent"
-            android:textSize="@dimen/tiny_font"
-            />-->
+        
     </LinearLayout>
 
     <ScrollView
@@ -87,6 +76,7 @@
         android:layout_height="fill_parent"
         android:layout_gravity="center"
         android:clipToPadding="false"
+        android:paddingTop="@dimen/drawable_left_pad"
         android:paddingBottom="@dimen/huge_padding"
         android:scrollbars="none"
         >
@@ -96,10 +86,39 @@
             android:layout_height="match_parent"
             >
 
+            <LinearLayout
+                android:id="@+id/month_title_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <com.moneyifyapp.views.ThinTextView
+                    android:id="@+id/graph_activity_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/drawable_left_pad"
+                    android:gravity="center"
+                    android:text="September"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/mongo_font"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:layout_marginLeft="@dimen/giga_padding"
+                    android:layout_marginRight="@dimen/giga_padding"
+                    android:background="@android:color/darker_gray"
+                    />
+
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/graph_empty_hint_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/month_title_layout"
                 android:layout_marginTop="@dimen/padding_start_currency"
                 android:gravity="center"
                 android:paddingLeft="@dimen/drawable_left_pad"
@@ -114,6 +133,7 @@
                 android:id="@+id/graphs_category_graph_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/graph_empty_hint_textview"
                 android:visibility="gone"
                 />
 

@@ -26,7 +26,6 @@ import java.util.List;
 public class PrecentageGraphFragment extends Fragment
 {
     private LinearLayout mLinearChart;
-    private LinearLayout mXAxisContainer;
     private View mView;
     private List<Integer> mValues;
     private List<String> mXAxisLabels;
@@ -110,8 +109,6 @@ public class PrecentageGraphFragment extends Fragment
             updateHasInsignts();
             mLinearChart = (LinearLayout) mView.findViewById(R.id.linearChart);
             mLinearChart.setWeightSum(weigtSum);
-            mXAxisContainer = (LinearLayout) mView.findViewById(R.id.xAxisLayout);
-            mXAxisContainer.setWeightSum(weigtSum);
             TextView title = (TextView) mView.findViewById(R.id.graph_bar_title_label);
             title.setText(mParameters.mTitle);
             TextView xTitle = (TextView) mView.findViewById(R.id.graph_x_axis_title);
@@ -186,7 +183,6 @@ public class PrecentageGraphFragment extends Fragment
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) textView.getLayoutParams();
         textView.setGravity(Gravity.CENTER);
         params.setMargins(leftMargin, topMargin, 0, 0);
-        mXAxisContainer.addView(textView);
     }
 
     /**
@@ -198,7 +194,6 @@ public class PrecentageGraphFragment extends Fragment
         imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
         params.setMargins(leftMargin, topMargin, 0, 0);
-        mXAxisContainer.addView(imageView);
     }
 
     /**

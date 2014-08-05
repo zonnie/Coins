@@ -138,7 +138,6 @@ public class MonthAnalytics extends Activity
         params.setXIcons(xIcons);
         params.mGraphSize = BarGraphFragment.MEDIUM_GRAPH;
         params.mUseIcons = true;
-        params.setYLabels(new ArrayList<String>());
         params.mResourceId = R.drawable.graph_bar_back_red;
         params.setXLabels(xValues);
 
@@ -234,7 +233,7 @@ public class MonthAnalytics extends Activity
         public int getCount()
         {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         /**

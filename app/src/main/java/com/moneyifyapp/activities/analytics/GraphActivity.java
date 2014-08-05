@@ -3,8 +3,10 @@ package com.moneyifyapp.activities.analytics;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.view.animation.Animation;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
@@ -32,11 +34,16 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
     private boolean mNoYearExpense = false;
     private int mMonth;
     private int MAX_CATEGORY_NUM = 5;
-    private String YEARLY_GRAPH_TITLE = "Yearly Expenses";
-    private String CATEGORY_GRAPH_TITLE = "Top Expenses by Category";
+    private String YEARLY_GRAPH_TITLE = "Month-to-Month";
+    private String CATEGORY_GRAPH_TITLE = "Top Categories";
     private FrameLayout mCategoryLayout;
     private FrameLayout mYearlyLayout;
-    private Button mPickDateButton;
+    private ImageButton mPickDateButton;
+    private TextView mCurrentDate;
+    private LinearLayout mTitleLayout;
+    private Animation mFadeInAnimation;
+    private int YEAR_FONT_SIZE = 8;
+    private int CAT_FONT_SIZE = 15;
 
     /**
      *
@@ -50,16 +57,20 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         Utils.setupBackButton(this);
         Utils.removeActionBar(this);
         Utils.animateForward(this);
+        mFadeInAnimation = Utils.loadFadeInAnimation(this);
 
         mMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
 
         TransactionHandler mTransactionHandler = TransactionHandler.getInstance(this);
         mYearTransactions = mTransactionHandler.getYearTransactions(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 
+        mTitleLayout = (LinearLayout)findViewById(R.id.month_title_layout);
+        mTitleLayout.startAnimation(mFadeInAnimation);
         mCategoryLayout = (FrameLayout)findViewById(R.id.graphs_category_graph_container);
         mYearlyLayout = (FrameLayout)findViewById(R.id.graphs_year_graph_container);
-        mPickDateButton = (Button)findViewById(R.id.graph_pick_month_button);
-        mPickDateButton.setText(Months.getMonthNameByNumber(mMonth-1));
+        mPickDateButton = (ImageButton)findViewById(R.id.graph_pick_month_button);
+        mCurrentDate = (TextView)findViewById(R.id.graph_activity_title);
+        mCurrentDate.setText(Months.getMonthNameByNumber(mMonth-1));
 
         if (savedInstanceState == null)
             buildGraphs();
@@ -70,13 +81,24 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
     private void buildGraphs()
     {
         TextView hint = (TextView)findViewById(R.id.graph_empty_hint_textview);
+
+        buildCategoryGraphAndReplaceFragment();
+        buildYearGraphAndReplaceFragment();
+
+        if(mNoYearExpense && mNoMonthExpense)
+            hint.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     */
+    private void buildCategoryGraphAndReplaceFragment()
+    {
         int categoryVisibility = mCategoryLayout.getVisibility();
-        int yearlyVisibility = mCategoryLayout.getVisibility();
 
         BarGraphFragment.BarGraphParameters categoryParams = buildCategoryGraph();
+        categoryParams.mFontSize = CAT_FONT_SIZE;
         if(!mNoMonthExpense)
         {
-            hint.setVisibility(View.GONE);
             mCategoryLayout.setVisibility((categoryVisibility == View.GONE) ? View.VISIBLE : View.VISIBLE);
 
             getFragmentManager().beginTransaction()
@@ -86,11 +108,18 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         }
         else
             mCategoryLayout.setVisibility(View.GONE);
+    }
+
+    /**
+     */
+    private void buildYearGraphAndReplaceFragment()
+    {
+        int yearlyVisibility = mCategoryLayout.getVisibility();
 
         BarGraphFragment.BarGraphParameters yearParams = buildYearGraph();
+        yearParams.mFontSize = YEAR_FONT_SIZE;
         if(!mNoYearExpense)
         {
-            hint.setVisibility(View.GONE);
             mYearlyLayout.setVisibility((yearlyVisibility == View.GONE) ? View.VISIBLE : View.VISIBLE);
 
             getFragmentManager().beginTransaction()
@@ -100,10 +129,6 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         }
         else
             mYearlyLayout.setVisibility(View.GONE);
-
-        if(mNoYearExpense && mNoMonthExpense)
-            hint.setVisibility(View.VISIBLE);
-
     }
 
     /**
@@ -145,7 +170,6 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
             params.setXIcons(xIcons);
             params.mGraphSize = BarGraphFragment.BIG_GRAPH;
             params.mUseIcons = true;
-            params.setYLabels(new ArrayList<String>());
             params.mResourceId = R.drawable.graph_bar_back_red;
             params.setXLabels(xValues);
             params.mGraphTitleImage = R.drawable.top_small;
@@ -170,7 +194,7 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         }
 
         expenseParams = buildGraphParams(YEARLY_GRAPH_TITLE, MonthTransactions.SubsetType.EXPENSE, xLabels,
-                new ArrayList<String>(), R.drawable.graph_bar_back_red, X_AXIS_TITLE, xIcons, R.drawable.top_small);
+                                R.drawable.graph_bar_back_red, X_AXIS_TITLE, xIcons, R.drawable.top_small);
 
         for(Integer cur : expenseParams.mValues)
         {
@@ -207,7 +231,7 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
     /**
      */
     private BarGraphFragment.BarGraphParameters buildGraphParams(String title, MonthTransactions.SubsetType type,
-                                                                 List<String> x, List<String> y,
+                                                                 List<String> x,
                                                                  int resourceId, String xTitle, List<Integer> xIcons,
                                                                  int titleResourceId)
     {
@@ -215,7 +239,6 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         BarGraphFragment.BarGraphParameters expenseParams = new BarGraphFragment.BarGraphParameters(title);
         expenseParams.setValues(createMaxListByType(type));
         expenseParams.setXLabels(x);
-        expenseParams.setYLabels(y);
         expenseParams.mGraphSize = BarGraphFragment.BIG_GRAPH;
         expenseParams.mResourceId = resourceId;
         expenseParams.setXAxisTitle(xTitle);
@@ -250,7 +273,8 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         if(mMonth != Months.getMonthByName(selected))
         {
             mMonth = Months.getMonthByName(selected);
-            mPickDateButton.setText(selected);
+            mCurrentDate.setText(selected);
+            mTitleLayout.startAnimation(mFadeInAnimation);
             if (mMonth > 0)
                 buildGraphs();
         }

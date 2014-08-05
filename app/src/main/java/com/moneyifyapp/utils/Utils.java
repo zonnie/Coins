@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
@@ -35,12 +36,12 @@ public class Utils
     {
         int res = 0;
 
-        for(int i = 0; i < globalCurrencyList.length; ++i)
+        for (int i = 0; i < globalCurrencyList.length; ++i)
         {
-            if(str.equals(globalCurrencyList[i]))
+            if (str.equals(globalCurrencyList[i]))
                 res = i;
         }
-        return  res;
+        return res;
     }
 
     /**
@@ -57,7 +58,7 @@ public class Utils
      */
     public static void initializeActionBar(Activity context)
     {
-        if(context.getActionBar() != null)
+        if (context.getActionBar() != null)
         {
             context.getActionBar().setDisplayShowCustomEnabled(true);
             context.getActionBar().setDisplayShowTitleEnabled(false);
@@ -78,7 +79,7 @@ public class Utils
      */
     public static void removeLogo(Activity context)
     {
-        if(context.getActionBar() != null)
+        if (context.getActionBar() != null)
             context.getActionBar().setIcon(new ColorDrawable(context.getResources().getColor(android.R.color.transparent)));
     }
 
@@ -86,7 +87,7 @@ public class Utils
      */
     public static void removeActionBar(Activity context)
     {
-        if(context.getActionBar() != null)
+        if (context.getActionBar() != null)
             context.getActionBar().hide();
     }
 
@@ -94,7 +95,7 @@ public class Utils
      */
     public static void setLogo(Activity context, int resourceId)
     {
-        if(context.getActionBar() != null)
+        if (context.getActionBar() != null)
         {
             context.getActionBar().setIcon(resourceId);
         }
@@ -141,10 +142,19 @@ public class Utils
         String dateSuffix = "";
 
         // Build the day suffix
-        if(date.endsWith("1") && !date.equals("11")){dateSuffix += "st";}
-        else if(date.endsWith("2") && !date.equals("12")){dateSuffix += "nd";}
-        else if(date.endsWith("3") && !date.equals("13")){dateSuffix += "rd";}
-        else {dateSuffix += "th";}
+        if (date.endsWith("1") && !date.equals("11"))
+        {
+            dateSuffix += "st";
+        } else if (date.endsWith("2") && !date.equals("12"))
+        {
+            dateSuffix += "nd";
+        } else if (date.endsWith("3") && !date.equals("13"))
+        {
+            dateSuffix += "rd";
+        } else
+        {
+            dateSuffix += "th";
+        }
 
         return dateSuffix;
     }
@@ -153,7 +163,7 @@ public class Utils
      */
     public static String formatDoubleToTextCurrency(double sum)
     {
-        if(mFormater == null)
+        if (mFormater == null)
             mFormater = new DecimalFormat("#.##");
 
         return mFormater.format(sum);
@@ -167,9 +177,9 @@ public class Utils
 
         String[] dateFormat = new DateFormatSymbols().getMonths();
 
-        if(dateFormat != null)
+        if (dateFormat != null)
         {
-            if(dateFormat.length-1 >= monthIndex)
+            if (dateFormat.length - 1 >= monthIndex)
                 month = dateFormat[monthIndex];
         }
 
@@ -181,10 +191,10 @@ public class Utils
     public static String getMonthPrefixByIndex(int monthIndex)
     {
         String month = getMonthNameByIndex(monthIndex);
-        if(month.length() > 3)
-            month = month.substring(0,3);
+        if (month.length() > 3)
+            month = month.substring(0, 3);
 
-        return  month;
+        return month;
     }
 
     /**
@@ -193,12 +203,11 @@ public class Utils
     {
         ActionBar bar = context.getActionBar();
 
-        if(bar != null)
+        if (bar != null)
             bar.setDisplayHomeAsUpEnabled(true);
     }
 
     /**
-     *
      * @param log
      */
     public static void writeLog(String log)
@@ -218,5 +227,21 @@ public class Utils
     public static void animateBack(Activity activity)
     {
         activity.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
+    /**
+     */
+    public static Animation loadFadeInAnimation(Activity activity)
+    {
+        return android.view.animation.AnimationUtils.loadAnimation(activity, R.anim.fade_in);
+    }
+
+    /**
+     */
+    public static String sumWithSuffix(long count)
+    {
+        if (count < 1000) return "" + count;
+        int exp = (int) (Math.log(count) / Math.log(1000));
+        return String.format("%.1f%c", count / Math.pow(1000, exp), "kMGTPE".charAt(exp - 1));
     }
 }

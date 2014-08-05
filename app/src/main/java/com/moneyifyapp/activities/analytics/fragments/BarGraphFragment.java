@@ -1,8 +1,10 @@
 package com.moneyifyapp.activities.analytics.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,8 @@ import android.widget.TextView;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.utils.JsonServiceYearTransactions;
+import com.moneyifyapp.utils.Utils;
+import com.moneyifyapp.views.CondensedTextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,27 +29,25 @@ import java.util.List;
  */
 public class BarGraphFragment extends Fragment
 {
+    private Context mContext;
     private LinearLayout mLinearChart;
-    private LinearLayout mXAxisContainer;
     private View mView;
     private List<Integer> mValues;
     private List<String> mXAxisLabels;
-    private List<String> mYAxisLabels;
     private List<Integer> mXAxisIcons;
-    private String mXAxisTitle;
     private TextView mXAxisTitleTextView;
-    public int mBarMargin = 140;
-    public int mXItemTopMargin = 20;
+    public int mBarMargin = 10;
     private int mMaxHeight;
     private int mMaxBarHeight = 300;
     public static final int BIG_GRAPH = 300;
     public static final int MEDIUM_GRAPH = 200;
     public static final int SMALL_GRAPH = 150;
-    private int DEFAULT_TEXT_SIZE = 9;
+    private int DEFAULT_TEXT_SIZE = 130;
     public static final String GRAPH_ARGS = "graphArgs";
     private Animation mBarAnimation;
     private BarGraphParameters mParameters;
     private boolean mNoInsights;
+    private int mBarTextSize;
 
     /**
      * Factory to pass some data for different fragments creation.
@@ -71,6 +73,7 @@ public class BarGraphFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
+        mContext = getActivity();
         mNoInsights = false;
 
         if (getArguments() != null)
@@ -80,8 +83,6 @@ public class BarGraphFragment extends Fragment
             mMaxBarHeight = mParameters.mGraphSize;
             mValues = mParameters.mValues;
             mXAxisLabels = mParameters.mXAxisLabels;
-            mYAxisLabels = mParameters.mYAxisLabels;
-            mXAxisTitle = mParameters.mXAxisTitle;
             mBarMargin = (mValues.size() > 0 ) ? mMaxBarHeight/mValues.size() : 0;
             mXAxisIcons = mParameters.mXAxisIcons;
         }
@@ -94,7 +95,7 @@ public class BarGraphFragment extends Fragment
         {
             mMaxHeight = Collections.max(mValues);
             drawBars();
-            drawXLabels();
+            //drawXLabels();
         }
 
         return mView;
@@ -111,14 +112,19 @@ public class BarGraphFragment extends Fragment
             updateHasInsignts();
             mLinearChart = (LinearLayout) mView.findViewById(R.id.linearChart);
             mLinearChart.setWeightSum(weigtSum);
-            mXAxisContainer = (LinearLayout) mView.findViewById(R.id.xAxisLayout);
-            mXAxisContainer.setWeightSum(weigtSum);
             TextView title = (TextView) mView.findViewById(R.id.graph_bar_title_label);
             title.setText(mParameters.mTitle);
+
             if(mParameters.mGraphTitleImage > 0)
                 title.setCompoundDrawables(getResources().getDrawable(mParameters.mGraphTitleImage), null, null, null);
             mXAxisTitleTextView = (TextView) mView.findViewById(R.id.graph_x_axis_title);
-            mXAxisTitleTextView.setText(mParameters.mXAxisTitle);
+
+            if(mParameters.mXAxisTitle != null && !mParameters.mXAxisTitle.isEmpty())
+                mXAxisTitleTextView.setText(mParameters.mXAxisTitle);
+            else
+                mXAxisTitleTextView.setVisibility(View.GONE);
+
+            mBarTextSize = mParameters.mFontSize;
         }
     }
 
@@ -137,86 +143,97 @@ public class BarGraphFragment extends Fragment
         {
             for (int j = 0; j < mValues.size(); j++)
             {
-                int leftMargin = (j == 0) ? 0 : mBarMargin;
                 int height = mValues.get(j);
-                int barBackground = mParameters.mResourceId;
-                if(j == mParameters.mSpecialBarsId)
-                    barBackground = R.drawable.graph_bar_back_yellow;
-                drawSingleBar(height, leftMargin, mXItemTopMargin, barBackground);
+                drawSingleBarWithValue(height, j);
             }
         }
     }
 
     /**
      */
-    private void drawXLabels()
-    {
-        if(mParameters.mUseIcons)
-            mXAxisTitleTextView.setVisibility(View.GONE);
-
-        if(!mXAxisLabels.isEmpty())
-        {
-            for (int j = 0; j < mValues.size(); j++)
-            {
-                int leftMargin = (j == 0) ? 0 : mBarMargin;
-                if (!mParameters.mUseIcons)
-                    createXvalue(mXAxisLabels.get(j), leftMargin, mXItemTopMargin);
-                else
-                {
-                    createXicon(mXAxisIcons.get(j), leftMargin, mXItemTopMargin);
-                }
-            }
-        }
-    }
-
-    /**
-     */
-    public void drawSingleBar(int height, int leftMargin, int topMargin, int drawable)
+    public void drawSingleBarWithValue(long height, int barId)
     {
         // Default background
-        Drawable resourceId = (mParameters.mResourceId != 0) ?
-                getResources().getDrawable(drawable) :
-                getResources().getDrawable(R.drawable.graph_bar_back_yellow);
+        int barBackground;
+        int leftMargin = (barId == 0) ? 0 : mBarMargin;
+        if(barId == mParameters.mSpecialBarsId)
+            barBackground = R.drawable.graph_bar_back_yellow;
+        else
+            barBackground = mParameters.mResourceId;
+        Drawable resourceId = getResources().getDrawable(barBackground);
 
-        final LinearLayout view = new LinearLayout(getActivity());
-        view.setBackground(resourceId);
-        final int normHeight = normalizeHeight(height);
-        view.setLayoutParams(new LinearLayout.LayoutParams(0, normHeight, 1));
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
-        params.setMargins(leftMargin, topMargin, 0, 0);
-        startBarAnimation(view);
-        mLinearChart.addView(view);
+        final long normHeight = normalizeHeight(height);
+        final TextView value = generateBarValue(height);
+
+        final LinearLayout bar = new LinearLayout(mContext);
+        bar.setBackground(resourceId);
+        bar.setId(mParameters.mResourceId);
+        bar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) normHeight, 0));
+
+        final LinearLayout masterLayout = new LinearLayout(mContext);
+        masterLayout.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+        masterLayout.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) masterLayout.getLayoutParams();
+        linearParams.setMargins(leftMargin, mBarMargin, 0, 0);
+        startBarAnimation(masterLayout);
+
+        masterLayout.addView(value);
+        masterLayout.addView(bar);
+
+        if(mParameters.mUseIcons)
+        {
+            ImageView xIcon = createXIcon(mXAxisIcons.get(barId));
+            masterLayout.addView(xIcon);
+        }
+        else
+        {
+            TextView xLabel = createXTextView(mXAxisLabels.get(barId));
+            masterLayout.addView(xLabel);
+        }
+
+        mLinearChart.addView(masterLayout);
     }
 
     /**
      */
-    private void createXvalue(String xValue, int leftMargin, int topMargin)
+    private TextView generateBarValue(long height)
     {
-        TextView textView = new TextView(getActivity());
-        textView.setTextSize(DEFAULT_TEXT_SIZE);
-        textView.setText(xValue);
-        textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) textView.getLayoutParams();
+        final TextView textView = new CondensedTextView(mContext);
+        textView.setText(Utils.sumWithSuffix(height) + Utils.getDefaultCurrency(mContext));
+        textView.setTextColor(getResources().getColor(android.R.color.darker_gray));
         textView.setGravity(Gravity.CENTER);
-        params.setMargins(leftMargin, topMargin, 0, 0);
-        mXAxisContainer.addView(textView);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,mBarTextSize);
+
+        return textView;
     }
 
     /**
      */
-    private void createXicon(Integer xIcon, int leftMargin, int topMargin)
+    private TextView createXTextView(String xValue)
     {
-        ImageView imageView = new ImageView(getActivity());
-        imageView.setImageResource(xIcon);
-        imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
-        params.setMargins(leftMargin, topMargin, 0, 0);
-        mXAxisContainer.addView(imageView);
+        TextView textView = new TextView(mContext);
+        textView.setText(xValue);
+        textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,mBarTextSize);
+        textView.setGravity(Gravity.CENTER);
+
+        return textView;
     }
 
     /**
      */
-    private int normalizeHeight(int height)
+    private ImageView createXIcon(Integer xIcon)
+    {
+        ImageView imageView = new ImageView(mContext);
+        imageView.setImageResource(xIcon);
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        return imageView;
+    }
+
+    /**
+     */
+    private long normalizeHeight(long height)
     {
         if(mMaxHeight != 0)
             return (mMaxBarHeight * height)/mMaxHeight;
@@ -231,7 +248,7 @@ public class BarGraphFragment extends Fragment
     {
         if (mBarAnimation == null)
         {
-            mBarAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
+            mBarAnimation = AnimationUtils.loadAnimation(mContext, R.anim.slide_up);
             mBarAnimation.setDuration(1000);
         }
         view.startAnimation(mBarAnimation);
@@ -247,9 +264,6 @@ public class BarGraphFragment extends Fragment
             LinearLayout layout = (LinearLayout) mView.findViewById(R.id.category_bar_graph_root);
             if(layout != null)
                 layout.setVisibility(View.VISIBLE);
-            TextView hint = (TextView) mView.findViewById(R.id.month_analytics_graph_hint);
-            if(hint != null)
-                hint.setVisibility(View.GONE);
         }
     }
 
@@ -262,24 +276,24 @@ public class BarGraphFragment extends Fragment
         public List<Integer> mValues;
         public List<String> mXAxisLabels;
         public List<Integer> mXAxisIcons;
-        public List<String> mYAxisLabels;
         public int mGraphSize;
         public String mTitle;
         public String mXAxisTitle;
         public int mSpecialBarsId;
         public boolean mUseIcons;
         public int mGraphTitleImage;
+        public int mFontSize;
 
         public BarGraphParameters(String title)
         {
             mValues = new ArrayList<Integer>();
             mXAxisLabels = new ArrayList<String>();
-            mYAxisLabels = new ArrayList<String>();
             mXAxisIcons = new ArrayList<Integer>();
             mGraphSize = BIG_GRAPH;
             mTitle = title;
             mUseIcons = false;
             mXAxisTitle = "";
+            mFontSize = 40;
         }
 
         /**
@@ -307,16 +321,6 @@ public class BarGraphFragment extends Fragment
             mXAxisIcons.clear();
             for(Integer image : list)
                 mXAxisIcons.add(image);
-        }
-
-        /**
-         */
-        public void setYLabels(List<String> list)
-        {
-            mYAxisLabels.clear();
-
-            for(String value : list)
-                mYAxisLabels.add(value);
         }
 
         /**

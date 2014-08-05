@@ -13,6 +13,8 @@
         android:weightSum="30"
         android:gravity="center"
         android:layout_marginTop="@dimen/padding_start_currency"
+        android:paddingLeft="@dimen/giga_padding"
+        android:paddingRight="@dimen/giga_padding"
         android:layout_marginBottom="@dimen/padding_start_currency"
         >
 
