@@ -42,10 +42,6 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
         super(context, resource, expenses.getItems());
         mTransactions = expenses;
         mLayoutResourceId = resource;
-
-        // Load animation lazy
-        //if (mItemsLoadAnimation == null)
-        //    mItemsLoadAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
     }
 
     /**
@@ -73,7 +69,6 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
         LayoutInflater viewInflator;
         viewInflator = LayoutInflater.from(getContext());
         mMyView = viewInflator.inflate(mLayoutResourceId, null);
-        //mMyView.startAnimation(mItemsLoadAnimation);
     }
 
     /**

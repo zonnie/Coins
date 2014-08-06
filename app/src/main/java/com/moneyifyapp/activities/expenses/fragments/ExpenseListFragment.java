@@ -186,9 +186,6 @@ public class ExpenseListFragment extends ListFragment
 
     private void handleRepeatedTasks()
     {
-        for(Transaction cur : mYearTransactions.getRepeatTransactions())
-        {
-        }
     }
 
     /**
@@ -640,7 +637,7 @@ public class ExpenseListFragment extends ListFragment
     private void handleNewTransactionRepeat(Transaction.REPEAT_TYPE repeatType, Transaction createTransaction)
     {
         if(repeatType != Transaction.REPEAT_TYPE.NONE)
-            mYearTransactions.addRepeatedTransaction(createTransaction);
+            mTransactionHandler.addRepeatedTransaction(createTransaction);
     }
 
     /**
@@ -650,9 +647,9 @@ public class ExpenseListFragment extends ListFragment
         Transaction updatedTransaction = mTransactions.getItems().get(position);
 
         if(repeatType == Transaction.REPEAT_TYPE.NONE)
-            mYearTransactions.removeRepeatedTransaction(updatedTransaction.mId);
+            mTransactionHandler.removeRepeatedTransaction(updatedTransaction.mId);
         else
-            mYearTransactions.addRepeatedTransaction(updatedTransaction);
+            mTransactionHandler.addRepeatedTransaction(updatedTransaction);
     }
 
     /**

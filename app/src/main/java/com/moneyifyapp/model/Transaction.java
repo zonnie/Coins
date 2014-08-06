@@ -140,8 +140,6 @@ public class Transaction implements Comparable<Transaction>
         {
             switch (resourceId)
             {
-                case R.id.detail_reoccur_daily_radio:return DAILY;
-                case R.id.detail_reoccur_weekly_radio:return WEEKLY;
                 case R.id.detail_reoccur_monthly_radio:return MONTHLY;
                 case R.id.detail_reoccur_yearly_radio:return YEARLY;
                 default:return NONE;

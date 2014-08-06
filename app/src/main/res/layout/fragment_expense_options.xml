@@ -91,6 +91,7 @@
                         android:typeface="normal"
                         />
 
+                    <!--
                     <RadioButton
                         android:id="@+id/detail_reoccur_daily_radio"
                         android:layout_width="match_parent"
@@ -128,6 +129,7 @@
                         android:textSize="@dimen/medium_font"
                         android:typeface="normal"
                         />
+                    -->
 
                     <RadioButton
                         android:id="@+id/detail_reoccur_monthly_radio"

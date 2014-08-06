@@ -11,6 +11,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,6 +26,8 @@ public class TransactionHandler
 {
     private static TransactionHandler instance;
     private Map<String, YearTransactions> mAllTransactions;
+    private List<String> mRepeatTransactions;
+    private List<String> mReusableTransactions;
     private Queue<onFetchingCompleteListener> mFetchCompleteListeners;
     private boolean mIsFirstFatch;
 
@@ -35,6 +38,8 @@ public class TransactionHandler
         Utils.initializeParse(context);
         mAllTransactions = new LinkedHashMap<String, YearTransactions>();
         mFetchCompleteListeners = new LinkedList<onFetchingCompleteListener>();
+        mRepeatTransactions = new ArrayList<String>();
+        mReusableTransactions = new ArrayList<String>();
         mIsFirstFatch = true;
     }
 
@@ -82,7 +87,10 @@ public class TransactionHandler
             {
                 if (e == null)
                     buildExpenseListFromParse(expenseList);
-                else{}
+                else
+                {
+
+                }
             }
         });
     }
@@ -183,5 +191,124 @@ public class TransactionHandler
     public void clearUserTransactions()
     {
         mAllTransactions.clear();
+    }
+
+
+    /*********************************************************************************************/
+    /**                                     Repeated Tasks                                      **/
+    /*********************************************************************************************/
+
+    /**
+     */
+    public void addRepeatedTransaction(Transaction transaction)
+    {
+        Transaction existingTransaction = getRepeatedTransactionById(transaction.mId);
+
+        if(existingTransaction == null)
+            mRepeatTransactions.add(transaction.mId);
+        else
+            existingTransaction.mRepeatType = transaction.mRepeatType;
+    }
+
+    /**
+     */
+    public void addReusableTransaction(Transaction transaction)
+    {
+        Transaction existingTransaction = getReusableTransactionById(transaction.mId);
+
+        if(existingTransaction == null)
+            mReusableTransactions.add(transaction.mId);
+    }
+
+    /**
+     */
+    public Transaction removeRepeatedTransaction(String id)
+    {
+        Transaction removed = getRepeatedTransactionById(id);
+
+        if(removed != null)
+            mRepeatTransactions.remove(id);
+
+        return removed;
+    }
+
+    /**
+     */
+    public Transaction removeReusableTransaction(String id)
+    {
+        Transaction removed = getReusableTransactionById(id);
+
+        if(removed != null)
+            mReusableTransactions.remove(id);
+
+        return removed;
+    }
+
+    /**
+     */
+    public List<Transaction> getRepeatTransactions()
+    {
+        List<Transaction> repeatTransactions = new ArrayList<Transaction>();
+
+        for(String curId : mRepeatTransactions)
+            repeatTransactions.add(getTransactionById(curId));
+
+        return repeatTransactions;
+    }
+
+    /**
+     */
+    public List<Transaction> getReusableTransactions()
+    {
+        List<Transaction> reusableTransactions = new ArrayList<Transaction>();
+
+        for(String curId : mReusableTransactions)
+            reusableTransactions.add(getTransactionById(curId));
+
+        return reusableTransactions;
+    }
+
+    /**
+     */
+    public Transaction getRepeatedTransactionById(String id)
+    {
+        for(Transaction cur : getRepeatTransactions())
+        {
+            if(cur.mId.equals(id))
+                return cur;
+        }
+
+        return null;
+    }
+
+    /**
+     */
+    public Transaction getReusableTransactionById(String id)
+    {
+        for(Transaction cur : getReusableTransactions())
+        {
+            if(cur.mId.equals(id))
+                return cur;
+        }
+
+        return null;
+    }
+
+    /**
+     */
+    public Transaction getTransactionById(String id)
+    {
+        for(YearTransactions year : mAllTransactions.values())
+            for(MonthTransactions month : year.getItems())
+            {
+                if(month != null)
+                    for (Transaction curTransaction : month.getItems())
+                    {
+                        if (curTransaction.mId.equals(id))
+                            return curTransaction;
+                    }
+            }
+
+        return null;
     }
 }

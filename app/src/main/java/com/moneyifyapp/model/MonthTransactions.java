@@ -89,6 +89,22 @@ public class MonthTransactions
     }
 
     /**
+     */
+    public MonthTransactions getTransactionByCategory(SubsetType type, int categoryResource)
+    {
+        MonthTransactions res = new MonthTransactions(mMonthNumber);
+        //int index = Images.getImageIndexByResource(categoryResource);
+
+        for(Transaction curTrans : mTransactions)
+        {
+            if(type == SubsetType.EXPENSE && curTrans.mIsExpense == true && curTrans.mImageResourceIndex == categoryResource)
+                res.getItems().add(curTrans);
+        }
+
+        return res;
+    }
+
+    /**
      * Returns a subset of the monthly transactions according
      * to the given type.
      */

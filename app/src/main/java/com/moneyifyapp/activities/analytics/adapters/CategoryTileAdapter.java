@@ -88,12 +88,4 @@ public class CategoryTileAdapter extends BaseAdapter
 
         return mView;
     }
-
-    /**
-     */
-    @Override
-    public boolean isEnabled(int position)
-    {
-        return false;
-    }
 }

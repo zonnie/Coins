@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.analytics.adapters.CategoryTileAdapter;
+import com.moneyifyapp.activities.analytics.dialogs.TransactionListDialog;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.YearTransactions;
@@ -30,6 +32,7 @@ public class TopCategoryFragment extends Fragment
     private View mRootView;
     private boolean mNoInsights = false;
     private GridView mGridView;
+    private List<MonthTransactions.Couple<Integer,Double>> mCategoryList;
 
     /**
      */
@@ -80,8 +83,20 @@ public class TopCategoryFragment extends Fragment
         if (mYearTransactions != null && mMonthTransactions != null)
             initTopCategory();
 
+        mCategoryList = mMonthTransactions.getTopCategoriesValues();
         mGridView = (GridView) mRootView.findViewById(R.id.month_analytics_top_category_layout);
-        mGridView.setAdapter(new CategoryTileAdapter(getActivity(), mMonthTransactions.getTopCategoriesValues()));
+        mGridView.setAdapter(new CategoryTileAdapter(getActivity(), mCategoryList));
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                MonthTransactions.Couple<Integer,Double> category = mCategoryList.get(position);
+                MonthTransactions transactions = mMonthTransactions.getTransactionByCategory(MonthTransactions.SubsetType.EXPENSE, category.mFirstField);
+                TransactionListDialog dialog = new TransactionListDialog(getActivity(), transactions, "Detailed Expenses");
+                dialog.show();
+            }
+        });
 
         return mRootView;
     }
@@ -106,7 +121,7 @@ public class TopCategoryFragment extends Fragment
                 layout.setVisibility(View.VISIBLE);
             TextView hint = (TextView) mRootView.findViewById(R.id.month_analytics_top_category_hint);
             if(hint != null)
-                hint.setVisibility(View.GONE);
+                hint.setText("Tap a category to see the expenses");
         }
     }
 

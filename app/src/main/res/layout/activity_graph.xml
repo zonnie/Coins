@@ -54,8 +54,9 @@
             android:layout_weight="1"
             android:background="@drawable/back_regualr"
             android:onClick="pickMonthClicked"
-            android:src="@drawable/cal"
+            android:src="@drawable/calendar"
             />
+
 
 
     </LinearLayout>

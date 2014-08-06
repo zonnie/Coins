@@ -41,18 +41,12 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
     private FrameLayout mCategoryLayout;
     private FrameLayout mYearlyLayout;
     private FrameLayout mMonthlyReport;
-    //private LinearLayout mMonthlyReportExpandable;
-    //private LinearLayout mGraphsExpandable;
-    //private Button mExpandMonthlyButton;
-    //private Button mExpandGraphButton;
     private ImageButton mPickDateButton;
     private TextView mCurrentDate;
     private LinearLayout mTitleLayout;
     private Animation mFadeInAnimation;
     private int YEAR_FONT_SIZE = 8;
     private int CAT_FONT_SIZE = 15;
-    //private Drawable mCollapseDrawable;
-    //private Drawable mExpandDrawable;
 
     /**
      *
@@ -69,8 +63,6 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         mFadeInAnimation = Utils.loadFadeInAnimation(this);
 
         mMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
-        //mExpandDrawable = getResources().getDrawable(R.drawable.expand);
-        //mCollapseDrawable = getResources().getDrawable(R.drawable.collapse);
 
         TransactionHandler mTransactionHandler = TransactionHandler.getInstance(this);
         mYearTransactions = mTransactionHandler.getYearTransactions(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
@@ -80,17 +72,9 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         mCategoryLayout = (FrameLayout)findViewById(R.id.graphs_category_graph_container);
         mYearlyLayout = (FrameLayout)findViewById(R.id.graphs_year_graph_container);
         mMonthlyReport = (FrameLayout) findViewById(R.id.graphs_month_report_container);
-        //mMonthlyReportExpandable = (LinearLayout)findViewById(R.id.monthly_layout_to_expand);
-        //mGraphsExpandable = (LinearLayout)findViewById(R.id.graph_layout_to_expand);
         mPickDateButton = (ImageButton)findViewById(R.id.graph_pick_month_button);
         mCurrentDate = (TextView)findViewById(R.id.graph_activity_title);
         mCurrentDate.setText(Months.getMonthNameByNumber(mMonth-1));
-
-        // Animations
-        //mExpandMonthlyButton = (Button)findViewById(R.id.expend_monthly_button);
-        //mExpandMonthlyButton.startAnimation(mFadeInAnimation);
-        //mExpandGraphButton = (Button)findViewById(R.id.expend_graph_button);
-        //mExpandGraphButton.startAnimation(mFadeInAnimation);
 
         if (savedInstanceState == null)
         {
@@ -115,9 +99,6 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         buildYearGraphAndReplaceFragment();
         buildMonthlyOverviewAndReplaceFragment();
 
-        //mExpandGraphButton.startAnimation(mFadeInAnimation);
-        //mExpandMonthlyButton.startAnimation(mFadeInAnimation);
-
         if(mNoYearExpense && mNoMonthExpense)
             hint.setVisibility(View.VISIBLE);
         else
@@ -138,6 +119,13 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         }
         else
             mMonthlyReport.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        finish();
     }
 
     /**
@@ -320,8 +308,6 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
             mMonth = Months.getMonthByName(selected);
             mCurrentDate.setText(selected);
             mTitleLayout.startAnimation(mFadeInAnimation);
-            //mMonthlyReportExpandable.startAnimation(mFadeInAnimation);
-            //mGraphsExpandable.startAnimation(mFadeInAnimation);
             if (mMonth > 0)
                 buildGraphs();
         }

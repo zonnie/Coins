@@ -125,12 +125,6 @@ public class ExpenseOptionsFragment extends Fragment
                     case NONE:
                         mRepeatGroup.check(R.id.detail_reoccur_none_radio);
                         break;
-                    case DAILY:
-                        mRepeatGroup.check(R.id.detail_reoccur_daily_radio);
-                        break;
-                    case WEEKLY:
-                        mRepeatGroup.check(R.id.detail_reoccur_weekly_radio);
-                        break;
                     case MONTHLY:
                         mRepeatGroup.check(R.id.detail_reoccur_monthly_radio);
                         break;

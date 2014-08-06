@@ -209,4 +209,21 @@ public class Images
     {
         return mImages;
     }
+
+    public static int getImageIndexByResource(int resource)
+    {
+        int index = 0;
+        int result = index;
+
+        for(ImageWithCaption cur : mImages)
+        {
+            if(cur.mImageResource == resource)
+            {
+                result = index;
+            }
+            index++;
+        }
+
+        return result;
+    }
 }
