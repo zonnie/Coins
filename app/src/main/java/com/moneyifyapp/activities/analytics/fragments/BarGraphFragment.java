@@ -36,7 +36,7 @@ public class BarGraphFragment extends Fragment
     private List<String> mXAxisLabels;
     private List<Integer> mXAxisIcons;
     private TextView mXAxisTitleTextView;
-    public int mBarMargin = 250;
+    public int mBarMargin = 255;
     private int mMaxHeight;
     private int mMaxBarHeight = 300;
     public static final int BIG_GRAPH = 300;
