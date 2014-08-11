@@ -20,7 +20,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/back_regualr"
             android:orientation="horizontal"
-            android:weightSum="6.3"
             >
 
             <ImageButton
@@ -31,27 +30,28 @@
                 android:background="@drawable/back_regular_drawable"
                 android:src="@drawable/back_2"
                 android:onClick="onBackClicked"
-                android:layout_weight="0.6"
+                android:layout_weight="0.9"
                 />
 
             <TextView
                 android:id="@+id/analytics_month_label"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed"
                 android:gravity="center_vertical|end"
-                android:text="MAR"
+                android:text="September"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/huge_font"
                 android:textStyle="bold"
-                android:layout_weight="0.9"
+                android:layout_weight="4.2"
+                android:drawableStart="@drawable/pie"
                 />
 
             <TextView
                 android:id="@+id/analytics_year_label"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3.5"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
                 android:fontFamily="sans-serif-condensed"
                 android:paddingStart="@dimen/padding_start_currency"
                 android:paddingBottom="@dimen/padding_start_currency"

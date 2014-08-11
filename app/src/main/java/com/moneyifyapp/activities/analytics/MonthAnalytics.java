@@ -77,7 +77,7 @@ public class MonthAnalytics extends Activity
      */
     private void initDateLabels()
     {
-        loadTextViewAndSetText(R.id.analytics_month_label, Utils.getMonthPrefixByIndex(mMonth).toUpperCase());
+        loadTextViewAndSetText(R.id.analytics_month_label, Utils.getMonthNameByIndex(mMonth));
         loadTextViewAndSetText(R.id.analytics_year_label, String.valueOf(mYear));
     }
 

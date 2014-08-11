@@ -36,7 +36,7 @@ public class BarGraphFragment extends Fragment
     private List<String> mXAxisLabels;
     private List<Integer> mXAxisIcons;
     private TextView mXAxisTitleTextView;
-    public int mBarMargin = 10;
+    public int mBarMargin = 250;
     private int mMaxHeight;
     private int mMaxBarHeight = 300;
     public static final int BIG_GRAPH = 300;
@@ -83,9 +83,8 @@ public class BarGraphFragment extends Fragment
             mMaxBarHeight = mParameters.mGraphSize;
             mValues = mParameters.mValues;
             mXAxisLabels = mParameters.mXAxisLabels;
-            //mBarMargin = (mValues.size() > 0 ) ? mMaxBarHeight/mValues.size() : 0;
-            mBarMargin = 10;
             mXAxisIcons = mParameters.mXAxisIcons;
+            mBarMargin /= mValues.size();
         }
 
         mView = inflater.inflate(R.layout.fragment_bar_graph, container, false);
@@ -170,12 +169,14 @@ public class BarGraphFragment extends Fragment
         bar.setBackground(resourceId);
         bar.setId(mParameters.mResourceId);
         bar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) normHeight, 0));
+        LinearLayout.LayoutParams barParams = (LinearLayout.LayoutParams) bar.getLayoutParams();
+        barParams.setMargins(mBarMargin, 0, mBarMargin, 0);
 
         final LinearLayout masterLayout = new LinearLayout(mContext);
         masterLayout.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
         masterLayout.setOrientation(LinearLayout.VERTICAL);
         LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) masterLayout.getLayoutParams();
-        linearParams.setMargins(leftMargin, mBarMargin, 0, 0);
+        linearParams.setMargins(0, 0, 0, 0);
         startBarAnimation(masterLayout);
 
         masterLayout.addView(value);
