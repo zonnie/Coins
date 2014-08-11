@@ -11,8 +11,9 @@ import android.widget.TextView;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.analytics.fragments.BarGraphFragment;
+import com.moneyifyapp.activities.analytics.fragments.ByCategoryFragment;
+import com.moneyifyapp.activities.analytics.fragments.ByDateFragment;
 import com.moneyifyapp.activities.analytics.fragments.MonthAnalyticsFragment;
-import com.moneyifyapp.activities.analytics.fragments.TopCategoryFragment;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.MonthTransactions;
@@ -90,9 +91,9 @@ public class MonthAnalytics extends Activity
 
     /**
      */
-    private TopCategoryFragment initTopFragment()
+    private ByCategoryFragment initTopFragment()
     {
-        return TopCategoryFragment.newInstance(mMonth, mYear, mYearTransactions);
+        return ByCategoryFragment.newInstance(mMonth, mYear, mYearTransactions);
     }
 
     /**
@@ -100,6 +101,13 @@ public class MonthAnalytics extends Activity
     private BarGraphFragment initGraphFragment()
     {
         return BarGraphFragment.newInstance(buildGraph());
+    }
+
+    /**
+     */
+    private ByDateFragment initByDateFragment()
+    {
+        return ByDateFragment.newInstance(mMonth, mYear, mYearTransactions);
     }
 
     /**
@@ -222,7 +230,7 @@ public class MonthAnalytics extends Activity
             else if (position == 1)
                 return initTopFragment();
             else if (position == 2)
-                return initGraphFragment();
+                return initByDateFragment();
             else
                 return initMonthlyOverviewFragment();
         }
@@ -233,7 +241,7 @@ public class MonthAnalytics extends Activity
         public int getCount()
         {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
 
         /**
@@ -248,7 +256,7 @@ public class MonthAnalytics extends Activity
                 case 1:
                     return getString(R.string.analytics_monthly_categories_title);
                 case 2:
-                    return getString(R.string.analytics_monthly_Insights_title);
+                    return getString(R.string.analytics_monthly_by_date_title);
             }
             return null;
         }

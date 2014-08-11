@@ -14,6 +14,7 @@ import com.moneyifyapp.R;
 import com.moneyifyapp.activities.analytics.adapters.CategoryTileAdapter;
 import com.moneyifyapp.activities.analytics.dialogs.TransactionListDialog;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
+import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.YearTransactions;
 import com.moneyifyapp.utils.JsonServiceYearTransactions;
@@ -23,7 +24,7 @@ import java.util.List;
 
 /**
  */
-public class TopCategoryFragment extends Fragment
+public class ByCategoryFragment extends Fragment
 {
     private int mMonth;
     private int mYear;
@@ -36,11 +37,11 @@ public class TopCategoryFragment extends Fragment
 
     /**
      */
-    public static TopCategoryFragment newInstance(int month, int year, YearTransactions transactions)
+    public static ByCategoryFragment newInstance(int month, int year, YearTransactions transactions)
     {
         String yearTransJson = JsonServiceYearTransactions.getInstance().toJson(transactions);
 
-        TopCategoryFragment fragment = new TopCategoryFragment();
+        ByCategoryFragment fragment = new ByCategoryFragment();
         Bundle args = new Bundle();
         args.putString(ExpenseListFragment.YEAR_JSON_KEY, yearTransJson);
         args.putInt(ExpenseListFragment.MONTH_KEY, month);
@@ -49,7 +50,7 @@ public class TopCategoryFragment extends Fragment
         return fragment;
     }
 
-    public TopCategoryFragment()
+    public ByCategoryFragment()
     {
         // Required empty public constructor
     }
@@ -91,14 +92,25 @@ public class TopCategoryFragment extends Fragment
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
+
+                String title = "Expenses on " + getCategoryCaption(position);
                 MonthTransactions.Couple<Integer,Double> category = mCategoryList.get(position);
                 MonthTransactions transactions = mMonthTransactions.getTransactionByCategory(MonthTransactions.SubsetType.EXPENSE, category.mFirstField);
-                TransactionListDialog dialog = new TransactionListDialog(getActivity(), transactions, "Detailed Expenses");
+                TransactionListDialog dialog = new TransactionListDialog(getActivity(), transactions, title);
                 dialog.show();
             }
         });
 
         return mRootView;
+    }
+
+    /**
+     */
+    private String getCategoryCaption(int position)
+    {
+        int resIndex = mCategoryList.get(position).mFirstField;
+        int resource = Images.getImageByPosition(resIndex);
+        return Images.getCaptionByImage(resource);
     }
 
     /**
@@ -116,9 +128,8 @@ public class TopCategoryFragment extends Fragment
         if(!mNoInsights)
         {
             mNoInsights = true;
-            GridView layout = (GridView) mRootView.findViewById(R.id.month_analytics_top_category_layout);
-            if(layout != null)
-                layout.setVisibility(View.VISIBLE);
+            if(mGridView != null)
+                mGridView.setVisibility(View.VISIBLE);
             TextView hint = (TextView) mRootView.findViewById(R.id.month_analytics_top_category_hint);
             if(hint != null)
                 hint.setText("Tap a category to see the expenses");

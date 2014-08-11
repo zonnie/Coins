@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,6 @@ public class MonthTransactions
     public final int mMonthNumber;
 
     /**
-     * @param monthNumber
      */
     public MonthTransactions(int monthNumber)
     {
@@ -29,8 +29,6 @@ public class MonthTransactions
     }
 
     /**
-     *
-     * @return
      */
     public List<Transaction> getItems()
     {
@@ -47,12 +45,12 @@ public class MonthTransactions
 
         for (Transaction curTrans : mTransactions)
         {
-            if(type == SubsetType.EXPENSE && curTrans.mIsExpense == true)
+            if(type == SubsetType.EXPENSE && curTrans.mIsExpense)
             {
                 double curTransSum = Double.valueOf(curTrans.mValue);
                 sum += curTransSum;
             }
-            else if(type == SubsetType.INCOME && curTrans.mIsExpense == false)
+            else if(type == SubsetType.INCOME && !curTrans.mIsExpense)
             {
                 double curTransSum = Double.valueOf(curTrans.mValue);
                 sum += curTransSum;
@@ -62,43 +60,50 @@ public class MonthTransactions
         return sum;
     }
 
-
-    /**
-     * Get the max expense/income.
-     */
-    public double getMaxTransaction(SubsetType type)
-    {
-        double maxExpense = 0;
-
-        for(Transaction curTrans : mTransactions)
-        {
-            Double curValue = Double.valueOf(curTrans.mValue);
-            if(type == SubsetType.EXPENSE && curTrans.mIsExpense == true)
-            {
-                if(maxExpense < curValue)
-                    maxExpense = curValue;
-            }
-            else if(type == SubsetType.INCOME && curTrans.mIsExpense == false)
-            {
-                if(maxExpense < curValue)
-                    maxExpense = curValue;
-            }
-        }
-
-        return maxExpense;
-    }
-
     /**
      */
     public MonthTransactions getTransactionByCategory(SubsetType type, int categoryResource)
     {
         MonthTransactions res = new MonthTransactions(mMonthNumber);
-        //int index = Images.getImageIndexByResource(categoryResource);
 
         for(Transaction curTrans : mTransactions)
         {
-            if(type == SubsetType.EXPENSE && curTrans.mIsExpense == true && curTrans.mImageResourceIndex == categoryResource)
+            if(type == SubsetType.EXPENSE && curTrans.mIsExpense
+                    && curTrans.mImageResourceIndex == categoryResource)
                 res.getItems().add(curTrans);
+        }
+
+        return res;
+    }
+
+    /**
+     */
+    public MonthTransactions getTransactionByDay(SubsetType type, String day)
+    {
+        MonthTransactions res = new MonthTransactions(mMonthNumber);
+
+        for(Transaction curTrans : mTransactions)
+        {
+            if(type == SubsetType.EXPENSE && curTrans.mIsExpense
+                    && curTrans.mTransactionDay.equals(day))
+                res.getItems().add(curTrans);
+        }
+
+        return res;
+    }
+
+    /**
+     */
+    public Map<String, Double> getDayToSumMap(SubsetType type)
+    {
+        Map<String,Double> res = new LinkedHashMap<String, Double>();
+
+        for(Transaction curTrans : mTransactions)
+        {
+            double curSum = (res.get(curTrans.mTransactionDay) == null ? 0 : res.get(curTrans.mTransactionDay));
+
+            if(type == SubsetType.EXPENSE && curTrans.mIsExpense)
+                res.put(curTrans.mTransactionDay, curSum + Double.parseDouble(curTrans.mValue));
         }
 
         return res;
@@ -114,14 +119,10 @@ public class MonthTransactions
 
         for(Transaction curTrans : mTransactions)
         {
-            if(type == SubsetType.EXPENSE && curTrans.mIsExpense == true)
-            {
+            if(type == SubsetType.EXPENSE && curTrans.mIsExpense)
                 res.getItems().add(curTrans);
-            }
-            else if(type == SubsetType.INCOME && curTrans.mIsExpense == false)
-            {
+            else if(type == SubsetType.INCOME && !curTrans.mIsExpense)
                 res.getItems().add(curTrans);
-            }
         }
 
         return res;
@@ -146,7 +147,7 @@ public class MonthTransactions
     /**
      * Enum for extracting subsets of the transactions
      */
-    public static enum SubsetType {INCOME, EXPENSE};
+    public static enum SubsetType {INCOME, EXPENSE}
 
     /**
      * Sort the transactions according to the transcation value.
@@ -198,7 +199,7 @@ public class MonthTransactions
 
         // Init the array
         for(; fillIndex < dayExpenses.length; ++fillIndex)
-            dayExpenses[fillIndex] = new Double(0);
+            dayExpenses[fillIndex] = Double.valueOf(0);
 
         // Fill with sums per
         for(Transaction curTransaction : mTransactions)
@@ -234,9 +235,7 @@ public class MonthTransactions
             }
         }
 
-        Couple<Integer, Double> categorySum = (maxSum > 0) ? new Couple<Integer, Double>(maxKey, maxSum) : null;
-
-        return categorySum;
+        return (maxSum > 0) ? new Couple<Integer, Double>(maxKey, maxSum) : null;
     }
 
     /**
@@ -318,5 +317,5 @@ public class MonthTransactions
     /**
      * An enum representing filters for the top subset function.
      */
-    public enum TopFilter {CATEGORY, BUSIEST_DAY};
+    public enum TopFilter {CATEGORY, BUSIEST_DAY}
 }
