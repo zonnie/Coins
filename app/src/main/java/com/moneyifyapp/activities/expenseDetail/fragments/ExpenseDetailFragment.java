@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -44,6 +46,7 @@ public class ExpenseDetailFragment extends Fragment
     public static final String EXPENSE_EDIT_KEY = "edit";
     private AlphaAnimation mAlphaDown;
     private AlphaAnimation mAlphaUp;
+    private Animation mBounce;
     private View mView;
     private final String ERROR_MISSING_DESC = "What is this transaction";
     private final String ERROR_MISSING_SUM = "How much did it cost";
@@ -92,6 +95,7 @@ public class ExpenseDetailFragment extends Fragment
 
             mAlphaDown = AnimationUtils.getAlphaDownAnimation();
             mAlphaUp = AnimationUtils.getmAlphaUpAnimation();
+            mBounce = AnimationUtils.getBounceAnimtion(getActivity());
         }
     }
 
@@ -155,6 +159,14 @@ public class ExpenseDetailFragment extends Fragment
             }
         });
 
+        mToggleIsExpense.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                mToggleIsExpense.startAnimation(mBounce);
+            }
+        });
     }
 
     /**

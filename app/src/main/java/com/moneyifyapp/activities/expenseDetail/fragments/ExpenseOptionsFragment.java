@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.widget.CompoundButton;
 import android.widget.RadioGroup;
 import android.widget.ToggleButton;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.model.Transaction;
+import com.moneyifyapp.utils.AnimationUtils;
 import com.moneyifyapp.utils.JsonServiceYearTransactions;
 
 /**
@@ -26,6 +29,7 @@ public class ExpenseOptionsFragment extends Fragment
     private boolean mIsEdit;
     public static final String EXPENSE_EDIT_KEY = "edit";
     private View mView;
+    private Animation mBounceAnimation;
 
     /**
      */
@@ -59,6 +63,7 @@ public class ExpenseOptionsFragment extends Fragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        mBounceAnimation = AnimationUtils.getBounceAnimtion(getActivity());
 
         if (getArguments() != null)
         {
@@ -89,6 +94,15 @@ public class ExpenseOptionsFragment extends Fragment
     private void storeViews()
     {
         mToggleSave = (ToggleButton)mView.findViewById(R.id.toggle_template_save);
+        mToggleSave.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                mToggleSave.startAnimation(mBounceAnimation);
+            }
+        });
+
         mRepeatGroup = (RadioGroup)mView.findViewById(R.id.detail_reoccur_group);
         mRepeatGroup.setOnCheckedChangeListener(
                 new RadioGroup.OnCheckedChangeListener() {

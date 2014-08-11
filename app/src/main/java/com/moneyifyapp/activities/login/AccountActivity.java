@@ -11,13 +11,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.activities.login.dialogs.ChangePasswordDialog;
 import com.moneyifyapp.activities.login.dialogs.ChangeUserDialog;
 import com.moneyifyapp.model.Transaction;
+import com.moneyifyapp.utils.AnimationUtils;
 import com.moneyifyapp.utils.Utils;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
@@ -64,6 +65,30 @@ public class AccountActivity extends Activity implements View.OnClickListener
     {
         mSignupForm = findViewById(R.id.account_form);
         mProgressView = findViewById(R.id.account_progress);
+
+        TextView userLayout = (TextView) findViewById(R.id.change_password_field);
+        userLayout.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                v.startAnimation(AnimationUtils.getBounceAnimtion(AccountActivity.this));
+                changeUserClicked(v);
+
+            }
+        });
+
+        TextView passLayout = (TextView) findViewById(R.id.change_username_field);
+        passLayout.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                v.startAnimation(AnimationUtils.getBounceAnimtion(AccountActivity.this));
+                changePasswordClicked(v);
+
+            }
+        });
     }
 
     /**
@@ -89,7 +114,7 @@ public class AccountActivity extends Activity implements View.OnClickListener
     }
 
     /**
-    */
+     */
     private void promptChangePasswordDialog()
     {
         ChangePasswordDialog dialog = new ChangePasswordDialog(this);
@@ -105,25 +130,7 @@ public class AccountActivity extends Activity implements View.OnClickListener
     }
 
     /**
-     * Sign up using Parse API.
      */
-    private void updateAccount()
-    {
-        ParseUser user = new ParseUser();
-        //user.setUsername(mUserEditText.getText().toString());
-        //user.setPassword(mPassEditText.getText().toString());
-
-    }
-
-    /**
-     * Sign up failed, let the user know.
-     */
-    private void singUpFailed()
-    {
-        Toast toast = Toast.makeText(this, "Sign Up failed :(", Toast.LENGTH_SHORT);
-        toast.show();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -202,7 +209,6 @@ public class AccountActivity extends Activity implements View.OnClickListener
     }
 
     /**
-     *
      */
     @Override
     public void onBackPressed()

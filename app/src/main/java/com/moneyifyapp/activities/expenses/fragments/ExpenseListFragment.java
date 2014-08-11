@@ -543,7 +543,6 @@ public class ExpenseListFragment extends ListFragment
         if (null != mListener)
         {
             mListener.expenseItemClickedInFragment(mAdapter.getItems().get(position));
-
             final Transaction expense = mAdapter.getItems().get(position);
             Intent intent = new Intent(getActivity(), ExpenseDetailActivity.class);
             intent.putExtra(ITEM_POS_KEY, position);

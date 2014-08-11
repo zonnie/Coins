@@ -56,10 +56,10 @@
                 android:id="@+id/detail_reoccur_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/drawable_left_pad"
                 android:layout_marginLeft="@dimen/big_padding"
                 android:layout_marginRight="@dimen/big_padding"
                 android:layout_marginTop="@dimen/padding_start_currency"
-                android:layout_marginBottom="@dimen/drawable_left_pad"
                 android:orientation="vertical"
                 >
 
@@ -213,7 +213,6 @@
                 android:id="@+id/detail_save_template_toggle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/padding_start_currency"
                 android:layout_marginLeft="@dimen/big_padding"
                 android:layout_marginRight="@dimen/big_padding"
                 android:layout_marginTop="@dimen/padding_start_currency"
@@ -236,6 +235,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/padding_start_currency"
                     android:background="@drawable/template_background"
                     android:paddingBottom="@dimen/drawable_left_pad"
                     android:paddingLeft="@dimen/expense_drawable_left_pad"
