@@ -81,7 +81,7 @@
     <string name="checkbox_saved">"Saved</string>
     <string name="checkbox_save">"Save</string>
     <string name="title_expense_detail_page">The Details</string>
-    <string name="title_expense_options_page">Reoccurance</string>
+    <string name="title_expense_options_page">Reoccurring</string>
     <string name="title_expense_reuse">Reuse</string>
     <string name="title_expense_repeat">Repeat</string>
     <string name="change_info_hint">Tap below details to change them</string>

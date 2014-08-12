@@ -61,10 +61,9 @@ public class CategoryTileAdapter extends BaseAdapter
      */
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        View view = convertView;
-        mView = view;
+        mView = convertView;
 
-        if (view == null)
+        if (mView == null)
         {
             LayoutInflater viewInflator;
             viewInflator = LayoutInflater.from(mContext);

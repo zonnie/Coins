@@ -5,16 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.activities.login.LoginActivity;
 import com.moneyifyapp.database.TransactionSqlHelper;
 import com.moneyifyapp.model.TransactionHandler;
-import com.moneyifyapp.utils.AnimationUtils;
 import com.parse.ParseUser;
 
 import java.util.Calendar;
@@ -45,9 +42,6 @@ public class SplashActivity extends Activity
         getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE).edit().putBoolean(FIRST_RUN_FLAG, false).commit();
         mTransactionHandler = TransactionHandler.getInstance(this);
 
-        ImageView imageView = (ImageView)findViewById(R.id.splashImage);
-        imageView.startAnimation(AnimationUtils.getZoomInBounceAnimation(this));
-
         if (!firstrun)
         {
             mTransactionHandler.registerListenerAndFetchTransactions(this, Calendar.getInstance().get(Calendar.YEAR));
@@ -59,11 +53,6 @@ public class SplashActivity extends Activity
             firstTimeLayout.setVisibility(View.VISIBLE);
             startWithNoQuery();
         }
-
-        TextView slogan = (TextView) findViewById(R.id.splashSlogan);
-        slogan.startAnimation(AnimationUtils.getmAlphaUpAnimation());
-        TextView title = (TextView) findViewById(R.id.splashTitle);
-        title.startAnimation(AnimationUtils.getmAlphaUpAnimation());
     }
 
     /**
@@ -114,5 +103,11 @@ public class SplashActivity extends Activity
                 finish();
             }
         }, SPLASH_DISPLAY_LENGTH);
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
     }
 }

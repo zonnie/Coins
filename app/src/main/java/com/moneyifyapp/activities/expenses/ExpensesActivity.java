@@ -40,7 +40,6 @@ import java.util.Calendar;
 public class ExpensesActivity extends Activity
         implements ExpenseListFragment.OnFragmentInteractionListener, ViewPager.OnPageChangeListener
 {
-    private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private Calendar mCalender;
     private TransactionHandler mTransactionHadler;
@@ -103,9 +102,9 @@ public class ExpensesActivity extends Activity
      */
     private void initViewPager()
     {
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setAdapter(sectionsPagerAdapter);
         mViewPager.setCurrentItem(mCalender.get(Calendar.MONTH));
         mViewPager.setOnPageChangeListener(this);
     }
@@ -154,7 +153,6 @@ public class ExpensesActivity extends Activity
     }
 
     /**
-     * @param savedInstanceState
      */
     @Override
     protected void onPostCreate(Bundle savedInstanceState)
@@ -165,7 +163,6 @@ public class ExpensesActivity extends Activity
     }
 
     /**
-     * @param newConfig
      */
     @Override
     public void onConfigurationChanged(Configuration newConfig)
@@ -343,9 +340,7 @@ public class ExpensesActivity extends Activity
         @Override
         public Fragment getItem(int position)
         {
-            ExpenseListFragment fragment = ExpenseListFragment.newInstance(position, mCalender.get(Calendar.YEAR));
-            return fragment;
-
+            return ExpenseListFragment.newInstance(position, mCalender.get(Calendar.YEAR));
         }
 
         /**

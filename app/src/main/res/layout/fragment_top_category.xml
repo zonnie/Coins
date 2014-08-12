@@ -35,6 +35,7 @@
             android:columnWidth="120dp"
             android:stretchMode="columnWidth"
             android:scrollbars="none"
+            android:visibility="gone"
             >
         </GridView>
     </LinearLayout>

@@ -81,6 +81,8 @@ public class ByDateFragment extends Fragment
 
         if (mYearTransactions != null && mMonthTransactions != null)
         {
+            mGridView = (GridView) mRootView.findViewById(R.id.month_analytics_by_date_layout);
+
             initTopCategory();
 
             mByDateList = mMonthTransactions.getDayToSumMap(MonthTransactions.SubsetType.EXPENSE);
@@ -89,7 +91,6 @@ public class ByDateFragment extends Fragment
             for(String key : mByDateList.keySet())
                 days.add(key);
 
-            mGridView = (GridView) mRootView.findViewById(R.id.month_analytics_by_date_layout);
             mGridView.setAdapter(new DateTileAdapter(getActivity(), mByDateList));
             mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
@@ -127,7 +128,7 @@ public class ByDateFragment extends Fragment
                 mGridView.setVisibility(View.VISIBLE);
             TextView hint = (TextView) mRootView.findViewById(R.id.month_analytics_by_date_hint);
             if(hint != null)
-                hint.setText("Tap a category to see the expenses");
+                hint.setText("Tap a day to see the expenses");
         }
     }
 

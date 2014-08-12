@@ -81,18 +81,18 @@ public class ByCategoryFragment extends Fragment
         if(mRootView == null)
             mRootView = inflater.inflate(R.layout.fragment_top_category, container, false);
 
+        mGridView = (GridView) mRootView.findViewById(R.id.month_analytics_top_category_layout);
+
         if (mYearTransactions != null && mMonthTransactions != null)
             initTopCategory();
 
         mCategoryList = mMonthTransactions.getTopCategoriesValues();
-        mGridView = (GridView) mRootView.findViewById(R.id.month_analytics_top_category_layout);
         mGridView.setAdapter(new CategoryTileAdapter(getActivity(), mCategoryList));
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-
                 String title = "Expenses on " + getCategoryCaption(position);
                 MonthTransactions.Couple<Integer,Double> category = mCategoryList.get(position);
                 MonthTransactions transactions = mMonthTransactions.getTransactionByCategory(MonthTransactions.SubsetType.EXPENSE, category.mFirstField);

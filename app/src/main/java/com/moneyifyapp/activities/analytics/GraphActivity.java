@@ -109,7 +109,7 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
     {
         MonthAnalyticsFragment monthly = MonthAnalyticsFragment.newInstance(mMonth-1, mYearTransactions.mYear, mYearTransactions);
 
-        if(mYearTransactions.get(mMonth) != null)
+        if(mYearTransactions.get(mMonth-1) != null)
         {
             getFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_in_object, R.anim.slide_out_object)

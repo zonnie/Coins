@@ -16,6 +16,7 @@ public class AnimationUtils
     private static Animation mBounceAnimation;
     private static Animation mZoomInBounceAnimation;
     private static Animation mZoomInBounceLongAnimation;
+    private static Animation mZoomInBounceSmallAnimation;
 
     /**
      */
@@ -69,6 +70,14 @@ public class AnimationUtils
             mZoomInBounceLongAnimation = android.view.animation.AnimationUtils.loadAnimation(context, R.anim.zoom_in_bounce_long);
 
         return mZoomInBounceLongAnimation;
+    }
+
+    public static Animation getZoomInBounceSmallAnimation(Context context)
+    {
+        if(mZoomInBounceSmallAnimation == null)
+            mZoomInBounceSmallAnimation = android.view.animation.AnimationUtils.loadAnimation(context, R.anim.zoom_in_bounce_small);
+
+        return mZoomInBounceSmallAnimation;
     }
 
 }
