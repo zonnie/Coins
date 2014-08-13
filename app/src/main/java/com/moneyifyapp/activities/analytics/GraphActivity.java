@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.analytics.dialogs.PickDateDialog;
 import com.moneyifyapp.activities.analytics.fragments.BarGraphFragment;
-import com.moneyifyapp.activities.analytics.fragments.MonthAnalyticsFragment;
+import com.moneyifyapp.activities.analytics.fragments.YearAnalyticsFragment;
 import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.TransactionHandler;
@@ -74,7 +74,7 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         mMonthlyReport = (FrameLayout) findViewById(R.id.graphs_month_report_container);
         mPickDateButton = (ImageButton)findViewById(R.id.graph_pick_month_button);
         mCurrentDate = (TextView)findViewById(R.id.graph_activity_title);
-        mCurrentDate.setText(Months.getMonthNameByNumber(mMonth-1));
+        mCurrentDate.setText(Months.getMonthNameByNumber(mMonth-1) + " " + mYearTransactions.mYear);
 
         if (savedInstanceState == null)
         {
@@ -83,7 +83,8 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
                 @Override
                 public void run()
                 {
-                    buildGraphs();
+                    buildFragments();
+                    buildYearlyOverviewAndReplaceFragment();
                 }
             }, 200);
         }
@@ -91,13 +92,12 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
 
     /**
      */
-    private void buildGraphs()
+    private void buildFragments()
     {
         TextView hint = (TextView)findViewById(R.id.graph_empty_hint_textview);
 
         buildCategoryGraphAndReplaceFragment();
         buildYearGraphAndReplaceFragment();
-        buildMonthlyOverviewAndReplaceFragment();
 
         if(mNoYearExpense && mNoMonthExpense)
             hint.setVisibility(View.VISIBLE);
@@ -105,9 +105,9 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
             hint.setVisibility(View.GONE);
     }
 
-    private void buildMonthlyOverviewAndReplaceFragment()
+    private void buildYearlyOverviewAndReplaceFragment()
     {
-        MonthAnalyticsFragment monthly = MonthAnalyticsFragment.newInstance(mMonth-1, mYearTransactions.mYear, mYearTransactions);
+        YearAnalyticsFragment monthly = YearAnalyticsFragment.newInstance(mMonth-1, mYearTransactions.mYear, mYearTransactions);
 
         if(mYearTransactions.get(mMonth-1) != null)
         {
@@ -306,10 +306,10 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         if(mMonth != Months.getMonthByName(selected))
         {
             mMonth = Months.getMonthByName(selected);
-            mCurrentDate.setText(selected);
+            mCurrentDate.setText(selected + " " + mYearTransactions.mYear);
             mTitleLayout.startAnimation(mFadeInAnimation);
             if (mMonth > 0)
-                buildGraphs();
+                buildFragments();
         }
     }
 

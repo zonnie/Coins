@@ -39,9 +39,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3.9"
-            android:paddingStart="@dimen/padding_start_currency"
             android:fontFamily="sans-serif-condensed"
             android:gravity="center_vertical|start"
+            android:paddingStart="@dimen/padding_start_currency"
             android:text="@string/analytics_graphs_activity_title"
             android:textColor="@android:color/white"
             android:textSize="@dimen/huge_font"
@@ -57,7 +57,6 @@
             android:onClick="pickMonthClicked"
             android:src="@drawable/calendar"
             />
-
 
 
     </LinearLayout>
@@ -81,7 +80,6 @@
         android:clipToPadding="false"
         android:paddingBottom="@dimen/huge_padding"
         android:paddingTop="@dimen/drawable_left_pad"
-        android:scrollbars="none"
         >
 
         <RelativeLayout
@@ -132,29 +130,31 @@
 
             </LinearLayout>
 
-                <FrameLayout
-                    android:id="@+id/graphs_category_graph_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/month_title_layout"
-                    android:visibility="gone"
-                    />
+            <!-- Fragments -->
 
-                <FrameLayout
-                    android:id="@+id/graphs_year_graph_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/graphs_category_graph_container"
-                    android:visibility="gone"
-                    />
+            <FrameLayout
+                android:id="@+id/graphs_category_graph_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/month_title_layout"
+                android:visibility="gone"
+                />
 
-                <FrameLayout
-                    android:id="@+id/graphs_month_report_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/graphs_year_graph_container"
-                    android:visibility="gone"
-                    />
+            <FrameLayout
+                android:id="@+id/graphs_year_graph_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/graphs_category_graph_container"
+                android:visibility="gone"
+                />
+
+            <FrameLayout
+                android:id="@+id/graphs_month_report_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/graphs_year_graph_container"
+                android:visibility="gone"
+                />
 
         </RelativeLayout>
     </ScrollView>

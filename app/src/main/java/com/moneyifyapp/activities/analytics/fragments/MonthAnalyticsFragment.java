@@ -27,25 +27,23 @@ import com.moneyifyapp.utils.Utils;
  */
 public class MonthAnalyticsFragment extends Fragment
 {
-    private int mMonth;
-    private int mYear;
-    private MonthTransactions mMonthTransactions;
-    private YearTransactions mYearTransactions;
-    private Animation mAppearAnimation;
-    private Animation mAppearAnimationLong;
-    private LinearLayout mDateLabelLayout;
-    private LinearLayout mMainContainerLayout;
-    private ListView mBiggestExpenseList;
-    private LinearLayout mBiggestExpenseLayout;
-    private ListView mBiggestIncomeList;
-    private LinearLayout mBiggestIncomeLayout;
-    private View mRootView;
-    private boolean mNoInsights;
-
-
-    private static final String PROFITED_LABEL = "Profit";
-    private static final String LOST_LABEL = "Loss";
-    private static final String BROKE_EVEN = "Broke even";
+    protected int mMonth;
+    protected int mYear;
+    protected MonthTransactions mMonthTransactions;
+    protected YearTransactions mYearTransactions;
+    protected Animation mAppearAnimation;
+    protected Animation mAppearAnimationLong;
+    protected LinearLayout mDateLabelLayout;
+    protected LinearLayout mMainContainerLayout;
+    protected ListView mBiggestExpenseList;
+    protected LinearLayout mBiggestExpenseLayout;
+    protected ListView mBiggestIncomeList;
+    protected LinearLayout mBiggestIncomeLayout;
+    protected View mRootView;
+    protected boolean mNoInsights;
+    protected static final String PROFITED_LABEL = "Profit";
+    protected static final String LOST_LABEL = "Loss";
+    protected static final String BROKE_EVEN = "Broke even";
 
     /**
      */
@@ -103,7 +101,7 @@ public class MonthAnalyticsFragment extends Fragment
         {
             initTotalSums();
             initProfitOrLossLabels();
-            initWorstDay();
+            initWorstDate();
             loadBiggestExpense();
             loadBiggestIncome();
         }
@@ -113,7 +111,7 @@ public class MonthAnalyticsFragment extends Fragment
 
     /**
      */
-    private void initYearTransactionsFromJson()
+    protected void initYearTransactionsFromJson()
     {
         // Get the month number, transaction and page id
         String yearTransJson = getArguments().getString(ExpenseListFragment.YEAR_JSON_KEY);
@@ -130,7 +128,7 @@ public class MonthAnalyticsFragment extends Fragment
 
     /**
      */
-    private TextView loadTextViewAndSetText(int resourceId, String text)
+    protected TextView loadTextViewAndSetText(int resourceId, String text)
     {
         TextView textView = null;
 
@@ -143,7 +141,7 @@ public class MonthAnalyticsFragment extends Fragment
         return textView;
     }
 
-    private void loadAnimations()
+    protected void loadAnimations()
     {
         if (mAppearAnimation == null)
             mAppearAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
@@ -153,18 +151,17 @@ public class MonthAnalyticsFragment extends Fragment
 
     /**
      */
-    private void initTotalSums()
+    protected void initTotalSums()
     {
         String totalExepense = Utils.formatDoubleToTextCurrency(mMonthTransactions.sumTransactions(MonthTransactions.SubsetType.EXPENSE));
         String totalIncome = Utils.formatDoubleToTextCurrency(mMonthTransactions.sumTransactions(MonthTransactions.SubsetType.INCOME));
         loadTextViewAndSetText(R.id.analytics_monthly_expense_sum, totalExepense);
         loadTextViewAndSetText(R.id.analytics_monthly_income_sum, totalIncome);
-
     }
 
     /**
      */
-    private void initWorstDay()
+    protected void initWorstDate()
     {
         MonthTransactions.Couple<Integer, Double> daySum = mMonthTransactions.getTopCategory(MonthTransactions.TopFilter.BUSIEST_DAY);
 
@@ -186,7 +183,7 @@ public class MonthAnalyticsFragment extends Fragment
 
     /**
      */
-    private void initProfitOrLossLabels()
+    protected void initProfitOrLossLabels()
     {
         double totalSpent = mMonthTransactions.sumTransactions(MonthTransactions.SubsetType.EXPENSE);
         double totalRevenue = mMonthTransactions.sumTransactions(MonthTransactions.SubsetType.INCOME);
@@ -218,7 +215,7 @@ public class MonthAnalyticsFragment extends Fragment
 
     /**
      */
-    private void startAppearanceAnimations()
+    protected void startAppearanceAnimations()
     {
         mDateLabelLayout = (LinearLayout) mRootView.findViewById(R.id.month_analytics_date_layout);
         mMainContainerLayout = (LinearLayout) mRootView.findViewById(R.id.month_analytics_main_layout);
@@ -228,7 +225,7 @@ public class MonthAnalyticsFragment extends Fragment
 
     /**
      */
-    private void loadBiggestExpense()
+    protected void loadBiggestExpense()
     {
         MonthTransactions expenses = mMonthTransactions.getTopFromSubset(MonthTransactions.SubsetType.EXPENSE);
 
@@ -246,7 +243,7 @@ public class MonthAnalyticsFragment extends Fragment
 
     /**
      */
-    private void loadBiggestIncome()
+    protected void loadBiggestIncome()
     {
         MonthTransactions incomes = mMonthTransactions.getTopFromSubset(MonthTransactions.SubsetType.INCOME);
 
@@ -264,7 +261,7 @@ public class MonthAnalyticsFragment extends Fragment
 
     /**
      */
-    private void updateHasInsignts()
+    protected void updateHasInsignts()
     {
         if (!mNoInsights)
         {

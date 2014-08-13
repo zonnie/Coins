@@ -1,11 +1,13 @@
 package com.moneyifyapp.model;
 
+import com.moneyifyapp.activities.analytics.intrfaces.Sumable;
+
 import java.util.Calendar;
 
 /**
  * Created by Zonnie_Work on 03/07/2014.
  */
-public class YearTransactions
+public class YearTransactions implements Sumable
 {
     private MonthTransactions[] mYearTransactions;
     public int mYear;
@@ -76,5 +78,46 @@ public class YearTransactions
         return new Integer((int)maxMonth);
     }
 
+    /**
+     */
+    @Override
+    public double sum(MonthTransactions.SubsetType type)
+    {
+        double sum = 0;
 
+        for(int i = 0; i < mYearTransactions.length; i++)
+        {
+            if(mYearTransactions[i] != null)
+                sum += mYearTransactions[i].sum(type);
+        }
+
+        return sum;
+    }
+
+    public MonthTransactions getTopMonthFromSubset(MonthTransactions.SubsetType type)
+    {
+        MonthTransactions maxMonth = null;
+        MonthTransactions curMonth;
+
+        for(int i = 0; i < mYearTransactions.length; i++)
+        {
+            if(mYearTransactions.length > 0 && mYearTransactions[i] != null)
+            {
+                if (maxMonth == null)
+                    maxMonth = mYearTransactions[i].getTopFromSubset(type);
+                else
+                {
+                    curMonth = mYearTransactions[i].getTopFromSubset(type);
+                    Transaction maxTrans = (maxMonth.getItems().size() > 0) ? maxMonth.getItems().get(0) : null;
+                    Transaction curTrans = (curMonth.getItems().size() > 0) ? curMonth.getItems().get(0) : null;
+
+                    if(maxTrans != null && curTrans != null)
+                        if (Double.parseDouble(curTrans.mValue) > Double.parseDouble(maxTrans.mValue))
+                            maxMonth = curMonth;
+                }
+            }
+        }
+
+        return maxMonth;
+    }
 }

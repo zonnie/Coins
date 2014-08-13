@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
+        android:layout_margin="@dimen/drawable_left_pad"
         tools:context="com.moneyifyapp.activities.analytics.FullAnalyticsActivity.ByDateAnalyticsFragment"
         >
         <!-- Body -->
@@ -21,8 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingEnd="@dimen/big_padding"
-            android:paddingStart="@dimen/big_padding"
             android:paddingTop="@dimen/expense_drawable_left_pad"
             >
 
@@ -51,6 +50,7 @@
                     >
 
                     <com.moneyifyapp.views.CondensedTextView
+                        android:id="@+id/report_bottom_line_label"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:drawableStart="@drawable/bottom_line"
@@ -277,6 +277,7 @@
                         >
 
                         <com.moneyifyapp.views.CondensedTextView
+                            android:id="@+id/report_worst_date_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"

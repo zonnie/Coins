@@ -99,7 +99,7 @@ public class ByDateFragment extends Fragment
                 {
                     String day =  days.get(position);
                     String title = "Expenses on the " + day + Utils.generateDayInMonthSuffix(day);
-                    MonthTransactions transactions = mMonthTransactions.getTransactionByDay(MonthTransactions.SubsetType.EXPENSE, day);
+                    MonthTransactions transactions = mMonthTransactions.getTransactionByDate(MonthTransactions.SubsetType.EXPENSE, day);
                     TransactionListDialog dialog = new TransactionListDialog(getActivity(), transactions, title);
                     dialog.show();
                 }

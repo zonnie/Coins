@@ -1,5 +1,7 @@
 package com.moneyifyapp.model;
 
+import com.moneyifyapp.activities.analytics.intrfaces.Sumable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,7 +16,7 @@ import java.util.Map;
  * <p/>
  * TODO: Replace all uses of this class before publishing your app.
  */
-public class MonthTransactions
+public class MonthTransactions implements Sumable
 {
 
     public List<Transaction> mTransactions = new ArrayList<Transaction>();
@@ -38,6 +40,12 @@ public class MonthTransactions
     /**
      * Sums up all the expenses in this month
      */
+
+    @Override
+    public double sum(SubsetType type)
+    {
+        return sumTransactions(type);
+    }
 
     public double sumTransactions(SubsetType type)
     {
@@ -78,7 +86,7 @@ public class MonthTransactions
 
     /**
      */
-    public MonthTransactions getTransactionByDay(SubsetType type, String day)
+    public MonthTransactions getTransactionByDate(SubsetType type, String day)
     {
         MonthTransactions res = new MonthTransactions(mMonthNumber);
 
@@ -219,6 +227,7 @@ public class MonthTransactions
             dayExpenses[arrayKey] += (curTransaction.mIsExpense) ? curTransactionSum : 0;
         }
 
+        // Find the max day
         for(; checkIndex < dayExpenses.length; ++checkIndex)
         {
             if(maxSum < dayExpenses[checkIndex])
