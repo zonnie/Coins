@@ -1,13 +1,9 @@
 package com.moneyifyapp.activities.expenseDetail;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v13.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.TextView;
 
@@ -40,8 +36,6 @@ public class ExpenseDetailActivity extends Activity
     private boolean mIsExpense;
     private boolean mSaved;
     private Transaction.REPEAT_TYPE mRepeatType;
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
     private boolean mIsEdit;
     private Transaction mTransaction;
     private ExpenseDetailFragment mDetailFragment;
@@ -49,6 +43,8 @@ public class ExpenseDetailActivity extends Activity
     private int mMonth;
     private TextView mDetailDateDay;
     private TextView mDetailDateMonth;
+    private final String DETAILS_TAG = "DETAILS";
+    private final String REPEAT_TAG = "REPEAT";
 
     /**
      */
@@ -93,9 +89,16 @@ public class ExpenseDetailActivity extends Activity
         mOptionsFragment = ExpenseOptionsFragment.newInstance(mIsEdit, mTransaction);
         initDetailDateLabels();
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        getFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_object, R.anim.slide_out_object)
+                .add(R.id.detail_container, mDetailFragment, DETAILS_TAG)
+                .commit();
+
+        getFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_object, R.anim.slide_out_object)
+                .add(R.id.options_container, mOptionsFragment, REPEAT_TAG)
+                .commit();
+
     }
 
     /**
@@ -116,12 +119,12 @@ public class ExpenseDetailActivity extends Activity
         // Get the default currency
         mCurrency = PreferenceManager.getDefaultSharedPreferences(this).getString(PrefActivity.PREF_LIST_NAME, "$");
 
-        Transaction transaction = new Transaction(Transaction.DEFUALT_TRANSCATION_ID, mDescription, mValue,
+        mTransaction = new Transaction(Transaction.DEFUALT_TRANSCATION_ID, mDescription, mValue,
                 mCurrency, mNotes, mImageName, mIsExpense, mTransactionDay);
-        transaction.mSaved = mSaved;
-        transaction.mRepeatType = mRepeatType;
+        mTransaction.mSaved = mSaved;
+        mTransaction.mRepeatType = mRepeatType;
 
-        return transaction;
+        return mTransaction;
     }
 
     /**
@@ -139,15 +142,6 @@ public class ExpenseDetailActivity extends Activity
         data.putExtra(ExpenseListFragment.ITEM_POS_KEY, mItemPosition);
         data.putExtra(ExpenseListFragment.MONTH_KEY, mMonth);
         data.putExtra(Transaction.KEY_TYPE, transaction.mIsExpense);
-
-    }
-
-    @Override
-    public void OnOptionsSubmit(Transaction transaction)
-    {
-        Intent data = getIntent();
-        data.putExtra(ExpenseListFragment.TEMPLATE_KEY, transaction.mSaved);
-        data.putExtra(ExpenseListFragment.REPEAT_KEY, transaction.mRepeatType.toString());
     }
 
     /**
@@ -172,6 +166,14 @@ public class ExpenseDetailActivity extends Activity
             finish();
             Utils.animateBack(this);
         }
+    }
+
+    public void onRepeatOptionsClicked(View view)
+    {
+        getFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_object, R.anim.slide_out_object)
+                .replace(R.id.detail_container, mOptionsFragment, REPEAT_TAG)
+                .commit();
     }
 
     public void OnBackClicked(View view)
@@ -199,54 +201,11 @@ public class ExpenseDetailActivity extends Activity
             mDetailDateMonth.setText(Utils.getMonthPrefixByIndex(mMonth).toUpperCase());
     }
 
-
-    /**
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter
+    @Override
+    public void OnOptionsSubmit(Transaction transaction)
     {
-
-        /**
-         */
-        public SectionsPagerAdapter(FragmentManager fm)
-        {
-            super(fm);
-        }
-
-        /**
-         */
-        @Override
-        public Fragment getItem(int position)
-        {
-            if (position == 0)
-                return mDetailFragment;
-            else if (position == 1)
-                return mOptionsFragment;
-            else
-                return mDetailFragment;
-        }
-
-        /**
-         */
-        @Override
-        public int getCount()
-        {
-            return 2;
-        }
-
-        /**
-         */
-        @Override
-        public CharSequence getPageTitle(int position)
-        {
-            switch (position)
-            {
-                case 0:
-                    return getString(R.string.title_expense_detail_page);
-                case 1:
-                    return getString(R.string.title_expense_options_page);
-                default:
-                    return getString(R.string.title_expense_detail_page);
-            }
-        }
+        Intent data = getIntent();
+        data.putExtra(ExpenseListFragment.TEMPLATE_KEY, transaction.mSaved);
+        data.putExtra(ExpenseListFragment.REPEAT_KEY, transaction.mRepeatType.toString());
     }
 }

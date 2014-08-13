@@ -80,12 +80,13 @@
     <string name="title_activity_user_account">Account</string>
     <string name="checkbox_saved">"Saved</string>
     <string name="checkbox_save">"Save</string>
-    <string name="title_expense_detail_page">The Details</string>
+    <string name="title_expense_detail_page">Details</string>
     <string name="title_expense_options_page">Reoccurring</string>
     <string name="title_expense_reuse">Reuse</string>
     <string name="title_expense_repeat">Repeat</string>
     <string name="change_info_hint">Tap below details to change them</string>
     <string name="account_title_text">Account</string>
     <string name="title_activity_graph">Stats</string>
-
+    <string name="repeat_button_text">Done !</string>
+    <string name="repeat_options_text">Repeat Options</string>
 </resources>

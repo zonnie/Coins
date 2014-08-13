@@ -1,263 +1,258 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:background="@color/background"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_gravity="top"
+              android:orientation="vertical"
     >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/drawable_left_pad"
         android:layout_marginLeft="@dimen/big_padding"
         android:layout_marginRight="@dimen/big_padding"
-        android:layout_marginTop="@dimen/drawable_left_pad"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/huge_padding"
         >
+
+        <!-- Title -->
+
+        <com.moneyifyapp.views.ThinTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/drawable_left_pad"
+            android:layout_marginTop="@dimen/expense_drawable_left_pad"
+            android:gravity="center"
+            android:text="@string/title_expense_detail_page"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/mongo_font"
+            />
+
+
+        <!-- Body -->
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginBottom="@dimen/drawable_left_pad"
+            android:layout_height="match_parent"
             android:background="@drawable/card"
+            android:gravity="center|top"
             android:orientation="vertical"
+            android:paddingBottom="@dimen/drawable_left_pad"
+            android:paddingLeft="@dimen/big_padding"
+            android:paddingRight="@dimen/big_padding"
+            android:paddingTop="@dimen/drawable_left_pad"
             >
-
-            <!-- Body -->
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/expense_drawable_left_pad"
-                android:gravity="center|top"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/drawable_left_pad"
-                android:paddingLeft="@dimen/big_padding"
-                android:paddingRight="@dimen/big_padding"
+                android:layout_height="wrap_content"
+                android:gravity="center"
                 >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_gravity="start"
+                    android:orientation="vertical"
+                    android:weightSum="6"
                     >
+
+                    <!-- Image -->
+
+                    <LinearLayout
+                        android:id="@+id/detail_date_category_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="5"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/big_padding"
+                        android:paddingRight="@dimen/big_padding"
+                        >
+
+                        <TextView
+                            android:id="@+id/image_picker_hint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/image_picker_hint_text"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="@dimen/tiny_font"
+                            />
+
+                        <ImageButton
+                            android:id="@+id/addExpenseImage"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginBottom="@dimen/padding_start_currency"
+                            android:layout_marginTop="@dimen/padding_start_currency"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/shop"
+                            />
+                    </LinearLayout>
+
+                    <!-- Expense/Income -->
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:orientation="vertical"
-                        android:weightSum="6"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         >
 
-                        <!-- Image -->
-
                         <LinearLayout
-                            android:id="@+id/detail_date_category_layout"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_weight="5"
                             android:orientation="vertical"
-                            android:paddingLeft="@dimen/big_padding"
-                            android:paddingRight="@dimen/big_padding"
                             >
 
                             <TextView
-                                android:id="@+id/image_picker_hint"
-                                android:layout_width="wrap_content"
+                                android:id="@+id/toggle_expense_hint"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="@string/image_picker_hint_text"
+                                android:layout_marginBottom="@dimen/padding_start_currency"
+                                android:gravity="center"
+                                android:text="@string/toggle_hint_text"
                                 android:textColor="@android:color/darker_gray"
                                 android:textSize="@dimen/tiny_font"
                                 />
 
-                            <ImageButton
-                                android:id="@+id/addExpenseImage"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:layout_marginBottom="@dimen/padding_start_currency"
-                                android:layout_marginTop="@dimen/padding_start_currency"
-                                android:background="@android:color/transparent"
-                                android:scaleType="fitCenter"
-                                android:src="@drawable/shop"
-                                />
-                        </LinearLayout>
-
-                        <!-- Expense/Income -->
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            >
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <ToggleButton
+                                android:id="@+id/isExpenseToggle"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:orientation="vertical"
-                                >
-
-                                <TextView
-                                    android:id="@+id/toggle_expense_hint"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="@dimen/padding_start_currency"
-                                    android:gravity="center"
-                                    android:text="@string/toggle_hint_text"
-                                    android:textColor="@android:color/darker_gray"
-                                    android:textSize="@dimen/tiny_font"
-                                    />
-
-                                <ToggleButton
-                                    android:id="@+id/isExpenseToggle"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:background="@drawable/expense_toggle"
-                                    android:paddingBottom="@dimen/drawable_left_pad"
-                                    android:layout_marginBottom="@dimen/expense_drawable_left_pad"
-                                    android:paddingEnd="@dimen/big_padding"
-                                    android:paddingStart="@dimen/big_padding"
-                                    android:paddingTop="@dimen/drawable_left_pad"
-                                    android:textColor="@android:color/white"
-                                    android:textOff="@string/spent_string"
-                                    android:textOn="@string/revenue_string"
-                                    android:textSize="@dimen/large_font"
-                                    />
-
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/detail_right_pane_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_toRightOf="@+id/detail_date_category_layout"
-                            android:orientation="vertical"
-                            android:visibility="gone"
-                            >
-
-                            <CheckBox
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:text="Repeat"
-                                android:typeface="normal"
+                                android:layout_marginBottom="@dimen/expense_drawable_left_pad"
+                                android:background="@drawable/expense_toggle"
+                                android:paddingBottom="@dimen/drawable_left_pad"
+                                android:paddingEnd="@dimen/big_padding"
+                                android:paddingStart="@dimen/big_padding"
+                                android:paddingTop="@dimen/drawable_left_pad"
+                                android:textColor="@android:color/white"
+                                android:textOff="@string/spent_string"
+                                android:textOn="@string/revenue_string"
+                                android:textSize="@dimen/large_font"
                                 />
 
                         </LinearLayout>
-
                     </LinearLayout>
 
-
-                    <!-- Seperator -->
-
-                    <View
-                        android:layout_width="0.3dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="@dimen/drawable_left_pad"
-                        android:layout_marginTop="@dimen/padding_start_currency"
-                        android:background="@android:color/darker_gray"
-                        android:visibility="gone"
-                        />
-
                 </LinearLayout>
+
 
                 <!-- Seperator -->
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.3dp"
+                    android:layout_width="0.3dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/drawable_left_pad"
+                    android:layout_marginTop="@dimen/padding_start_currency"
                     android:background="@android:color/darker_gray"
+                    android:visibility="gone"
                     />
 
-                <LinearLayout
+            </LinearLayout>
+
+            <!-- Seperator -->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.3dp"
+                android:background="@android:color/darker_gray"
+                />
+
+            <!-- Details -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_start_currency"
+                android:orientation="vertical"
+                >
+
+                <!-- Description -->
+
+                <com.moneyifyapp.views.ThinEditText
+                    android:id="@+id/addExpenseDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/padding_start_currency"
-                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@android:color/transparent"
+                    android:drawableLeft="@drawable/desc"
+                    android:drawablePadding="@dimen/expense_drawable_left_pad"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:hint="@string/add_item_description_hint"
+                    android:maxLength="@integer/max_desc_len"
+                    android:paddingBottom="@dimen/padding_start_currency"
+                    android:singleLine="true"
+                    android:textSize="@dimen/large_font"
+                    />
+
+                <!-- Value -->
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/padding_start_currency"
                     >
 
-                    <!-- Description -->
-
                     <com.moneyifyapp.views.ThinEditText
-                        android:id="@+id/addExpenseDescription"
+                        android:id="@+id/addExpenseSum"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
                         android:background="@android:color/transparent"
-                        android:drawableLeft="@drawable/desc"
+                        android:drawableLeft="@drawable/sum"
                         android:drawablePadding="@dimen/expense_drawable_left_pad"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
-                        android:hint="@string/add_item_description_hint"
-                        android:maxLength="@integer/max_desc_len"
-                        android:paddingBottom="@dimen/padding_start_currency"
+                        android:hint="@string/item_value_hint"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:maxLength="7"
                         android:singleLine="true"
                         android:textSize="@dimen/large_font"
                         />
 
-                    <!-- Value -->
-
-                    <LinearLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingBottom="@dimen/padding_start_currency"
-                        >
-
-                        <com.moneyifyapp.views.ThinEditText
-                            android:id="@+id/addExpenseSum"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@android:color/transparent"
-                            android:drawableLeft="@drawable/sum"
-                            android:drawablePadding="@dimen/expense_drawable_left_pad"
-                            android:focusable="true"
-                            android:focusableInTouchMode="true"
-                            android:hint="@string/item_value_hint"
-                            android:imeOptions="actionNext"
-                            android:inputType="number"
-                            android:maxLength="7"
-                            android:singleLine="true"
-                            android:textSize="@dimen/large_font"
-                            />
-
-                    </LinearLayout>
-
-                    <!-- Notes -->
-
-                    <com.moneyifyapp.views.ThinEditText
-                        android:id="@+id/addExpenseNotes"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/padding_start_currency"
-                        android:background="@android:color/transparent"
-                        android:drawableLeft="@drawable/notes_2"
-                        android:drawablePadding="@dimen/expense_drawable_left_pad"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:hint="Notes..."
-                        android:imeOptions="actionNext"
-                        android:maxLength="@integer/max_note_len"
-                        android:singleLine="true"
-                        android:textSize="@dimen/medium_font"
-
-                        />
-
                 </LinearLayout>
+
+                <!-- Notes -->
+
+                <com.moneyifyapp.views.ThinEditText
+                    android:id="@+id/addExpenseNotes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/padding_start_currency"
+                    android:background="@android:color/transparent"
+                    android:drawableLeft="@drawable/notes_2"
+                    android:drawablePadding="@dimen/expense_drawable_left_pad"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:hint="Notes..."
+                    android:imeOptions="actionNext"
+                    android:maxLength="@integer/max_note_len"
+                    android:singleLine="true"
+                    android:textSize="@dimen/medium_font"
+
+                    />
+
             </LinearLayout>
+
         </LinearLayout>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/expense_drawable_left_pad"
+            android:background="@drawable/stanard_button_drawable"
+            android:onClick="onRepeatOptionsClicked"
+            android:text="@string/repeat_options_text"
+            android:visibility="gone"
+            />
+
     </LinearLayout>
-</ScrollView>
+
+</LinearLayout>

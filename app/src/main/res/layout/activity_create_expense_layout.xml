@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/background"
               android:orientation="vertical"
               android:scrollbars="none"
     >
@@ -21,25 +22,25 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:paddingStart="@dimen/drawable_left_pad"
-            android:paddingEnd="@dimen/drawable_left_pad"
             android:layout_weight="0.6"
             android:background="@drawable/back_regular_drawable"
-            android:src="@drawable/back_2"
             android:onClick="OnBackClicked"
+            android:paddingEnd="@dimen/drawable_left_pad"
+            android:paddingStart="@dimen/drawable_left_pad"
+            android:src="@drawable/back_2"
             />
 
         <TextView
             android:id="@+id/detail_date_month"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="0.9"
             android:fontFamily="sans-serif-condensed"
             android:gravity="center_vertical|end"
             android:text="JUL"
             android:textColor="@android:color/white"
             android:textSize="@dimen/huge_font"
             android:textStyle="bold"
-            android:layout_weight="0.9"
             />
 
         <TextView
@@ -48,10 +49,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="3.5"
             android:fontFamily="sans-serif-condensed"
-            android:paddingStart="@dimen/padding_start_currency"
-            android:paddingBottom="@dimen/padding_start_currency"
-            android:paddingTop="@dimen/padding_start_currency"
             android:gravity="center_vertical"
+            android:paddingBottom="@dimen/padding_start_currency"
+            android:paddingStart="@dimen/padding_start_currency"
+            android:paddingTop="@dimen/padding_start_currency"
             android:text="24th"
             android:textColor="@android:color/white"
             android:textSize="@dimen/huge_font"
@@ -62,32 +63,61 @@
             android:id="@+id/submit_item"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/back_regular_drawable"
             android:layout_gravity="center_vertical|right"
             android:layout_weight="1.4"
+            android:background="@drawable/back_regular_drawable"
             android:gravity="end"
-            android:src="@drawable/accept"
             android:onClick="onAcceptClicked"
+            android:src="@drawable/accept"
             />
     </LinearLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.moneyifyapp.activities.analytics.FullAnalyticsActivity"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/background"
+                android:scrollbars="none"
         >
-        <android.support.v4.view.PagerTitleStrip
-            android:id="@+id/pager_title_strip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:background="@drawable/back_regualr"
-            android:textColor="#fff"/>
 
-    </android.support.v4.view.ViewPager>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <FrameLayout
+                android:id="@+id/detail_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                />
+
+            <!-- Seperator -->
+
+            <View
+                android:id="@+id/seperator_details"
+                android:layout_width="match_parent"
+                android:layout_height="0.3dp"
+                android:layout_marginLeft="@dimen/big_padding"
+                android:layout_marginRight="@dimen/big_padding"
+                android:background="@android:color/darker_gray"
+                android:layout_below="@+id/detail_container"
+                />
+
+            <FrameLayout
+                android:id="@+id/options_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_below="@+id/seperator_details"
+                />
+        </RelativeLayout>
+    </ScrollView>
+
 </LinearLayout>
 
 

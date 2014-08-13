@@ -1,257 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="@color/background"
-            android:scrollbars="none"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/drawable_left_pad"
+              android:orientation="vertical"
+              android:paddingLeft="@dimen/big_padding"
+              android:paddingRight="@dimen/big_padding"
+              android:paddingBottom="@dimen/huge_padding"
     >
+
+    <!-- Repeat -->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/big_padding"
-        android:layout_marginRight="@dimen/big_padding"
-        android:layout_marginTop="@dimen/drawable_left_pad"
+        android:background="@drawable/card"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/huge_padding"
+        android:paddingBottom="@dimen/padding_start_currency"
         >
 
-        <!-- Repeat -->
+        <!-- title -->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:background="@drawable/card"
-            android:orientation="vertical"
+            android:background="@drawable/date_header"
+            android:orientation="horizontal"
             android:paddingBottom="@dimen/padding_start_currency"
+            android:paddingTop="@dimen/padding_start_currency"
             >
 
-            <!-- title -->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/date_header"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/padding_start_currency"
-                android:paddingTop="@dimen/padding_start_currency"
-                >
-
-                <com.moneyifyapp.views.CondensedTextView
-                    android:id="@+id/detail_date_month"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:drawableStart="@drawable/repeat"
-                    android:gravity="center"
-                    android:text="@string/title_expense_repeat"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/large_font"
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/detail_reoccur_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/drawable_left_pad"
-                android:layout_marginLeft="@dimen/big_padding"
-                android:layout_marginRight="@dimen/big_padding"
-                android:layout_marginTop="@dimen/padding_start_currency"
-                android:orientation="vertical"
-                >
-
-
-                <RadioGroup
-                    android:id="@+id/detail_reoccur_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical"
-                    >
-
-                    <RadioButton
-                        android:id="@+id/detail_reoccur_none_radio"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/drawable_left_pad"
-                        android:background="@drawable/template_background"
-                        android:button="@null"
-                        android:checked="true"
-                        android:gravity="center"
-                        android:paddingBottom="@dimen/drawable_left_pad"
-                        android:paddingLeft="@dimen/expense_drawable_left_pad"
-                        android:paddingRight="@dimen/expense_drawable_left_pad"
-                        android:paddingTop="@dimen/padding_start_currency"
-                        android:text="None"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/medium_font"
-                        android:typeface="normal"
-                        />
-
-                    <!--
-                    <RadioButton
-                        android:id="@+id/detail_reoccur_daily_radio"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/drawable_left_pad"
-                        android:background="@drawable/template_background"
-                        android:button="@null"
-                        android:checked="false"
-                        android:gravity="center"
-                        android:paddingBottom="@dimen/drawable_left_pad"
-                        android:paddingLeft="@dimen/expense_drawable_left_pad"
-                        android:paddingRight="@dimen/expense_drawable_left_pad"
-                        android:paddingTop="@dimen/padding_start_currency"
-                        android:text="Daily"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/medium_font"
-                        android:typeface="normal"
-                        />
-
-                    <RadioButton
-                        android:id="@+id/detail_reoccur_weekly_radio"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/drawable_left_pad"
-                        android:background="@drawable/template_background"
-                        android:button="@null"
-                        android:checked="false"
-                        android:gravity="center"
-                        android:paddingBottom="@dimen/drawable_left_pad"
-                        android:paddingLeft="@dimen/expense_drawable_left_pad"
-                        android:paddingRight="@dimen/expense_drawable_left_pad"
-                        android:paddingTop="@dimen/padding_start_currency"
-                        android:text="Weekly"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/medium_font"
-                        android:typeface="normal"
-                        />
-                    -->
-
-                    <RadioButton
-                        android:id="@+id/detail_reoccur_monthly_radio"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/drawable_left_pad"
-                        android:background="@drawable/template_background"
-                        android:button="@null"
-                        android:checked="false"
-                        android:gravity="center"
-                        android:paddingBottom="@dimen/drawable_left_pad"
-                        android:paddingLeft="@dimen/expense_drawable_left_pad"
-                        android:paddingRight="@dimen/expense_drawable_left_pad"
-                        android:paddingTop="@dimen/padding_start_currency"
-                        android:text="Monthly"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/medium_font"
-                        android:typeface="normal"
-                        />
-
-                    <RadioButton
-                        android:id="@+id/detail_reoccur_yearly_radio"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/template_background"
-                        android:button="@null"
-                        android:checked="false"
-                        android:gravity="center"
-                        android:paddingBottom="@dimen/drawable_left_pad"
-                        android:paddingLeft="@dimen/expense_drawable_left_pad"
-                        android:paddingRight="@dimen/expense_drawable_left_pad"
-                        android:paddingTop="@dimen/padding_start_currency"
-                        android:text="Yearly"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/medium_font"
-                        android:typeface="normal"
-                        />
-                </RadioGroup>
-
-            </LinearLayout>
-
+            <com.moneyifyapp.views.CondensedTextView
+                android:id="@+id/detail_date_month"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/repeat"
+                android:gravity="center"
+                android:text="@string/title_expense_repeat"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/large_font"
+                />
 
         </LinearLayout>
 
-        <!-- Reuse -->
-
         <LinearLayout
+            android:id="@+id/detail_reoccur_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="@dimen/drawable_left_pad"
-            android:background="@drawable/card"
+            android:layout_marginBottom="@dimen/drawable_left_pad"
+            android:layout_marginLeft="@dimen/big_padding"
+            android:layout_marginRight="@dimen/big_padding"
+            android:layout_marginTop="@dimen/padding_start_currency"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/expense_drawable_left_pad"
             >
 
-            <!-- title -->
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <RadioGroup
+                android:id="@+id/detail_reoccur_group"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/date_header"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/padding_start_currency"
-                android:paddingTop="@dimen/padding_start_currency"
-                >
-
-                <com.moneyifyapp.views.CondensedTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:drawableStart="@drawable/save_template"
-                    android:gravity="center"
-                    android:text="@string/title_expense_reuse"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/large_font"
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/detail_save_template_toggle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/big_padding"
-                android:layout_marginRight="@dimen/big_padding"
-                android:layout_marginTop="@dimen/padding_start_currency"
+                android:layout_gravity="center"
                 android:orientation="vertical"
                 >
 
-                <TextView
-                    android:id="@+id/toggle_template_save_hint"
+                <RadioButton
+                    android:id="@+id/detail_reoccur_none_radio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/padding_start_currency"
-                    android:gravity="center"
-                    android:text="@string/checkbox_template_hint_text"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="@dimen/tiny_font"
-                    />
-
-                <ToggleButton
-                    android:id="@+id/toggle_template_save"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="@dimen/padding_start_currency"
+                    android:layout_marginBottom="@dimen/drawable_left_pad"
                     android:background="@drawable/template_background"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
                     android:paddingBottom="@dimen/drawable_left_pad"
                     android:paddingLeft="@dimen/expense_drawable_left_pad"
                     android:paddingRight="@dimen/expense_drawable_left_pad"
                     android:paddingTop="@dimen/padding_start_currency"
+                    android:text="None"
                     android:textColor="@android:color/white"
-                    android:textOff="@string/checkbox_save"
-                    android:textOn="@string/checkbox_saved"
                     android:textSize="@dimen/medium_font"
                     android:typeface="normal"
                     />
 
-            </LinearLayout>
+                <!--
+                <RadioButton
+                    android:id="@+id/detail_reoccur_daily_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/drawable_left_pad"
+                    android:background="@drawable/template_background"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/drawable_left_pad"
+                    android:paddingLeft="@dimen/expense_drawable_left_pad"
+                    android:paddingRight="@dimen/expense_drawable_left_pad"
+                    android:paddingTop="@dimen/padding_start_currency"
+                    android:text="Daily"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/medium_font"
+                    android:typeface="normal"
+                    />
+
+                <RadioButton
+                    android:id="@+id/detail_reoccur_weekly_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/drawable_left_pad"
+                    android:background="@drawable/template_background"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/drawable_left_pad"
+                    android:paddingLeft="@dimen/expense_drawable_left_pad"
+                    android:paddingRight="@dimen/expense_drawable_left_pad"
+                    android:paddingTop="@dimen/padding_start_currency"
+                    android:text="Weekly"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/medium_font"
+                    android:typeface="normal"
+                    />
+                -->
+
+                <RadioButton
+                    android:id="@+id/detail_reoccur_monthly_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/drawable_left_pad"
+                    android:background="@drawable/template_background"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/drawable_left_pad"
+                    android:paddingLeft="@dimen/expense_drawable_left_pad"
+                    android:paddingRight="@dimen/expense_drawable_left_pad"
+                    android:paddingTop="@dimen/padding_start_currency"
+                    android:text="Monthly"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/medium_font"
+                    android:typeface="normal"
+                    />
+
+                <RadioButton
+                    android:id="@+id/detail_reoccur_yearly_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/template_background"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/drawable_left_pad"
+                    android:paddingLeft="@dimen/expense_drawable_left_pad"
+                    android:paddingRight="@dimen/expense_drawable_left_pad"
+                    android:paddingTop="@dimen/padding_start_currency"
+                    android:text="Yearly"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/medium_font"
+                    android:typeface="normal"
+                    />
+            </RadioGroup>
 
         </LinearLayout>
 
 
     </LinearLayout>
-</ScrollView>
+
+    <!-- Reuse -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/drawable_left_pad"
+        android:background="@drawable/card"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/expense_drawable_left_pad"
+        >
+
+        <!-- title -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/date_header"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/padding_start_currency"
+            android:paddingTop="@dimen/padding_start_currency"
+            >
+
+            <com.moneyifyapp.views.CondensedTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/save_template"
+                android:gravity="center"
+                android:text="@string/title_expense_reuse"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/large_font"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/detail_save_template_toggle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/big_padding"
+            android:layout_marginRight="@dimen/big_padding"
+            android:layout_marginTop="@dimen/padding_start_currency"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/toggle_template_save_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_start_currency"
+                android:gravity="center"
+                android:text="@string/checkbox_template_hint_text"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="@dimen/tiny_font"
+                />
+
+            <ToggleButton
+                android:id="@+id/toggle_template_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/padding_start_currency"
+                android:background="@drawable/template_background"
+                android:paddingBottom="@dimen/drawable_left_pad"
+                android:paddingLeft="@dimen/expense_drawable_left_pad"
+                android:paddingRight="@dimen/expense_drawable_left_pad"
+                android:paddingTop="@dimen/padding_start_currency"
+                android:textColor="@android:color/white"
+                android:textOff="@string/checkbox_save"
+                android:textOn="@string/checkbox_saved"
+                android:textSize="@dimen/medium_font"
+                android:typeface="normal"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
