@@ -153,8 +153,8 @@ public class MonthAnalyticsFragment extends Fragment
      */
     protected void initTotalSums()
     {
-        String totalExepense = Utils.formatDoubleToTextCurrency(mMonthTransactions.sumTransactions(MonthTransactions.SubsetType.EXPENSE));
-        String totalIncome = Utils.formatDoubleToTextCurrency(mMonthTransactions.sumTransactions(MonthTransactions.SubsetType.INCOME));
+        String totalExepense = "" + (mMonthTransactions.sumTransactions(MonthTransactions.SubsetType.EXPENSE));
+        String totalIncome = "" + (mMonthTransactions.sumTransactions(MonthTransactions.SubsetType.INCOME));
         loadTextViewAndSetText(R.id.analytics_monthly_expense_sum, totalExepense);
         loadTextViewAndSetText(R.id.analytics_monthly_income_sum, totalIncome);
     }
@@ -163,7 +163,7 @@ public class MonthAnalyticsFragment extends Fragment
      */
     protected void initWorstDate()
     {
-        MonthTransactions.Couple<Integer, Double> daySum = mMonthTransactions.getTopCategory(MonthTransactions.TopFilter.BUSIEST_DAY);
+        MonthTransactions.Couple<Integer, Integer> daySum = mMonthTransactions.getTopCategory(MonthTransactions.TopFilter.BUSIEST_DAY);
 
         if (daySum != null)
         {
@@ -176,7 +176,7 @@ public class MonthAnalyticsFragment extends Fragment
             String month = Months.getMonthNameByNumber(mMonth);
 
             loadTextViewAndSetText(R.id.analytics_monthly_worst_day_date_label, month + " " + dayStr + suffix);
-            loadTextViewAndSetText(R.id.analytics_monthly_worst_day_sum, Utils.formatDoubleToTextCurrency(daySum.mSecondField));
+            loadTextViewAndSetText(R.id.analytics_monthly_worst_day_sum, "" + (daySum.mSecondField));
         }
     }
 
@@ -185,9 +185,9 @@ public class MonthAnalyticsFragment extends Fragment
      */
     protected void initProfitOrLossLabels()
     {
-        double totalSpent = mMonthTransactions.sumTransactions(MonthTransactions.SubsetType.EXPENSE);
-        double totalRevenue = mMonthTransactions.sumTransactions(MonthTransactions.SubsetType.INCOME);
-        double totalProfit = totalRevenue - totalSpent;
+        int totalSpent = mMonthTransactions.sumTransactions(MonthTransactions.SubsetType.EXPENSE);
+        int totalRevenue = mMonthTransactions.sumTransactions(MonthTransactions.SubsetType.INCOME);
+        int totalProfit = totalRevenue - totalSpent;
 
         TextView profitTextView = loadTextViewAndSetText(R.id.analytics_monthly_profit_sum, String.valueOf(totalProfit));
         TextView profitCurrency = (TextView) mRootView.findViewById(R.id.analytics_monthly_profit_currency);
@@ -207,7 +207,7 @@ public class MonthAnalyticsFragment extends Fragment
         } else
             profitLabel.setText(BROKE_EVEN);
 
-        String profitStr = Utils.formatDoubleToTextCurrency(totalProfit);
+        String profitStr = String.valueOf(totalProfit);
         profitTextView.setText(profitStr);
         profitTextView.setTextColor(color);
         profitCurrency.setTextColor(color);

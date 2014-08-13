@@ -20,23 +20,23 @@ import java.util.Map;
 public class DateTileAdapter extends BaseAdapter
 {
     private Context mContext;
-    private Map<String, Double> mTransactions;
+    private Map<String, Integer> mTransactions;
     private View mView;
     private TextView mDayTextView;
     private TextView mCategorySum;
     private List<String> mDayList;
-    private List<Double> mDaySumList;
+    private List<Integer> mDaySumList;
 
     /**
      */
-    public DateTileAdapter(Context c, Map<String, Double> expenseByDayList)
+    public DateTileAdapter(Context c, Map<String, Integer> expenseByDayList)
     {
         super();
         mContext = c;
         mTransactions = expenseByDayList;
 
         mDayList = new ArrayList<String>();
-        mDaySumList = new ArrayList<Double>();
+        mDaySumList = new ArrayList<Integer>();
 
         for(String key : mTransactions.keySet())
         {
@@ -85,10 +85,10 @@ public class DateTileAdapter extends BaseAdapter
 
         if(mDaySumList.get(position) != null && mDaySumList.get(position) > 0)
         {
-            Double curDaySum = mDaySumList.get(position);
+            int curDaySum = mDaySumList.get(position);
             String curDay = mDayList.get(position);
             mDayTextView.setText(curDay + Utils.generateDayInMonthSuffix(curDay));
-            mCategorySum.setText(Utils.formatDoubleToTextCurrency(curDaySum));
+            mCategorySum.setText("" + curDaySum);
         }
 
         return mView;

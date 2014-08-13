@@ -181,18 +181,18 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         if(transactions != null)
         {
             int topNumber = Math.min(MAX_CATEGORY_NUM, transactions.getNumberOfExpenses());
-            List<MonthTransactions.Couple<Integer, Double>> coupleValues = transactions.getTopCategoriesValues(topNumber);
+            List<MonthTransactions.Couple<Integer, Integer>> coupleValues = transactions.getTopCategoriesValues(topNumber);
 
             List<Integer> values = new ArrayList<Integer>();
             List<String> xValues = new ArrayList<String>();
             List<Integer> xIcons = new ArrayList<Integer>();
 
             // Build the graph details
-            for (MonthTransactions.Couple<Integer, Double> cur : coupleValues)
+            for (MonthTransactions.Couple<Integer, Integer> cur : coupleValues)
                 xIcons.add(Images.getSmallImageByPosition(cur.mFirstField));
-            for (MonthTransactions.Couple<Integer, Double> cur : coupleValues)
+            for (MonthTransactions.Couple<Integer, Integer> cur : coupleValues)
                 values.add(cur.mSecondField.intValue());
-            for (MonthTransactions.Couple<Integer, Double> cur : coupleValues)
+            for (MonthTransactions.Couple<Integer, Integer> cur : coupleValues)
                 xValues.add(Images.getCaptionByImage(Images.getImageByPosition(cur.mFirstField)));
 
             for (Integer cur : values)

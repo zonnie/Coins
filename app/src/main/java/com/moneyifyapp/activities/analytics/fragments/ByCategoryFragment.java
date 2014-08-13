@@ -33,7 +33,7 @@ public class ByCategoryFragment extends Fragment
     private View mRootView;
     private boolean mNoInsights = false;
     private GridView mGridView;
-    private List<MonthTransactions.Couple<Integer,Double>> mCategoryList;
+    private List<MonthTransactions.Couple<Integer,Integer>> mCategoryList;
 
     /**
      */
@@ -94,7 +94,7 @@ public class ByCategoryFragment extends Fragment
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 String title = "Expenses on " + getCategoryCaption(position);
-                MonthTransactions.Couple<Integer,Double> category = mCategoryList.get(position);
+                MonthTransactions.Couple<Integer,Integer> category = mCategoryList.get(position);
                 MonthTransactions transactions = mMonthTransactions.getTransactionByCategory(MonthTransactions.SubsetType.EXPENSE, category.mFirstField);
                 TransactionListDialog dialog = new TransactionListDialog(getActivity(), transactions, title);
                 dialog.show();
@@ -117,7 +117,7 @@ public class ByCategoryFragment extends Fragment
      */
     private void initTopCategory()
     {
-        List<MonthTransactions.Couple<Integer, Double>> categorySum = mMonthTransactions.getTopCategoriesValues();
+        List<MonthTransactions.Couple<Integer, Integer>> categorySum = mMonthTransactions.getTopCategoriesValues();
 
         if (categorySum != null && !categorySum.isEmpty())
             updateHasInsignts();

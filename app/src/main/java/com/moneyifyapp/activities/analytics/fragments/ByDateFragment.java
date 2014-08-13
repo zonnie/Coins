@@ -33,7 +33,7 @@ public class ByDateFragment extends Fragment
     private View mRootView;
     private boolean mNoInsights = false;
     private GridView mGridView;
-    private Map<String, Double> mByDateList;
+    private Map<String, Integer> mByDateList;
 
     /**
      */
@@ -113,7 +113,7 @@ public class ByDateFragment extends Fragment
      */
     private void initTopCategory()
     {
-        List<MonthTransactions.Couple<Integer, Double>> categorySum = mMonthTransactions.getTopCategoriesValues();
+        List<MonthTransactions.Couple<Integer, Integer>> categorySum = mMonthTransactions.getTopCategoriesValues();
 
         if (categorySum != null && !categorySum.isEmpty())
             updateHasInsignts();

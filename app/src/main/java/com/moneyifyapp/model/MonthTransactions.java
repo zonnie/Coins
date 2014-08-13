@@ -42,25 +42,25 @@ public class MonthTransactions implements Sumable
      */
 
     @Override
-    public double sum(SubsetType type)
+    public int sum(SubsetType type)
     {
         return sumTransactions(type);
     }
 
-    public double sumTransactions(SubsetType type)
+    public int sumTransactions(SubsetType type)
     {
-        double sum = 0;
+        int sum = 0;
 
         for (Transaction curTrans : mTransactions)
         {
             if(type == SubsetType.EXPENSE && curTrans.mIsExpense)
             {
-                double curTransSum = Double.valueOf(curTrans.mValue);
+                int curTransSum = Integer.valueOf(curTrans.mValue);
                 sum += curTransSum;
             }
             else if(type == SubsetType.INCOME && !curTrans.mIsExpense)
             {
-                double curTransSum = Double.valueOf(curTrans.mValue);
+                int curTransSum = Integer.valueOf(curTrans.mValue);
                 sum += curTransSum;
             }
         }
@@ -102,16 +102,16 @@ public class MonthTransactions implements Sumable
 
     /**
      */
-    public Map<String, Double> getDayToSumMap(SubsetType type)
+    public Map<String, Integer> getDayToSumMap(SubsetType type)
     {
-        Map<String,Double> res = new LinkedHashMap<String, Double>();
+        Map<String,Integer> res = new LinkedHashMap<String, Integer>();
 
         for(Transaction curTrans : mTransactions)
         {
-            double curSum = (res.get(curTrans.mTransactionDay) == null ? 0 : res.get(curTrans.mTransactionDay));
+            int curSum = (res.get(curTrans.mTransactionDay) == null ? 0 : res.get(curTrans.mTransactionDay));
 
             if(type == SubsetType.EXPENSE && curTrans.mIsExpense)
-                res.put(curTrans.mTransactionDay, curSum + Double.parseDouble(curTrans.mValue));
+                res.put(curTrans.mTransactionDay, curSum + Integer.valueOf(curTrans.mValue));
         }
 
         return res;
@@ -201,13 +201,13 @@ public class MonthTransactions implements Sumable
                 return null;
         }
 
-        Double[] dayExpenses = new Double[arrLength];
+        int[] dayExpenses = new int[arrLength];
         int maxKey = 0;
-        double maxSum = 0;
+        int maxSum = 0;
 
         // Init the array
         for(; fillIndex < dayExpenses.length; ++fillIndex)
-            dayExpenses[fillIndex] = Double.valueOf(0);
+            dayExpenses[fillIndex] = 0;
 
         // Fill with sums per
         for(Transaction curTransaction : mTransactions)
@@ -223,7 +223,7 @@ public class MonthTransactions implements Sumable
                     arrayKey = Integer.valueOf(curTransaction.mTransactionDay);
                     break;
             }
-            double curTransactionSum = Double.parseDouble(curTransaction.mValue);
+            int curTransactionSum = Integer.valueOf(curTransaction.mValue);
             dayExpenses[arrayKey] += (curTransaction.mIsExpense) ? curTransactionSum : 0;
         }
 
@@ -244,7 +244,7 @@ public class MonthTransactions implements Sumable
             }
         }
 
-        return (maxSum > 0) ? new Couple<Integer, Double>(maxKey, maxSum) : null;
+        return (maxSum > 0) ? new Couple<Integer, Integer>(maxKey, maxSum) : null;
     }
 
     /**
@@ -278,31 +278,31 @@ public class MonthTransactions implements Sumable
 
     /**
      */
-    public List<Couple<Integer, Double>> getTopCategoriesValues()
+    public List<Couple<Integer, Integer>> getTopCategoriesValues()
     {
-        List<Couple<Integer, Double>> result = new ArrayList<Couple<Integer, Double>>();
-        Map<Integer, Double> expenseMap = new HashMap<Integer, Double>();
+        List<Couple<Integer, Integer>> result = new ArrayList<Couple<Integer, Integer>>();
+        Map<Integer, Integer> expenseMap = new HashMap<Integer, Integer>();
 
         for(Transaction cur : mTransactions)
             if(cur.mIsExpense)
             {
-                Double curValue = expenseMap.get(cur.mImageResourceIndex);
+                Integer curValue = expenseMap.get(cur.mImageResourceIndex);
                 // Sum with previous values
                 if(curValue == null)
-                    curValue = 0.0;
-                curValue += Double.parseDouble(cur.mValue);
+                    curValue = 0;
+                curValue += Integer.valueOf(cur.mValue);
                 expenseMap.put(cur.mImageResourceIndex, curValue);
             }
 
         // Group in list
         for(Integer key : expenseMap.keySet())
-            result.add(new Couple<Integer, Double>(key, expenseMap.get(key)));
+            result.add(new Couple<Integer, Integer>(key, expenseMap.get(key)));
 
         // Sort and reverse for descending order
-        Collections.sort(result, new Comparator<Couple<Integer, Double>>()
+        Collections.sort(result, new Comparator<Couple<Integer, Integer>>()
         {
             @Override
-            public int compare(Couple<Integer, Double> lhs, Couple<Integer, Double> rhs)
+            public int compare(Couple<Integer, Integer> lhs, Couple<Integer, Integer> rhs)
             {
                 return lhs.mSecondField.intValue() - rhs.mSecondField.intValue();
             }
@@ -314,9 +314,9 @@ public class MonthTransactions implements Sumable
 
     /**
      */
-    public List<Couple<Integer, Double>> getTopCategoriesValues(int n)
+    public List<Couple<Integer, Integer>> getTopCategoriesValues(int n)
     {
-        List<Couple<Integer,Double>> list = getTopCategoriesValues();
+        List<Couple<Integer,Integer>> list = getTopCategoriesValues();
         if(list.size() >= n)
             return getTopCategoriesValues().subList(0,n);
         else

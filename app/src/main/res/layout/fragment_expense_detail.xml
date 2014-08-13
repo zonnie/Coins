@@ -227,12 +227,10 @@
                             android:focusableInTouchMode="true"
                             android:hint="@string/item_value_hint"
                             android:imeOptions="actionNext"
-                            android:inputType="numberDecimal"
+                            android:inputType="number"
                             android:maxLength="7"
                             android:singleLine="true"
                             android:textSize="@dimen/large_font"
-
-
                             />
 
                     </LinearLayout>

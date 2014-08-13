@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.moneyifyapp.R;
 import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.MonthTransactions;
-import com.moneyifyapp.utils.Utils;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ import java.util.List;
 public class CategoryTileAdapter extends BaseAdapter
 {
     private Context mContext;
-    private List<MonthTransactions.Couple<Integer, Double>> mCategoryList;
+    private List<MonthTransactions.Couple<Integer, Integer>> mCategoryList;
     private View mView;
     private TextView mCaptionTextView;
     private ImageView mCategoryImageView;
@@ -29,7 +28,7 @@ public class CategoryTileAdapter extends BaseAdapter
 
     /**
      */
-    public CategoryTileAdapter(Context c, List<MonthTransactions.Couple<Integer, Double>> categoryList)
+    public CategoryTileAdapter(Context c, List<MonthTransactions.Couple<Integer, Integer>> categoryList)
     {
         super();
         mContext = c;
@@ -77,7 +76,7 @@ public class CategoryTileAdapter extends BaseAdapter
 
         if(mCategoryList.get(position) != null)
         {
-            String sum = Utils.formatDoubleToTextCurrency(mCategoryList.get(position).mSecondField);
+            String sum = "" + (mCategoryList.get(position).mSecondField);
             int resIndex = mCategoryList.get(position).mFirstField;
             int resource = Images.getImageByPosition(resIndex);
             mCaptionTextView.setText(Images.getCaptionByImage(resource));

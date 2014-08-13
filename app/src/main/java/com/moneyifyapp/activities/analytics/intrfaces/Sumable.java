@@ -6,5 +6,5 @@ import com.moneyifyapp.model.MonthTransactions;
  */
 public interface Sumable
 {
-    public double sum(MonthTransactions.SubsetType type);
+    public int sum(MonthTransactions.SubsetType type);
 }

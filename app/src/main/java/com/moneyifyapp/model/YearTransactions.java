@@ -63,13 +63,13 @@ public class YearTransactions implements Sumable
      */
     public Integer maxMonthExpeneses()
     {
-        double maxMonth = 0;
+        int maxMonth = 0;
 
         for(int i = 0; i < size(); ++i)
         {
             if(get(i) != null)
             {
-                double monthSum = get(i).sumTransactions(MonthTransactions.SubsetType.EXPENSE);
+                int monthSum = get(i).sumTransactions(MonthTransactions.SubsetType.EXPENSE);
                 if (monthSum > maxMonth)
                     maxMonth = monthSum;
             }
@@ -81,9 +81,9 @@ public class YearTransactions implements Sumable
     /**
      */
     @Override
-    public double sum(MonthTransactions.SubsetType type)
+    public int sum(MonthTransactions.SubsetType type)
     {
-        double sum = 0;
+        int sum = 0;
 
         for(int i = 0; i < mYearTransactions.length; i++)
         {
@@ -112,7 +112,7 @@ public class YearTransactions implements Sumable
                     Transaction curTrans = (curMonth.getItems().size() > 0) ? curMonth.getItems().get(0) : null;
 
                     if(maxTrans != null && curTrans != null)
-                        if (Double.parseDouble(curTrans.mValue) > Double.parseDouble(maxTrans.mValue))
+                        if (Integer.valueOf(curTrans.mValue) > Integer.valueOf(maxTrans.mValue))
                             maxMonth = curMonth;
                 }
             }

@@ -372,7 +372,7 @@ public class ExpenseListFragment extends ListFragment
         if (id == R.id.refresh_list)
         {
             refreshFromDatabase();
-            Toast.makeText(getActivity(), "Refreshing...", Toast.LENGTH_SHORT).show();
+            Utils.showPrettyToast(getActivity(), "Refreshing...", Toast.LENGTH_SHORT);
         }
         else if (id == R.id.add_expense)
             startNewTransactionActivity();
@@ -462,7 +462,9 @@ public class ExpenseListFragment extends ListFragment
                     public void done(ParseException e)
                     {
                         if (e == null)
+                        {
                             mRemoveQueue.remove();
+                        }
                         else
                         {
                             // Remove the id from queue w/o removing the item
@@ -668,6 +670,7 @@ public class ExpenseListFragment extends ListFragment
         newTransaction.mRepeatType = repeatType;
         ParseObject expenseObject = new ParseObject(Transaction.CLASS_NAME);
         saveDataInBackground(newTransaction, expenseObject);
+        Utils.showPrettyToast(getActivity(), "Added \"" + addDescription +"\"", Toast.LENGTH_LONG);
 
         // The adapter will add the expense to the model collection so it can update observer
         // as well.
@@ -705,7 +708,7 @@ public class ExpenseListFragment extends ListFragment
     /**
      * This encapsulates the saving of date using Parse.
      */
-    private void saveDataInBackground(Transaction newTransaction, ParseObject expenseObject)
+    private void saveDataInBackground(final Transaction newTransaction, final ParseObject expenseObject)
     {
         ParseUser user = ParseUser.getCurrentUser();
 
@@ -742,6 +745,7 @@ public class ExpenseListFragment extends ListFragment
                 {
                     ParseObject expenseObjectInDb = list.get(0);
                     saveDataInBackground(updatedExpense, expenseObjectInDb);
+                    Utils.showPrettyToast(getActivity(), "Updated \"" + updatedExpense.mDescription +"\"", Toast.LENGTH_LONG);
                 }
             }
         });
@@ -776,9 +780,9 @@ public class ExpenseListFragment extends ListFragment
     private void updateTotalsOnAddedTransaction(Transaction newTransaction, boolean isRemoval)
     {
         boolean isExpense = newTransaction.mIsExpense;
-        double initIncome = Double.valueOf(mTotalIncome.getText().toString());
-        double initExpense = Double.valueOf(mTotalExpense.getText().toString());
-        double curTransValue = Double.valueOf(newTransaction.mValue);
+        int initIncome = Integer.valueOf(mTotalIncome.getText().toString());
+        int initExpense = Integer.valueOf(mTotalExpense.getText().toString());
+        int curTransValue = Integer.valueOf(newTransaction.mValue);
 
         // Collect info
         if (isExpense)
@@ -786,7 +790,7 @@ public class ExpenseListFragment extends ListFragment
         else
             initIncome += (isRemoval) ? (-curTransValue) : curTransValue;
 
-        double initTotal = initIncome - initExpense;
+        int initTotal = initIncome - initExpense;
 
         int color;
         if (initTotal < 0)
@@ -800,9 +804,9 @@ public class ExpenseListFragment extends ListFragment
         mTotalSavings.setTextColor(color);
         mTotalSavingsSign.setTextColor(color);
 
-        String incomeStr = Utils.formatDoubleToTextCurrency(initIncome);
-        String expenseStr = Utils.formatDoubleToTextCurrency(initExpense);
-        String savingStr = Utils.formatDoubleToTextCurrency(initTotal);
+        String incomeStr = "" + initIncome;
+        String expenseStr = "" + initExpense;
+        String savingStr = "" + initTotal;
         mTotalSavings.setText(savingStr);
         mTotalIncome.setText(incomeStr);
         mTotalExpense.setText(expenseStr);

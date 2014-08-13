@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.preferences.PrefActivity;
+import com.moneyifyapp.views.PrettyToast;
 import com.parse.Parse;
 
 import java.text.DateFormatSymbols;
@@ -264,5 +265,23 @@ public class Utils
         if (count < 1000) return "" + count;
         int exp = (int) (Math.log(count) / Math.log(1000));
         return String.format("%.1f%c", count / Math.pow(1000, exp), "kMGTPE".charAt(exp - 1));
+    }
+
+    /**
+     */
+    public static String sumAsCurrency(double value)
+    {
+        if (value < 1000) return String.valueOf(value);
+        int exp = (int) (Math.log(value) / Math.log(1000));
+        return String.format("%.1f%c", value / Math.pow(1000, exp), "kMGTPE".charAt(exp - 1));
+    }
+
+    /**
+     */
+    public static void showPrettyToast(Activity activity, String text, int duration)
+    {
+        PrettyToast.ToastParams params = new PrettyToast.ToastParams();
+        params.mToastText = text;
+        new PrettyToast(activity, params).show();
     }
 }
