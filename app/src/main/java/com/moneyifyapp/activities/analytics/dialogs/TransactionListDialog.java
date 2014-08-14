@@ -34,6 +34,8 @@ public class TransactionListDialog extends Dialog implements ExpenseItemAdapterR
         mTitle = title;
 
         buildDialog();
+        if(transactions.getItems().size() > 0)
+            mDialog.findViewById(R.id.templates_empty_textivew).setVisibility(View.GONE);
     }
 
     /**
