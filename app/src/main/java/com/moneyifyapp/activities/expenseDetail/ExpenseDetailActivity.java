@@ -8,12 +8,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
+import com.moneyifyapp.activities.expenseDetail.dialogs.SavedTransactionsDialog;
 import com.moneyifyapp.activities.expenseDetail.fragments.ExpenseDetailFragment;
 import com.moneyifyapp.activities.expenseDetail.fragments.ExpenseOptionsFragment;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.activities.preferences.PrefActivity;
 import com.moneyifyapp.model.Transaction;
+import com.moneyifyapp.model.TransactionHandler;
 import com.moneyifyapp.utils.Utils;
 
 /**
@@ -23,7 +25,8 @@ import com.moneyifyapp.utils.Utils;
  */
 public class ExpenseDetailActivity extends Activity
         implements ExpenseDetailFragment.OnDetailFragmentSubmit,
-        ExpenseOptionsFragment.OnOptionsFragmentSubmit
+        ExpenseOptionsFragment.OnOptionsFragmentSubmit,
+        SavedTransactionsDialog.OnTransactionItemClicked
 {
     private int mRequestCode;
     private int mItemPosition;
@@ -127,6 +130,13 @@ public class ExpenseDetailActivity extends Activity
         return mTransaction;
     }
 
+    public void onLoadTransactionClick(View view)
+    {
+        SavedTransactionsDialog dialog = new SavedTransactionsDialog(this,
+                TransactionHandler.getInstance(this).getAllSavedTransactions(), "Template Transactions", this);
+        dialog.show();
+    }
+
     /**
      */
     @Override
@@ -201,11 +211,31 @@ public class ExpenseDetailActivity extends Activity
             mDetailDateMonth.setText(Utils.getMonthPrefixByIndex(mMonth).toUpperCase());
     }
 
+    /**
+     */
     @Override
     public void OnOptionsSubmit(Transaction transaction)
     {
         Intent data = getIntent();
         data.putExtra(ExpenseListFragment.TEMPLATE_KEY, transaction.mSaved);
         data.putExtra(ExpenseListFragment.REPEAT_KEY, transaction.mRepeatType.toString());
+    }
+
+    /**
+     */
+    @Override
+    public void transactionItemClicked(Transaction selected)
+    {
+        mDetailFragment = ExpenseDetailFragment.newInstance(true, selected);
+        mOptionsFragment = ExpenseOptionsFragment.newInstance(true, selected);
+
+        getFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_object, R.anim.slide_out_object)
+                .replace(R.id.detail_container, mDetailFragment, REPEAT_TAG)
+                .commit();
+        getFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_object, R.anim.slide_out_object)
+                .replace(R.id.options_container, mOptionsFragment, REPEAT_TAG)
+                .commit();
     }
 }

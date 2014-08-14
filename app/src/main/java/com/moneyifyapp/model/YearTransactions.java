@@ -120,4 +120,19 @@ public class YearTransactions implements Sumable
 
         return maxMonth;
     }
+
+    /**
+     */
+    public MonthTransactions getYearSavedTransactions()
+    {
+        MonthTransactions transactions = new MonthTransactions(0);
+
+        for(int i = 0; i < mYearTransactions.length; ++i)
+        {
+            if(mYearTransactions[i] != null)
+                transactions.getItems().addAll(mYearTransactions[i].getSavedTemplates().getItems());
+        }
+
+        return transactions;
+    }
 }

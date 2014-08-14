@@ -126,7 +126,7 @@ public class YearAnalyticsFragment extends MonthAnalyticsFragment
             mBiggestExpenseLayout = (LinearLayout) mRootView.findViewById(R.id.month_analytics_biggest_expense_layout);
             mBiggestExpenseLayout.setVisibility(View.VISIBLE);
             mBiggestExpenseList = (ListView) mRootView.findViewById(R.id.month_analytics_biggest_expense_list);
-            ExpenseItemAdapterRead expenseAdapter = new ExpenseItemAdapterRead(getActivity(), R.layout.adapter_expense_item_read, expenses);
+            ExpenseItemAdapterRead expenseAdapter = new ExpenseItemAdapterRead(getActivity(), R.layout.adapter_expense_item_read, expenses, this);
             mBiggestExpenseList.setAdapter(expenseAdapter);
         }
     }
@@ -144,7 +144,7 @@ public class YearAnalyticsFragment extends MonthAnalyticsFragment
             mBiggestIncomeLayout = (LinearLayout) mRootView.findViewById(R.id.month_analytics_biggest_income_layout);
             mBiggestIncomeLayout.setVisibility(View.VISIBLE);
             mBiggestIncomeList = (ListView) mRootView.findViewById(R.id.month_analytics_biggest_income_list);
-            ExpenseItemAdapterRead incomeAdapter = new ExpenseItemAdapterRead(getActivity(), R.layout.adapter_expense_item_read, incomes);
+            ExpenseItemAdapterRead incomeAdapter = new ExpenseItemAdapterRead(getActivity(), R.layout.adapter_expense_item_read, incomes, this);
             mBiggestIncomeList.setAdapter(incomeAdapter);
         }
     }

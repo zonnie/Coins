@@ -23,6 +23,7 @@ import com.moneyifyapp.utils.Utils;
  */
 public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
 {
+    private LinearLayout mItemLayout;
     private TextView mExpenseDescription;
     private TextView mExpenseValue;
     private TextView mExpenseCurrency;
@@ -33,15 +34,17 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
     private MonthTransactions mTransactions;
     private View mMyView;
     public static int PICK_IMAGE_DIMENSIONS = 150;
+    private OnExpenseItemClicked mListener;
 
     /**
      *
      */
-    public ExpenseItemAdapterRead(Context context, int resource, MonthTransactions expenses)
+    public ExpenseItemAdapterRead(Context context, int resource, MonthTransactions expenses, OnExpenseItemClicked listener)
     {
         super(context, resource, expenses.getItems());
         mTransactions = expenses;
         mLayoutResourceId = resource;
+        mListener = listener;
     }
 
     /**
@@ -73,7 +76,7 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
 
     /**
      */
-    private View getRegularView(int position)
+    private View getRegularView(final int position)
     {
         Transaction currentTransactionView = mTransactions.getItems().get(position);
 
@@ -81,6 +84,15 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
         if (currentTransactionView != null)
         {
             storeViews();
+
+            mItemLayout.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    mListener.expenseItemClicked(view);
+                }
+            });
 
             // Update ht look of the the view accordingly
             if(mTransactions.getItems().get(position).mIsExpense == true)
@@ -102,6 +114,7 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
     private void storeViews()
     {
         // Take care of click to layout to be able to edit item in view
+        mItemLayout = (LinearLayout) mMyView.findViewById(R.id.transaction_card_layout);
         mExpenseDescription = (TextView) mMyView.findViewById(R.id.expenseDesc);
         mExpenseValue = (TextView) mMyView.findViewById(R.id.expenseValue);
         mExpenseCurrency = (TextView) mMyView.findViewById(R.id.currency);
@@ -169,5 +182,10 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
             mExpenseMonth.setText(dateSuffix);
         }
 
+    }
+
+    public interface OnExpenseItemClicked
+    {
+        public void expenseItemClicked(View view);
     }
 }

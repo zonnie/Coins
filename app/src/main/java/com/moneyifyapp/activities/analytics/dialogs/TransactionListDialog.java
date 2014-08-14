@@ -3,6 +3,7 @@ package com.moneyifyapp.activities.analytics.dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ListView;
@@ -14,14 +15,14 @@ import com.moneyifyapp.model.MonthTransactions;
 
 /**
  */
-public class TransactionListDialog extends Dialog
+public class TransactionListDialog extends Dialog implements ExpenseItemAdapterRead.OnExpenseItemClicked
 {
-    private Dialog mDialog;
-    private String mTitle;
-    private Context mContext;
-    private WindowManager.LayoutParams mLayoutParams;
-    private MonthTransactions mTransactions;
-    private ListView mListView;
+    protected Dialog mDialog;
+    protected String mTitle;
+    protected Context mContext;
+    protected WindowManager.LayoutParams mLayoutParams;
+    protected MonthTransactions mTransactions;
+    protected ListView mListView;
 
     /**
      */
@@ -49,7 +50,7 @@ public class TransactionListDialog extends Dialog
         mLayoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
         mLayoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
-        ExpenseItemAdapterRead incomeAdapter = new ExpenseItemAdapterRead(mContext, R.layout.adapter_expense_item_read, mTransactions);
+        ExpenseItemAdapterRead incomeAdapter = new ExpenseItemAdapterRead(mContext, R.layout.adapter_expense_item_read, mTransactions, this);
         mListView = (ListView) mDialog.findViewById(R.id.dialog_transaction_listview);
         TextView textView = (TextView)mDialog.findViewById(R.id.dialog_transaction_title_label);
         textView.setText(mTitle);
@@ -64,5 +65,11 @@ public class TransactionListDialog extends Dialog
     {
         mDialog.show();
         mDialog.getWindow().setAttributes(mLayoutParams);
+    }
+
+
+    @Override
+    public void expenseItemClicked(View view)
+    {
     }
 }

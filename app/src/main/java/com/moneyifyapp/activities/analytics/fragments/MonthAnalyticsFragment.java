@@ -25,7 +25,7 @@ import com.moneyifyapp.utils.Utils;
  * It can be used in any activity that can supply it's
  * basic info.
  */
-public class MonthAnalyticsFragment extends Fragment
+public class MonthAnalyticsFragment extends Fragment implements ExpenseItemAdapterRead.OnExpenseItemClicked
 {
     protected int mMonth;
     protected int mYear;
@@ -236,7 +236,7 @@ public class MonthAnalyticsFragment extends Fragment
             mBiggestExpenseLayout = (LinearLayout) mRootView.findViewById(R.id.month_analytics_biggest_expense_layout);
             mBiggestExpenseLayout.setVisibility(View.VISIBLE);
             mBiggestExpenseList = (ListView) mRootView.findViewById(R.id.month_analytics_biggest_expense_list);
-            ExpenseItemAdapterRead expenseAdapter = new ExpenseItemAdapterRead(getActivity(), R.layout.adapter_expense_item_read, expenses);
+            ExpenseItemAdapterRead expenseAdapter = new ExpenseItemAdapterRead(getActivity(), R.layout.adapter_expense_item_read, expenses, this);
             mBiggestExpenseList.setAdapter(expenseAdapter);
         }
     }
@@ -254,7 +254,7 @@ public class MonthAnalyticsFragment extends Fragment
             mBiggestIncomeLayout = (LinearLayout) mRootView.findViewById(R.id.month_analytics_biggest_income_layout);
             mBiggestIncomeLayout.setVisibility(View.VISIBLE);
             mBiggestIncomeList = (ListView) mRootView.findViewById(R.id.month_analytics_biggest_income_list);
-            ExpenseItemAdapterRead incomeAdapter = new ExpenseItemAdapterRead(getActivity(), R.layout.adapter_expense_item_read, incomes);
+            ExpenseItemAdapterRead incomeAdapter = new ExpenseItemAdapterRead(getActivity(), R.layout.adapter_expense_item_read, incomes, this);
             mBiggestIncomeList.setAdapter(incomeAdapter);
         }
     }
@@ -278,5 +278,11 @@ public class MonthAnalyticsFragment extends Fragment
     {
         super.onResume();
         mNoInsights = false;
+    }
+
+    @Override
+    public void expenseItemClicked(View view)
+    {
+
     }
 }

@@ -311,4 +311,16 @@ public class TransactionHandler
 
         return null;
     }
+
+    /**
+     */
+    public MonthTransactions getAllSavedTransactions()
+    {
+        MonthTransactions allSaved = new MonthTransactions(0);
+
+        for(String year : mAllTransactions.keySet())
+            allSaved.getItems().addAll(mAllTransactions.get(year).getYearSavedTransactions().getItems());
+
+        return allSaved;
+    }
 }

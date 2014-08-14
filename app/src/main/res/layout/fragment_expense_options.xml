@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/drawable_left_pad"
               android:orientation="vertical"
               android:paddingLeft="@dimen/big_padding"
               android:paddingRight="@dimen/big_padding"
@@ -17,6 +16,7 @@
         android:background="@drawable/card"
         android:orientation="vertical"
         android:paddingBottom="@dimen/padding_start_currency"
+        android:visibility="gone"
         >
 
         <!-- title -->
@@ -170,7 +170,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/drawable_left_pad"
+        android:layout_marginTop="@dimen/padding_start_currency"
         android:background="@drawable/card"
         android:orientation="vertical"
         android:paddingBottom="@dimen/expense_drawable_left_pad"

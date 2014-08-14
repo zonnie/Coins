@@ -327,4 +327,19 @@ public class MonthTransactions implements Sumable
      * An enum representing filters for the top subset function.
      */
     public enum TopFilter {CATEGORY, BUSIEST_DAY}
+
+    /**
+     */
+    public MonthTransactions getSavedTemplates()
+    {
+        MonthTransactions result = new MonthTransactions(mMonthNumber);
+
+        for(Transaction cur : mTransactions)
+        {
+            if(cur.mSaved)
+                result.getItems().add(cur);
+        }
+
+        return result;
+    }
 }
