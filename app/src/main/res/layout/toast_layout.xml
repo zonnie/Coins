@@ -1,11 +1,11 @@
 <LinearLayout
     android:id="@+id/toast_layout_root"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/toast_background"
     android:orientation="horizontal"
-    android:paddingLeft="@dimen/expense_drawable_left_pad"
+    android:paddingLeft="@dimen/padding_start_currency"
     android:paddingRight="@dimen/expense_drawable_left_pad"
     >
 
@@ -26,6 +26,7 @@
         android:textSize="@dimen/medium_font"
         android:textColor="@android:color/white"
         android:paddingStart="@dimen/drawable_left_pad"
+        android:paddingEnd="@dimen/drawable_left_pad"
         android:singleLine="false"
         android:layout_weight="40"
         android:text="Text"

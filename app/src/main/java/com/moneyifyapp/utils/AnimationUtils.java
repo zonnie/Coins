@@ -3,6 +3,8 @@ package com.moneyifyapp.utils;
 import android.content.Context;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 
 import com.moneyifyapp.R;
 
@@ -17,6 +19,7 @@ public class AnimationUtils
     private static Animation mZoomInBounceAnimation;
     private static Animation mZoomInBounceLongAnimation;
     private static Animation mZoomInBounceSmallAnimation;
+    private static Animation mRotateAnimation;
 
     /**
      */
@@ -80,4 +83,19 @@ public class AnimationUtils
         return mZoomInBounceSmallAnimation;
     }
 
+    public static Animation getmRotateAnimation()
+    {
+        if(mRotateAnimation == null)
+        {
+            mRotateAnimation = new RotateAnimation(0.0f, 360.0f,
+                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
+                    0.5f);
+            mRotateAnimation.setRepeatCount(Animation.INFINITE);
+            mRotateAnimation.setDuration(500);
+            mRotateAnimation.setInterpolator(new LinearInterpolator());
+            mRotateAnimation.setFillAfter(true);
+        }
+
+        return mRotateAnimation;
+    }
 }

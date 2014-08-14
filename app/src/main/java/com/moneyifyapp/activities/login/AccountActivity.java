@@ -1,12 +1,5 @@
 package com.moneyifyapp.activities.login;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -14,9 +7,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
+import com.moneyifyapp.activities.LoadingActivity;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.activities.login.dialogs.ChangePasswordDialog;
 import com.moneyifyapp.activities.login.dialogs.ChangeUserDialog;
+import com.moneyifyapp.activities.login.dialogs.DeleteDialog;
 import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.utils.AnimationUtils;
 import com.moneyifyapp.utils.Utils;
@@ -29,15 +24,12 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
-public class AccountActivity extends Activity implements View.OnClickListener
+public class AccountActivity extends LoadingActivity
+        implements View.OnClickListener, DeleteDialog.OnDeleteClicked
 {
-    private View mProgressView;
-    private View mSignupForm;
     public static final int ACCOUNT_DELETED = 323;
     public static final int ACCOUNT_SAME = 32323;
     public int mItemsCounter;
-    private final String DELETE_MSG = "Are you sure you want to delete your account ?" +
-            "                       \nThis will also delete all your transactions";
 
     /**
      */
@@ -52,20 +44,18 @@ public class AccountActivity extends Activity implements View.OnClickListener
         Utils.removeLogo(this);
         Utils.removeActionBar(this);
         Utils.animateForward(this);
-
         setContentView(R.layout.activity_user_account);
-        getActionBar().setHomeButtonEnabled(true);
 
         storeViews();
     }
 
     /**
      */
-    private void storeViews()
+    @Override
+    protected void storeViews()
     {
-        mSignupForm = findViewById(R.id.account_form);
-        mProgressView = findViewById(R.id.account_progress);
-
+        super.storeViews();
+        super.setAnimationText("Deleting account \"" + ParseUser.getCurrentUser().getUsername().toString() + "\"");
         TextView userLayout = (TextView) findViewById(R.id.change_password_field);
         userLayout.setOnClickListener(new View.OnClickListener()
         {
@@ -143,22 +133,10 @@ public class AccountActivity extends Activity implements View.OnClickListener
      */
     public void promptAccountDelete(View view)
     {
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-                switch (which)
-                {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        deleteAccount();
-                        break;
-                }
-            }
-        };
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(DELETE_MSG).setPositiveButton("Yes", dialogClickListener)
-                .setNegativeButton("No", dialogClickListener).show();
+        String first = getResources().getString(R.string.delete_account_first_text);
+        String second = getResources().getString(R.string.delete_account_second_text);
+        DeleteDialog dialog = new DeleteDialog(this, this, first, second);
+        dialog.show();
     }
 
     /**
@@ -183,6 +161,14 @@ public class AccountActivity extends Activity implements View.OnClickListener
      */
     private void deleteAccountTransactions(List<ParseObject> parseObjects)
     {
+        if(parseObjects.isEmpty())
+        {
+            setResult(ACCOUNT_DELETED);
+            finish();
+            super.showProgress(false);
+            return;
+        }
+
         for (ParseObject object : parseObjects)
         {
             object.deleteInBackground(new DeleteCallback()
@@ -191,10 +177,11 @@ public class AccountActivity extends Activity implements View.OnClickListener
                 public void done(ParseException e)
                 {
                     mItemsCounter--;
-                    if (mItemsCounter == 0)
+                    if (mItemsCounter <= 0)
                     {
                         setResult(ACCOUNT_DELETED);
                         finish();
+                        showProgress(false);
                     }
                 }
             });
@@ -217,40 +204,10 @@ public class AccountActivity extends Activity implements View.OnClickListener
         Utils.animateBack(this);
     }
 
-    /**
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    public void showProgress(final boolean show)
+    @Override
+    public void deleteClicked()
     {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2)
-        {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mSignupForm.setVisibility(show ? View.GONE : View.VISIBLE);
-            mSignupForm.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter()
-            {
-                @Override
-                public void onAnimationEnd(Animator animation)
-                {
-                    mSignupForm.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter()
-            {
-                @Override
-                public void onAnimationEnd(Animator animation)
-                {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else
-        {
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mSignupForm.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
+        showProgress(true);
+        deleteAccount();
     }
 }

@@ -25,7 +25,7 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItem>
     private List<DrawerItem> mDrawerItems;
     private View mMyView;
     private int mLayoutResourceId;
-    public static int PICK_IMAGE_DIMENSIONS = 130;
+    public static int PICK_IMAGE_DIMENSIONS = 100;
     private Animation mItemsLoadAnimation;
 
     /**

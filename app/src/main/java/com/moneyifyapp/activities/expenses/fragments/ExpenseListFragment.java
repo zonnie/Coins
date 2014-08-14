@@ -26,6 +26,7 @@ import com.moneyifyapp.activities.analytics.MonthAnalytics;
 import com.moneyifyapp.activities.expenseDetail.ExpenseDetailActivity;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.activities.expenses.adapters.ExpenseItemAdapter;
+import com.moneyifyapp.activities.login.dialogs.DeleteDialog;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.model.TransactionHandler;
@@ -48,7 +49,8 @@ import java.util.UUID;
  * A fragment representing a list of Items.
  */
 public class ExpenseListFragment extends ListFragment
-        implements ExpenseItemAdapter.ListItemHandler, TransactionHandler.onFetchingCompleteListener
+        implements ExpenseItemAdapter.ListItemHandler, TransactionHandler.onFetchingCompleteListener,
+        DeleteDialog.OnDeleteClicked
 {
     public static final String ITEM_POS_KEY = "itemPos";
     public static final String PAGE_ID_KEY = "frag_id";
@@ -78,6 +80,7 @@ public class ExpenseListFragment extends ListFragment
     private TransactionHandler mTransactionHandler;
     private int mPageId;
     private int mYear;
+    private int mDeletePosition;
 
     /**
      * Factory to pass some data for different fragments creation.
@@ -697,6 +700,12 @@ public class ExpenseListFragment extends ListFragment
         updateTotalsOnAddedTransaction(newTransaction, false);
     }
 
+    @Override
+    public void deleteClicked()
+    {
+        removeItemFromList(mDeletePosition);
+    }
+
     /**
      */
     public interface OnFragmentInteractionListener
@@ -830,7 +839,12 @@ public class ExpenseListFragment extends ListFragment
     {
         final int position = getListView().getPositionForView((LinearLayout) viewInAdapter.getParent().getParent());
         if (position >= 0)
-            verifyRemoveDialog(position);
+        {
+            mDeletePosition = position;
+            DeleteDialog dialog = new DeleteDialog(getActivity(), this,
+                    "Are you sure you want to delete", "\"" + mAdapter.getItem(position).mDescription + "\"");
+            dialog.show();
+        }
     }
 
     /**

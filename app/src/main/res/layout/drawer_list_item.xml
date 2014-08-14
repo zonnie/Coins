@@ -26,7 +26,7 @@
             android:orientation="vertical"
             android:paddingBottom="@dimen/padding_start_currency"
             android:paddingEnd="@dimen/padding_start_currency"
-            android:paddingStart="@dimen/expense_drawable_left_pad"
+            android:paddingStart="@dimen/padding_start_currency"
             android:paddingTop="@dimen/padding_start_currency"
             >
 
@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/cal"
-                android:drawablePadding="@dimen/big_padding"
+                android:drawablePadding="@dimen/drawable_left_pad"
                 android:gravity="center"
                 android:text=""
                 android:textSize="@dimen/large_font"

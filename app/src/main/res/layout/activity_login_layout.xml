@@ -10,16 +10,45 @@
     >
 
     <!-- Login progress -->
-    <ProgressBar
+    <!--<ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:visibility="gone"/>
+        android:visibility="gone"/>-->
+
+    <!-- Animation -->
+
+    <LinearLayout
+        android:id="@+id/animation_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <com.moneyifyapp.views.ThinTextView
+            android:id="@+id/animation_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/drawable_left_pad"
+            android:textSize="@dimen/large_font"
+            />
+
+        <ImageView
+            android:id="@+id/progress_view"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/coin_animate"
+            />
+    </LinearLayout>
 
     <ScrollView
-        android:id="@+id/login_form"
+        android:id="@+id/body_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
@@ -162,7 +191,6 @@
                             android:textStyle="bold"/>
 
 
-
                     </LinearLayout>
 
 
@@ -170,14 +198,14 @@
 
                 <Button
                     android:id="@+id/forgot_button"
-                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/padding_start_currency"
+                    android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/drawable_left_pad"
+                    android:layout_marginTop="@dimen/padding_start_currency"
                     android:background="@drawable/template_background"
-                    android:text="@string/action_forgot_pass"
                     android:padding="@dimen/drawable_left_pad"
+                    android:text="@string/action_forgot_pass"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/medium_font"
                     android:textStyle="bold"/>

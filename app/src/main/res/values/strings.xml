@@ -28,6 +28,7 @@
     <string name="change_username_hint">New Username</string>
     <string name="reset_password_hint">Enter Username</string>
     <string name="reset_password_button">Reset Password</string>
+    <string name="account_delete_button_text">Delete</string>
     <string name="change_password_button_text">Change Password</string>
     <string name="new_password_hint">New Password</string>
     <string name="new_password_repeat_hint">Verify Password</string>
@@ -89,4 +90,6 @@
     <string name="title_activity_graph">Stats</string>
     <string name="repeat_button_text">Done !</string>
     <string name="repeat_options_text">Repeat Options</string>
+    <string name="delete_account_first_text">We don\'t wannna lose you</string>
+    <string name="delete_account_second_text">Deleting the account will lose all your info</string>
 </resources>

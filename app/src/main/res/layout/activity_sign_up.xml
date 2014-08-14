@@ -9,17 +9,48 @@
               android:paddingRight="@dimen/activity_horizontal_margin"
     >
 
-    <ProgressBar
+    <!--<ProgressBar
         android:id="@+id/signup_progress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:visibility="gone"
-        />
+        />-->
+
+    <!-- Animation -->
+
+    <LinearLayout
+        android:id="@+id/animation_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <com.moneyifyapp.views.ThinTextView
+            android:id="@+id/animation_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Wait for it..."
+            android:paddingBottom="@dimen/drawable_left_pad"
+            android:textSize="@dimen/large_font"
+            />
+
+        <ImageView
+            android:id="@+id/progress_view"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/coin_animate"
+            />
+    </LinearLayout>
+
 
     <ScrollView
-        android:id="@+id/signup_form"
+        android:id="@+id/body_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"

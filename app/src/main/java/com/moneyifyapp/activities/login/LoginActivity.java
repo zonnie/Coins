@@ -1,13 +1,8 @@
 package com.moneyifyapp.activities.login;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -21,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.moneyifyapp.R;
+import com.moneyifyapp.activities.LoadingActivity;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.activities.login.dialogs.ResetPasswordDialog;
 import com.moneyifyapp.database.TransactionSqlHelper;
@@ -35,13 +31,12 @@ import java.util.Calendar;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends Activity implements OnClickListener, TransactionHandler.onFetchingCompleteListener
+public class LoginActivity extends LoadingActivity
+        implements OnClickListener, TransactionHandler.onFetchingCompleteListener
 {
     // UI references.
     private EditText mEmailView;
     private EditText mPasswordView;
-    private View mProgressView;
-    private View mLoginFormView;
     private Button mEmailSignInButton;
     private Button mSignUpButton;
     private Button mResetPasswordButton;
@@ -75,15 +70,15 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
 
     /**
      */
-    private void storeViews()
+    @Override
+    protected void storeViews()
     {
+        super.storeViews();
         mEmailView = (EditText) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
         mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mSignUpButton = (Button) findViewById(R.id.sign_up_button);
         mResetPasswordButton = (Button) findViewById(R.id.forgot_button);
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
     }
 
     /**
@@ -134,7 +129,7 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
             @Override
             public void onClick(View v)
             {
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mSignUpButton.getWindowToken(), 0);
                 ResetPasswordDialog dialog = new ResetPasswordDialog(LoginActivity.this);
                 dialog.show();
@@ -236,43 +231,6 @@ public class LoginActivity extends Activity implements OnClickListener, Transact
     {
         Toast.makeText(this, "We can't seem to know you, check your email and password", Toast.LENGTH_SHORT).show();
         showProgress(false);
-    }
-
-    /**
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    public void showProgress(final boolean show)
-    {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2)
-        {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter()
-            {
-                @Override
-                public void onAnimationEnd(Animator animation)
-                {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter()
-            {
-                @Override
-                public void onAnimationEnd(Animator animation)
-                {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else
-        {
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
     }
 
     @Override

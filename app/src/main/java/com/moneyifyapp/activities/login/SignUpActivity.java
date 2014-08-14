@@ -1,12 +1,7 @@
 package com.moneyifyapp.activities.login;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
@@ -21,18 +16,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.moneyifyapp.R;
+import com.moneyifyapp.activities.LoadingActivity;
 import com.moneyifyapp.utils.Utils;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-public class SignUpActivity extends Activity implements View.OnClickListener
+public class SignUpActivity extends LoadingActivity implements View.OnClickListener
 {
     private EditText mUserEditText;
     private EditText mPassEditText;
     private EditText mPassRepeatEditText;
-    private View mProgressView;
-    private View mSignupForm;
 
     /**
      */
@@ -50,22 +44,20 @@ public class SignUpActivity extends Activity implements View.OnClickListener
 
         setContentView(R.layout.activity_sign_up);
 
-        getActionBar().setHomeButtonEnabled(true);
-
         storeViews();
         bindEventListenersToViews();
     }
 
     /**
      */
-    private void storeViews()
+    @Override
+    protected void storeViews()
     {
+        super.storeViews();
+        super.setAnimationText("Writing it down...");
         mUserEditText = (EditText) findViewById(R.id.usernameEditText);
         mPassEditText = (EditText) findViewById(R.id.passEditText);
-        mSignupForm = findViewById(R.id.signup_form);
-        mProgressView = findViewById(R.id.signup_progress);
         mPassRepeatEditText = (EditText) findViewById(R.id.passVerifyEditText);
-
     }
 
     /**
@@ -257,42 +249,5 @@ public class SignUpActivity extends Activity implements View.OnClickListener
     {
         super.onBackPressed();
         Utils.animateBack(this);
-    }
-
-    /**
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    public void showProgress(final boolean show)
-    {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2)
-        {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mSignupForm.setVisibility(show ? View.GONE : View.VISIBLE);
-            mSignupForm.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter()
-            {
-                @Override
-                public void onAnimationEnd(Animator animation)
-                {
-                    mSignupForm.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter()
-            {
-                @Override
-                public void onAnimationEnd(Animator animation)
-                {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else
-        {
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mSignupForm.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
     }
 }
