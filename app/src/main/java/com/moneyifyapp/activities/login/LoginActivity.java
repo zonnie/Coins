@@ -13,7 +13,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.LoadingActivity;
@@ -22,6 +21,7 @@ import com.moneyifyapp.activities.login.dialogs.ResetPasswordDialog;
 import com.moneyifyapp.database.TransactionSqlHelper;
 import com.moneyifyapp.model.TransactionHandler;
 import com.moneyifyapp.utils.Utils;
+import com.moneyifyapp.views.PrettyToast;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -42,6 +42,7 @@ public class LoginActivity extends LoadingActivity
     private Button mResetPasswordButton;
     private TransactionHandler mTransactionHandler;
     private TransactionSqlHelper mLocalDb;
+    public static final String EMAIL_VERIFY_KEY = "emailVerified";
 
     /**
      */
@@ -199,12 +200,22 @@ public class LoginActivity extends LoadingActivity
                     {
                         if (user != null)
                         {
-                            mTransactionHandler.fetchYearTransactions(Calendar.getInstance().get(Calendar.YEAR));
-                            initFromLocalDb();
+                            boolean isVerified = user.getBoolean(EMAIL_VERIFY_KEY);
+                            //TODO we need to check isVerified when in production
+                            if(true)
+                            {
+                                mTransactionHandler.fetchYearTransactions(Calendar.getInstance().get(Calendar.YEAR));
+                                initFromLocalDb();
+                            }
+                            else if(isVerified)
+                            {
+                                Utils.showPrettyToast(LoginActivity.this, "Please check your inbox in \"" +
+                                        mEmailView.getText() + "\"\nand validate your email", PrettyToast.VERY_LONG);
+                                showProgress(false);
+                            }
                         }
                         else
                             signInFailed();
-
                     }
                 }
         );
@@ -229,7 +240,7 @@ public class LoginActivity extends LoadingActivity
      */
     private void signInFailed()
     {
-        Toast.makeText(this, "We can't seem to know you, check your email and password", Toast.LENGTH_SHORT).show();
+        Utils.showPrettyToast(this, "We can't seem to know you, check your email and password", PrettyToast.VERY_LONG);
         showProgress(false);
     }
 

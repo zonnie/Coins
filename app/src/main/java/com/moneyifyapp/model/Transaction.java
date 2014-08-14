@@ -22,6 +22,7 @@ public class Transaction implements Comparable<Transaction>
     public boolean mOriginal;
     public static final String TRANS_JSON = "transactionJson";
     public static final String CLASS_NAME = "expense";
+    public static final String CLASS_USER = "User";
     public static final String KEY_ID = "code";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_VALUE = "value";

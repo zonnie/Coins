@@ -55,6 +55,7 @@ public class ExpensesActivity extends Activity
     public static final int RESP_CHANGED = 533;
     public static final int REQ_EDIT_ITEM = 92;
     public static String PARSE_USER_KEY = "user";
+    public static String PARSE_USERNAME_KEY = "username";
     private final String DRAWER_TITLE = "Stuff to Do";
 
     // Drawer

@@ -13,14 +13,19 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.LoadingActivity;
+import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.utils.Utils;
+import com.moneyifyapp.views.PrettyToast;
+import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+
+import java.util.List;
 
 public class SignUpActivity extends LoadingActivity implements View.OnClickListener
 {
@@ -103,8 +108,7 @@ public class SignUpActivity extends LoadingActivity implements View.OnClickListe
 
         if (isSignUpValid())
         {
-            showProgress(true);
-            signUp();
+            verifyUserNotExist(mUserEditText.getText().toString());
         }
     }
 
@@ -117,9 +121,6 @@ public class SignUpActivity extends LoadingActivity implements View.OnClickListe
     }
 
     /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
      */
     public boolean isSignUpValid()
     {
@@ -177,6 +178,26 @@ public class SignUpActivity extends LoadingActivity implements View.OnClickListe
         }
     }
 
+    private void verifyUserNotExist(String username)
+    {
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.whereEqualTo(ExpensesActivity.PARSE_USERNAME_KEY, username);
+        query.findInBackground(new FindCallback<ParseUser>()
+        {
+            @Override
+            public void done(List<ParseUser> parseUsers, ParseException e)
+            {
+                if(parseUsers.isEmpty())
+                {
+                    showProgress(true);
+                    signUp();
+                }
+                else
+                    userExists();
+            }
+        });
+    }
+
     /**
      * Sign up using Parse API.
      */
@@ -184,6 +205,7 @@ public class SignUpActivity extends LoadingActivity implements View.OnClickListe
     {
         ParseUser user = new ParseUser();
         user.setUsername(mUserEditText.getText().toString());
+        user.setEmail(mUserEditText.getText().toString());
         user.setPassword(mPassEditText.getText().toString());
 
         user.signUpInBackground(new SignUpCallback()
@@ -192,11 +214,14 @@ public class SignUpActivity extends LoadingActivity implements View.OnClickListe
             {
                 if (e == null)
                 {
+                    Utils.showPrettyToast(SignUpActivity.this, "An email verifcation was sent to \"" +
+                            mUserEditText.getText().toString() + "\"\nPlease verify your account.", PrettyToast.VERY_LONG);
                     goToLogin();
                     finish();
                     showProgress(false);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                } else
+                }
+                else
                 {
                     singUpFailed();
                     showProgress(false);
@@ -219,9 +244,16 @@ public class SignUpActivity extends LoadingActivity implements View.OnClickListe
      */
     private void singUpFailed()
     {
-        Toast toast = Toast.makeText(this, "Sign Up failed :(", Toast.LENGTH_SHORT);
-        toast.show();
+        Utils.showPrettyToast(this, "Sign Up failed :(", PrettyToast.VERY_LONG);
     }
+    /**
+     * Sign up failed, let the user know.
+     */
+    private void userExists()
+    {
+        Utils.showPrettyToast(this, "Username is taken, try another one", PrettyToast.VERY_LONG);
+    }
+
 
     /**
      */

@@ -21,6 +21,7 @@ public class PrettyToast extends Toast
     private View mView;
     private Animation mToastAnimation;
     private final int OFFSET = 10;
+    public static final int VERY_LONG = 3;
 
     /**
      */
