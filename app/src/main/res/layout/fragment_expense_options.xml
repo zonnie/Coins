@@ -16,6 +16,7 @@
         android:background="@drawable/card"
         android:orientation="vertical"
         android:paddingBottom="@dimen/padding_start_currency"
+        android:layout_marginBottom="@dimen/padding_start_currency"
         android:visibility="gone"
         >
 
@@ -26,8 +27,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/date_header"
             android:orientation="horizontal"
-            android:paddingBottom="@dimen/padding_start_currency"
-            android:paddingTop="@dimen/padding_start_currency"
             >
 
             <com.moneyifyapp.views.CondensedTextView
@@ -135,7 +134,7 @@
                     android:paddingLeft="@dimen/expense_drawable_left_pad"
                     android:paddingRight="@dimen/expense_drawable_left_pad"
                     android:paddingTop="@dimen/padding_start_currency"
-                    android:text="Monthly"
+                    android:text="Month"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/medium_font"
                     android:typeface="normal"
@@ -153,7 +152,7 @@
                     android:paddingLeft="@dimen/expense_drawable_left_pad"
                     android:paddingRight="@dimen/expense_drawable_left_pad"
                     android:paddingTop="@dimen/padding_start_currency"
-                    android:text="Yearly"
+                    android:text="Year"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/medium_font"
                     android:typeface="normal"
@@ -170,10 +169,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/padding_start_currency"
         android:background="@drawable/card"
         android:orientation="vertical"
         android:paddingBottom="@dimen/expense_drawable_left_pad"
+        android:visibility="gone"
         >
 
         <!-- title -->
@@ -183,8 +182,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/date_header"
             android:orientation="horizontal"
-            android:paddingBottom="@dimen/padding_start_currency"
-            android:paddingTop="@dimen/padding_start_currency"
             >
 
             <com.moneyifyapp.views.CondensedTextView

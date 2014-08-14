@@ -31,16 +31,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/drawable_left_pad"
+            android:layout_marginLeft="@dimen/drawable_left_pad"
+            android:layout_marginRight="@dimen/drawable_left_pad"
             >
+
+            <com.moneyifyapp.views.ThinTextView
+                android:id="@+id/templates_empty_textivew"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@android:color/darker_gray"
+                android:gravity="center"
+                android:textSize="@dimen/medium_font"
+                android:padding="@dimen/big_padding"
+                android:text="@string/list_empty_templates"
+                />
 
             <ListView
                 android:id="@+id/dialog_transaction_listview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingBottom="@dimen/big_padding"
-                android:paddingTop="@dimen/drawable_left_pad"
+                android:paddingBottom="@dimen/padding_start_currency"
+                android:paddingTop="@dimen/padding_start_currency"
                 android:scrollbars="none"
                 android:divider="@null"
                 />

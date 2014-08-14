@@ -109,24 +109,12 @@
                 android:layout_gravity="center"
                 />
 
-            <!-- Seperator -->
-
-            <View
-                android:id="@+id/seperator_details"
-                android:layout_width="match_parent"
-                android:layout_height="0.3dp"
-                android:layout_marginLeft="@dimen/big_padding"
-                android:layout_marginRight="@dimen/big_padding"
-                android:background="@android:color/darker_gray"
-                android:layout_below="@+id/detail_container"
-                />
-
             <FrameLayout
                 android:id="@+id/options_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_below="@+id/seperator_details"
+                android:layout_below="@+id/detail_container"
                 />
         </RelativeLayout>
     </ScrollView>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.moneyifyapp.R;
 import com.moneyifyapp.activities.analytics.dialogs.TransactionListDialog;
 import com.moneyifyapp.activities.expenses.adapters.ExpenseItemAdapterRead;
 import com.moneyifyapp.model.MonthTransactions;
@@ -20,6 +21,8 @@ public class SavedTransactionsDialog extends TransactionListDialog implements Ex
     public SavedTransactionsDialog(Context context, MonthTransactions transactions, String title, OnTransactionItemClicked listener)
     {
         super(context, transactions, title);
+        if(transactions.getItems().size() > 0)
+            mDialog.findViewById(R.id.templates_empty_textivew).setVisibility(View.GONE);
         mListener = listener;
     }
 

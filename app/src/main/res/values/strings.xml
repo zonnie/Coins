@@ -8,6 +8,7 @@
     <string name="list_empty_hint">Tap the "+" button add stuff</string>
     <string name="totals_hint_string">Tap for monthly insights</string>
     <string name="list_empty_message">Nothing here, so lonely</string>
+    <string name="list_empty_templates">No saved transactions…</string>
     <string name="new_expense_button_caption">Add</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
@@ -42,7 +43,7 @@
     <string name="account_hint">Update us on any account changes</string>
     <string name="image_picker_hint_text">Select category</string>
     <string name="toggle_hint_text">Tap to change</string>
-    <string name="checkbox_template_hint_text">Tap to save as template</string>
+    <string name="checkbox_template_hint_text">Tap to save for future use</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="item_details_submit">"Done !"</string>
@@ -80,11 +81,11 @@
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="title_activity_user_account">Account</string>
     <string name="checkbox_saved">"Saved</string>
-    <string name="checkbox_save">"Save</string>
+    <string name="checkbox_save">"Save as Template</string>
     <string name="title_expense_detail_page">Details</string>
     <string name="title_expense_options_page">Reoccurring</string>
-    <string name="title_expense_reuse">Reuse</string>
-    <string name="title_expense_repeat">Repeat</string>
+    <string name="title_expense_reuse">Save for Future Use</string>
+    <string name="title_expense_repeat">Repeat Every…</string>
     <string name="change_info_hint">Tap below details to change them</string>
     <string name="account_title_text">Account</string>
     <string name="title_activity_graph">Stats</string>

@@ -21,14 +21,13 @@
         <com.moneyifyapp.views.ThinTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/drawable_left_pad"
-            android:layout_marginTop="@dimen/expense_drawable_left_pad"
+            android:layout_marginBottom="@dimen/padding_start_currency"
+            android:layout_marginTop="@dimen/padding_start_currency"
             android:gravity="center"
             android:text="@string/title_expense_detail_page"
             android:textColor="@android:color/darker_gray"
             android:textSize="@dimen/mongo_font"
             />
-
 
         <!-- Body -->
 
@@ -38,7 +37,6 @@
             android:background="@drawable/card"
             android:gravity="center|top"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/drawable_left_pad"
             android:paddingLeft="@dimen/big_padding"
             android:paddingRight="@dimen/big_padding"
             android:paddingTop="@dimen/drawable_left_pad"
@@ -161,7 +159,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.3dp"
                 android:background="@android:color/darker_gray"
-                />
+                />-
 
             <!-- Details -->
 
@@ -241,17 +239,41 @@
 
             </LinearLayout>
 
+            <!-- save -->
+
+            <LinearLayout
+                android:id="@+id/detail_save_template_toggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/big_padding"
+                android:layout_marginRight="@dimen/big_padding"
+                android:orientation="vertical"
+                >
+
+                <ToggleButton
+                    android:id="@+id/toggle_template_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/padding_start_currency"
+                    android:background="@drawable/template_background"
+                    android:paddingBottom="@dimen/drawable_left_pad"
+                    android:paddingLeft="@dimen/expense_drawable_left_pad"
+                    android:paddingRight="@dimen/expense_drawable_left_pad"
+                    android:paddingTop="@dimen/padding_start_currency"
+                    android:textColor="@android:color/white"
+                    android:textOff="@string/checkbox_save"
+                    android:textOn="@string/checkbox_saved"
+                    android:textSize="@dimen/medium_font"
+                    android:typeface="normal"
+                    android:layout_margin="@dimen/drawable_left_pad"
+                    />
+
+            </LinearLayout>
+
+
         </LinearLayout>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/expense_drawable_left_pad"
-            android:background="@drawable/stanard_button_drawable"
-            android:onClick="onRepeatOptionsClicked"
-            android:text="@string/repeat_options_text"
-            android:visibility="gone"
-            />
 
     </LinearLayout>
 

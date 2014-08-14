@@ -6,14 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.widget.CompoundButton;
 import android.widget.RadioGroup;
-import android.widget.ToggleButton;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.model.Transaction;
-import com.moneyifyapp.utils.AnimationUtils;
 import com.moneyifyapp.utils.JsonServiceYearTransactions;
 
 /**
@@ -22,14 +18,12 @@ import com.moneyifyapp.utils.JsonServiceYearTransactions;
  */
 public class ExpenseOptionsFragment extends Fragment
 {
-    private ToggleButton mToggleSave;
     private OnOptionsFragmentSubmit mListener;
     private Transaction mTempExpenseObject;
     private RadioGroup mRepeatGroup;
     private boolean mIsEdit;
     public static final String EXPENSE_EDIT_KEY = "edit";
     private View mView;
-    private Animation mBounceAnimation;
 
     /**
      */
@@ -63,7 +57,6 @@ public class ExpenseOptionsFragment extends Fragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        mBounceAnimation = AnimationUtils.getBounceAnimtion(getActivity());
 
         if (getArguments() != null)
         {
@@ -83,7 +76,6 @@ public class ExpenseOptionsFragment extends Fragment
         mView = inflater.inflate(R.layout.fragment_expense_options, container, false);
 
         storeViews();
-        initDataIfTransactionEdited();
         initRepeatRadioButton();
 
         return mView;
@@ -93,16 +85,6 @@ public class ExpenseOptionsFragment extends Fragment
      */
     private void storeViews()
     {
-        mToggleSave = (ToggleButton)mView.findViewById(R.id.toggle_template_save);
-        mToggleSave.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
-                mToggleSave.startAnimation(mBounceAnimation);
-            }
-        });
-
         mRepeatGroup = (RadioGroup)mView.findViewById(R.id.detail_reoccur_group);
         mRepeatGroup.setOnCheckedChangeListener(
                 new RadioGroup.OnCheckedChangeListener() {
@@ -116,14 +98,6 @@ public class ExpenseOptionsFragment extends Fragment
                         }
                     }
                 });
-    }
-
-    /**
-     */
-    private void initDataIfTransactionEdited()
-    {
-        if (mIsEdit)
-            mToggleSave.setChecked(mTempExpenseObject.mSaved);
     }
 
     /**
@@ -161,8 +135,6 @@ public class ExpenseOptionsFragment extends Fragment
     {
         if (mListener != null)
         {
-            boolean isSaved = mToggleSave.isChecked();
-            mTempExpenseObject.mSaved = isSaved;
             mTempExpenseObject.mRepeatType = Transaction.REPEAT_TYPE.getTypeById(mRepeatGroup.getCheckedRadioButtonId());
             mListener.OnOptionsSubmit(mTempExpenseObject);
         }

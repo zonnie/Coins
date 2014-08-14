@@ -39,6 +39,7 @@ public class ExpenseDetailFragment extends Fragment
     private ImageButton mExpenseIcon;
     private EditText mExpenseNotes;
     private ToggleButton mToggleIsExpense;
+    private ToggleButton mToggleIsSaved;
     private OnDetailFragmentSubmit mListener;
     private Transaction mTempExpenseObject;
     private boolean mIsEdit;
@@ -126,6 +127,16 @@ public class ExpenseDetailFragment extends Fragment
         mExpenseIcon = (ImageButton) mView.findViewById(R.id.addExpenseImage);
         mExpenseNotes = (EditText) mView.findViewById(R.id.addExpenseNotes);
         mToggleIsExpense = (ToggleButton) mView.findViewById(R.id.isExpenseToggle);
+        mToggleIsSaved = (ToggleButton) mView.findViewById(R.id.toggle_template_save);
+        mToggleIsSaved.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                mToggleIsSaved.startAnimation(mBounce);
+            }
+        });
+
     }
 
     /**
@@ -187,6 +198,7 @@ public class ExpenseDetailFragment extends Fragment
             mExpenseNotes.setText(mTempExpenseObject.mNotes);
             mExpenseIcon.setImageResource(Images.getImageByPosition(mTempExpenseObject.mImageResourceIndex));
             mToggleIsExpense.setChecked(!mTempExpenseObject.mIsExpense);
+            mToggleIsSaved.setChecked(mTempExpenseObject.mSaved);
         }
     }
 
@@ -222,6 +234,7 @@ public class ExpenseDetailFragment extends Fragment
             String sum = mExpenseValue.getText().toString();
             String currency = Utils.getDefaultCurrency(getActivity());
             boolean isExpense = !mToggleIsExpense.isChecked();
+            boolean isSaved = mToggleIsSaved.isChecked();
 
             if (description.isEmpty() || sum.isEmpty())
             {
@@ -239,6 +252,7 @@ public class ExpenseDetailFragment extends Fragment
                 mTempExpenseObject.mValue = sum;
                 mTempExpenseObject.mCurrency = currency;
                 mTempExpenseObject.mIsExpense = isExpense;
+                mTempExpenseObject.mSaved = isSaved;
                 mListener.onTransactionSubmit(mTempExpenseObject);
                 return true;
             }

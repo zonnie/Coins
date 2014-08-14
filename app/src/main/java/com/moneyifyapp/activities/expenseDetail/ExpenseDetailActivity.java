@@ -152,6 +152,7 @@ public class ExpenseDetailActivity extends Activity
         data.putExtra(ExpenseListFragment.ITEM_POS_KEY, mItemPosition);
         data.putExtra(ExpenseListFragment.MONTH_KEY, mMonth);
         data.putExtra(Transaction.KEY_TYPE, transaction.mIsExpense);
+        data.putExtra(ExpenseListFragment.TEMPLATE_KEY, transaction.mSaved);
     }
 
     /**
@@ -217,7 +218,6 @@ public class ExpenseDetailActivity extends Activity
     public void OnOptionsSubmit(Transaction transaction)
     {
         Intent data = getIntent();
-        data.putExtra(ExpenseListFragment.TEMPLATE_KEY, transaction.mSaved);
         data.putExtra(ExpenseListFragment.REPEAT_KEY, transaction.mRepeatType.toString());
     }
 
@@ -226,7 +226,11 @@ public class ExpenseDetailActivity extends Activity
     @Override
     public void transactionItemClicked(Transaction selected)
     {
+        // Make sure not to save as template the new transaction again
+        selected.mSaved = false;
         mDetailFragment = ExpenseDetailFragment.newInstance(true, selected);
+        // Update to saved, at this point a new instance was created in the fragment
+        selected.mSaved = true;
         mOptionsFragment = ExpenseOptionsFragment.newInstance(true, selected);
 
         getFragmentManager().beginTransaction()
