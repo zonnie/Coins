@@ -47,7 +47,8 @@ public class ExpenseDetailFragment extends Fragment
     public static final String EXPENSE_EDIT_KEY = "edit";
     private AlphaAnimation mAlphaDown;
     private AlphaAnimation mAlphaUp;
-    private Animation mBounce;
+    private Animation mBounceSaved;
+    private Animation mBounceSpending;
     private View mView;
     private final String ERROR_MISSING_DESC = "What is this transaction";
     private final String ERROR_MISSING_SUM = "How much did it cost";
@@ -96,7 +97,9 @@ public class ExpenseDetailFragment extends Fragment
 
             mAlphaDown = AnimationUtils.getAlphaDownAnimation();
             mAlphaUp = AnimationUtils.getmAlphaUpAnimation();
-            mBounce = AnimationUtils.getBounceAnimtion(getActivity());
+            mBounceSaved = AnimationUtils.getBounceAnimtion(getActivity());
+            mBounceSpending = android.view.animation.AnimationUtils.loadAnimation(getActivity(), R.anim.bounce);
+
         }
     }
 
@@ -167,7 +170,7 @@ public class ExpenseDetailFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                mToggleIsExpense.startAnimation(mBounce);
+                mToggleIsExpense.startAnimation(mBounceSpending);
             }
         });
         mToggleIsSaved.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
@@ -175,7 +178,7 @@ public class ExpenseDetailFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                mToggleIsSaved.startAnimation(mBounce);
+                mToggleIsSaved.startAnimation(mBounceSaved);
             }
         });
 

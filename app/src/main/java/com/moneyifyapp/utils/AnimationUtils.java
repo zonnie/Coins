@@ -15,10 +15,6 @@ public class AnimationUtils
 {
     private static AlphaAnimation sAlphaDown;
     private static AlphaAnimation sAlphaUp;
-    private static Animation mBounceAnimation;
-    private static Animation mZoomInBounceAnimation;
-    private static Animation mZoomInBounceLongAnimation;
-    private static Animation mZoomInBounceSmallAnimation;
     private static Animation mRotateAnimation;
 
     /**
@@ -53,34 +49,22 @@ public class AnimationUtils
      */
     public static Animation getBounceAnimtion(Context context)
     {
-        if(mBounceAnimation == null)
-            mBounceAnimation = android.view.animation.AnimationUtils.loadAnimation(context, R.anim.bounce);
-
-        return mBounceAnimation;
+        return android.view.animation.AnimationUtils.loadAnimation(context, R.anim.bounce);
     }
 
     public static Animation getZoomInBounceAnimation(Context context)
     {
-        if(mZoomInBounceAnimation == null)
-            mZoomInBounceAnimation = android.view.animation.AnimationUtils.loadAnimation(context, R.anim.zoom_in_bounce);
-
-        return mZoomInBounceAnimation;
+        return android.view.animation.AnimationUtils.loadAnimation(context, R.anim.zoom_in_bounce);
     }
 
     public static Animation getZoomInBounceLongAnimation(Context context)
     {
-        if(mZoomInBounceLongAnimation == null)
-            mZoomInBounceLongAnimation = android.view.animation.AnimationUtils.loadAnimation(context, R.anim.zoom_in_bounce_long);
-
-        return mZoomInBounceLongAnimation;
+        return android.view.animation.AnimationUtils.loadAnimation(context, R.anim.zoom_in_bounce_long);
     }
 
     public static Animation getZoomInBounceSmallAnimation(Context context)
     {
-        if(mZoomInBounceSmallAnimation == null)
-            mZoomInBounceSmallAnimation = android.view.animation.AnimationUtils.loadAnimation(context, R.anim.zoom_in_bounce_small);
-
-        return mZoomInBounceSmallAnimation;
+       return android.view.animation.AnimationUtils.loadAnimation(context, R.anim.zoom_in_bounce_small);
     }
 
     public static Animation getmRotateAnimation()

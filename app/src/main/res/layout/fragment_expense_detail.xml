@@ -199,8 +199,6 @@
                 android:id="@+id/detail_save_template_toggle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/drawable_left_pad"
-                android:layout_marginRight="@dimen/drawable_left_pad"
                 android:orientation="horizontal"
                 >
 
@@ -240,13 +238,8 @@
                     android:textSize="@dimen/medium_font"
                     />
 
-
             </LinearLayout>
-
-
         </LinearLayout>
-
-
     </LinearLayout>
 
 </LinearLayout>
