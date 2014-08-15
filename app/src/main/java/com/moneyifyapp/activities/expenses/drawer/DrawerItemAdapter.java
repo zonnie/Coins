@@ -47,21 +47,14 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItem>
 
         if (mMyView == null)
         {
-
             LayoutInflater viewInflator;
             viewInflator = LayoutInflater.from(getContext());
-
             mMyView = viewInflator.inflate(mLayoutResourceId, null);
 
-            // Load animation lazy
             if(mItemsLoadAnimation == null)
-            {
                 mItemsLoadAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
-            }
-
             mMyView.startAnimation(mItemsLoadAnimation);
         }
-
         return getRegularView(position);
     }
 
@@ -75,7 +68,6 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItem>
         if (currentTransactionView != null)
         {
             mItemTitle = (TextView) mMyView.findViewById(R.id.drawerItemText);
-
             handleDrawerItemTitle(currentTransactionView);
             updateImage(currentTransactionView.getmResourceId());
         }
@@ -87,10 +79,7 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItem>
     private void handleDrawerItemTitle(DrawerItem currentItem)
     {
         if (mItemTitle != null)
-        {
             mItemTitle.setText(currentItem.getmItemTitle());
-        }
-
     }
 
     /**
@@ -115,7 +104,6 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItem>
     {
         // Update an item
         updateDrawerItem(position, item);
-
         // Reflect on display
         notifyDataSetChanged();
     }
@@ -130,7 +118,6 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItem>
         {
             updatedExpense.setmItemTitle(item.getmItemTitle());
             updatedExpense.setmItemHint(item.getmItemHint());
-
             updateImage(item.getmResourceId());
         }
     }

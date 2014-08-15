@@ -17,7 +17,7 @@ import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.utils.Utils;
 
-public class ImagePickerActivity extends ListActivity
+public class ImagePickerActivity extends ListActivity implements  ImageAdapter.OnItemClick
 {
     private Animation mItemsLoadAnimation;
     private ImageAdapter mImageAdapter;
@@ -36,7 +36,7 @@ public class ImagePickerActivity extends ListActivity
         Utils.animateForward(this);
 
         // Instance of ImageAdapter Class
-        mImageAdapter = new ImageAdapter(this, Images.getImageWithCaptions());
+        mImageAdapter = new ImageAdapter(this, Images.getImageWithCaptions(), this);
         getListView().setAdapter(mImageAdapter);
         getListView().setTextFilterEnabled(true);
         initFilterField();
@@ -73,6 +73,7 @@ public class ImagePickerActivity extends ListActivity
     /**
      * Called by the adapter.
      */
+    @Override
     public void onItemClick(int position)
     {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);

@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/date_header"
             android:orientation="horizontal"
-            android:paddingBottom="@dimen/drawable_left_pad"
+            android:paddingBottom="@dimen/padding_start_currency"
             android:paddingTop="@dimen/padding_start_currency"
             >
 
@@ -32,7 +32,7 @@
                 android:gravity="center"
                 android:text="24th"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/mongo_font"
+                android:textSize="@dimen/large_font"
                 android:layout_weight="1"
                 android:textStyle="bold"
                 />

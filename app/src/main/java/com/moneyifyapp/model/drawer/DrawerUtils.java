@@ -19,6 +19,7 @@ public class DrawerUtils
         drawerItems.add(new DrawerItem("Analytics", "Understand your coins", R.drawable.dashboard));
         drawerItems.add(new DrawerItem("Preferences", "Menage your preferences", R.drawable.contorls));
         drawerItems.add(new DrawerItem("Account", "Menage your account", R.drawable.account));
+        drawerItems.add(new DrawerItem("Favorites", "Menage your favorites", R.drawable.fav_drawer));
         //drawerItems.add(new DrawerItem("Dashboard", "Look at stuff", R.drawable.dashboard));
         //drawerItems.add(new DrawerItem("Share Wallet", "Share your wallet with friends", R.drawable.wallet));
     }

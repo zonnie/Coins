@@ -84,7 +84,12 @@
     <style name="myCustomMenuTextApearance" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:fontFamily">sans-serif-light</item>
-        <!--<item name="android:fontFamily">sans-serif-thin</item>-->
-        <!--<item name="android:textStyle">bold</item>-->
     </style>
+
+    <!-- This style can be assinged progremattically to a Dialog -->
+    <style name="PauseDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/appear_in_bounce</item>
+        <item name="android:windowExitAnimation">@anim/appear_out_bounce</item>
+    </style>
+
 </resources>

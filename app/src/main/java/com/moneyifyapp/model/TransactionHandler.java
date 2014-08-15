@@ -138,6 +138,8 @@ public class TransactionHandler
         transaction.mSaved = curExpense.getBoolean(ExpenseListFragment.TEMPLATE_KEY);
         transaction.mRepeatType = (curExpense.getString(ExpenseListFragment.REPEAT_KEY) == null)
                 ? Transaction.REPEAT_TYPE.NONE : Transaction.REPEAT_TYPE.valueOf(curExpense.getString(ExpenseListFragment.REPEAT_KEY));
+        transaction.mMonth = curExpense.getInt(Transaction.KEY_MONTH);
+        transaction.mYear = curExpense.getInt(Transaction.KEY_YEAR);
 
         return transaction;
     }
@@ -208,16 +210,6 @@ public class TransactionHandler
             mRepeatTransactions.add(transaction.mId);
         else
             existingTransaction.mRepeatType = transaction.mRepeatType;
-    }
-
-    /**
-     */
-    public void addReusableTransaction(Transaction transaction)
-    {
-        Transaction existingTransaction = getReusableTransactionById(transaction.mId);
-
-        if(existingTransaction == null)
-            mReusableTransactions.add(transaction.mId);
     }
 
     /**
@@ -323,4 +315,30 @@ public class TransactionHandler
 
         return allSaved;
     }
+
+    /**
+     * This encapsulates the saving of date using Parse.
+     */
+    public void saveDataInBackground(final Transaction newTransaction,
+                                      final ParseObject expenseObject)
+    {
+        ParseUser user = ParseUser.getCurrentUser();
+
+        expenseObject.put(Transaction.KEY_ID, newTransaction.mId);
+        expenseObject.put(Transaction.KEY_DESCRIPTION, newTransaction.mDescription);
+        expenseObject.put(Transaction.KEY_VALUE, newTransaction.mValue);
+        expenseObject.put(Transaction.KEY_CURRENCY, newTransaction.mCurrency);
+        expenseObject.put(Transaction.KEY_IMAGE_NAME, newTransaction.mImageResourceIndex);
+        expenseObject.put(Transaction.KEY_NOTES, newTransaction.mNotes);
+        expenseObject.put(Transaction.KEY_TYPE, newTransaction.mIsExpense);
+        expenseObject.put(ExpensesActivity.PARSE_USER_KEY, user);
+        expenseObject.put(ExpenseListFragment.MONTH_KEY, newTransaction.mMonth);
+        expenseObject.put(ExpenseListFragment.DAY_KEY, newTransaction.mTransactionDay);
+        expenseObject.put(ExpenseListFragment.YEAR_KEY, newTransaction.mYear);
+        expenseObject.put(ExpenseListFragment.TEMPLATE_KEY, newTransaction.mSaved);
+        expenseObject.put(ExpenseListFragment.REPEAT_KEY, newTransaction.mRepeatType.toString());
+
+        expenseObject.saveInBackground();
+    }
+
 }

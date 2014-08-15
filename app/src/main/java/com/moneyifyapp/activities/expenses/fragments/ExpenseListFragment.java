@@ -1,9 +1,7 @@
 package com.moneyifyapp.activities.expenses.fragments;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ListFragment;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -484,28 +482,6 @@ public class ExpenseListFragment extends ListFragment
 
     /**
      */
-    private void verifyRemoveDialog(final int position)
-    {
-        new AlertDialog.Builder(getActivity()).setMessage(REMOVE_ITEM_PROMPT_MSG).setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        removeItemFromList(position);
-                        dialog.dismiss();
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        dialog.cancel();
-                    }
-                }).show();
-    }
-
-    /**
-     */
     @Override
     public void onAttach(Activity activity)
     {
@@ -672,7 +648,7 @@ public class ExpenseListFragment extends ListFragment
         newTransaction.mSaved = isSaved;
         newTransaction.mRepeatType = repeatType;
         ParseObject expenseObject = new ParseObject(Transaction.CLASS_NAME);
-        saveDataInBackground(newTransaction, expenseObject);
+        TransactionHandler.getInstance(getActivity()).saveDataInBackground(newTransaction, expenseObject);
         Utils.showPrettyToast(getActivity(), "Added \"" + addDescription +"\"", Toast.LENGTH_LONG);
 
         // The adapter will add the expense to the model collection so it can update observer
@@ -715,30 +691,6 @@ public class ExpenseListFragment extends ListFragment
     }
 
     /**
-     * This encapsulates the saving of date using Parse.
-     */
-    private void saveDataInBackground(final Transaction newTransaction, final ParseObject expenseObject)
-    {
-        ParseUser user = ParseUser.getCurrentUser();
-
-        expenseObject.put(Transaction.KEY_ID, newTransaction.mId);
-        expenseObject.put(Transaction.KEY_DESCRIPTION, newTransaction.mDescription);
-        expenseObject.put(Transaction.KEY_VALUE, newTransaction.mValue);
-        expenseObject.put(Transaction.KEY_CURRENCY, newTransaction.mCurrency);
-        expenseObject.put(Transaction.KEY_IMAGE_NAME, newTransaction.mImageResourceIndex);
-        expenseObject.put(Transaction.KEY_NOTES, newTransaction.mNotes);
-        expenseObject.put(Transaction.KEY_TYPE, newTransaction.mIsExpense);
-        expenseObject.put(ExpensesActivity.PARSE_USER_KEY, user);
-        expenseObject.put(MONTH_KEY, mTransactions.mMonthNumber);
-        expenseObject.put(DAY_KEY, newTransaction.mTransactionDay);
-        expenseObject.put(YEAR_KEY, mYearTransactions.mYear);
-        expenseObject.put(TEMPLATE_KEY, newTransaction.mSaved);
-        expenseObject.put(REPEAT_KEY, newTransaction.mRepeatType.toString());
-
-        expenseObject.saveInBackground();
-    }
-
-    /**
      * Updates the matching object in the database.
      */
     private void updateDataInBackground(final Transaction updatedExpense)
@@ -753,7 +705,7 @@ public class ExpenseListFragment extends ListFragment
                 if (list.size() != 0)
                 {
                     ParseObject expenseObjectInDb = list.get(0);
-                    saveDataInBackground(updatedExpense, expenseObjectInDb);
+                    TransactionHandler.getInstance(getActivity()).saveDataInBackground(updatedExpense, expenseObjectInDb);
                     Utils.showPrettyToast(getActivity(), "Updated \"" + updatedExpense.mDescription +"\"", Toast.LENGTH_LONG);
                 }
             }

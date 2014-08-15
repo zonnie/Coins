@@ -80,8 +80,8 @@
     <string name="spent_string">"Spent</string>
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="title_activity_user_account">Account</string>
-    <string name="checkbox_saved">"Saved</string>
-    <string name="checkbox_save">"Save as Template</string>
+    <string name="checkbox_saved">"Faved</string>
+    <string name="checkbox_save">"Favorite</string>
     <string name="title_expense_detail_page">Details</string>
     <string name="title_expense_options_page">Reoccurring</string>
     <string name="title_expense_reuse">Save for Future Use</string>
@@ -93,4 +93,6 @@
     <string name="repeat_options_text">Repeat Options</string>
     <string name="delete_account_first_text">We don\'t wannna lose you</string>
     <string name="delete_account_second_text">Deleting the account will lose all your info</string>
+    <string name="title_activity_faviorte">Favorites</string>
+
 </resources>

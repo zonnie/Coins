@@ -133,7 +133,7 @@ public class ExpenseDetailActivity extends Activity
     public void onLoadTransactionClick(View view)
     {
         SavedTransactionsDialog dialog = new SavedTransactionsDialog(this,
-                TransactionHandler.getInstance(this).getAllSavedTransactions(), "Template Transactions", this);
+                TransactionHandler.getInstance(this).getAllSavedTransactions(), "Favorites", this);
         dialog.show();
     }
 

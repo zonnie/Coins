@@ -47,6 +47,7 @@ public class TransactionListDialog extends Dialog implements ExpenseItemAdapterR
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         mDialog.setContentView(R.layout.dialog_expense_list);
+        mDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
         mLayoutParams = new WindowManager.LayoutParams();
         mLayoutParams.copyFrom(mDialog.getWindow().getAttributes());
         mLayoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;

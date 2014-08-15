@@ -23,6 +23,7 @@ import com.moneyifyapp.R;
 import com.moneyifyapp.activities.analytics.GraphActivity;
 import com.moneyifyapp.activities.expenses.drawer.DrawerItemAdapter;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
+import com.moneyifyapp.activities.favorites.FaviorteActivity;
 import com.moneyifyapp.activities.login.AccountActivity;
 import com.moneyifyapp.activities.login.LoginActivity;
 import com.moneyifyapp.activities.preferences.PrefActivity;
@@ -206,6 +207,8 @@ public class ExpensesActivity extends Activity
                 startPrefActivity();
             else if (position == 2)
                 startAccountActivity();
+            else if (position == 3)
+                startFavoritesActivity();
 //            else if (position == 3)
 //                startDashboardActivity();
         }
@@ -233,6 +236,14 @@ public class ExpensesActivity extends Activity
     {
         Intent intent = new Intent(mActivity, AccountActivity.class);
         startActivityForResult(intent, ACCOUNT_HANDLE);
+    }
+
+    /**
+     */
+    private void startFavoritesActivity()
+    {
+        Intent intent = new Intent(mActivity, FaviorteActivity.class);
+        startActivity(intent);
     }
 
     /**

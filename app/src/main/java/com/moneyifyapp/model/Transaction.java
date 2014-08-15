@@ -17,18 +17,21 @@ public class Transaction implements Comparable<Transaction>
     public String mNotes;
     public boolean mIsExpense;
     public String mTransactionDay;
+    public int mMonth;
+    public int mYear;
     public boolean mSaved;
     public REPEAT_TYPE mRepeatType;
     public boolean mOriginal;
     public static final String TRANS_JSON = "transactionJson";
     public static final String CLASS_NAME = "expense";
-    public static final String CLASS_USER = "User";
     public static final String KEY_ID = "code";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_VALUE = "value";
     public static final String KEY_CURRENCY = "currency";
     public static final String KEY_IMAGE_NAME = "image";
     public static final String KEY_NOTES = "note";
+    public static final String KEY_MONTH = "month";
+    public static final String KEY_YEAR = "year";
     public static final String KEY_TYPE = "type";
     public static final String CURRENCY_DEFAULT = "₪";
     public static final String DEFUALT_TRANSCATION_ID = "0";
@@ -48,6 +51,8 @@ public class Transaction implements Comparable<Transaction>
         this.mSaved = builder.mSaved;
         this.mRepeatType = builder.mRepeatType;
         this.mOriginal = builder.mOriginal;
+        this.mMonth = builder.mMonth;
+        this.mYear = builder.mYear;
     }
 
     /**
@@ -58,7 +63,8 @@ public class Transaction implements Comparable<Transaction>
         builder.setId(original.mId).setDescription(original.mDescription).setValue(original.mValue)
                 .setCurrency(original.mCurrency).setImageResourceId(original.mImageResourceIndex)
                 .setNotes(original.mNotes).setIsExpense(original.mIsExpense).setDay(original.mTransactionDay)
-                .setIsSaved(original.mSaved).setRepeatType(original.mRepeatType).setOriginal(false);
+                .setIsSaved(original.mSaved).setRepeatType(original.mRepeatType).setOriginal(false)
+                .setMonth(original.mMonth).setYear(original.mYear);
 
         return builder.build();
     }
@@ -80,6 +86,8 @@ public class Transaction implements Comparable<Transaction>
         this.mSaved = false;
         this.mRepeatType = REPEAT_TYPE.NONE;
         this.mOriginal = true;
+        this.mMonth = Calendar.getInstance().get(Calendar.MONTH);
+        this.mYear = Calendar.getInstance().get(Calendar.YEAR);
     }
 
     /**
@@ -91,6 +99,8 @@ public class Transaction implements Comparable<Transaction>
     {
         this(id, description, value, currency, note, imageName, isExpense);
         this.mTransactionDay = day;
+        this.mMonth = Calendar.getInstance().get(Calendar.MONTH);
+        this.mYear = Calendar.getInstance().get(Calendar.YEAR);
     }
 
     /**
@@ -102,6 +112,8 @@ public class Transaction implements Comparable<Transaction>
         this.mTransactionDay = String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         this.mSaved = false;
         this.mRepeatType = REPEAT_TYPE.NONE;
+        this.mMonth = Calendar.getInstance().get(Calendar.MONTH);
+        this.mYear = Calendar.getInstance().get(Calendar.YEAR);
     }
 
     /**
@@ -119,6 +131,8 @@ public class Transaction implements Comparable<Transaction>
     @Override
     public int compareTo(Transaction another)
     {
+        if(another == null)
+            return -1;
         double myValue = Double.valueOf(this.mValue);
         double anotherValue = Double.valueOf(another.mValue);
 
@@ -146,7 +160,7 @@ public class Transaction implements Comparable<Transaction>
                 default:return NONE;
             }
         }
-    };
+    }
 
     /**
      * A builder for the transaction class
@@ -164,6 +178,8 @@ public class Transaction implements Comparable<Transaction>
         public boolean mSaved;
         public REPEAT_TYPE mRepeatType;
         public boolean mOriginal;
+        public int mMonth;
+        public int mYear;
 
         /**
          * @return a new transaction object
@@ -184,6 +200,7 @@ public class Transaction implements Comparable<Transaction>
         public TransactionBuilder setIsSaved(boolean isSaved){mSaved = isSaved; return this;}
         public TransactionBuilder setRepeatType(REPEAT_TYPE repeatType){mRepeatType = repeatType; return this;}
         public TransactionBuilder setOriginal(boolean original){mOriginal = original; return this;}
-
+        public TransactionBuilder setMonth(int month){mMonth = month; return this;}
+        public TransactionBuilder setYear(int year){mYear = year; return this;}
     }
 }

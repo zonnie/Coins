@@ -1,5 +1,6 @@
 package com.moneyifyapp.activities.expenseDetail;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,8 @@ import java.util.List;
  */
 public class ImageAdapter extends BaseAdapter implements Filterable
 {
-    private ImagePickerActivity mContext;
+    private Activity mContext;
+    private OnItemClick mListner;
     private View mView;
     private Filter mFilter;
     private List<Images.ImageWithCaption> mFilteredValues;
@@ -29,10 +31,11 @@ public class ImageAdapter extends BaseAdapter implements Filterable
 
     /**
      */
-    public ImageAdapter(ImagePickerActivity context, List<Images.ImageWithCaption> images)
+    public ImageAdapter(Activity context, List<Images.ImageWithCaption> images, OnItemClick listener)
     {
         super();
         mContext = context;
+        mListner = listener;
         mAllValues = images;
         mFilteredValues = new ArrayList<Images.ImageWithCaption>();
         mFilteredValues = new ArrayList<Images.ImageWithCaption>(mAllValues);
@@ -72,7 +75,7 @@ public class ImageAdapter extends BaseAdapter implements Filterable
                         globalPosition = i;
                     }
                 }
-                mContext.onItemClick(globalPosition);
+                mListner.onItemClick(globalPosition);
             }
         });
 
@@ -162,5 +165,10 @@ public class ImageAdapter extends BaseAdapter implements Filterable
             notifyDataSetChanged();
         }
 
+    }
+
+    public interface OnItemClick
+    {
+        public void onItemClick(int position);
     }
 }

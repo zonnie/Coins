@@ -39,7 +39,7 @@
                 android:drawableLeft="@drawable/cal"
                 android:drawablePadding="@dimen/drawable_left_pad"
                 android:gravity="center"
-                android:text=""
+                android:text="Preferences"
                 android:textSize="@dimen/large_font"
                 android:textColor="@android:color/white"
                 />
