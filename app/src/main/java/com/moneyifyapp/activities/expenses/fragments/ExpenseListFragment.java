@@ -30,6 +30,7 @@ import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.model.TransactionHandler;
 import com.moneyifyapp.model.YearTransactions;
 import com.moneyifyapp.utils.Utils;
+import com.moneyifyapp.views.PrettyToast;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -279,7 +280,7 @@ public class ExpenseListFragment extends ListFragment
                     clearTotals();
                     buildExpenseListFromParse(expenseList);
                 } else
-                    Toast.makeText(getActivity(), "We are having some issues, sorry", Toast.LENGTH_LONG).show();
+                    Utils.showPrettyToast(getActivity(), "We are having some issues, sorry", PrettyToast.VERY_LONG);
             }
         });
     }
@@ -334,7 +335,6 @@ public class ExpenseListFragment extends ListFragment
             {
                 // Normalize all currencies according to default
                 transaction.mCurrency = Utils.getDefaultCurrency(getActivity());
-                //addNewTransactionToStartAndUpdateTotals(transaction);
                 appendNewTransactionAndUpdateTotals(transaction);
             }
         }
@@ -344,7 +344,7 @@ public class ExpenseListFragment extends ListFragment
      */
     private Transaction createTransactionFromParseObject(ParseObject curExpense)
     {
-        return new Transaction(curExpense.getString(Transaction.KEY_ID),
+        Transaction transaction = new Transaction(curExpense.getString(Transaction.KEY_ID),
                 curExpense.getString(Transaction.KEY_DESCRIPTION),
                 curExpense.getString(Transaction.KEY_VALUE),
                 curExpense.getString(Transaction.KEY_CURRENCY),
@@ -352,6 +352,11 @@ public class ExpenseListFragment extends ListFragment
                 curExpense.getInt(Transaction.KEY_IMAGE_NAME),
                 curExpense.getBoolean(Transaction.KEY_TYPE),
                 curExpense.getString(DAY_KEY));
+        transaction.mSaved = curExpense.getBoolean(TEMPLATE_KEY);
+        transaction.mMonth = curExpense.getInt(MONTH_KEY);
+        transaction.mYear = curExpense.getInt(YEAR_KEY);
+
+        return transaction;
     }
 
     /**
@@ -584,6 +589,8 @@ public class ExpenseListFragment extends ListFragment
     {
         String currency = Transaction.CURRENCY_DEFAULT;
         Transaction createTransaction = createNewTransaction(desc, sum, currency, note, image, isExpense, isSaved, repeatType);
+        createTransaction.mMonth = mTransactions.mMonthNumber;
+        createTransaction.mYear = mYear;
         Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
 
         if (getListView().getChildCount() > 0)
@@ -603,6 +610,8 @@ public class ExpenseListFragment extends ListFragment
         Transaction tempExpense = new Transaction("0", desc, sum, currency, note, image, isExpense);
         tempExpense.mSaved = isSaved;
         tempExpense.mRepeatType = repeatType;
+        tempExpense.mMonth = mTransactions.mMonthNumber;
+        tempExpense.mYear = mYear;
         mAdapter.update(position, tempExpense);
         // ! We now MUST pass the item from the collection to preserve
         // the ID, the tempExpense object has an 'empty' ID.
@@ -647,6 +656,8 @@ public class ExpenseListFragment extends ListFragment
         Transaction newTransaction = new Transaction(newId, addDescription, addSum, currency, note, image, isExpense, transactionDay);
         newTransaction.mSaved = isSaved;
         newTransaction.mRepeatType = repeatType;
+        newTransaction.mMonth = mTransactions.mMonthNumber;
+        newTransaction.mYear = mYear;
         ParseObject expenseObject = new ParseObject(Transaction.CLASS_NAME);
         TransactionHandler.getInstance(getActivity()).saveDataInBackground(newTransaction, expenseObject);
         Utils.showPrettyToast(getActivity(), "Added \"" + addDescription +"\"", Toast.LENGTH_LONG);

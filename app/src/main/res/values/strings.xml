@@ -8,7 +8,7 @@
     <string name="list_empty_hint">Tap the "+" button add stuff</string>
     <string name="totals_hint_string">Tap for monthly insights</string>
     <string name="list_empty_message">Nothing here, so lonely</string>
-    <string name="list_empty_templates">No saved transactions…</string>
+    <string name="list_empty_templates">You don\'t have any favorites…</string>
     <string name="new_expense_button_caption">Add</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>

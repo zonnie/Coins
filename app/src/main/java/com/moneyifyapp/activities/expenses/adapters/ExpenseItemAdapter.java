@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,12 +30,14 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
 {
     private ListItemHandler mListener;
     private int mLayoutResourceId;
-    private MonthTransactions mTransactions;
+    //private MonthTransactions mTransactions;
     public static int PICK_IMAGE_DIMENSIONS = 130;
     private Animation mItemsLoadAnimation;
     public View mMyView;
     private ViewHolder mViewHolder;
-
+    private Filter mFilter;
+    private List<Transaction> mFilteredValues;
+    private List<Transaction> mAllValues;
 
     /**
      */
@@ -41,8 +45,10 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     {
         super(context, resource, expenses.getItems());
         mListener = listener;
-        mTransactions = expenses;
+        //mTransactions = expenses;
         mLayoutResourceId = resource;
+        mAllValues = expenses.getItems();
+        mFilteredValues = new ArrayList<Transaction>(mAllValues);
     }
 
     /**
@@ -74,11 +80,17 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         return buildItemView(position);
     }
 
+    @Override
+    public int getCount()
+    {
+        return mFilteredValues.size();
+    }
+
     /**
      */
     private View buildItemView(int position)
     {
-        Transaction currentTransaction = mTransactions.getItems().get(position);
+        Transaction currentTransaction = mFilteredValues.get(position);
 
         // Populate the current view according to collection item.
         if (currentTransaction != null)
@@ -124,7 +136,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private void initTransactionLookType(int position)
     {
         // Update ht look of the the view accordingly
-        if (!(mTransactions.getItems().get(position).mIsExpense))
+        if (!(mFilteredValues.get(position).mIsExpense))
             updateViewToExpense(mMyView, R.color.income_color);
         else
             updateViewToExpense(mMyView, R.color.expense_color);
@@ -163,7 +175,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         if (mViewHolder.mExpenseDescription != null)
         {
             String date = currentTransactionView.mTransactionDay;
-            String dateSuffix = Utils.getMonthPrefixByIndex(mTransactions.mMonthNumber).toUpperCase();
+            String dateSuffix = Utils.getMonthPrefixByIndex(currentTransactionView.mMonth).toUpperCase();
             mViewHolder.mExpenseDayOfMonth.setText(date);
             mViewHolder.mExpenseMonth.setText(dateSuffix);
         }
@@ -209,7 +221,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
      */
     public void remove(int position)
     {
-        Transaction transaction = mTransactions.getItems().get(position);
+        Transaction transaction = mFilteredValues.get(position);
         super.remove(transaction);
     }
 
@@ -218,7 +230,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
      */
     public List<Transaction> getItems()
     {
-        return mTransactions.getItems();
+        return mFilteredValues;
     }
 
     /**
@@ -227,7 +239,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
      */
     public void removeAll()
     {
-        for (Transaction expense : mTransactions.getItems())
+        for (Transaction expense : mFilteredValues)
             remove(expense);
 
         notifyDataSetChanged();
@@ -246,7 +258,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
      */
     private void updateTransaction(int position, Transaction expense)
     {
-        Transaction updatedExpense = mTransactions.getItems().get(position);
+        Transaction updatedExpense = mFilteredValues.get(position);
 
         if (expense != null)
         {
@@ -333,4 +345,66 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         public Button mRemoveItemButton;
         public ImageView mExpenseImage;
     }
+
+    /**
+     */
+    @Override
+    public Filter getFilter()
+    {
+        if (mFilter == null)
+            mFilter = new CustomFilter();
+        return mFilter;
+    }
+
+    /**
+     */
+    private class CustomFilter extends Filter
+    {
+
+        /**
+         */
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint)
+        {
+            FilterResults results = new FilterResults();
+
+            if (constraint == null || constraint.length() == 0)
+            {
+                List<Transaction> list = new ArrayList<Transaction>(mAllValues);
+                results.values = list;
+                results.count = list.size();
+            }
+            else
+            {
+                List<Transaction> newValues = new ArrayList<Transaction>();
+                for (int i = 0; i < mAllValues.size(); i++)
+                {
+                    Transaction item = mAllValues.get(i);
+                    if (item.mDescription.toUpperCase().contains(constraint.toString().toUpperCase()))
+                        newValues.add(item);
+                    else if(item.mNotes.toUpperCase().contains(constraint.toString().toUpperCase()))
+                        newValues.add(item);
+                    else if(item.mValue.toUpperCase().contains(constraint.toString().toUpperCase()))
+                        newValues.add(item);
+                }
+                results.values = newValues;
+                results.count = newValues.size();
+            }
+
+            return results;
+        }
+
+        /**
+         */
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint,
+                                      FilterResults results)
+        {
+            mFilteredValues = (List<Transaction>) results.values;
+            notifyDataSetChanged();
+        }
+
+    }
+
 }
