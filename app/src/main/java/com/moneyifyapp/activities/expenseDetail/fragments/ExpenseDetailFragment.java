@@ -128,14 +128,6 @@ public class ExpenseDetailFragment extends Fragment
         mExpenseNotes = (EditText) mView.findViewById(R.id.addExpenseNotes);
         mToggleIsExpense = (ToggleButton) mView.findViewById(R.id.isExpenseToggle);
         mToggleIsSaved = (ToggleButton) mView.findViewById(R.id.toggle_template_save);
-        mToggleIsSaved.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
-                mToggleIsSaved.startAnimation(mBounce);
-            }
-        });
 
     }
 
@@ -178,6 +170,15 @@ public class ExpenseDetailFragment extends Fragment
                 mToggleIsExpense.startAnimation(mBounce);
             }
         });
+        mToggleIsSaved.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                mToggleIsSaved.startAnimation(mBounce);
+            }
+        });
+
     }
 
     /**

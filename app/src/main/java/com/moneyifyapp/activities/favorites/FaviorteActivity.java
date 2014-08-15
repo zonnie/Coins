@@ -3,6 +3,7 @@ package com.moneyifyapp.activities.favorites;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -24,7 +25,9 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  *
@@ -36,6 +39,7 @@ public class FaviorteActivity extends ListActivity implements ExpenseItemAdapter
     private EditText mFilterField;
     private MonthTransactions mTransactions;
     private Animation mRemoveAnimation;
+    private Queue<Integer> mRemoveQueue;
 
     /**
      */
@@ -57,6 +61,7 @@ public class FaviorteActivity extends ListActivity implements ExpenseItemAdapter
 
             if (mRemoveAnimation == null)
                 mRemoveAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out);
+            mRemoveQueue = new LinkedList<Integer>();
 
             mItemAdapter = new ExpenseItemAdapter(this, R.layout.adapter_expense_item ,mTransactions, this);
             getListView().setAdapter(mItemAdapter);
@@ -117,10 +122,22 @@ public class FaviorteActivity extends ListActivity implements ExpenseItemAdapter
             // Put the next ID so that async functions could use it
             if (getListView().getChildAt(position) != null)
             {
+                mRemoveQueue.add(position);
                 View removedItem = getListView().getChildAt(position);
                 removedItem.startAnimation(mRemoveAnimation);
-                removeFavorite(mItemAdapter.getItems().get(position));
-                mItemAdapter.remove(position);
+                Transaction transaction = mItemAdapter.getItems().get(position);
+                transaction.mSaved = false;
+                // After animation is done, remove item from list
+                new Handler().postDelayed(new Runnable()
+                {
+                    public void run()
+                    {
+                        int itemId = mRemoveQueue.remove();
+                        mItemAdapter.remove(itemId);
+                    }
+
+                }, mRemoveAnimation.getDuration());
+                removeFavorite(transaction);
             }
         }
     }

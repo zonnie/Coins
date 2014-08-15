@@ -33,10 +33,10 @@
             android:id="@+id/detail_date_month"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.9"
+            android:layout_weight="0.8"
             android:fontFamily="sans-serif-condensed"
             android:gravity="center_vertical|end"
-            android:text="JUL"
+            android:text="MAR"
             android:textColor="@android:color/white"
             android:textSize="@dimen/huge_font"
             android:paddingTop="@dimen/padding_start_currency"
@@ -71,16 +71,6 @@
             android:src="@drawable/fave"
             />
 
-        <ImageButton
-            android:id="@+id/submit_item"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="0.8"
-            android:background="@drawable/back_regular_drawable"
-            android:onClick="onAcceptClicked"
-            android:src="@drawable/accept"
-            />
     </LinearLayout>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -101,12 +91,29 @@
                 android:layout_gravity="center"
                 />
 
+            <Button
+                android:id="@+id/submit_item"
+                android:layout_marginTop="@dimen/padding_start_currency"
+                android:layout_marginBottom="@dimen/padding_start_currency"
+                android:layout_marginLeft="@dimen/big_padding"
+                android:layout_marginRight="@dimen/big_padding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/stanard_button_drawable"
+                android:onClick="onAcceptClicked"
+                android:text="@string/item_details_submit"
+                android:textSize="@dimen/mongo_font"
+                android:src="@drawable/accept"
+                android:layout_below="@+id/detail_container"
+                />
+
             <FrameLayout
                 android:id="@+id/options_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_below="@+id/detail_container"
+                android:layout_below="@+id/submit_item"
                 />
         </RelativeLayout>
     </ScrollView>

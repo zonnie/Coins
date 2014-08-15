@@ -30,7 +30,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
 {
     private ListItemHandler mListener;
     private int mLayoutResourceId;
-    //private MonthTransactions mTransactions;
+    private MonthTransactions mTransactions;
     public static int PICK_IMAGE_DIMENSIONS = 130;
     private Animation mItemsLoadAnimation;
     public View mMyView;
@@ -45,10 +45,10 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     {
         super(context, resource, expenses.getItems());
         mListener = listener;
-        //mTransactions = expenses;
+        mTransactions = expenses;
         mLayoutResourceId = resource;
         mAllValues = expenses.getItems();
-        mFilteredValues = new ArrayList<Transaction>(mAllValues);
+        mFilteredValues = mAllValues;
     }
 
     /**
@@ -377,9 +377,8 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             else
             {
                 List<Transaction> newValues = new ArrayList<Transaction>();
-                for (int i = 0; i < mAllValues.size(); i++)
+                for (Transaction item : mAllValues)
                 {
-                    Transaction item = mAllValues.get(i);
                     if (item.mDescription.toUpperCase().contains(constraint.toString().toUpperCase()))
                         newValues.add(item);
                     else if(item.mNotes.toUpperCase().contains(constraint.toString().toUpperCase()))

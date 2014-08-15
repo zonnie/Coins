@@ -6,12 +6,17 @@
               android:orientation="vertical">
 
     <!-- This is a must for a custom list in fragment listview -->
+
+    <!-- Totals -->
     <LinearLayout
         android:id="@+id/totalLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/expense_drawable_left_pad"
+        android:layout_marginRight="@dimen/expense_drawable_left_pad"
+        android:layout_marginTop="@dimen/padding_start_currency"
         android:background="@drawable/general_item_card"
-        android:gravity="center"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/padding_start_currency"
         android:paddingLeft="@dimen/drawable_left_pad"
@@ -25,7 +30,7 @@
             android:orientation="vertical"
             >
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/totals_hint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -33,7 +38,7 @@
                 android:text="@string/totals_hint_string"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="@dimen/tiny_font"
-                />
+                />-->
 
             <LinearLayout
                 android:id="@+id/totalSubBarLayout"
@@ -121,20 +126,26 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!--</LinearLayout>-->
+    <!-- List Body -->
 
     <ListView
         android:id="@id/android:list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_marginLeft="@dimen/expense_drawable_left_pad"
         android:layout_marginRight="@dimen/expense_drawable_left_pad"
         android:layout_weight="1"
         android:clipToPadding="false"
-        android:drawSelectorOnTop="false"
+        android:drawSelectorOnTop="true"
         android:paddingBottom="@dimen/big_padding"
+        android:paddingTop="@dimen/drawable_left_pad"
+        android:fadingEdgeLength="@dimen/big_padding"
+        android:requiresFadingEdge="vertical"
+        android:background="@android:color/transparent"
         android:scrollbars="none"
-        android:paddingTop="@dimen/drawable_left_pad"/>
+        />
+
+    <!-- Empty -->
 
     <LinearLayout
         android:id="@id/android:empty"
