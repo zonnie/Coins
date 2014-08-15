@@ -196,19 +196,47 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/big_padding"
+                    android:layout_marginRight="@dimen/big_padding"
+                    >
+
                 <Button
                     android:id="@+id/forgot_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/drawable_left_pad"
+                    android:layout_marginTop="@dimen/padding_start_currency"
+                    android:background="@drawable/template_background"
+                    android:layout_margin="@dimen/padding_start_currency"
+                    android:padding="@dimen/drawable_left_pad"
+                    android:text="@string/action_forgot_pass"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/medium_font"
+                    android:textStyle="bold"/>
+
+                <Button
+                    android:id="@+id/Tutorial"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/drawable_left_pad"
                     android:layout_marginTop="@dimen/padding_start_currency"
                     android:background="@drawable/template_background"
                     android:padding="@dimen/drawable_left_pad"
-                    android:text="@string/action_forgot_pass"
+                    android:text="Tutorial"
+                    android:onClick="startTutorial"
+                    android:layout_margin="@dimen/padding_start_currency"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/medium_font"
                     android:textStyle="bold"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 

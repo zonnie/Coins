@@ -19,6 +19,7 @@ import com.moneyifyapp.activities.LoadingActivity;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.activities.login.dialogs.ResetPasswordDialog;
 import com.moneyifyapp.database.TransactionSqlHelper;
+import com.moneyifyapp.guide.WelcomeActivity;
 import com.moneyifyapp.model.TransactionHandler;
 import com.moneyifyapp.utils.Utils;
 import com.moneyifyapp.views.PrettyToast;
@@ -244,12 +245,21 @@ public class LoginActivity extends LoadingActivity
         showProgress(false);
     }
 
+    /**
+     */
     @Override
     public void onFetchComplete()
     {
         showProgress(false);
         goToMainActivity();
         finish();
+    }
+
+    /**
+     */
+    public void startTutorial(View view)
+    {
+        startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
     }
 }
 

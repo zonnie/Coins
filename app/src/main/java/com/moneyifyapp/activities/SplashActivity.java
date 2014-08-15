@@ -11,6 +11,7 @@ import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.activities.login.LoginActivity;
 import com.moneyifyapp.database.TransactionSqlHelper;
+import com.moneyifyapp.guide.WelcomeActivity;
 import com.moneyifyapp.model.TransactionHandler;
 import com.parse.ParseUser;
 
@@ -27,6 +28,7 @@ public class SplashActivity extends Activity
     private String FIRST_RUN_FLAG = "firstrun";
     private int SPLASH_DISPLAY_LENGTH = 1200;
     private TransactionSqlHelper mLocalDb;
+    private boolean mIsFristRun;
 
     /**
      */
@@ -36,13 +38,13 @@ public class SplashActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_layout);
 
-        boolean firstrun = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE).getBoolean(FIRST_RUN_FLAG, true);
+        mIsFristRun = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE).getBoolean(FIRST_RUN_FLAG, true);
 
         // Save the state with shared preferences
         getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE).edit().putBoolean(FIRST_RUN_FLAG, false).commit();
         mTransactionHandler = TransactionHandler.getInstance(this);
 
-        if (!firstrun)
+        if (!mIsFristRun)
         {
             mTransactionHandler.registerListenerAndFetchTransactions(this, Calendar.getInstance().get(Calendar.YEAR));
             initFromLocalDb();
@@ -94,7 +96,9 @@ public class SplashActivity extends Activity
                 Intent mainIntent;
 
                 // Login user automatically if it can be done
-                if (currentUser != null)
+                if(mIsFristRun)
+                    mainIntent = new Intent(SplashActivity.this, WelcomeActivity.class);
+                else if (currentUser != null)
                     mainIntent = new Intent(SplashActivity.this, ExpensesActivity.class);
                 else
                     mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
