@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.activities.expenses.adapters.ExpenseItemAdapter;
+import com.moneyifyapp.activities.login.dialogs.DeleteDialog;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.model.TransactionHandler;
@@ -32,7 +33,9 @@ import java.util.Queue;
 /**
  *
  */
-public class FaviorteActivity extends ListActivity implements ExpenseItemAdapter.ListItemHandler
+public class FaviorteActivity extends ListActivity
+        implements ExpenseItemAdapter.ListItemHandler,
+        DeleteDialog.OnDeleteClicked
 {
     private Animation mItemsLoadAnimation;
     private ExpenseItemAdapter mItemAdapter;
@@ -40,6 +43,7 @@ public class FaviorteActivity extends ListActivity implements ExpenseItemAdapter
     private MonthTransactions mTransactions;
     private Animation mRemoveAnimation;
     private Queue<Integer> mRemoveQueue;
+    private int mDeletePosition;
 
     /**
      */
@@ -113,10 +117,36 @@ public class FaviorteActivity extends ListActivity implements ExpenseItemAdapter
         Utils.animateBack(this);
     }
 
+    /**
+     */
     @Override
     public void removeFromFragmentList(View view)
     {
         final int position = getListView().getPositionForView((LinearLayout) view.getParent().getParent());
+        if (position >= 0)
+        {
+            mDeletePosition = position;
+            DeleteDialog dialog = new DeleteDialog(this, this,
+                    "The following will be removed from the favorite list",
+                    "Are you sure you want to remove \"" + mItemAdapter.getItem(position).mDescription + "\" ?");
+            dialog.setDialogImage(R.drawable.fave);
+            dialog.show();
+        }
+
+    }
+
+    /**
+     */
+    @Override
+    public void deleteClicked()
+    {
+        removeFavoriteFromList(mDeletePosition);
+    }
+
+    /**
+     */
+    private void removeFavoriteFromList(int position)
+    {
         if (position >= 0)
         {
             // Put the next ID so that async functions could use it

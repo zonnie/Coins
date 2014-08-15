@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
@@ -18,6 +19,7 @@ public class DeleteDialog extends Dialog
     private Context mContext;
     private WindowManager.LayoutParams mLayoutParams;
     private OnDeleteClicked mListener;
+    private ImageView mDialogImage;
 
     /**
      */
@@ -29,6 +31,7 @@ public class DeleteDialog extends Dialog
 
         ((TextView) mDialog.findViewById(R.id.delete_account_first_line)).setText(firstLine);
         ((TextView) mDialog.findViewById(R.id.delete_account_second_line)).setText(secondLine);
+        mDialogImage = (ImageView)mDialog.findViewById(R.id.delete_dialog_imageview);
         mListener = listener;
 
         bindCallbacksToButtons();
@@ -55,6 +58,13 @@ public class DeleteDialog extends Dialog
     {
         mListener.deleteClicked();
         mDialog.dismiss();
+    }
+
+    /**
+     */
+    public void setDialogImage(int resource)
+    {
+        mDialogImage.setImageResource(resource);
     }
 
     /**

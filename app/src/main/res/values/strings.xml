@@ -94,5 +94,6 @@
     <string name="delete_account_first_text">We don\'t wannna lose you</string>
     <string name="delete_account_second_text">Deleting the account will lose all your info</string>
     <string name="title_activity_faviorte">Favorites</string>
+    <string name="title_activity_welcome">Welcome</string>
 
 </resources>
