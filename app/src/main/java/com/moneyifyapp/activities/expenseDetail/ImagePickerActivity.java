@@ -81,7 +81,7 @@ public class ImagePickerActivity extends ListActivity implements  ImageAdapter.O
         imm.hideSoftInputFromWindow(mFilterField.getWindowToken(), 0);
 
         Intent data = getIntent();
-        data.putExtra(Transaction.KEY_IMAGE_NAME, position);
+        data.putExtra(Transaction.KEY_IMAGE_NAME, Images.getImageIndexBySortedPosition(position));
         setResult(ExpensesActivity.IMAGE_PICK_OK, data);
         finish();
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
