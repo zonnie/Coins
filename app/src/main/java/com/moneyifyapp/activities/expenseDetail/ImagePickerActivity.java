@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
@@ -96,5 +97,12 @@ public class ImagePickerActivity extends ListActivity implements  ImageAdapter.O
         Intent mIntent = getIntent();
         setResult(ExpensesActivity.IMAGE_PICK_CANCEL, mIntent);
         Utils.animateBack(this);
+    }
+
+    /**
+     */
+    public void OnBackClicked(View view)
+    {
+        onBackPressed();
     }
 }

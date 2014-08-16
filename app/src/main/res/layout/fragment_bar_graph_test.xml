@@ -1,0 +1,183 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background"
+            android:orientation="vertical"
+            android:scrollbars="none"
+
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <!-- Category Bar Graph -->
+
+        <TextView
+            android:id="@+id/month_analytics_graph_hint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingTop="@dimen/mongo_padding"
+            android:text="@string/analytics_str_top_graph_hint"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/medium_font"
+            />
+
+        <LinearLayout
+            android:id="@+id/category_bar_graph_root"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/drawable_left_pad"
+            android:orientation="vertical"
+            >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/card"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/padding_start_currency"
+                android:weightSum="12"
+                >
+
+                <!-- title -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/date_header"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/drawable_left_pad"
+                    android:paddingTop="@dimen/padding_start_currency"
+                    >
+
+                    <com.moneyifyapp.views.CondensedTextView
+                        android:id="@+id/graph_bar_title_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="sans-serif-condensed"
+                        android:gravity="center"
+                        android:text="@string/dashboard_bar_expense_chart_title"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/large_font"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_start_currency"
+                    android:orientation="vertical"
+                    android:paddingEnd="@dimen/big_padding"
+                    android:paddingStart="@dimen/big_padding"
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <LinearLayout
+                            android:id="@+id/linearChart"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="bottom"
+                            android:orientation="horizontal"
+                            >
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/drawable_left_pad"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                >
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_above="@+id/kkkk"
+                                    android:text="4K"
+                                    android:textColor="@android:color/black"
+                                    />
+
+                                <LinearLayout
+                                    android:id="@+id/kkkk"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="60dp"
+                                    android:background="@drawable/graph_bar_back_red"
+                                    android:layout_marginLeft="@dimen/drawable_left_pad"
+                                    android:layout_marginRight="@dimen/drawable_left_pad"
+
+                                    />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="FEB"
+                                    />
+
+                                </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="70dp"
+                                android:layout_marginRight="@dimen/drawable_left_pad"
+                                android:layout_weight="1"
+                                android:background="@drawable/graph_bar_back_red"
+                                />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="70dp"
+                                android:layout_marginRight="@dimen/drawable_left_pad"
+                                android:layout_weight="1"
+                                android:background="@drawable/graph_bar_back_red"
+                                />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="50dp"
+                                android:layout_marginRight="@dimen/drawable_left_pad"
+                                android:layout_weight="1"
+                                android:background="@drawable/graph_bar_back_red"
+                                />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="90dp"
+                                android:layout_marginRight="@dimen/drawable_left_pad"
+                                android:layout_weight="1"
+                                android:background="@drawable/graph_bar_back_red"
+                                />
+
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/graph_x_axis_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/padding_start_currency"
+                        android:gravity="center"
+                        android:text="Month"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="@dimen/tiny_font"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+</ScrollView>

@@ -108,6 +108,13 @@ public class FaviorteActivity extends ListActivity
 
     /**
      */
+    public void OnBackClicked(View view)
+    {
+        onBackPressed();
+    }
+
+    /**
+     */
     @Override
     public void onBackPressed()
     {

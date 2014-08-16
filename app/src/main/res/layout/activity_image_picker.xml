@@ -6,6 +6,34 @@
               android:background="@color/background"
     >
 
+    <!-- Title -->
+
+    <LinearLayout
+        android:id="@+id/month_analytics_date_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back_regualr"
+        android:orientation="horizontal"
+        >
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@drawable/back_regular_drawable"
+            android:onClick="OnBackClicked"
+            android:paddingEnd="@dimen/drawable_left_pad"
+            android:paddingStart="@dimen/drawable_left_pad"
+            android:src="@drawable/back_2"
+            android:padding="@dimen/drawable_left_pad"
+            />
+
+
+
+    </LinearLayout>
+
+    <!-- Search -->
+
     <com.moneyifyapp.views.ThinEditText
         android:id="@+id/image_picker_filter"
         android:layout_width="match_parent"
@@ -19,6 +47,7 @@
         android:paddingBottom="@dimen/padding_start_currency"
         android:paddingTop="@dimen/padding_start_currency"
         android:textColor="@android:color/darker_gray"
+        android:layout_margin="@dimen/padding_start_currency"
         />
 
     <ListView
@@ -26,6 +55,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="@dimen/large_font"
         />
 
 </LinearLayout>
