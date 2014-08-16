@@ -67,6 +67,16 @@ public class AnimationUtils
        return android.view.animation.AnimationUtils.loadAnimation(context, R.anim.zoom_in_bounce_small);
     }
 
+    public static Animation getFadeInAnimation(Context context)
+    {
+        return android.view.animation.AnimationUtils.loadAnimation(context, R.anim.fade_in);
+    }
+
+    public static Animation getFadeOutAnimation(Context context)
+    {
+        return android.view.animation.AnimationUtils.loadAnimation(context, R.anim.fade_out);
+    }
+
     public static Animation getmRotateAnimation()
     {
         if(mRotateAnimation == null)

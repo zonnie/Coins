@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
+import com.moneyifyapp.model.tutorial.Tutorial;
 
 /**
  */
@@ -26,12 +27,10 @@ public class WelcomeFragment extends Fragment
     private static final String TUTORIAL_HEADLINE_KEY = "head";
     private static final String TUTORIAL_TOP_TEXT_KEY = "top";
     private static final String TUTORIAL_BOTTOM_TEXT_KEY = "bottom";
-    private static final String TUTORIAL_FIRST_KEY = "first";
-    private static final String TUTORIAL_LAST_KEY = "last";
 
     /**
      */
-    public static WelcomeFragment newInstance(TutorialParams params)
+    public static WelcomeFragment newInstance(Tutorial.TutorialParams params)
     {
         WelcomeFragment fragment = new WelcomeFragment();
         Bundle args = new Bundle();
@@ -39,8 +38,6 @@ public class WelcomeFragment extends Fragment
         args.putString(TUTORIAL_HEADLINE_KEY, params.mHeadline);
         args.putString(TUTORIAL_TOP_TEXT_KEY, params.mTopText);
         args.putString(TUTORIAL_BOTTOM_TEXT_KEY, params.mBottomText);
-        args.putBoolean(TUTORIAL_FIRST_KEY, params.mFirst);
-        args.putBoolean(TUTORIAL_LAST_KEY, params.mLast);
         fragment.setArguments(args);
         return fragment;
     }
@@ -135,28 +132,5 @@ public class WelcomeFragment extends Fragment
     public interface OnFragmentInteractionListener
     {
         public void onFragmentInteraction(Uri uri);
-    }
-
-    /**
-     *
-     */
-    public static class TutorialParams
-    {
-        public int mImageResource;
-        public String mHeadline;
-        public String mTopText;
-        public String mBottomText;
-        public boolean mFirst;
-        public boolean mLast;
-
-        public TutorialParams(int image, String headline, String top, String bottom)
-        {
-            this.mImageResource = image;
-            this.mHeadline = headline;
-            this.mTopText = top;
-            this.mBottomText = bottom;
-            this.mFirst = false;
-            this.mLast = false;
-        }
     }
 }

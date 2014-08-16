@@ -1,13 +1,12 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:background="@drawable/back_regualr"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/big_padding"
-            android:paddingRight="@dimen/big_padding"
             android:scrollbars="none"
             tools:context=".guide.fragments.WelcomeFragment"
+            android:fillViewport="true"
     >
 
     <LinearLayout
@@ -20,47 +19,49 @@
             android:id="@+id/welcome_headline"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:gravity="center"
-            android:paddingTop="@dimen/drawable_left_pad"
             android:text="Favorites"
+            android:layout_marginTop="@dimen/drawable_left_pad"
             android:textColor="@android:color/white"
             android:textSize="@dimen/mongo_font"
             android:textStyle="bold"
             />
 
-        <com.moneyifyapp.views.ThinTextView
+        <TextView
             android:id="@+id/welcome_main_body"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center_horizontal|bottom"
+            android:layout_weight="0.5"
+            android:paddingLeft="@dimen/big_padding"
+            android:paddingRight="@dimen/big_padding"
+            android:gravity="center"
             android:text="@string/welcome_sample_text"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/medium_font"
+            />
+
+        <TextView
+            android:id="@+id/welcome_bottom_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:paddingLeft="@dimen/big_padding"
+            android:paddingRight="@dimen/big_padding"
+            android:gravity="center"
+            android:text="Just tap the 'Favorite' to save this transaction for future use"
+            android:textColor="@android:color/white"
             />
 
         <ImageView
             android:id="@+id/welcome_main_pic"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="6"
             android:adjustViewBounds="true"
             android:fadingEdge="vertical"
             android:fadingEdgeLength="@dimen/large_font"
             android:src="@drawable/basic"
             />
 
-        <com.moneyifyapp.views.ThinTextView
-            android:id="@+id/welcome_bottom_text"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingTop="@dimen/padding_start_currency"
-            android:text="Just tap the 'Favorite' to save this transaction for future use"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/medium_font"
-            />
     </LinearLayout>
 </ScrollView>

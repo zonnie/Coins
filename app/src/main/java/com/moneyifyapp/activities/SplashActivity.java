@@ -11,8 +11,8 @@ import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.activities.login.LoginActivity;
 import com.moneyifyapp.database.TransactionSqlHelper;
-import com.moneyifyapp.guide.WelcomeActivity;
 import com.moneyifyapp.model.TransactionHandler;
+import com.moneyifyapp.utils.Utils;
 import com.parse.ParseUser;
 
 import java.util.Calendar;
@@ -23,8 +23,7 @@ import java.util.Calendar;
 public class SplashActivity extends Activity
         implements TransactionHandler.onFetchingCompleteListener
 {
-    private TransactionHandler mTransactionHandler;
-    private String SHARED_PREF_NAME = "com.moneyifyapp";
+    public static String SHARED_PREF_NAME = "com.moneyifyapp";
     private String FIRST_RUN_FLAG = "firstrun";
     private int SPLASH_DISPLAY_LENGTH = 1200;
     private TransactionSqlHelper mLocalDb;
@@ -38,11 +37,10 @@ public class SplashActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_layout);
 
-        mIsFristRun = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE).getBoolean(FIRST_RUN_FLAG, true);
+        mIsFristRun = Utils.isFirstRunSplash(this);
+        Utils.setFirstRunSplash(this, false);
 
-        // Save the state with shared preferences
-        getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE).edit().putBoolean(FIRST_RUN_FLAG, false).commit();
-        mTransactionHandler = TransactionHandler.getInstance(this);
+        TransactionHandler mTransactionHandler = TransactionHandler.getInstance(this);
 
         if (!mIsFristRun)
         {
@@ -95,10 +93,7 @@ public class SplashActivity extends Activity
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 Intent mainIntent;
 
-                // Login user automatically if it can be done
-                if(mIsFristRun)
-                    mainIntent = new Intent(SplashActivity.this, WelcomeActivity.class);
-                else if (currentUser != null)
+                if (currentUser != null)
                     mainIntent = new Intent(SplashActivity.this, ExpensesActivity.class);
                 else
                     mainIntent = new Intent(SplashActivity.this, LoginActivity.class);

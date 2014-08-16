@@ -47,6 +47,8 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="item_details_submit">"Done"</string>
+    <string name="tutorial_finish">"Finish"</string>
+    <string name="tutorial_exit">"Exit"</string>
     <string name="item_details_cancel">"Cancel"</string>
     <string name="item_list_refresh">"Refresh"</string>
     <string name="item_list_edit">"Edit"</string>

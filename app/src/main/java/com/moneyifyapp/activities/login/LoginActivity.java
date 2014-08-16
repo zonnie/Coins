@@ -21,6 +21,7 @@ import com.moneyifyapp.activities.login.dialogs.ResetPasswordDialog;
 import com.moneyifyapp.database.TransactionSqlHelper;
 import com.moneyifyapp.guide.WelcomeActivity;
 import com.moneyifyapp.model.TransactionHandler;
+import com.moneyifyapp.model.tutorial.TutorialData;
 import com.moneyifyapp.utils.Utils;
 import com.moneyifyapp.views.PrettyToast;
 import com.parse.LogInCallback;
@@ -43,6 +44,7 @@ public class LoginActivity extends LoadingActivity
     private Button mResetPasswordButton;
     private TransactionHandler mTransactionHandler;
     private TransactionSqlHelper mLocalDb;
+    private boolean mFirstRun;
     public static final String EMAIL_VERIFY_KEY = "emailVerified";
 
     /**
@@ -62,6 +64,9 @@ public class LoginActivity extends LoadingActivity
 
         // Set the content
         setContentView(R.layout.activity_login_layout);
+
+        mFirstRun = Utils.isFirstRunLogin(this);
+        Utils.setFirstRunLogin(this, false);
 
         mTransactionHandler = TransactionHandler.getInstance(this);
         mTransactionHandler.registerToFetchComplete(this);
@@ -251,15 +256,28 @@ public class LoginActivity extends LoadingActivity
     public void onFetchComplete()
     {
         showProgress(false);
-        goToMainActivity();
+        if(mFirstRun)
+            startTutorial();
+        else
+            goToMainActivity();
         finish();
     }
 
     /**
      */
+    //TODO Remove - this is for debug only
     public void startTutorial(View view)
     {
-        startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+        startActivity(new Intent(LoginActivity.this,
+                WelcomeActivity.class).putExtra(WelcomeActivity.TUTORIAL_TYPE_KEY, TutorialData.TutorialType.MAIN_LIST.toString()));
+    }
+
+    /**
+     */
+    public void startTutorial()
+    {
+        startActivity(new Intent(LoginActivity.this,
+                WelcomeActivity.class).putExtra(WelcomeActivity.TUTORIAL_TYPE_KEY, TutorialData.TutorialType.MAIN_LIST.toString()));
     }
 }
 

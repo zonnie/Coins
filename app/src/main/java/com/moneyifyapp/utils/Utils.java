@@ -30,6 +30,10 @@ public class Utils
     public static final String FONT_CONDENSED = "sans-serif-condensed";
     public static final String FONT_THIN = "sans-serif-thin";
     private static DecimalFormat mFormater;
+    public static String SHARED_PREF_NAME = "com.moneyifyapp";
+    public static String SPLASH_FIRST_RUN_FLAG = "firstrunSplash";
+    public static String LOGIN_FIRST_RUN_FLAG = "firstrunLogin";
+    public static String DETAILS_FIRST_RUN_FLAG = "firstrunDetails";
 
     /**
      */
@@ -284,4 +288,47 @@ public class Utils
         params.mToastText = text;
         new PrettyToast(activity, params).show();
     }
+
+    /**
+     */
+    public static boolean isFirstRunSplash(Context context)
+    {
+        return context.getSharedPreferences(SHARED_PREF_NAME, Activity.MODE_PRIVATE).getBoolean(SPLASH_FIRST_RUN_FLAG, true);
+    }
+
+    /**
+     */
+    public static boolean isFirstRunLogin(Context context)
+    {
+        return context.getSharedPreferences(SHARED_PREF_NAME, Activity.MODE_PRIVATE).getBoolean(LOGIN_FIRST_RUN_FLAG, true);
+    }
+
+    /**
+     */
+    public static boolean isFirstRunDetails(Context context)
+    {
+        return context.getSharedPreferences(SHARED_PREF_NAME, Activity.MODE_PRIVATE).getBoolean(DETAILS_FIRST_RUN_FLAG, true);
+    }
+
+    /**
+     */
+    public static void setFirstRunSplash(Context context, boolean firstRun)
+    {
+        context.getSharedPreferences(SHARED_PREF_NAME, Activity.MODE_PRIVATE).edit().putBoolean(SPLASH_FIRST_RUN_FLAG, firstRun).commit();
+    }
+
+    /**
+     */
+    public static void setFirstRunLogin(Context context, boolean firstRun)
+    {
+        context.getSharedPreferences(SHARED_PREF_NAME, Activity.MODE_PRIVATE).edit().putBoolean(LOGIN_FIRST_RUN_FLAG, firstRun).commit();
+    }
+
+    /**
+     */
+    public static void setFirstRunDetails(Context context, boolean firstRun)
+    {
+        context.getSharedPreferences(SHARED_PREF_NAME, Activity.MODE_PRIVATE).edit().putBoolean(DETAILS_FIRST_RUN_FLAG, firstRun).commit();
+    }
+
 }

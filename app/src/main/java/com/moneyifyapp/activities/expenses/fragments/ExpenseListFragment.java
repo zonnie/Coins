@@ -25,10 +25,12 @@ import com.moneyifyapp.activities.expenseDetail.ExpenseDetailActivity;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.activities.expenses.adapters.ExpenseItemAdapter;
 import com.moneyifyapp.activities.login.dialogs.DeleteDialog;
+import com.moneyifyapp.guide.WelcomeActivity;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.model.TransactionHandler;
 import com.moneyifyapp.model.YearTransactions;
+import com.moneyifyapp.model.tutorial.TutorialData;
 import com.moneyifyapp.utils.Utils;
 import com.moneyifyapp.views.PrettyToast;
 import com.parse.DeleteCallback;
@@ -80,6 +82,7 @@ public class ExpenseListFragment extends ListFragment
     private int mPageId;
     private int mYear;
     private int mDeletePosition;
+    private boolean mIsFirst;
 
     /**
      * Factory to pass some data for different fragments creation.
@@ -113,6 +116,9 @@ public class ExpenseListFragment extends ListFragment
             mPageId = getArguments().getInt(PAGE_ID_KEY);
             mYear = getArguments().getInt(YEAR_KEY);
         }
+
+        mIsFirst = Utils.isFirstRunDetails(getActivity());
+        Utils.setFirstRunDetails(getActivity(), false);
 
         // Init Parse for data storing
         mTransactionHandler = TransactionHandler.getInstance(getActivity());
@@ -227,10 +233,19 @@ public class ExpenseListFragment extends ListFragment
      */
     private void startNewTransactionActivity()
     {
-        Intent intent = new Intent(getActivity(), ExpenseDetailActivity.class);
-        intent.putExtra(MONTH_KEY, mTransactions.mMonthNumber);
-        intent.putExtra(REQ_CODE_KEY, ExpensesActivity.REQ_NEW_ITEM);
-        startActivityForResult(intent, ExpensesActivity.REQ_NEW_ITEM);
+        if(mIsFirst)
+        {
+            Intent intent = new Intent(getActivity(), WelcomeActivity.class);
+            intent.putExtra(WelcomeActivity.TUTORIAL_TYPE_KEY, TutorialData.TutorialType.EXPENSE.toString());
+            startActivityForResult(intent, ExpensesActivity.REQ_NEW_ITEM);
+        }
+        else
+        {
+            Intent intent = new Intent(getActivity(), ExpenseDetailActivity.class);
+            intent.putExtra(MONTH_KEY, mTransactions.mMonthNumber);
+            intent.putExtra(REQ_CODE_KEY, ExpensesActivity.REQ_NEW_ITEM);
+            startActivityForResult(intent, ExpensesActivity.REQ_NEW_ITEM);
+        }
     }
 
     /**
@@ -557,6 +572,9 @@ public class ExpenseListFragment extends ListFragment
     {
         super.onActivityResult(requestCode, resultCode, data);
 
+        //Needed so that if it's tutorial end we will start a "new" activity
+        mIsFirst = Utils.isFirstRunDetails(getActivity());
+
         if (resultCode == ExpensesActivity.EXPENSE_RESULT_OK)
         {
             String desc = data.getExtras().getString(Transaction.KEY_DESCRIPTION);
@@ -578,7 +596,8 @@ public class ExpenseListFragment extends ListFragment
                             position);
             }
         }
-
+        else if(resultCode == WelcomeActivity.TUTORIAL_DONE)
+            startNewTransactionActivity();
     }
 
     //TODO this has WAAAAY to many arguments
