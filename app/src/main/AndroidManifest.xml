@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.moneyifyapp" >
+<manifest
+    package="com.moneyifyapp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/coin_large"
         android:label="@string/main_title"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".activities.expenses.ExpensesActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label=""
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activities.login.LoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/action_sign_in"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".activities.login.SignUpActivity"
@@ -29,18 +30,18 @@
             android:label="@string/action_sing_up"
             android:parentActivityName=".activities.login.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".activities.SplashActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/main_title"
+            android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.CustomizedAppTheme" >
+            android:theme="@style/Theme.CustomizedAppTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
@@ -49,58 +50,59 @@
             android:label=""
             android:parentActivityName=".activities.expenses.ExpensesActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".activities.expenseDetail.ImagePickerActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label=""
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".activities.preferences.PrefActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label=""
             android:parentActivityName=".activities.expenses.ExpensesActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activities.analytics.FullAnalyticsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label=""
-            android:parentActivityName=".activities.expenses.ExpensesActivity" >
+            android:parentActivityName=".activities.expenses.ExpensesActivity">
         </activity>
         <activity
             android:name=".activities.analytics.MonthAnalytics"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label=""
-            android:parentActivityName=".activities.expenses.ExpensesActivity" >
+            android:parentActivityName=".activities.expenses.ExpensesActivity">
         </activity>
         <activity
             android:name=".activities.login.AccountActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label=""
             android:parentActivityName=".activities.expenses.ExpensesActivity"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".activities.analytics.GraphActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label=""
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".activities.favorites.FaviorteActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_faviorte"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".guide.WelcomeActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:label="@string/title_activity_welcome" >
+            android:label="@string/title_activity_welcome"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
     </application>
 

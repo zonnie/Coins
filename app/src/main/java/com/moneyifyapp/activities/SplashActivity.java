@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -25,7 +26,7 @@ public class SplashActivity extends Activity
 {
     public static String SHARED_PREF_NAME = "com.moneyifyapp";
     private String FIRST_RUN_FLAG = "firstrun";
-    private int SPLASH_DISPLAY_LENGTH = 1200;
+    private int SPLASH_DISPLAY_LENGTH = 1000;
     private TransactionSqlHelper mLocalDb;
     private boolean mIsFristRun;
 
@@ -36,6 +37,7 @@ public class SplashActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_layout);
+        Log.d("YONI","onCreate");
 
         mIsFristRun = Utils.isFirstRunSplash(this);
         Utils.setFirstRunSplash(this, false);
@@ -67,8 +69,9 @@ public class SplashActivity extends Activity
     @Override
     public void onFetchComplete()
     {
+        Log.d("YONI","onFetchComplete");
         ParseUser currentUser = ParseUser.getCurrentUser();
-        Intent mainIntent = null;
+        Intent mainIntent;
 
         // Login user automatically if it can be done
         if (currentUser != null)
@@ -85,6 +88,7 @@ public class SplashActivity extends Activity
      */
     private void startWithNoQuery()
     {
+        Log.d("YONI","startWithNoQuery");
         new Handler().postDelayed(new Runnable()
         {
             @Override
@@ -97,7 +101,6 @@ public class SplashActivity extends Activity
                     mainIntent = new Intent(SplashActivity.this, ExpensesActivity.class);
                 else
                     mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
-
                 startActivity(mainIntent);
                 finish();
             }
@@ -107,6 +110,8 @@ public class SplashActivity extends Activity
     @Override
     protected void onResume()
     {
+        Log.d("YONI","onResume");
         super.onResume();
+        onFetchComplete();
     }
 }

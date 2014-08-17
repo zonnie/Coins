@@ -7,18 +7,18 @@
     <translate
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:duration="300"
-        android:fromYDelta="-100%p"
-        android:toYDelta="0%p"
+        android:fromYDelta="0%p"
+        android:toYDelta="100%p"
         >
     </translate>
 
     <!--<scale
         android:duration="300"
         android:fromXScale="1"
-        android:fromYScale="0"
+        android:fromYScale="1"
         android:pivotX="50%"
         android:pivotY="50%"
-        android:toXScale="1"
-        android:toYScale="1"
+        android:toXScale="0"
+        android:toYScale="0"
         />-->
 </set>

@@ -47,7 +47,9 @@
         android:paddingBottom="@dimen/padding_start_currency"
         android:paddingTop="@dimen/padding_start_currency"
         android:textColor="@android:color/darker_gray"
-        android:layout_margin="@dimen/padding_start_currency"
+        android:layout_marginTop="@dimen/padding_start_currency"
+        android:layout_marginLeft="@dimen/padding_start_currency"
+        android:layout_marginRight="@dimen/padding_start_currency"
         />
 
     <com.moneyifyapp.views.ThinTextView
@@ -65,5 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="@dimen/large_font"
         />
     </LinearLayout>

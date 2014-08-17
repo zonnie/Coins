@@ -38,7 +38,7 @@
     <string name="title_activity_create_expense">Transaction</string>
     <string name="title_activity_image_picker">Category</string>
     <string name="login_welcome">Welcome!</string>
-    <string name="login_welcome_2nd_line">Sign in and save some Coins</string>
+    <string name="login_welcome_2nd_line">Save some Coins</string>
     <string name="signup_welcome">Some info that we\'ll know you in the future</string>
     <string name="account_hint">Update us on any account changes</string>
     <string name="image_picker_hint_text">Select category</string>

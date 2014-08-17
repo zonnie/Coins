@@ -57,6 +57,7 @@ public class LoginActivity extends LoadingActivity
         Utils.initializeActionBar(this);
         Utils.removeLogo(this);
         Utils.removeActionBar(this);
+        Utils.animateFadeIn(this);
 
         // Remove logo for this activity
         if(getActionBar() != null)
@@ -150,6 +151,14 @@ public class LoginActivity extends LoadingActivity
     public void onClick(View v)
     {
         ((EditText)v).setError(null);
+    }
+
+    /**
+     */
+    @Override
+    public void onBackPressed()
+    {
+        finish();
     }
 
     /**
@@ -265,19 +274,12 @@ public class LoginActivity extends LoadingActivity
 
     /**
      */
-    //TODO Remove - this is for debug only
-    public void startTutorial(View view)
-    {
-        startActivity(new Intent(LoginActivity.this,
-                WelcomeActivity.class).putExtra(WelcomeActivity.TUTORIAL_TYPE_KEY, TutorialData.TutorialType.MAIN_LIST.toString()));
-    }
-
-    /**
-     */
     public void startTutorial()
     {
-        startActivity(new Intent(LoginActivity.this,
-                WelcomeActivity.class).putExtra(WelcomeActivity.TUTORIAL_TYPE_KEY, TutorialData.TutorialType.MAIN_LIST.toString()));
+        Intent intent = new Intent(LoginActivity.this,
+                WelcomeActivity.class).putExtra(WelcomeActivity.TUTORIAL_TYPE_KEY, TutorialData.TutorialType.MAIN_LIST.toString());
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }
 

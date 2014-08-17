@@ -229,6 +229,20 @@ public class Utils
 
     /**
      */
+    public static void animateUpFromBottom(Activity activity)
+    {
+        activity.overridePendingTransition(R.anim.appear_in_bounce, R.anim.fade_out);
+    }
+
+    /**
+     */
+    public static void animateFadeIn(Activity activity)
+    {
+        activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    /**
+     */
     public static void animateBack(Activity activity)
     {
         activity.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);

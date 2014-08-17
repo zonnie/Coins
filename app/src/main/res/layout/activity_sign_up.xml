@@ -137,7 +137,9 @@
                     android:padding="@dimen/drawable_left_pad"
                     android:singleLine="true"
                     android:inputType="textEmailAddress"
-                    android:textColorHint="#bbbbbb"/>
+                    android:textColorHint="#bbbbbb"
+                    android:textSize="@dimen/medium_font"
+                    />
 
                 <EditText
                     android:id="@+id/passEditText"
@@ -152,7 +154,9 @@
                     android:inputType="textPassword"
                     android:password="true"
                     android:singleLine="true"
-                    android:textColorHint="#bbbbbb"/>
+                    android:textColorHint="#bbbbbb"
+                    android:textSize="@dimen/medium_font"
+                    />
 
                 <EditText
                     android:id="@+id/passVerifyEditText"
@@ -169,7 +173,9 @@
                     android:password="true"
                     android:inputType="textPassword"
                     android:singleLine="true"
-                    android:textColorHint="#bbbbbb"/>
+                    android:textColorHint="#bbbbbb"
+                    android:textSize="@dimen/medium_font"
+                    />
 
                 <Button
                     android:id="@+id/confirm_signup"
