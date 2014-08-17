@@ -14,7 +14,7 @@
         android:orientation="vertical"
         >
 
-        <TextView
+        <com.moneyifyapp.views.ThinTextView
             android:id="@+id/month_analytics_top_category_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
             android:paddingBottom="@dimen/padding_start_currency"
             android:text="@string/analytics_str_top_category_hint"
             android:textColor="@android:color/darker_gray"
-            android:textSize="@dimen/medium_font"
+            android:textSize="@dimen/tiny_font"
             />
 
         <GridView

@@ -606,7 +606,7 @@ public class ExpenseListFragment extends ListFragment
     private void handleNewTransaction(String desc, String sum, String note, int image, boolean isExpense,
                                       boolean isSaved, Transaction.REPEAT_TYPE repeatType)
     {
-        String currency = Transaction.CURRENCY_DEFAULT;
+        String currency = Utils.getDefaultCurrency(getActivity());
         Transaction createTransaction = createNewTransaction(desc, sum, currency, note, image, isExpense, isSaved, repeatType);
         createTransaction.mMonth = mTransactions.mMonthNumber;
         createTransaction.mYear = mYear;

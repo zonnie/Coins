@@ -1,6 +1,7 @@
 package com.moneyifyapp.model;
 
 import android.app.Activity;
+import android.content.Context;
 
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
@@ -30,12 +31,14 @@ public class TransactionHandler
     private List<String> mReusableTransactions;
     private Queue<onFetchingCompleteListener> mFetchCompleteListeners;
     private boolean mIsFirstFatch;
+    private Context mContext;
 
     /**
      */
     private TransactionHandler(Activity context)
     {
         Utils.initializeParse(context);
+        mContext = context;
         mAllTransactions = new LinkedHashMap<String, YearTransactions>();
         mFetchCompleteListeners = new LinkedList<onFetchingCompleteListener>();
         mRepeatTransactions = new ArrayList<String>();
@@ -130,7 +133,8 @@ public class TransactionHandler
         Transaction transaction =  new Transaction(curExpense.getString(Transaction.KEY_ID),
                 curExpense.getString(Transaction.KEY_DESCRIPTION),
                 curExpense.getString(Transaction.KEY_VALUE),
-                curExpense.getString(Transaction.KEY_CURRENCY),
+                Utils.getDefaultCurrency(mContext),     //TODO this effectivly ignores the DB currency value
+                //curExpense.getString(Transaction.KEY_CURRENCY),
                 curExpense.getString(Transaction.KEY_NOTES),
                 curExpense.getInt(Transaction.KEY_IMAGE_NAME),
                 curExpense.getBoolean(Transaction.KEY_TYPE),
