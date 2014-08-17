@@ -1,9 +1,9 @@
 <!-- Title -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:scrollbars="none"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:scrollbars="none"
     >
 
     <!-- Custom Action Bar -->
@@ -26,42 +26,47 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:scaleType="center"
+                android:layout_weight="0.55"
                 android:background="@drawable/back_regular_drawable"
-                android:src="@drawable/back_2"
                 android:onClick="onBackClicked"
-                android:layout_weight="0.9"
+                android:scaleType="center"
+                android:src="@drawable/back_2"
                 />
 
-            <TextView
-                android:id="@+id/analytics_month_label"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
-                android:gravity="center_vertical|end"
-                android:text="September"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/huge_font"
-                android:textStyle="bold"
-                android:layout_weight="4.2"
-                android:drawableStart="@drawable/pie"
-                />
+                android:layout_weight="5.1"
+                android:orientation="vertical"
+                >
 
-            <TextView
-                android:id="@+id/analytics_year_label"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:fontFamily="sans-serif-condensed"
-                android:paddingStart="@dimen/padding_start_currency"
-                android:paddingBottom="@dimen/padding_start_currency"
-                android:paddingTop="@dimen/padding_start_currency"
-                android:gravity="center_vertical"
-                android:text="2014"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/huge_font"
+                <com.moneyifyapp.views.CondensedTextView
+                    android:id="@+id/analytics_month_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="center_vertical|start"
+                    android:text="September"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/huge_font"
+                    android:textStyle="bold"
+                    />
 
-                />
+                <com.moneyifyapp.views.ThinTextView
+                    android:id="@+id/analytics_year_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="center_vertical|start"
+                    android:paddingBottom="@dimen/padding_start_currency"
+                    android:paddingEnd="@dimen/drawable_left_pad"
+                    android:text="2014"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/large_font"
+                    />
+            </LinearLayout>
+
         </LinearLayout>
 
         <android.support.v4.view.ViewPager
@@ -72,13 +77,15 @@
             android:layout_height="match_parent"
             tools:context="com.moneyifyapp.activities.analytics.FullAnalyticsActivity"
             >
+
             <android.support.v4.view.PagerTitleStrip
                 android:id="@+id/pager_title_strip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
-                android:background="@drawable/back_regualr"
-                android:textColor="#fff"/>
+                android:background="@color/background"
+                android:textColor="@android:color/darker_gray"
+                />
 
         </android.support.v4.view.ViewPager>
     </LinearLayout>

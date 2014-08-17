@@ -27,15 +27,15 @@ public class TutorialData
     public static String[] mExpenseTutorialTopText =
             {"Basically, a transaction must have a description and it\'s amount"
                     ,"Each transaction is either an income or an expense"
-                    ,"You can categorize each transaction from our wide veriaty of categories"
+                    ,"You can categorize each transaction from our wide variaty of categories"
                     ,"Use your \"Favorites\" to create new transactions in a pinch"
-                    ,"When you are done, simple click the \"Done\" button"};
+                    ,"When you are done, simply click the \"Done\" button"};
 
     public static String[] mExpenseTutorialBottomText =
             {"Optionally you can provide a note for further detail"
-                    ,"Tap the button to choose between the two"
+                    ,"Tap the \"Spent\"/\"Earned\" button to toggle between the two"
                     ,"This will help us share some insights on where you spend your money"
-                    ,"Just tap the 'Favorite' to save this transaction for future use"
+                    ,"Just tap the \"Favorite\" to save this transaction for future use"
                     ,""};
 
 
@@ -53,11 +53,11 @@ public class TutorialData
 
     public static String[] mListTutorialTopText =
             {"Tap the \"+\" to add new income or expenses"
-            ,"Take a look at existing transactions or update them"
+            ,"Take a look at existing transactions and update them"
             ,"Tap to get a complete monthly overview"};
 
     public static String[] mListTutorialBottomText =
             {"Here you'll be able to 'reuse' favorite transactions"
-            ,"Tap the button to choose between the two"
-            ,"Tip: Add some stuff before heading to the monthly overview"};
+            ,""
+            ,"Tip : Add some stuff before heading to the monthly overview"};
 }

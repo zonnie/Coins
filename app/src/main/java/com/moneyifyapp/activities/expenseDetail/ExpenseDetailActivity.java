@@ -213,9 +213,9 @@ public class ExpenseDetailActivity extends Activity
     {
         String date = mTransaction.mTransactionDay;
         date += Utils.generateDayInMonthSuffix(date);
-        mDetailDateDay.setText(date);
+        mDetailDateDay.setText("the " + date);
         if(mMonth >= 0)
-            mDetailDateMonth.setText(Utils.getMonthPrefixByIndex(mMonth).toUpperCase());
+            mDetailDateMonth.setText(Utils.getMonthNameByIndex(mMonth));
     }
 
     /**

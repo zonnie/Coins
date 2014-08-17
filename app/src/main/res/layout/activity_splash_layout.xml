@@ -2,65 +2,26 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:background="@drawable/button_alternate"
-              android:gravity="center"
               android:orientation="vertical"
-              android:weightSum="4">
+              >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="10"
         >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            android:layout_weight="6"
-            android:layout_marginTop="@dimen/big_padding"
-            >
-
-            <TextView
-                android:id="@+id/splashTitle"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:gravity="center_horizontal|bottom"
-                android:text="@string/splash_slogan"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/huge_font"
-                />
-
-            <TextView
-                android:id="@+id/splashSlogan"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center_horizontal|top"
-                android:text="@string/splash_slogan_under"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/white"
-                />
-
-            <ImageView
-                android:id="@+id/splashImage"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="5"
-                android:src="@drawable/coin_large"
-                />
-        </LinearLayout>
+        <!-- First time -->
 
         <LinearLayout
             android:id="@+id/first_time_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
-            android:layout_weight="4"
-            android:visibility="gone"
+            android:layout_weight="2"
+            android:visibility="invisible"
             >
-            <TextView
+            <com.moneyifyapp.views.CondensedTextView
                 android:id="@+id/firstTimeWelcome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,20 +29,49 @@
                 android:gravity="center"
                 android:text="@string/splash_first_time_title"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/large_font"
+                android:textSize="@dimen/mongo_font"
                 />
 
-            <TextView
+            <com.moneyifyapp.views.CondensedTextView
                 android:id="@+id/firstTimeText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/expense_drawable_left_pad"
                 android:gravity="top|center_horizontal"
                 android:text="@string/splash_first_time_body"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/medium_font"
                 />
         </LinearLayout>
+
+        <!-- image -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9"
+            >
+
+            <ImageView
+                android:id="@+id/splashImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/splash_new"
+                />
+
+            <com.moneyifyapp.views.CondensedTextView
+                android:id="@+id/splashSlogan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/splash_slogan_under"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="@dimen/tiny_font"
+                android:textColor="@android:color/white"
+                android:layout_below="@+id/splashImage"
+                />
+
+        </RelativeLayout>
+
     </LinearLayout>
 
 

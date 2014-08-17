@@ -26,22 +26,21 @@
             android:src="@drawable/back_2"
             />
 
-        <ImageView
+        <!--<ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.8"
             android:scaleType="fitCenter"
             android:src="@drawable/dashboard_small"
-            />
+            />-->
 
-        <TextView
+        <com.moneyifyapp.views.CondensedTextView
             android:id="@+id/detail_date_month"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3.9"
+            android:layout_weight="4.7"
             android:fontFamily="sans-serif-condensed"
             android:gravity="center_vertical|start"
-            android:paddingStart="@dimen/padding_start_currency"
             android:text="@string/analytics_graphs_activity_title"
             android:textColor="@android:color/white"
             android:textSize="@dimen/huge_font"
