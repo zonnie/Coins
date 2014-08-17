@@ -279,7 +279,9 @@ public class SignUpActivity extends LoadingActivity implements View.OnClickListe
     @Override
     public void onBackPressed()
     {
-        super.onBackPressed();
+        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
         Utils.animateBack(this);
     }
 }

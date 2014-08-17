@@ -57,7 +57,7 @@ public class LoginActivity extends LoadingActivity
         Utils.initializeActionBar(this);
         Utils.removeLogo(this);
         Utils.removeActionBar(this);
-        Utils.animateFadeIn(this);
+        Utils.animateForward(this);
 
         // Remove logo for this activity
         if(getActionBar() != null)
@@ -158,7 +158,7 @@ public class LoginActivity extends LoadingActivity
     @Override
     public void onBackPressed()
     {
-        finish();
+        super.onBackPressed();
     }
 
     /**
@@ -248,6 +248,7 @@ public class LoginActivity extends LoadingActivity
     private void goToMainActivity()
     {
         Intent intent = new Intent(this, ExpensesActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 

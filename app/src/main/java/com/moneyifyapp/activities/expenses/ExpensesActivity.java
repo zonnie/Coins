@@ -338,6 +338,12 @@ public class ExpensesActivity extends Activity
         frag.updateTotalCurrencyToPrefDefault();
     }
 
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+    }
+
     /**
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter
@@ -371,5 +377,11 @@ public class ExpensesActivity extends Activity
         {
             return Months.getMonthNameByNumber(position).toUpperCase() + " " + mYearTransactions.mYear;
         }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        finish();
     }
 }
