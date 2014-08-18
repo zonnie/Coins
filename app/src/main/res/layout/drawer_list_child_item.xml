@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/alternate_button_drawable"
+              android:paddingBottom="@dimen/padding_start_currency"
+              android:paddingTop="@dimen/padding_start_currency"
+              android:paddingStart="@dimen/drawable_left_pad"
+    >
+
+    <LinearLayout
+        android:id="@+id/drawer_child_layout"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        >
+
+        <com.moneyifyapp.views.CondensedTextView
+            android:id="@+id/drawer_child_item_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/wallet"
+            android:drawablePadding="@dimen/padding_start_currency"
+            android:gravity="center_vertical|start"
+            android:text="Wallet"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/medium_font"
+            />
+    </LinearLayout>
+</LinearLayout>

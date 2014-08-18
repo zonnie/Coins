@@ -5,16 +5,14 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:showDividers="none"
-    android:weightSum="1">
+    android:background="@drawable/back_regualr"
+    android:paddingStart="@dimen/drawable_left_pad"
+    >
 
     <LinearLayout
         android:id="@+id/transaction_card_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/expense_card_margin"
-        android:layout_marginLeft="@dimen/padding_start_currency"
-        android:layout_marginRight="@dimen/expense_drawable_left_pad"
-        android:layout_marginTop="@dimen/expense_card_margin"
         android:orientation="vertical"
         android:paddingBottom="@dimen/padding_start_currency"
         android:showDividers="none"
@@ -26,19 +24,16 @@
             android:orientation="vertical"
             android:paddingBottom="@dimen/padding_start_currency"
             android:paddingEnd="@dimen/padding_start_currency"
-            android:paddingStart="@dimen/padding_start_currency"
             android:paddingTop="@dimen/padding_start_currency"
             >
 
 
-            <com.moneyifyapp.views.CondensedTextView
+            <com.moneyifyapp.views.ThinTextView
                 android:id="@+id/drawerItemText"
                 xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/cal"
-                android:drawablePadding="@dimen/drawable_left_pad"
-                android:gravity="center"
+                android:gravity="start|center_vertical"
                 android:text="Preferences"
                 android:textSize="@dimen/large_font"
                 android:textColor="@android:color/white"

@@ -262,6 +262,11 @@ public class Utils
         return android.view.animation.AnimationUtils.loadAnimation(activity, R.anim.fade_in);
     }
 
+    public static Animation createAnimation(Context activity, int animationId)
+    {
+        return android.view.animation.AnimationUtils.loadAnimation(activity, animationId);
+    }
+
     /**
      */
     public static void animateUp(Activity activity)

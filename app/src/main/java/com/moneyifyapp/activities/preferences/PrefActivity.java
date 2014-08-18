@@ -41,7 +41,7 @@ public class PrefActivity extends PreferenceActivity
         sPrefChanges = new HashMap<String, Boolean>();
 
         Utils.initializeActionBar(this);
-        Utils.setLogo(this, R.drawable.contorls);
+        Utils.setLogo(this, R.drawable.controls);
         Utils.setupBackButton(this);
         Utils.animateForward(this);
 

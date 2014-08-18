@@ -5,138 +5,190 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
-import com.moneyifyapp.model.drawer.DrawerItem;
+import com.moneyifyapp.model.drawer.DrawerChildItem;
+import com.moneyifyapp.model.drawer.DrawerGroupItem;
 import com.moneyifyapp.model.drawer.DrawerUtils;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * An expense item adapter.
  */
-public class DrawerItemAdapter extends ArrayAdapter<DrawerItem>
+public class DrawerItemAdapter extends BaseExpandableListAdapter
 {
     private TextView mItemTitle;
-    private List<DrawerItem> mDrawerItems;
+    private List<DrawerGroupItem> mDrawerGroupItems;
     private View mMyView;
     private int mLayoutResourceId;
     public static int PICK_IMAGE_DIMENSIONS = 100;
-    private Animation mItemsLoadAnimation;
+    private Map<String, List<DrawerChildItem>> mDrawerItemMap;
+    private Context mContext;
 
     /**
      */
     public DrawerItemAdapter(Context context, int resource)
     {
-        super(context, resource, DrawerUtils.drawerItems);
-        mDrawerItems = DrawerUtils.drawerItems;
+        mContext = context;
+        mDrawerGroupItems = DrawerUtils.drawerGroupItems;
+        mDrawerItemMap = DrawerUtils.drawerGroupMap;
         mLayoutResourceId = resource;
     }
 
     /**
-     * Generates the fragments view for display for each list view item.
      */
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View getGroupView(int groupPosition, boolean isExpanded,
+                             View convertView, ViewGroup parent)
     {
         mMyView = convertView;
 
         if (mMyView == null)
         {
             LayoutInflater viewInflator;
-            viewInflator = LayoutInflater.from(getContext());
+            viewInflator = LayoutInflater.from(mContext);
             mMyView = viewInflator.inflate(mLayoutResourceId, null);
-
-            if(mItemsLoadAnimation == null)
-                mItemsLoadAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
-            mMyView.startAnimation(mItemsLoadAnimation);
         }
-        return getRegularView(position);
+
+        return getRegularView(groupPosition);
     }
 
     /**
      */
     private View getRegularView(int position)
     {
-        DrawerItem currentTransactionView = mDrawerItems.get(position);
+        DrawerGroupItem currentTransactionView = (DrawerGroupItem)getGroup(position);
 
-        // Populate the current view according to collection item.
         if (currentTransactionView != null)
         {
             mItemTitle = (TextView) mMyView.findViewById(R.id.drawerItemText);
             handleDrawerItemTitle(currentTransactionView);
-            updateImage(currentTransactionView.getmResourceId());
+            //TODO this currently will not be used
+            //updateImage(currentTransactionView.getmResourceId());
         }
         return mMyView;
     }
 
     /**
      */
-    private void handleDrawerItemTitle(DrawerItem currentItem)
+    private void handleDrawerItemTitle(DrawerGroupItem currentItem)
     {
         if (mItemTitle != null)
             mItemTitle.setText(currentItem.getmItemTitle());
     }
 
     /**
-     */
-    public void remove(int position)
-    {
-        DrawerItem item = mDrawerItems.get(position);
-        super.remove(item);
-    }
-
-    /**
      * Get the expense items.
      */
-    public List<DrawerItem> getItems()
+    public List<DrawerGroupItem> getItems()
     {
-        return mDrawerItems;
+        return mDrawerGroupItems;
     }
 
     /**
      */
-    public void update(int position, DrawerItem item)
+    private void updateImage(TextView textView, int resourceIndex)
     {
-        // Update an item
-        updateDrawerItem(position, item);
-        // Reflect on display
-        notifyDataSetChanged();
-    }
-
-    /**
-     */
-    private void updateDrawerItem(int position, DrawerItem item)
-    {
-        DrawerItem updatedExpense = mDrawerItems.get(position);
-
-        if (item != null)
-        {
-            updatedExpense.setmItemTitle(item.getmItemTitle());
-            updatedExpense.setmItemHint(item.getmItemHint());
-            updateImage(item.getmResourceId());
-        }
+        Drawable img = mContext.getResources().getDrawable(resourceIndex);
+        //img.setBounds(0, 0, PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
+        textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
     }
 
     /**
      */
     @Override
-    public void insert(DrawerItem item, int position)
+    public Object getChild(int groupPosition, int childPosititon)
     {
-        super.insert(item, position);
+        DrawerGroupItem group = (DrawerGroupItem)getGroup(groupPosition);
+        if(group != null)
+            return mDrawerItemMap.get(group.getmItemTitle()).get(childPosititon);
+        else
+            return null;
     }
 
     /**
-     * Update the description's left drawable
      */
-    private void updateImage(int resourceIndex)
+    @Override
+    public long getChildId(int groupPosition, int childPosition)
     {
-        Drawable img = getContext().getResources().getDrawable(resourceIndex);
-        img.setBounds( 0, 0, PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
-        mItemTitle.setCompoundDrawables(img, null, null, null);
+        return childPosition;
+    }
+
+    /**
+     */
+    @Override
+    public View getChildView(int groupPosition, final int childPosition,
+                             boolean isLastChild, View convertView, ViewGroup parent)
+    {
+
+        DrawerChildItem child = (DrawerChildItem)getChild(groupPosition, childPosition);
+
+        if (convertView == null)
+        {
+            LayoutInflater infalInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = infalInflater.inflate(R.layout.drawer_list_child_item, null);
+        }
+
+        TextView childText = (TextView) convertView.findViewById(R.id.drawer_child_item_text);
+        childText.setText(child.getmItemTitle());
+        updateImage(childText, child.getmResourceId());
+
+        return convertView;
+    }
+
+    /**
+     */
+    @Override
+    public int getChildrenCount(int groupPosition)
+    {
+        DrawerGroupItem group = (DrawerGroupItem)getGroup(groupPosition);
+        if(group != null)
+            return this.mDrawerItemMap.get(group.getmItemTitle()).size();
+        else
+            return 0;
+    }
+
+    /**
+     */
+    @Override
+    public Object getGroup(int groupPosition)
+    {
+        return this.mDrawerGroupItems.get(groupPosition);
+    }
+
+    /**
+     */
+    @Override
+    public int getGroupCount()
+    {
+        return this.mDrawerGroupItems.size();
+    }
+
+    /**
+     */
+    @Override
+    public long getGroupId(int groupPosition)
+    {
+        return groupPosition;
+    }
+
+    /**
+     */
+    @Override
+    public boolean hasStableIds()
+    {
+        return false;
+    }
+
+    /**
+     */
+    @Override
+    public boolean isChildSelectable(int groupPosition, int childPosition)
+    {
+        return true;
     }
 }

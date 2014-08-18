@@ -126,7 +126,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/drawable_left_pad"
                 android:layout_marginBottom="@dimen/padding_start_currency"
-                android:src="@drawable/account"/>
+                android:src="@drawable/account_big"/>
 
             <View
                 android:layout_width="match_parent"

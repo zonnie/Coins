@@ -15,9 +15,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.analytics.GraphActivity;
@@ -62,7 +61,7 @@ public class ExpensesActivity extends Activity
     // Drawer
     private DrawerLayout mDrawerLayout;
     private LinearLayout mDrawerTopListLayout;
-    private ListView mDrawerList;
+    private ExpandableListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private YearTransactions mYearTransactions;
     private Activity mActivity;
@@ -117,9 +116,9 @@ public class ExpensesActivity extends Activity
     {
         mDrawerTopListLayout = (LinearLayout) findViewById(R.id.top_list_layout);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        mDrawerList.setAdapter(new DrawerItemAdapter(this, R.layout.drawer_list_item));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerList = (ExpandableListView) findViewById(R.id.left_drawer);
+        mDrawerList.setAdapter(new DrawerItemAdapter(this, R.layout.drawer_list_group));
+        mDrawerList.setOnChildClickListener(new DrawerItemClickListener());
         mDrawerToggle = createDrawerToggle();
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -193,24 +192,32 @@ public class ExpensesActivity extends Activity
 
     /**
      */
-    private class DrawerItemClickListener implements ListView.OnItemClickListener
+    private class DrawerItemClickListener implements ExpandableListView.OnChildClickListener
     {
         @Override
-        public void onItemClick(AdapterView parent, View view, int position, long id)
+        public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
         {
-            mDrawerList.setItemChecked(position, true);
+            mDrawerList.setItemChecked(childPosition, true);
             mDrawerLayout.closeDrawer(mDrawerTopListLayout);
 
-            if (position == 0)
-                startAnalyticsActivity();
-            else if (position == 1)
-                startPrefActivity();
-            else if (position == 2)
-                startAccountActivity();
-            else if (position == 3)
-                startFavoritesActivity();
-//            else if (position == 3)
-//                startDashboardActivity();
+            // App stuff
+            if (groupPosition == 0)
+            {
+                if (childPosition == 0)
+                    startFavoritesActivity();
+                else if (childPosition == 1)
+                    startAnalyticsActivity();
+            }
+            // General
+            else if (groupPosition == 1)
+            {
+                if (childPosition == 0)
+                    startAccountActivity();
+                else if (childPosition == 1)
+                    startPrefActivity();
+            }
+
+            return true;
         }
     }
 

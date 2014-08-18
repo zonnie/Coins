@@ -1,15 +1,14 @@
 package com.moneyifyapp.model.drawer;
 
 /**
- * Created by Zonnie_Work on 06/07/2014.
  */
-public class DrawerItem
+public class DrawerGroupItem
 {
     private String mItemTitle;
     private String mItemHint;
     private int mResourceId;
 
-    public DrawerItem(String title, String hint, int resource)
+    public DrawerGroupItem(String title, String hint, int resource)
     {
         this.mItemTitle = title;
         this.mItemHint = hint;
