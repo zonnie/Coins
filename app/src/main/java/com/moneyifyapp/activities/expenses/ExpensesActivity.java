@@ -20,7 +20,7 @@ import android.widget.LinearLayout;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.analytics.GraphActivity;
-import com.moneyifyapp.activities.expenses.drawer.DrawerItemAdapter;
+import com.moneyifyapp.activities.expenses.drawer.DrawerExpandableList;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.activities.favorites.FaviorteActivity;
 import com.moneyifyapp.activities.login.AccountActivity;
@@ -61,7 +61,7 @@ public class ExpensesActivity extends Activity
     // Drawer
     private DrawerLayout mDrawerLayout;
     private LinearLayout mDrawerTopListLayout;
-    private ExpandableListView mDrawerList;
+    private ExpandableListView mDrawerGroupList;
     private ActionBarDrawerToggle mDrawerToggle;
     private YearTransactions mYearTransactions;
     private Activity mActivity;
@@ -116,12 +116,17 @@ public class ExpensesActivity extends Activity
     {
         mDrawerTopListLayout = (LinearLayout) findViewById(R.id.top_list_layout);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ExpandableListView) findViewById(R.id.left_drawer);
-        mDrawerList.setAdapter(new DrawerItemAdapter(this, R.layout.drawer_list_group));
-        mDrawerList.setOnChildClickListener(new DrawerItemClickListener());
+        mDrawerGroupList = (ExpandableListView) findViewById(R.id.left_drawer);
+        mDrawerGroupList.setAdapter(new DrawerExpandableList(this, R.layout.drawer_list_group));
+        mDrawerGroupList.setOnChildClickListener(new DrawerItemClickListener());
         mDrawerToggle = createDrawerToggle();
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        for(int i = 0; i < mDrawerGroupList.getExpandableListAdapter().getGroupCount(); i++)
+        {
+            mDrawerGroupList.expandGroup(i);
+        }
     }
 
     /**
@@ -197,7 +202,7 @@ public class ExpensesActivity extends Activity
         @Override
         public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
         {
-            mDrawerList.setItemChecked(childPosition, true);
+            mDrawerGroupList.setItemChecked(childPosition, true);
             mDrawerLayout.closeDrawer(mDrawerTopListLayout);
 
             // App stuff

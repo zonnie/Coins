@@ -19,19 +19,18 @@ import java.util.Map;
 /**
  * An expense item adapter.
  */
-public class DrawerItemAdapter extends BaseExpandableListAdapter
+public class DrawerExpandableList extends BaseExpandableListAdapter
 {
     private TextView mItemTitle;
     private List<DrawerGroupItem> mDrawerGroupItems;
     private View mMyView;
     private int mLayoutResourceId;
-    public static int PICK_IMAGE_DIMENSIONS = 100;
     private Map<String, List<DrawerChildItem>> mDrawerItemMap;
     private Context mContext;
 
     /**
      */
-    public DrawerItemAdapter(Context context, int resource)
+    public DrawerExpandableList(Context context, int resource)
     {
         mContext = context;
         mDrawerGroupItems = DrawerUtils.drawerGroupItems;

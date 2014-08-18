@@ -100,7 +100,7 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
             else
                 updateTransactionSumColor(mMyView, R.color.income_color);
 
-            updateDescriptionLeftDrawable(Images.getImageByPosition(currentTransactionView.mImageResourceIndex));
+            updateDescriptionLeftDrawable(Images.getSmallImageByPosition(currentTransactionView.mImageResourceIndex));
             handleViewDate(currentTransactionView);
             handleViewDescription(currentTransactionView);
             handleViewValue(currentTransactionView);
@@ -164,10 +164,8 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
     private void updateDescriptionLeftDrawable(int resourceIndex)
     {
         Drawable img = getContext().getResources().getDrawable(resourceIndex);
-        img.setBounds( 0, 0, PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
         mExpenseImage.setImageDrawable(img);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
-        mExpenseImage.setLayoutParams(layoutParams);    }
+    }
 
     /**
      */

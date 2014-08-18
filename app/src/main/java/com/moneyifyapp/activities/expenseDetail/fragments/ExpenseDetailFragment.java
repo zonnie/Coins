@@ -219,6 +219,9 @@ public class ExpenseDetailFragment extends Fragment
         {
             mCurrentImage = data.getExtras().getInt(Transaction.KEY_IMAGE_NAME);
             mExpenseIcon.setImageResource(Images.getImageByPosition(mCurrentImage));
+
+            if(mExpenseDescription.getText().toString().isEmpty())
+                mExpenseDescription.setText(Images.getCaptioneByPosition(mCurrentImage));
         }
     }
 

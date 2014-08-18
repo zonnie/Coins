@@ -90,6 +90,42 @@ public class Images
 
     /**
      */
+    public static String getCaptioneByPosition(int position)
+    {
+        String resource;
+
+        try
+        {
+            resource = mUnsortedResouceIndexList.get(position).getCaption();
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            resource = mUnsortedResouceIndexList.get(0).getCaption();
+        }
+
+        return  resource;
+    }
+
+    /**
+     */
+    public static int getImageSmallByPosition(int position)
+    {
+        int resource;
+
+        try
+        {
+            resource = mUnsortedResouceIndexList.get(position).getImageSmall();
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            resource = mUnsortedResouceIndexList.get(0).getImageSmall();
+        }
+
+        return  resource;
+    }
+
+    /**
+     */
     public static int getImageIndexBySortedPosition(int position)
     {
         int resourceIndex = 0;

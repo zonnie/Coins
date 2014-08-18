@@ -46,6 +46,7 @@
             android:layout_weight="25.2"
             android:background="@drawable/general_item_card"
             android:orientation="vertical"
+            android:paddingBottom="@dimen/padding_start_currency"
             >
 
 
@@ -62,9 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="@dimen/padding_start_currency"
                     android:paddingEnd="@dimen/drawable_left_pad"
-                    android:paddingTop="@dimen/padding_start_currency"
                     >
 
                     <ImageButton
@@ -74,14 +73,14 @@
                         android:layout_gravity="center"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/email"
+                        android:src="@drawable/shop_small"
+                        android:adjustViewBounds="true"
                         />
 
                     <View
                         android:id="@+id/seperator"
                         android:layout_width="0.6px"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/drawable_left_pad"
                         android:layout_toRightOf="@+id/categoryImage"
                         android:background="@android:color/darker_gray"
                         android:fadingEdge="vertical"
@@ -92,7 +91,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/drawable_left_pad"
+                        android:layout_marginStart="@dimen/padding_start_currency"
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
                         >

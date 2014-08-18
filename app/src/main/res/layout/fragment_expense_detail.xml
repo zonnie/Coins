@@ -183,7 +183,7 @@
                     android:drawablePadding="@dimen/expense_drawable_left_pad"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:hint="Notes..."
+                    android:hint="Note (optional)"
                     android:imeOptions="actionNext"
                     android:maxLength="@integer/max_note_len"
                     android:singleLine="true"

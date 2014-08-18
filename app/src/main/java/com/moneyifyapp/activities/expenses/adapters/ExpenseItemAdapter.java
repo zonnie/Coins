@@ -31,7 +31,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private ListItemHandler mListener;
     private int mLayoutResourceId;
     private MonthTransactions mTransactions;
-    public static int PICK_IMAGE_DIMENSIONS = 130;
     private Animation mItemsLoadAnimation;
     public View mMyView;
     private ViewHolder mViewHolder;
@@ -95,7 +94,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         {
             bindItemToEventListeners(position);
             handleViewDate(currentTransaction);
-            handleViewImage(Images.getImageByPosition(currentTransaction.mImageResourceIndex));
+            handleViewImage(Images.getSmallImageByPosition(currentTransaction.mImageResourceIndex));
             handleViewDescription(currentTransaction);
             handleViewValue(currentTransaction);
             handleViewCurrency(currentTransaction);
@@ -265,7 +264,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             updatedExpense.mCurrency = expense.mCurrency;
             updatedExpense.mNotes = expense.mNotes;
             updatedExpense.mImageResourceIndex = expense.mImageResourceIndex;
-            handleViewImage(Images.getImageByPosition(updatedExpense.mImageResourceIndex));
+            handleViewImage(Images.getSmallImageByPosition(updatedExpense.mImageResourceIndex));
             updateViewType(updatedExpense, expense);
             updatedExpense.mSaved = expense.mSaved;
             updatedExpense.mRepeatType = expense.mRepeatType;
@@ -311,11 +310,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private void handleViewImage(int resourceIndex)
     {
         Drawable img = getContext().getResources().getDrawable(resourceIndex);
-        img.setBounds( 0, 0, PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
         mViewHolder.mExpenseImage.setImageDrawable(img);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
-        mViewHolder.mExpenseImage.setLayoutParams(layoutParams);
-
     }
 
     /**
