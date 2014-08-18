@@ -20,7 +20,7 @@ import android.widget.LinearLayout;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.analytics.GraphActivity;
-import com.moneyifyapp.activities.expenses.drawer.DrawerExpandableList;
+import com.moneyifyapp.activities.expenses.drawer.DrawerExpandableAdapter;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.activities.favorites.FaviorteActivity;
 import com.moneyifyapp.activities.login.AccountActivity;
@@ -38,7 +38,8 @@ import java.util.Calendar;
 /**
  */
 public class ExpensesActivity extends Activity
-        implements ExpenseListFragment.OnFragmentInteractionListener, ViewPager.OnPageChangeListener
+        implements ExpenseListFragment.OnFragmentInteractionListener,
+        ViewPager.OnPageChangeListener
 {
     private ViewPager mViewPager;
     private Calendar mCalender;
@@ -117,7 +118,7 @@ public class ExpensesActivity extends Activity
         mDrawerTopListLayout = (LinearLayout) findViewById(R.id.top_list_layout);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerGroupList = (ExpandableListView) findViewById(R.id.left_drawer);
-        mDrawerGroupList.setAdapter(new DrawerExpandableList(this, R.layout.drawer_list_group));
+        mDrawerGroupList.setAdapter(new DrawerExpandableAdapter(this, R.layout.drawer_list_group));
         mDrawerGroupList.setOnChildClickListener(new DrawerItemClickListener());
         mDrawerToggle = createDrawerToggle();
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -390,6 +391,8 @@ public class ExpensesActivity extends Activity
             return Months.getMonthNameByNumber(position).toUpperCase() + " " + mYearTransactions.mYear;
         }
     }
+
+
 
     @Override
     public void onBackPressed()

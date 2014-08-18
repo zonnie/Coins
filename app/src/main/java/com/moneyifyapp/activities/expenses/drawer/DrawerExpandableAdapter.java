@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * An expense item adapter.
  */
-public class DrawerExpandableList extends BaseExpandableListAdapter
+public class DrawerExpandableAdapter extends BaseExpandableListAdapter
 {
     private TextView mItemTitle;
     private List<DrawerGroupItem> mDrawerGroupItems;
@@ -30,7 +30,7 @@ public class DrawerExpandableList extends BaseExpandableListAdapter
 
     /**
      */
-    public DrawerExpandableList(Context context, int resource)
+    public DrawerExpandableAdapter(Context context, int resource)
     {
         mContext = context;
         mDrawerGroupItems = DrawerUtils.drawerGroupItems;
@@ -66,8 +66,6 @@ public class DrawerExpandableList extends BaseExpandableListAdapter
         {
             mItemTitle = (TextView) mMyView.findViewById(R.id.drawerItemText);
             handleDrawerItemTitle(currentTransactionView);
-            //TODO this currently will not be used
-            //updateImage(currentTransactionView.getmResourceId());
         }
         return mMyView;
     }
@@ -93,7 +91,6 @@ public class DrawerExpandableList extends BaseExpandableListAdapter
     private void updateImage(TextView textView, int resourceIndex)
     {
         Drawable img = mContext.getResources().getDrawable(resourceIndex);
-        //img.setBounds(0, 0, PICK_IMAGE_DIMENSIONS, PICK_IMAGE_DIMENSIONS);
         textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
     }
 
