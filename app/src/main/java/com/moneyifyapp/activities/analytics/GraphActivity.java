@@ -42,7 +42,8 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
     private FrameLayout mYearlyLayout;
     private FrameLayout mMonthlyReport;
     private ImageButton mPickDateButton;
-    private TextView mCurrentDate;
+    private TextView mCurrentMonth;
+    private TextView mCurrentYear;
     private LinearLayout mTitleLayout;
     private Animation mFadeInAnimation;
     private int YEAR_FONT_SIZE = 8;
@@ -73,8 +74,11 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         mYearlyLayout = (FrameLayout)findViewById(R.id.graphs_year_graph_container);
         mMonthlyReport = (FrameLayout) findViewById(R.id.graphs_month_report_container);
         mPickDateButton = (ImageButton)findViewById(R.id.graph_pick_month_button);
-        mCurrentDate = (TextView)findViewById(R.id.graph_activity_title);
-        mCurrentDate.setText(Months.getMonthNameByNumber(mMonth-1) + " " + mYearTransactions.mYear);
+
+        mCurrentMonth = (TextView)findViewById(R.id.graph_activity_month);
+        mCurrentMonth.setText(Months.getMonthNameByNumber(mMonth - 1));
+        mCurrentYear = (TextView)findViewById(R.id.graph_activity_day);
+        mCurrentYear.setText("" + mYearTransactions.mYear);
 
         if (savedInstanceState == null)
         {
@@ -306,7 +310,8 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         if(mMonth != Months.getMonthByName(selected))
         {
             mMonth = Months.getMonthByName(selected);
-            mCurrentDate.setText(selected + " " + mYearTransactions.mYear);
+            mCurrentMonth.setText(selected);
+            mCurrentYear.setText("" + mYearTransactions.mYear);
             mTitleLayout.startAnimation(mFadeInAnimation);
             if (mMonth > 0)
                 buildFragments();

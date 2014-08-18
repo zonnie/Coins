@@ -123,11 +123,18 @@ public class ExpensesActivity extends Activity
         mDrawerToggle = createDrawerToggle();
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerGroupList.expandGroup(0);
 
-        for(int i = 0; i < mDrawerGroupList.getExpandableListAdapter().getGroupCount(); i++)
+        /*mDrawerGroupList.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener()
         {
-            mDrawerGroupList.expandGroup(i);
-        }
+            @Override
+            public void onGroupExpand(int groupPosition)
+            {
+                for(int i = 0; i < mDrawerGroupList.getExpandableListAdapter().getGroupCount(); i++)
+                    if(i != groupPosition)
+                        mDrawerGroupList.collapseGroup(i);
+            }
+        });*/
     }
 
     /**
@@ -265,7 +272,6 @@ public class ExpensesActivity extends Activity
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.expenses, menu);
-        getMenuInflater().inflate(R.menu.logout_action, menu);
         return true;
     }
 
@@ -280,11 +286,8 @@ public class ExpensesActivity extends Activity
         {
             mViewPager.setCurrentItem(mCalender.get(Calendar.MONTH));
             return true;
-        } else if (id == R.id.logout)
-        {
-            logOutUser();
-            return true;
-        } else if (mDrawerToggle.onOptionsItemSelected(item))
+        }
+        else if (mDrawerToggle.onOptionsItemSelected(item))
             return true;
 
         return super.onOptionsItemSelected(item);
@@ -392,11 +395,19 @@ public class ExpensesActivity extends Activity
         }
     }
 
-
-
+    /**
+     */
     @Override
     public void onBackPressed()
     {
         finish();
+    }
+
+    /**
+     * Called from XML
+     */
+    public void logoutClicked(View view)
+    {
+        logOutUser();
     }
 }
