@@ -118,6 +118,7 @@
             >
 
             <LinearLayout
+                android:id="@+id/hint_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -146,7 +147,7 @@
                 android:id="@+id/graphs_category_graph_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/month_title_layout"
+                android:layout_below="@+id/hint_layout"
                 android:visibility="gone"
                 />
 

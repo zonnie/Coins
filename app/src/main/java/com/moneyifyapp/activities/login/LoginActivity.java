@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
@@ -45,6 +46,7 @@ public class LoginActivity extends LoadingActivity
     private TransactionHandler mTransactionHandler;
     private TransactionSqlHelper mLocalDb;
     private boolean mFirstRun;
+    private ImageView mArt;
     public static final String EMAIL_VERIFY_KEY = "emailVerified";
 
     /**
@@ -87,6 +89,16 @@ public class LoginActivity extends LoadingActivity
         mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mSignUpButton = (Button) findViewById(R.id.sign_up_button);
         mResetPasswordButton = (Button) findViewById(R.id.forgot_button);
+        mArt = (ImageView)findViewById(R.id.login_art);
+    }
+
+    /**
+     */
+    public void onWindowFocusChanged (boolean hasFocus)
+    {
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus)
+            mArt.startAnimation(Utils.createAnimation(this,R.anim.appear_in_bounce_from_bottom));
     }
 
     /**
