@@ -342,4 +342,15 @@ public class MonthTransactions implements Sumable
 
         return result;
     }
+
+    public Transaction getTransactionById(String id)
+    {
+        for(Transaction transaction : mTransactions)
+        {
+            if(transaction.mId.equals(id))
+                return  transaction;
+        }
+
+        return null;
+    }
 }

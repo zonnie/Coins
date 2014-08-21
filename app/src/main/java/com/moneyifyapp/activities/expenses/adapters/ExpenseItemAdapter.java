@@ -37,7 +37,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private Filter mFilter;
     private List<Transaction> mFilteredValues;
     private List<Transaction> mAllValues;
-    private ImageView mFavImage;
 
     /**
      */
@@ -100,8 +99,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             handleViewValue(currentTransaction);
             handleViewCurrency(currentTransaction);
             handleViewNote(currentTransaction);
-            //TODO FAVORITE
-            //handleFavorite(currentTransaction);
+            handleFavorite(currentTransaction);
         }
         return mMyView;
     }
@@ -167,8 +165,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             mViewHolder.mExpenseDescription.setText(currentTransactionView.mDescription);
     }
 
-    //TODO FAVORITE
-    /*
     private void handleFavorite(Transaction transaction)
     {
         if(transaction.mSaved)
@@ -176,7 +172,6 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         else
             mViewHolder.mFavIcon.setVisibility(View.INVISIBLE);
     }
-    */
 
     /**
      */

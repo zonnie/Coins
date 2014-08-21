@@ -20,14 +20,8 @@ import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.model.TransactionHandler;
 import com.moneyifyapp.utils.Utils;
-import com.moneyifyapp.views.PrettyToast;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 /**
@@ -184,6 +178,9 @@ public class FaviorteActivity extends ListActivity
     private void removeFavorite(final Transaction favoriteToUpdate)
     {
         favoriteToUpdate.mSaved = false;
+        TransactionHandler.getInstance(this).updateTransaction(favoriteToUpdate);
+
+        /*
         ParseQuery<ParseObject> query = ParseQuery.getQuery(Transaction.CLASS_NAME);
         query.whereEqualTo(Transaction.KEY_ID, favoriteToUpdate.mId);
         query.findInBackground(new FindCallback<ParseObject>()
@@ -199,6 +196,7 @@ public class FaviorteActivity extends ListActivity
                 }
             }
         });
+        */
     }
 
     @Override

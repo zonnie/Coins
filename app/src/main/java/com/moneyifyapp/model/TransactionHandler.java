@@ -185,6 +185,25 @@ public class TransactionHandler
         return mAllTransactions.get(year);
     }
 
+    public void updateTransaction(final Transaction transaction)
+    {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(Transaction.CLASS_NAME);
+        query.whereEqualTo(Transaction.KEY_ID, transaction.mId);
+        query.findInBackground(new FindCallback<ParseObject>()
+        {
+            @Override
+            public void done(List<ParseObject> list, ParseException e)
+            {
+                if (list.size() != 0)
+                {
+                    ParseObject expenseObjectInDb = list.get(0);
+                    saveDataInBackground(transaction, expenseObjectInDb);
+                }
+            }
+        });
+
+    }
+
     /**
      */
     public interface onFetchingCompleteListener

@@ -124,7 +124,6 @@ public class ExpensesActivity extends Activity
         mDrawerToggle = createDrawerToggle();
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-        mDrawerGroupList.expandGroup(0);
 
         /*mDrawerGroupList.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener()
         {
