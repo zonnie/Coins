@@ -52,6 +52,7 @@ public class YearAnalyticsFragment extends MonthAnalyticsFragment
     {
         double maxMonth = 0.0;
         double curMonth;
+        int busiestMonth = 0;
 
         loadTextViewAndSetText(R.id.report_worst_date_label, "Busiest Month");
 
@@ -60,6 +61,7 @@ public class YearAnalyticsFragment extends MonthAnalyticsFragment
             if(mYearTransactions.get(i) != null)
             {
                 curMonth = mYearTransactions.get(i).sum(MonthTransactions.SubsetType.EXPENSE);
+                busiestMonth = (curMonth > maxMonth) ? i : busiestMonth;
                 maxMonth = (curMonth > maxMonth) ? curMonth : maxMonth;
             }
         }
@@ -70,7 +72,7 @@ public class YearAnalyticsFragment extends MonthAnalyticsFragment
 
             LinearLayout worstDayLayout = (LinearLayout) mRootView.findViewById(R.id.month_analytics_worst_day_layout);
             worstDayLayout.setVisibility(View.VISIBLE);
-            String month = Months.getMonthNameByNumber(mMonth);
+            String month = Months.getMonthNameByNumber(busiestMonth);
 
             loadTextViewAndSetText(R.id.analytics_monthly_worst_day_date_label, month);
             loadTextViewAndSetText(R.id.analytics_monthly_worst_day_sum, Utils.formatDoubleToTextCurrency(maxMonth));

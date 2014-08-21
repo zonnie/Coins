@@ -37,6 +37,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private Filter mFilter;
     private List<Transaction> mFilteredValues;
     private List<Transaction> mAllValues;
+    private ImageView mFavImage;
 
     /**
      */
@@ -99,6 +100,8 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             handleViewValue(currentTransaction);
             handleViewCurrency(currentTransaction);
             handleViewNote(currentTransaction);
+            //TODO FAVORITE
+            //handleFavorite(currentTransaction);
         }
         return mMyView;
     }
@@ -153,6 +156,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         mViewHolder.mRemoveItemButton = (Button) mMyView.findViewById(R.id.expenseRemove);
         mViewHolder.mRemoveItemLayout = (LinearLayout) mMyView.findViewById(R.id.remove_item_button_layout);
         mViewHolder.mExpenseImage = (ImageView) mMyView.findViewById(R.id.expense_item_image);
+        mViewHolder.mFavIcon = (ImageView) mMyView.findViewById(R.id.item_faved_icon);
     }
 
     /**
@@ -160,10 +164,19 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private void handleViewDescription(Transaction currentTransactionView)
     {
         if (mViewHolder.mExpenseDescription != null)
-        {
             mViewHolder.mExpenseDescription.setText(currentTransactionView.mDescription);
-        }
     }
+
+    //TODO FAVORITE
+    /*
+    private void handleFavorite(Transaction transaction)
+    {
+        if(transaction.mSaved)
+            mViewHolder.mFavIcon.setVisibility(View.VISIBLE);
+        else
+            mViewHolder.mFavIcon.setVisibility(View.INVISIBLE);
+    }
+    */
 
     /**
      */
@@ -337,6 +350,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         public TextView mExpenseMonth;
         public Button mRemoveItemButton;
         public ImageView mExpenseImage;
+        public ImageView mFavIcon;
     }
 
     /**

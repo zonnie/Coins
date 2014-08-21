@@ -5,7 +5,7 @@
               android:background="@drawable/alternate_button_drawable"
               android:paddingBottom="@dimen/padding_start_currency"
               android:paddingTop="@dimen/padding_start_currency"
-              android:paddingStart="@dimen/drawable_left_pad"
+              android:paddingStart="@dimen/big_padding"
     >
 
     <LinearLayout

@@ -86,6 +86,7 @@ public class ExpensesActivity extends Activity
         Utils.initializeParse(this);
         Utils.initializeActionBar(this);
         Utils.setupBackButton(this);
+        Utils.removeLogo(this);
 
         initViewPager();
         initDrawer();

@@ -26,7 +26,7 @@
 
     <LinearLayout
         android:id="@+id/top_list_layout"
-        android:layout_width="220dp"
+        android:layout_width="260dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:orientation="vertical"
@@ -40,7 +40,7 @@
             android:layout_weight="1"
             android:background="@drawable/drawer_item_card"
             android:gravity="center_vertical"
-            android:paddingStart="@dimen/padding_start_currency"
+            android:paddingStart="@dimen/drawable_left_pad"
             android:text="@string/drawer_top_title_text"
             android:textColor="@android:color/white"
             android:textSize="@dimen/mongo_font"

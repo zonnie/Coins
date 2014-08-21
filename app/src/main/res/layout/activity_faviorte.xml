@@ -30,7 +30,17 @@
             android:padding="@dimen/drawable_left_pad"
             />
 
-
+        <com.moneyifyapp.views.CondensedTextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:text="Favorites"
+            android:paddingEnd="@dimen/drawable_left_pad"
+            android:paddingStart="@dimen/drawable_left_pad"
+            android:padding="@dimen/drawable_left_pad"
+            android:textSize="@dimen/huge_font"
+            android:textColor="@android:color/white"
+            />
 
     </LinearLayout>
 
@@ -56,8 +66,9 @@
         android:id="@android:id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="@dimen/drawable_left_pad"
         android:text="@string/list_empty_templates"
-        android:gravity="center"
+        android:gravity="center_horizontal|top"
         android:textSize="@dimen/large_font"
         android:textColor="@android:color/darker_gray"
         />

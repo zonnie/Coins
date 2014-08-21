@@ -33,7 +33,6 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
     private int mLayoutResourceId;
     private MonthTransactions mTransactions;
     private View mMyView;
-    public static int PICK_IMAGE_DIMENSIONS = 150;
     private OnExpenseItemClicked mListener;
 
     /**
