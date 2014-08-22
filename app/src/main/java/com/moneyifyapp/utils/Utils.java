@@ -32,6 +32,7 @@ public class Utils
     private static DecimalFormat mFormater;
     public static String SHARED_PREF_NAME = "com.moneyifyapp";
     public static String SPLASH_FIRST_RUN_FLAG = "firstrunSplash";
+    public static String MAIN_FIRST_RUN_FLAG = "firstrunMain";
     public static String LOGIN_FIRST_RUN_FLAG = "firstrunLogin";
     public static String DETAILS_FIRST_RUN_FLAG = "firstrunDetails";
 
@@ -269,20 +270,6 @@ public class Utils
 
     /**
      */
-    public static void animateUp(Activity activity)
-    {
-        activity.overridePendingTransition(R.anim.slide_up, R.anim.zoom_exit);
-    }
-
-    /**
-     */
-    public static void animateDown(Activity activity)
-    {
-        activity.overridePendingTransition(R.anim.zoom_in, R.anim.slide_down);
-    }
-
-    /**
-     */
     public static String sumWithSuffix(long count)
     {
         if (count < 1000) return "" + count;
@@ -313,6 +300,13 @@ public class Utils
     public static boolean isFirstRunSplash(Context context)
     {
         return context.getSharedPreferences(SHARED_PREF_NAME, Activity.MODE_PRIVATE).getBoolean(SPLASH_FIRST_RUN_FLAG, true);
+    }
+
+    /**
+     */
+    public static boolean isFirstRunMain(Context context)
+    {
+        return context.getSharedPreferences(SHARED_PREF_NAME, Activity.MODE_PRIVATE).getBoolean(MAIN_FIRST_RUN_FLAG, true);
     }
 
     /**
@@ -350,4 +344,10 @@ public class Utils
         context.getSharedPreferences(SHARED_PREF_NAME, Activity.MODE_PRIVATE).edit().putBoolean(DETAILS_FIRST_RUN_FLAG, firstRun).commit();
     }
 
+    /**
+     */
+    public static void setFirstRunMain(Context context, boolean firstRun)
+    {
+        context.getSharedPreferences(SHARED_PREF_NAME, Activity.MODE_PRIVATE).edit().putBoolean(MAIN_FIRST_RUN_FLAG, firstRun).commit();
+    }
 }

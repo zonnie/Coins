@@ -16,7 +16,6 @@
         android:layout_marginRight="@dimen/expense_drawable_left_pad"
         android:layout_marginTop="@dimen/padding_start_currency"
         android:orientation="horizontal"
-        android:weightSum="30"
         >
 
         <LinearLayout
