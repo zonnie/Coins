@@ -40,7 +40,7 @@ public class SplashActivity extends Activity
 
         TransactionHandler mTransactionHandler = TransactionHandler.getInstance(this);
 
-        if (!mIsFristRun)
+        if (!mIsFristRun && ParseUser.getCurrentUser() != null)
         {
             mTransactionHandler.registerListenerAndFetchAll(this, Calendar.getInstance().get(Calendar.YEAR));
             initFromLocalDb();

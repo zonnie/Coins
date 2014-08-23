@@ -112,8 +112,9 @@ public class TransactionHandler
                     String id = wallet.getString(WALLET_ID);
                     String title = wallet.getString(WALLET_TITLE);
                     int iconIndex = wallet.getInt(WALLET_ICON_INDEX);
+                    String notes = wallet.getString(WALLET_NOTES);
                     DrawerUtils.addNewWalletItem(title, iconIndex, id);
-                    mAllWalletsTransactions.put(id, new LinkedHashMap<String, YearTransactions>());
+                    addWalletToAllTransactions(id);
                 }
 
                 queryDatabaseAndBuildTransactions(year);
@@ -290,8 +291,11 @@ public class TransactionHandler
     public void clearAllWallets()
     {
         // Clear wallets interior
-        for(String walletId : mAllWalletsTransactions.keySet())
-            clearWalletTransactions(walletId);
+        this.mAllWalletsTransactions.clear();
+
+        // Reset wallet to default
+        Utils.setCurrentWalletId(mContext, DEFAULT_WALLET_ID);
+        setCurrentWalletId(Utils.getCurrentWalletId(mContext));
     }
 
     /*********************************************************************************************/

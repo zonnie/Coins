@@ -25,6 +25,9 @@ public class DrawerUtils
     public static final String GENERAL_NAME = "General";
     public static final String WALLETS_NAME = "Wallets";
 
+    public static final String WALLET_CREATE = "Create a Wallet";
+    public static final String DEFAULT_WALLET_NAME = "My Wallet";
+
     static
     {
         drawerGroupItems = new ArrayList<DrawerGroupItem>();
@@ -39,8 +42,8 @@ public class DrawerUtils
         sAppStuff = new ArrayList<DrawerChildItem>();
         sGeneral = new ArrayList<DrawerChildItem>();
 
-        sWallets.add(new DrawerChildItem("Create a Wallet", R.drawable.add_wallet, "new"));
-        sWallets.add(new DrawerChildItem("My Wallet", R.drawable.wallet_small, TransactionHandler.DEFAULT_WALLET_ID));
+        sWallets.add(new DrawerChildItem(WALLET_CREATE, R.drawable.add_wallet, "new"));
+        sWallets.add(new DrawerChildItem(DEFAULT_WALLET_NAME, R.drawable.wallet_small, TransactionHandler.DEFAULT_WALLET_ID));
 
         sGeneral.add(new DrawerChildItem("Account", R.drawable.account));
         sGeneral.add(new DrawerChildItem("Settings", R.drawable.controls));
@@ -98,5 +101,15 @@ public class DrawerUtils
         }
 
         return walletTitle;
+    }
+
+    /**
+     *
+     */
+    public static void resetWallets()
+    {
+        sWallets.clear();
+        sWallets.add(new DrawerChildItem(WALLET_CREATE, R.drawable.add_wallet, "new"));
+        sWallets.add(new DrawerChildItem(DEFAULT_WALLET_NAME, R.drawable.wallet_small, TransactionHandler.DEFAULT_WALLET_ID));
     }
 }

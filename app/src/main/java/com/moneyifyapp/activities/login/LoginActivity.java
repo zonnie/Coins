@@ -43,7 +43,6 @@ public class LoginActivity extends LoadingActivity
     private Button mEmailSignInButton;
     private Button mSignUpButton;
     private Button mResetPasswordButton;
-    private TransactionHandler mTransactionHandler;
     private TransactionSqlHelper mLocalDb;
     private boolean mFirstRun;
     private ImageView mArt;
@@ -71,8 +70,7 @@ public class LoginActivity extends LoadingActivity
         mFirstRun = Utils.isFirstRunLogin(this);
         Utils.setFirstRunLogin(this, false);
 
-        mTransactionHandler = TransactionHandler.getInstance(this);
-        mTransactionHandler.registerToFetchComplete(this);
+        TransactionHandler.getInstance(this).registerToFetchComplete(this);
 
         storeViews();
         bindViewsToEventListeners();
@@ -231,7 +229,10 @@ public class LoginActivity extends LoadingActivity
                             //TODO we need to check isVerified when in production
                             if(true)
                             {
-                                mTransactionHandler.fetchTransactionsForAllWalletsByYear(Calendar.getInstance().get(Calendar.YEAR));
+                                // Reset the current wallet to default wallet
+                                TransactionHandler handler = TransactionHandler.getInstance(LoginActivity.this);
+                                handler.setCurrentWalletId(Utils.getCurrentWalletId(LoginActivity.this));
+                                handler.fetchTransactionsForAllWalletsByYear(Calendar.getInstance().get(Calendar.YEAR));
                                 initFromLocalDb();
                             }
                             else if(isVerified)

@@ -57,6 +57,7 @@
             android:divider="@android:color/darker_gray"
             android:dividerHeight="0dp"
             android:groupIndicator="@null"
+            android:scrollbars="none"
             />
 
         <Button

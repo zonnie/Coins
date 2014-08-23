@@ -350,6 +350,8 @@ public class ExpensesActivity extends Activity
         ParseUser.logOut();
 
         TransactionHandler.getInstance(this).clearAllWallets();
+        DrawerUtils.resetWallets();
+
         startLoginActivity();
     }
 
