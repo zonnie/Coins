@@ -1,13 +1,18 @@
 package com.moneyifyapp.activities.wallet;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
@@ -58,6 +63,23 @@ public class WalletActivity extends Activity
         mWalletDesc = (EditText)findViewById(R.id.walletDescription);
         mWalletNotes = (EditText)findViewById(R.id.walletNotes);
         mWalletIcon = (ImageButton)findViewById(R.id.walletIcon);
+
+        mWalletNotes.setOnEditorActionListener(new TextView.OnEditorActionListener()
+        {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+            {
+                boolean handled = false;
+                if ((actionId == EditorInfo.IME_ACTION_NEXT))
+                {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(mWalletNotes.getWindowToken(), 0);
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
     }
 
     /**
