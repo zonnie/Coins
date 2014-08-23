@@ -99,7 +99,7 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
             else
                 updateTransactionSumColor(mMyView, R.color.income_color);
 
-            updateDescriptionLeftDrawable(Images.getSmallImageByPosition(currentTransactionView.mImageResourceIndex));
+            updateDescriptionLeftDrawable(Images.getSmallImageByPosition(currentTransactionView.mImageResourceIndex, Images.getUnsorted()));
             handleViewDate(currentTransactionView);
             handleViewDescription(currentTransactionView);
             handleViewValue(currentTransactionView);

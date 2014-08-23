@@ -33,7 +33,7 @@ public class AnimationUtils
 
     /**
      */
-    public static AlphaAnimation getmAlphaUpAnimation()
+    public static AlphaAnimation getAlphaUpAnimation()
     {
         if(sAlphaUp == null)
         {

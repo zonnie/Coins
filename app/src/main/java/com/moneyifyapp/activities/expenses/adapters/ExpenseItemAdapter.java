@@ -94,7 +94,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         {
             bindItemToEventListeners(position);
             handleViewDate(currentTransaction);
-            handleViewImage(Images.getSmallImageByPosition(currentTransaction.mImageResourceIndex));
+            handleViewImage(Images.getSmallImageByPosition(currentTransaction.mImageResourceIndex, Images.getUnsorted()));
             handleViewDescription(currentTransaction);
             handleViewValue(currentTransaction);
             handleViewCurrency(currentTransaction);
@@ -272,7 +272,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             updatedExpense.mCurrency = expense.mCurrency;
             updatedExpense.mNotes = expense.mNotes;
             updatedExpense.mImageResourceIndex = expense.mImageResourceIndex;
-            handleViewImage(Images.getSmallImageByPosition(updatedExpense.mImageResourceIndex));
+            handleViewImage(Images.getSmallImageByPosition(updatedExpense.mImageResourceIndex, Images.getUnsorted()));
             updateViewType(updatedExpense, expense);
             updatedExpense.mSaved = expense.mSaved;
             updatedExpense.mRepeatType = expense.mRepeatType;

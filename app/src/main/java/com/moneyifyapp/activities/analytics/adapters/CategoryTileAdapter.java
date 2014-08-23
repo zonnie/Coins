@@ -78,8 +78,8 @@ public class CategoryTileAdapter extends BaseAdapter
         {
             String sum = "" + (mCategoryList.get(position).mSecondField);
             int resIndex = mCategoryList.get(position).mFirstField;
-            int resource = Images.getImageByPosition(resIndex);
-            mCaptionTextView.setText(Images.getCaptionByImage(resource));
+            int resource = Images.getImageByPosition(resIndex, Images.getUnsorted());
+            mCaptionTextView.setText(Images.getCaptionByImage(resource, Images.getSorted()));
             mCategoryImageView.setImageResource(resource);
             mCategorySum.setText(sum);
         }

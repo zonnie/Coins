@@ -130,8 +130,8 @@ public class DrawerExpandableAdapter extends BaseExpandableListAdapter
         }
 
         TextView childText = (TextView) convertView.findViewById(R.id.drawer_child_item_text);
-        childText.setText(child.getmItemTitle());
-        updateImage(childText, child.getmResourceId());
+        childText.setText(child.getItemTitle());
+        updateImage(childText, child.getResourceId());
 
         return convertView;
     }

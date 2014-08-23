@@ -63,7 +63,6 @@ public class ExpenseListFragment extends ListFragment
     public static final String REPEAT_KEY = "repeat";
     public static final String PARSE_DATE_KEY = "createdAt";
     public static final String REQ_CODE_KEY = "req";
-    public static final String REMOVE_ITEM_PROMPT_MSG = "Are you sure you want to remove this?";
     private MonthTransactions mTransactions;
     private YearTransactions mYearTransactions;
     private ExpenseItemAdapter mAdapter;
@@ -78,7 +77,6 @@ public class ExpenseListFragment extends ListFragment
     private Queue<Integer> mRemoveQueue;
     private Animation mRemoveAnimation;
     private View mView;
-    private TransactionHandler mTransactionHandler;
     private int mPageId;
     private int mYear;
     private int mDeletePosition;
@@ -120,8 +118,6 @@ public class ExpenseListFragment extends ListFragment
         mIsFirst = Utils.isFirstRunDetails(getActivity());
         Utils.setFirstRunDetails(getActivity(), false);
 
-        // Init Parse for data storing
-        mTransactionHandler = TransactionHandler.getInstance(getActivity());
 
         if (mRemoveAnimation == null)
             mRemoveAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
@@ -137,8 +133,8 @@ public class ExpenseListFragment extends ListFragment
      */
     private void reFeatchDataIfWeResumed()
     {
-        if (mTransactionHandler.isFirstFeatch())
-            mTransactionHandler.registerListenerAndFetchTransactions(this, mYear);
+        if (TransactionHandler.getInstance(getActivity()).isFirstFeatch())
+            TransactionHandler.getInstance(getActivity()).registerListenerAndFetchAll(this, mYear);
     }
 
     /**
@@ -156,8 +152,7 @@ public class ExpenseListFragment extends ListFragment
         // Create a new month
         int pageId = getArguments().getInt(PAGE_ID_KEY);
         String year = mYear == 0 ? String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) : String.valueOf(mYear);
-        mYearTransactions = mTransactionHandler.getYearTransactions(year);
-        mYearTransactions.addMonth(pageId);
+        mYearTransactions = TransactionHandler.getInstance(getActivity()).getYearTransactions(year);
         mTransactions = mYearTransactions.get(pageId);
     }
 
@@ -194,6 +189,7 @@ public class ExpenseListFragment extends ListFragment
 
     private void handleRepeatedTasks()
     {
+
     }
 
     /**
@@ -201,10 +197,7 @@ public class ExpenseListFragment extends ListFragment
     private void buildListIfFetchNotDone()
     {
         if(mAdapter.isEmpty() && mTransactions != null)
-        {
             buildExpenseListFromTransactionHandler();
-        }
-
     }
 
     /**
@@ -282,6 +275,21 @@ public class ExpenseListFragment extends ListFragment
     }
 
     /**
+     * Called from the containg activity when a wallet was changed
+     */
+    public void updateOnWalletChange()
+    {
+        clearTotals();
+
+        mYearTransactions = TransactionHandler.getInstance(getActivity()).getYearTransactions(""+mYear);
+        mTransactions = mYearTransactions.get(mPageId);
+        mAdapter = new ExpenseItemAdapter(getActivity(), R.layout.adapter_expense_item, mTransactions, this);
+        setListAdapter(mAdapter);
+        initTotalsViews();
+        updateTotalsForAllTransactions();
+    }
+
+    /**
      */
     public void refreshFromDatabase()
     {
@@ -309,6 +317,7 @@ public class ExpenseListFragment extends ListFragment
         query.whereEqualTo(ExpensesActivity.PARSE_USER_KEY, user);
         query.whereEqualTo(YEAR_KEY, mYearTransactions.mYear);
         query.whereEqualTo(MONTH_KEY, mTransactions.mMonthNumber);
+        query.whereEqualTo(TransactionHandler.WALLET_ID, TransactionHandler.getInstance(getActivity()).getCurrentWalletId());
         query.addAscendingOrder(PARSE_DATE_KEY);
 
         return query;
@@ -338,8 +347,9 @@ public class ExpenseListFragment extends ListFragment
      */
     public void buildExpenseListFromTransactionHandler()
     {
-        String year = mYear == 0 ? String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) : String.valueOf(mYear);
-        mYearTransactions = mTransactionHandler.getYearTransactions(year);
+        String year = (mYear == 0) ? String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) : String.valueOf(mYear);
+        mYearTransactions = TransactionHandler.getInstance(getActivity()).getYearTransactions(year);
+
         mYearTransactions.addMonth(mPageId);
         mTransactions = mYearTransactions.get(mPageId);
 
@@ -634,7 +644,8 @@ public class ExpenseListFragment extends ListFragment
         mAdapter.update(position, tempExpense);
         // ! We now MUST pass the item from the collection to preserve
         // the ID, the tempExpense object has an 'empty' ID.
-        updateDataInBackground(mAdapter.getItems().get(position));
+        //updateDataInBackground(mAdapter.getItems().get(position));
+        TransactionHandler.getInstance(getActivity()).updateTransaction(mAdapter.getItems().get(position));
         updateTotalsOnAddedTransaction(tempExpense, false);
 
         handleEditedTransactionRepeat(repeatType, position);
@@ -645,7 +656,7 @@ public class ExpenseListFragment extends ListFragment
     private void handleNewTransactionRepeat(Transaction.REPEAT_TYPE repeatType, Transaction createTransaction)
     {
         if(repeatType != Transaction.REPEAT_TYPE.NONE)
-            mTransactionHandler.addRepeatedTransaction(createTransaction);
+            TransactionHandler.getInstance(getActivity()).addRepeatedTransaction(createTransaction);
     }
 
     /**
@@ -655,9 +666,9 @@ public class ExpenseListFragment extends ListFragment
         Transaction updatedTransaction = mTransactions.getItems().get(position);
 
         if(repeatType == Transaction.REPEAT_TYPE.NONE)
-            mTransactionHandler.removeRepeatedTransaction(updatedTransaction.mId);
+            TransactionHandler.getInstance(getActivity()).removeRepeatedTransaction(updatedTransaction.mId);
         else
-            mTransactionHandler.addRepeatedTransaction(updatedTransaction);
+            TransactionHandler.getInstance(getActivity()).addRepeatedTransaction(updatedTransaction);
     }
 
     /**
@@ -718,29 +729,6 @@ public class ExpenseListFragment extends ListFragment
     {
         // TODO: Update argument type and name
         public void expenseItemClickedInFragment(Transaction transaction);
-    }
-
-    /**
-     * Updates the matching object in the database.
-     */
-    private void updateDataInBackground(final Transaction updatedExpense)
-    {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery(Transaction.CLASS_NAME);
-        query.whereEqualTo(Transaction.KEY_ID, updatedExpense.mId);
-        query.findInBackground(new FindCallback<ParseObject>()
-        {
-            @Override
-            public void done(List<ParseObject> list, ParseException e)
-            {
-                if (list.size() != 0)
-                {
-                    ParseObject expenseObjectInDb = list.get(0);
-                    TransactionHandler.getInstance(getActivity()).saveDataInBackground(updatedExpense, expenseObjectInDb);
-                    Utils.showPrettyToast(getActivity(), "Updated \"" + updatedExpense.mDescription +"\"", Toast.LENGTH_LONG);
-                }
-            }
-        });
-
     }
 
     /**

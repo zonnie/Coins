@@ -26,9 +26,12 @@ import com.moneyifyapp.activities.favorites.FaviorteActivity;
 import com.moneyifyapp.activities.login.AccountActivity;
 import com.moneyifyapp.activities.login.LoginActivity;
 import com.moneyifyapp.activities.preferences.PrefActivity;
+import com.moneyifyapp.activities.wallet.WalletActivity;
 import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.model.TransactionHandler;
 import com.moneyifyapp.model.YearTransactions;
+import com.moneyifyapp.model.drawer.DrawerChildItem;
+import com.moneyifyapp.model.drawer.DrawerUtils;
 import com.moneyifyapp.model.enums.Months;
 import com.moneyifyapp.utils.Utils;
 import com.parse.ParseUser;
@@ -39,17 +42,18 @@ import java.util.Calendar;
  */
 public class ExpensesActivity extends Activity
         implements ExpenseListFragment.OnFragmentInteractionListener,
-        ViewPager.OnPageChangeListener
+        ViewPager.OnPageChangeListener, TransactionHandler.onFetchingCompleteListener
 {
     private ViewPager mViewPager;
     private Calendar mCalender;
-    private TransactionHandler mTransactionHadler;
+    private TransactionHandler mTransactionHandler;
 
     public static final int IMAGE_PICK_REQ = 90;
     public static final int IMAGE_PICK_OK = 423;
     public static final int IMAGE_PICK_CANCEL = 563;
     public static final int EXPENSE_RESULT_OK = 222;
     public static final int ACCOUNT_HANDLE = 2345;
+    public static final int WALLET_HANDLE = 5345;
     public static final int EXPENSE_RESULT_CANCELED = 333;
     public static final int REQ_NEW_ITEM = 42;
     public static final int REQ_PREFS = 532;
@@ -76,21 +80,43 @@ public class ExpensesActivity extends Activity
         super.onCreate(savedInstanceState);
 
         mActivity = this;
-        mTransactionHadler = TransactionHandler.getInstance(mActivity);
+        mTransactionHandler = TransactionHandler.getInstance(mActivity);
         mCalender = Calendar.getInstance();
-        mYearTransactions = mTransactionHadler.getYearTransactions(String.valueOf(mCalender.get(Calendar.YEAR)));
+        mYearTransactions = mTransactionHandler.getYearTransactions(String.valueOf(mCalender.get(Calendar.YEAR)));
 
         setContentView(R.layout.activity_expenses);
 
         // Init Parse for data storing
         Utils.initializeParse(this);
-        Utils.initializeActionBar(this);
+        Utils.initializeActionBar(this, DrawerUtils.getWalletTitleById(TransactionHandler.getInstance(this).getCurrentWalletId()));
         Utils.setupBackButton(this);
         Utils.removeLogo(this);
 
         initViewPager();
         initDrawer();
         initActionBarDisplay();
+    }
+
+    /**
+     */
+    private void swapWallet(String id)
+    {
+        TransactionHandler.getInstance(this).setCurrentWalletId(id);
+        mYearTransactions = TransactionHandler.getInstance(this).getYearTransactions(String.valueOf(mCalender.get(Calendar.YEAR)));
+        updateAllFragmentsOnWalletChange();
+        Utils.setCurrentWalletId(this,id);
+
+        String walletId = TransactionHandler.getInstance(this).getCurrentWalletId();
+        Utils.initializeActionBar(this, DrawerUtils.getWalletTitleById(walletId));
+
+    }
+
+    /**
+     */
+    @Override
+    public void onFetchComplete()
+    {
+
     }
 
     /**
@@ -125,16 +151,14 @@ public class ExpensesActivity extends Activity
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        /*mDrawerGroupList.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener()
+        // Expand all but the wallets
+        int groupCount = mDrawerGroupList.getExpandableListAdapter().getGroupCount();
+
+        for(int i = 0; i < groupCount; i++)
         {
-            @Override
-            public void onGroupExpand(int groupPosition)
-            {
-                for(int i = 0; i < mDrawerGroupList.getExpandableListAdapter().getGroupCount(); i++)
-                    if(i != groupPosition)
-                        mDrawerGroupList.collapseGroup(i);
-            }
-        });*/
+            if(i != groupCount-1)
+                mDrawerGroupList.expandGroup(i);
+        }
     }
 
     /**
@@ -154,12 +178,17 @@ public class ExpensesActivity extends Activity
             {
                 if (getActionBar() != null)
                     getActionBar().setTitle(DRAWER_TITLE);
+
+                collapseWallets();
+
             }
 
             public void onDrawerOpened(View drawerView)
             {
                 if (getActionBar() != null)
                     getActionBar().setTitle(DRAWER_TITLE);
+
+                expandAllButWallets();
             }
         };
 
@@ -203,6 +232,7 @@ public class ExpensesActivity extends Activity
     @Override
     public void onPageScrollStateChanged(int state){}
 
+
     /**
      */
     private class DrawerItemClickListener implements ExpandableListView.OnChildClickListener
@@ -228,6 +258,18 @@ public class ExpensesActivity extends Activity
                     startAccountActivity();
                 else if (childPosition == 1)
                     startPrefActivity();
+            }
+            else if(groupPosition == 2)
+            {
+                if(childPosition == 0)
+                    startWalletDetailActivityWithResult();
+                else if(childPosition == 1)
+                    swapWallet(TransactionHandler.DEFAULT_WALLET_ID);
+                else
+                {
+                    DrawerChildItem item = DrawerUtils.sWallets.get(childPosition);
+                    swapWallet(item.getId());
+                }
             }
 
             return true;
@@ -268,6 +310,14 @@ public class ExpensesActivity extends Activity
 
     /**
      */
+    private void startWalletDetailActivityWithResult()
+    {
+        Intent intent = new Intent(mActivity, WalletActivity.class);
+        startActivityForResult(intent, WALLET_HANDLE);
+    }
+
+    /**
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -299,7 +349,7 @@ public class ExpensesActivity extends Activity
     {
         ParseUser.logOut();
 
-        mTransactionHadler.clearUserTransactions();
+        TransactionHandler.getInstance(this).clearAllWallets();
         startLoginActivity();
     }
 
@@ -328,6 +378,17 @@ public class ExpensesActivity extends Activity
     {
         if(requestCode == ACCOUNT_HANDLE && resultCode == AccountActivity.ACCOUNT_DELETED)
             handleAccountDelete();
+        else if(requestCode == WALLET_HANDLE && resultCode == WalletActivity.WALLET_OK)
+        {
+            // Save to Parse
+            String title = data.getExtras().getString(TransactionHandler.WALLET_TITLE);
+            int icon = data.getExtras().getInt(TransactionHandler.WALLET_ICON_INDEX);
+            String notes = data.getExtras().getString(TransactionHandler.WALLET_NOTES);
+            String id = DrawerUtils.generateId(title);
+
+            TransactionHandler.getInstance(this).addWallet(id, title, icon, notes);
+            DrawerUtils.addNewWalletItem(title, icon, id);
+        }
         super.onActivityResult(requestCode, resultCode, data);
         int position = mViewPager.getCurrentItem();
         updateFragmentOnCurrencyPrefChange(position);
@@ -352,6 +413,19 @@ public class ExpensesActivity extends Activity
         ExpenseListFragment frag = (ExpenseListFragment) getFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + id);
         frag.updateFragmentCurrency();
         frag.updateTotalCurrencyToPrefDefault();
+    }
+
+    /**
+     * Updates the 'id' fragment in the viewpager.
+     */
+    private void updateAllFragmentsOnWalletChange()
+    {
+        for(int i = 0; i < mViewPager.getAdapter().getCount(); i++)
+        {
+            ExpenseListFragment frag = (ExpenseListFragment) getFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + i);
+            if(frag != null)
+                frag.updateOnWalletChange();
+        }
     }
 
     @Override
@@ -409,5 +483,28 @@ public class ExpensesActivity extends Activity
     public void logoutClicked(View view)
     {
         logOutUser();
+    }
+
+    /**
+    */
+    private void expandAllButWallets()
+    {
+        int groupCount = mDrawerGroupList.getExpandableListAdapter().getGroupCount();
+
+        for(int i = 0; i < groupCount; i++)
+        {
+            if(i != groupCount-1)
+                mDrawerGroupList.expandGroup(i);
+        }
+
+    }
+
+    /**
+     */
+    private void collapseWallets()
+    {
+        // Close wallets list
+        int groupCount = mDrawerGroupList.getExpandableListAdapter().getGroupCount();
+        mDrawerGroupList.collapseGroup(groupCount-1);
     }
 }

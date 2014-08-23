@@ -231,7 +231,7 @@ public class LoginActivity extends LoadingActivity
                             //TODO we need to check isVerified when in production
                             if(true)
                             {
-                                mTransactionHandler.fetchYearTransactions(Calendar.getInstance().get(Calendar.YEAR));
+                                mTransactionHandler.fetchTransactionsForAllWalletsByYear(Calendar.getInstance().get(Calendar.YEAR));
                                 initFromLocalDb();
                             }
                             else if(isVerified)

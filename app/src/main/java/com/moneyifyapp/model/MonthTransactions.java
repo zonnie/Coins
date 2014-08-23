@@ -235,7 +235,7 @@ public class MonthTransactions implements Sumable
                 switch (filter)
                 {
                     case CATEGORY:
-                        maxKey = Images.getImageByPosition(checkIndex);
+                        maxKey = Images.getImageByPosition(checkIndex, Images.getUnsorted());
                         break;
                     case BUSIEST_DAY:
                         maxKey = checkIndex;

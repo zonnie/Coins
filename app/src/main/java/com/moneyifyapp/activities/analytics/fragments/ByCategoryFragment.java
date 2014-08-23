@@ -109,8 +109,8 @@ public class ByCategoryFragment extends Fragment
     private String getCategoryCaption(int position)
     {
         int resIndex = mCategoryList.get(position).mFirstField;
-        int resource = Images.getImageByPosition(resIndex);
-        return Images.getCaptionByImage(resource);
+        int resource = Images.getImageByPosition(resIndex, Images.getUnsorted());
+        return Images.getCaptionByImage(resource, Images.getSorted());
     }
 
     /**

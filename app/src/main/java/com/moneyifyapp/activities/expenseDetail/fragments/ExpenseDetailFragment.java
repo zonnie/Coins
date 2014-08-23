@@ -96,7 +96,7 @@ public class ExpenseDetailFragment extends Fragment
             mCurrentImage = mTempExpenseObject.mImageResourceIndex;
 
             mAlphaDown = AnimationUtils.getAlphaDownAnimation();
-            mAlphaUp = AnimationUtils.getmAlphaUpAnimation();
+            mAlphaUp = AnimationUtils.getAlphaUpAnimation();
             mBounceSaved = AnimationUtils.getBounceAnimtion(getActivity());
             mBounceSpending = android.view.animation.AnimationUtils.loadAnimation(getActivity(), R.anim.bounce);
 
@@ -188,7 +188,7 @@ public class ExpenseDetailFragment extends Fragment
      */
     private void initImageView()
     {
-        mExpenseIcon.setImageResource(Images.getImageByPosition(mTempExpenseObject.mImageResourceIndex));
+        mExpenseIcon.setImageResource(Images.getImageByPosition(mTempExpenseObject.mImageResourceIndex, Images.getUnsorted()));
     }
 
     /**
@@ -200,7 +200,7 @@ public class ExpenseDetailFragment extends Fragment
             mExpenseDescription.setText(mTempExpenseObject.mDescription);
             mExpenseValue.setText(mTempExpenseObject.mValue);
             mExpenseNotes.setText(mTempExpenseObject.mNotes);
-            mExpenseIcon.setImageResource(Images.getImageByPosition(mTempExpenseObject.mImageResourceIndex));
+            mExpenseIcon.setImageResource(Images.getImageByPosition(mTempExpenseObject.mImageResourceIndex, Images.getUnsorted()));
             mToggleIsExpense.setChecked(!mTempExpenseObject.mIsExpense);
             mToggleIsSaved.setChecked(mTempExpenseObject.mSaved);
         }
@@ -218,10 +218,10 @@ public class ExpenseDetailFragment extends Fragment
         if (resultCode == ExpensesActivity.IMAGE_PICK_OK)
         {
             mCurrentImage = data.getExtras().getInt(Transaction.KEY_IMAGE_NAME);
-            mExpenseIcon.setImageResource(Images.getImageByPosition(mCurrentImage));
+            mExpenseIcon.setImageResource(Images.getImageByPosition(mCurrentImage, Images.getUnsorted()));
 
             if(mExpenseDescription.getText().toString().isEmpty())
-                mExpenseDescription.setText(Images.getCaptioneByPosition(mCurrentImage));
+                mExpenseDescription.setText(Images.getCaptioneByPosition(Images.getUnsorted(), mCurrentImage));
         }
     }
 

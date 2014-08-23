@@ -42,7 +42,7 @@ public class SplashActivity extends Activity
 
         if (!mIsFristRun)
         {
-            mTransactionHandler.registerListenerAndFetchTransactions(this, Calendar.getInstance().get(Calendar.YEAR));
+            mTransactionHandler.registerListenerAndFetchAll(this, Calendar.getInstance().get(Calendar.YEAR));
             initFromLocalDb();
         }
         else

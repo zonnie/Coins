@@ -13,6 +13,29 @@ public class Images
 {
     private static List<ImageWithCaption> mSortedImages;
     private static List<ImageWithCaption> mUnsortedResouceIndexList;
+    private static List<ImageWithCaption> mWalletIcons;
+    private static List<ImageWithCaption> mWalletSortedIcons;
+
+    public static List<ImageWithCaption> getWalletSorted(){return mWalletSortedIcons;}
+    public static List<ImageWithCaption> getSorted(){return mSortedImages;}
+    public static List<ImageWithCaption> getWalletUnsorted(){return mWalletIcons;}
+    public static List<ImageWithCaption> getUnsorted(){return mUnsortedResouceIndexList;}
+
+    static
+    {
+        mWalletIcons = new ArrayList<ImageWithCaption>();
+        mWalletSortedIcons = new ArrayList<ImageWithCaption>();
+
+        mWalletIcons.add(new ImageWithCaption(R.drawable.wallet, "Private", R.drawable.wallet_small));
+        mWalletIcons.add(new ImageWithCaption(R.drawable.bbq, "Event", R.drawable.bbq_small));
+        mWalletIcons.add(new ImageWithCaption(R.drawable.invesments, "Invesments", R.drawable.invesments_small));
+        mWalletIcons.add(new ImageWithCaption(R.drawable.biz, "Bisnuess", R.drawable.biz_small));
+
+        for(int i = 0; i < mWalletIcons.size(); i++)
+            mWalletSortedIcons.add(mWalletIcons.get(i));
+
+        Collections.sort(mWalletSortedIcons);
+    }
 
     static
     {
@@ -72,17 +95,17 @@ public class Images
 
     /**
      */
-    public static int getImageByPosition(int position)
+    public static int getImageByPosition(int position, List<ImageWithCaption> unsorted)
     {
         int resource;
 
         try
         {
-            resource = mUnsortedResouceIndexList.get(position).getImage();
+            resource = unsorted.get(position).getImage();
         }
         catch (IndexOutOfBoundsException e)
         {
-            resource = mUnsortedResouceIndexList.get(0).getImage();
+            resource = unsorted.get(0).getImage();
         }
 
         return  resource;
@@ -90,35 +113,17 @@ public class Images
 
     /**
      */
-    public static String getCaptioneByPosition(int position)
+    public static String getCaptioneByPosition(List<ImageWithCaption> unsorted, int position)
     {
         String resource;
 
         try
         {
-            resource = mUnsortedResouceIndexList.get(position).getCaption();
+            resource = unsorted.get(position).getCaption();
         }
         catch (IndexOutOfBoundsException e)
         {
-            resource = mUnsortedResouceIndexList.get(0).getCaption();
-        }
-
-        return  resource;
-    }
-
-    /**
-     */
-    public static int getImageSmallByPosition(int position)
-    {
-        int resource;
-
-        try
-        {
-            resource = mUnsortedResouceIndexList.get(position).getImageSmall();
-        }
-        catch (IndexOutOfBoundsException e)
-        {
-            resource = mUnsortedResouceIndexList.get(0).getImageSmall();
+            resource = unsorted.get(0).getCaption();
         }
 
         return  resource;
@@ -143,17 +148,35 @@ public class Images
 
     /**
      */
-    public static int getSmallImageByPosition(int position)
+    public static int getWalletImageIndexBySortedPosition(int position)
+    {
+        int resourceIndex = 0;
+
+        ImageWithCaption image = mWalletSortedIcons.get(position);
+
+        for(int i = 0; i < mWalletSortedIcons.size(); i++)
+        {
+            if(mWalletIcons.get(i).getImage() == image.getImage())
+                resourceIndex = i;
+        }
+
+        return resourceIndex;
+    }
+
+
+    /**
+     */
+    public static int getSmallImageByPosition(int position, List<ImageWithCaption> unsorted)
     {
         int resource;
 
         try
         {
-            resource = mUnsortedResouceIndexList.get(position).getImageSmall();
+            resource = unsorted.get(position).getImageSmall();
         }
         catch (IndexOutOfBoundsException e)
         {
-            resource = mUnsortedResouceIndexList.get(0).getImage();
+            resource = unsorted.get(0).getImage();
         }
 
         return  resource;
@@ -168,11 +191,11 @@ public class Images
 
     /**
      */
-    public static List<Integer> getSortedImages()
+    public static List<Integer> getSortedImages(List<ImageWithCaption> sorted)
     {
         List<Integer> resources = new ArrayList<Integer>();
 
-        for(ImageWithCaption cur : mSortedImages)
+        for(ImageWithCaption cur : sorted)
             resources.add(cur.getImage());
 
         return resources;
@@ -194,13 +217,13 @@ public class Images
 
     /**
      */
-    public static String getCaptionByImage(int resourceId)
+    public static String getCaptionByImage(int resourceId, List<ImageWithCaption> sorted)
     {
         String caption = "";
 
         for(int i = 0; i < Images.getCount(); ++i)
         {
-            if(Images.getSortedImages().get(i) == resourceId)
+            if(Images.getSortedImages(sorted).get(i) == resourceId)
                 caption = Images.getCaptions().get(i);
         }
 
@@ -248,11 +271,18 @@ public class Images
      */
     public static int getDefaultImage()
     {
+       return getDefaultImage(mUnsortedResouceIndexList);
+    }
+
+    /**
+     */
+    public static int getDefaultImage(List<ImageWithCaption> unsorted)
+    {
         int imageIndex = 0;
 
-        for(int i = 0; i < mUnsortedResouceIndexList.size(); ++i)
+        for(int i = 0; i < unsorted.size(); ++i)
         {
-            if(mUnsortedResouceIndexList.get(i).mImageResource == R.drawable.shop)
+            if(unsorted.get(i).mImageResource == R.drawable.shop)
                 imageIndex = i;
         }
 
@@ -262,5 +292,10 @@ public class Images
     public static List<ImageWithCaption> getImageWithCaptions()
     {
         return mSortedImages;
+    }
+
+    public static List<ImageWithCaption> getWalletImageWithCaptions()
+    {
+        return mWalletSortedIcons;
     }
 }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.preferences.PrefActivity;
+import com.moneyifyapp.model.TransactionHandler;
 import com.moneyifyapp.views.PrettyToast;
 import com.parse.Parse;
 
@@ -32,7 +33,7 @@ public class Utils
     private static DecimalFormat mFormater;
     public static String SHARED_PREF_NAME = "com.moneyifyapp";
     public static String SPLASH_FIRST_RUN_FLAG = "firstrunSplash";
-    public static String MAIN_FIRST_RUN_FLAG = "firstrunMain";
+    public static String CURRENT_WALLET_ID = "currentWalletId";
     public static String LOGIN_FIRST_RUN_FLAG = "firstrunLogin";
     public static String DETAILS_FIRST_RUN_FLAG = "firstrunDetails";
 
@@ -77,6 +78,24 @@ public class Utils
             ((TextView) v.findViewById(R.id.title)).setText(context.getTitle());
 
             //assign the view to the actionbar
+            context.getActionBar().setCustomView(v);
+        }
+    }
+
+    /**
+     * Initializes the action bar to be custom made.
+     */
+    public static void initializeActionBar(Activity context, String text)
+    {
+        if (context.getActionBar() != null)
+        {
+            context.getActionBar().setDisplayShowCustomEnabled(true);
+            context.getActionBar().setDisplayShowTitleEnabled(false);
+
+            LayoutInflater inflator = LayoutInflater.from(context);
+            View v = inflator.inflate(R.layout.custom_actionbar, null);
+
+            ((TextView) v.findViewById(R.id.title)).setText(text);
             context.getActionBar().setCustomView(v);
         }
     }
@@ -304,9 +323,9 @@ public class Utils
 
     /**
      */
-    public static boolean isFirstRunMain(Context context)
+    public static String getCurrentWalletId(Context context)
     {
-        return context.getSharedPreferences(SHARED_PREF_NAME, Activity.MODE_PRIVATE).getBoolean(MAIN_FIRST_RUN_FLAG, true);
+        return context.getSharedPreferences(SHARED_PREF_NAME, Activity.MODE_PRIVATE).getString(CURRENT_WALLET_ID, TransactionHandler.DEFAULT_WALLET_ID);
     }
 
     /**
@@ -346,8 +365,8 @@ public class Utils
 
     /**
      */
-    public static void setFirstRunMain(Context context, boolean firstRun)
+    public static void setCurrentWalletId(Context context, String currentWalletId)
     {
-        context.getSharedPreferences(SHARED_PREF_NAME, Activity.MODE_PRIVATE).edit().putBoolean(MAIN_FIRST_RUN_FLAG, firstRun).commit();
+        context.getSharedPreferences(SHARED_PREF_NAME, Activity.MODE_PRIVATE).edit().putString(CURRENT_WALLET_ID, currentWalletId).commit();
     }
 }

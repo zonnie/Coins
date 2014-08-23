@@ -193,11 +193,11 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
 
             // Build the graph details
             for (MonthTransactions.Couple<Integer, Integer> cur : coupleValues)
-                xIcons.add(Images.getSmallImageByPosition(cur.mFirstField));
+                xIcons.add(Images.getSmallImageByPosition(cur.mFirstField,  Images.getUnsorted()));
             for (MonthTransactions.Couple<Integer, Integer> cur : coupleValues)
                 values.add(cur.mSecondField.intValue());
             for (MonthTransactions.Couple<Integer, Integer> cur : coupleValues)
-                xValues.add(Images.getCaptionByImage(Images.getImageByPosition(cur.mFirstField)));
+                xValues.add(Images.getCaptionByImage(Images.getImageByPosition(cur.mFirstField, Images.getUnsorted()), Images.getSorted()));
 
             for (Integer cur : values)
             {

@@ -1,10 +1,11 @@
 package com.moneyifyapp.model;
 
 import android.app.Activity;
-import android.content.Context;
+import android.widget.Toast;
 
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
+import com.moneyifyapp.model.drawer.DrawerUtils;
 import com.moneyifyapp.utils.Utils;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -13,6 +14,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,24 +28,40 @@ import java.util.Queue;
 public class TransactionHandler
 {
     private static TransactionHandler instance;
-    private Map<String, YearTransactions> mAllTransactions;
+    private Map<String, Map<String, YearTransactions>> mAllWalletsTransactions;
     private List<String> mRepeatTransactions;
     private List<String> mReusableTransactions;
     private Queue<onFetchingCompleteListener> mFetchCompleteListeners;
     private boolean mIsFirstFatch;
-    private Context mContext;
+    private Activity mContext;
+    public static final String WALLET_ID = "walletId";
+    public static final String WALLET_NOTES = "walletNotes";
+    public static final String WALLET_TITLE = "walletTitle";
+    public static final String WALLET_ICON_INDEX = "walletIcon";
+
+    private String mCurrentWalletId;
+    public static final String DEFAULT_WALLET_ID = "1";
+    public static final String WALLET_CLASS = "wallet";
 
     /**
      */
     private TransactionHandler(Activity context)
     {
         Utils.initializeParse(context);
+        initTransactionHandler(context);
+    }
+
+    /**
+     */
+    private void initTransactionHandler(Activity context)
+    {
         mContext = context;
-        mAllTransactions = new LinkedHashMap<String, YearTransactions>();
+        mAllWalletsTransactions = new HashMap<String, Map<String, YearTransactions>>();
         mFetchCompleteListeners = new LinkedList<onFetchingCompleteListener>();
         mRepeatTransactions = new ArrayList<String>();
         mReusableTransactions = new ArrayList<String>();
         mIsFirstFatch = true;
+        mCurrentWalletId = Utils.getCurrentWalletId(mContext);
     }
 
     /**
@@ -58,18 +76,18 @@ public class TransactionHandler
 
     /**
      */
-    public void registerListenerAndFetchTransactions(onFetchingCompleteListener listener, int year)
+    public void registerListenerAndFetchAll(onFetchingCompleteListener listener, int year)
     {
         registerToFetchComplete(listener);
-        fetchYearTransactions(year);
+        fetchTransactionsForAllWalletsByYear(year);
     }
 
     /**
      */
-    public void fetchYearTransactions(int year)
+    public void fetchTransactionsForAllWalletsByYear(int year)
     {
         if(!mFetchCompleteListeners.isEmpty())
-            queryDatabaseAndBuildTransactions(year);
+            fetchWalletsForCurrentUser(year);
     }
 
     /**
@@ -77,6 +95,37 @@ public class TransactionHandler
     public void registerToFetchComplete(onFetchingCompleteListener listener)
     {
         this.mFetchCompleteListeners.add(listener);
+    }
+
+
+
+    public void fetchWalletsForCurrentUser(final int year)
+    {
+        ParseQuery<ParseObject> list = createParseQueryForWallet();
+        list.findInBackground(new FindCallback<ParseObject>()
+        {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e)
+            {
+                for(ParseObject wallet : parseObjects)
+                {
+                    String id = wallet.getString(WALLET_ID);
+                    String title = wallet.getString(WALLET_TITLE);
+                    int iconIndex = wallet.getInt(WALLET_ICON_INDEX);
+                    DrawerUtils.addNewWalletItem(title, iconIndex, id);
+                    mAllWalletsTransactions.put(id, new LinkedHashMap<String, YearTransactions>());
+                }
+
+                queryDatabaseAndBuildTransactions(year);
+            }
+        });
+    }
+
+    /**
+     */
+    public boolean isFirstFeatch()
+    {
+        return mIsFirstFatch;
     }
 
     /**
@@ -99,20 +148,15 @@ public class TransactionHandler
     }
 
     /**
-     */
-    public boolean isFirstFeatch()
-    {
-        return mIsFirstFatch;
-    }
-
-    /**
      * Initializes the expenses from the remote DB.
      */
     public void buildExpenseListFromParse(List<ParseObject> list)
     {
         if (list != null)
         {
-            this.clearUserTransactions();
+            // Clear wallets interior
+            for(String walletId : mAllWalletsTransactions.keySet())
+                clearWalletTransactions(walletId);
 
             for (ParseObject curExpense : list)
             {
@@ -156,7 +200,24 @@ public class TransactionHandler
         ParseQuery<ParseObject> query = ParseQuery.getQuery(Transaction.CLASS_NAME);
         query.whereEqualTo(ExpensesActivity.PARSE_USER_KEY, user);
         query.whereEqualTo(ExpenseListFragment.YEAR_KEY, year);
+        //query.whereEqualTo(WALLET_ID, mCurrentWalletId);
         query.addDescendingOrder(ExpenseListFragment.PARSE_DATE_KEY);
+
+        return query;
+    }
+
+    /**
+     */
+    private ParseQuery<ParseObject> createParseQueryForWallet()
+    {
+        ParseUser user = ParseUser.getCurrentUser();
+        ParseQuery<ParseObject> query = null;
+
+        if(user != null)
+        {
+            query = ParseQuery.getQuery(WALLET_CLASS);
+            query.whereEqualTo(ExpensesActivity.PARSE_USER_KEY, user);
+        }
 
         return query;
     }
@@ -168,27 +229,34 @@ public class TransactionHandler
     {
         // The adapter will add the expense to the model collection so it can update observer
         // as well.
+        String walletId = parseObject.getString(WALLET_ID);
         String year = String.valueOf(parseObject.getInt(ExpenseListFragment.YEAR_KEY));
         int month = parseObject.getInt(ExpenseListFragment.MONTH_KEY);
-        if(mAllTransactions.get(year) == null)
-            mAllTransactions.put(year, new YearTransactions(Integer.valueOf(year)));
-        mAllTransactions.get(year).addTransactionToMonth(month,newTransaction,0);
+        if(mAllWalletsTransactions.get(walletId) == null)
+            mAllWalletsTransactions.put(walletId, new LinkedHashMap<String, YearTransactions>());
+        Map<String, YearTransactions> allTransactions = mAllWalletsTransactions.get(walletId);
+        if(allTransactions.get(year) == null)
+            allTransactions.put(year, new YearTransactions(Integer.valueOf(year)));
+        allTransactions.get(year).addTransactionToMonth(month,newTransaction,0);
     }
 
     /**
      */
     public YearTransactions getYearTransactions(String year)
     {
-        if(mAllTransactions.get(year) == null)
-            mAllTransactions.put(year, new YearTransactions(Integer.valueOf(year)));
+        Map<String, YearTransactions> allTransactions = mAllWalletsTransactions.get(mCurrentWalletId);
 
-        return mAllTransactions.get(year);
+        if(allTransactions.get(year) == null)
+            allTransactions.put(year, new YearTransactions(Integer.valueOf(year)));
+
+        return allTransactions.get(year);
     }
 
     public void updateTransaction(final Transaction transaction)
     {
         ParseQuery<ParseObject> query = ParseQuery.getQuery(Transaction.CLASS_NAME);
         query.whereEqualTo(Transaction.KEY_ID, transaction.mId);
+        query.whereEqualTo(WALLET_ID, mCurrentWalletId);
         query.findInBackground(new FindCallback<ParseObject>()
         {
             @Override
@@ -198,6 +266,7 @@ public class TransactionHandler
                 {
                     ParseObject expenseObjectInDb = list.get(0);
                     saveDataInBackground(transaction, expenseObjectInDb);
+                    Utils.showPrettyToast(mContext, "Updated \"" + transaction.mDescription +"\"", Toast.LENGTH_LONG);
                 }
             }
         });
@@ -213,11 +282,17 @@ public class TransactionHandler
 
     /**
      */
-    public void clearUserTransactions()
+    public void clearWalletTransactions(String walletId)
     {
-        mAllTransactions.clear();
+        mAllWalletsTransactions.get(walletId).clear();
     }
 
+    public void clearAllWallets()
+    {
+        // Clear wallets interior
+        for(String walletId : mAllWalletsTransactions.keySet())
+            clearWalletTransactions(walletId);
+    }
 
     /*********************************************************************************************/
     /**                                     Repeated Tasks                                      **/
@@ -313,7 +388,10 @@ public class TransactionHandler
      */
     public Transaction getTransactionById(String id)
     {
-        for(YearTransactions year : mAllTransactions.values())
+        Map<String, YearTransactions> allTransactions = mAllWalletsTransactions.get(mCurrentWalletId);
+        if(allTransactions == null)
+            return null;
+        for(YearTransactions year : allTransactions.values())
             for(MonthTransactions month : year.getItems())
             {
                 if(month != null)
@@ -332,9 +410,12 @@ public class TransactionHandler
     public MonthTransactions getAllSavedTransactions()
     {
         MonthTransactions allSaved = new MonthTransactions(0);
+        Map<String, YearTransactions> allTransactions = mAllWalletsTransactions.get(mCurrentWalletId);
 
-        for(String year : mAllTransactions.keySet())
-            allSaved.getItems().addAll(mAllTransactions.get(year).getYearSavedTransactions().getItems());
+        if(allTransactions == null)
+            return null;
+        for(String year : allTransactions.keySet())
+            allSaved.getItems().addAll(allTransactions.get(year).getYearSavedTransactions().getItems());
 
         return allSaved;
     }
@@ -360,8 +441,53 @@ public class TransactionHandler
         expenseObject.put(ExpenseListFragment.YEAR_KEY, newTransaction.mYear);
         expenseObject.put(ExpenseListFragment.TEMPLATE_KEY, newTransaction.mSaved);
         expenseObject.put(ExpenseListFragment.REPEAT_KEY, newTransaction.mRepeatType.toString());
+        expenseObject.put(WALLET_ID, mCurrentWalletId);
 
         expenseObject.saveInBackground();
+    }
+
+    /**
+     */
+    private void createWalletInBackground(String id, String title, int drawable, String notes)
+    {
+        ParseUser user = ParseUser.getCurrentUser();
+        ParseObject expenseObject = new ParseObject(WALLET_CLASS);
+
+        expenseObject.put(WALLET_ID, id);
+        expenseObject.put(WALLET_TITLE, title);
+        expenseObject.put(WALLET_NOTES, notes);
+        expenseObject.put(WALLET_ICON_INDEX, drawable);
+        expenseObject.put(ExpensesActivity.PARSE_USER_KEY, user);
+
+        expenseObject.saveInBackground();
+    }
+
+    private void addWalletToAllTransactions(String id)
+    {
+        Map<String, YearTransactions> allTransactions = mAllWalletsTransactions.get(id);
+        if(allTransactions == null)
+            mAllWalletsTransactions.put(id,new HashMap<String, YearTransactions>());
+    }
+
+    public void addWallet(String id, String title, int drawable, String notes)
+    {
+        createWalletInBackground(id, title, drawable, notes);
+        addWalletToAllTransactions(id);
+    }
+
+    /**
+     */
+    public String getCurrentWalletId()
+    {
+        return mCurrentWalletId;
+    }
+
+
+    /**
+     */
+    public void setCurrentWalletId(String mCurrentWalletId)
+    {
+        this.mCurrentWalletId = mCurrentWalletId;
     }
 
 }

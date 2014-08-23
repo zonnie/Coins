@@ -94,8 +94,8 @@ public class ExpenseDetailActivity extends Activity
         mOptionsFragment = ExpenseOptionsFragment.newInstance(mIsEdit, mTransaction);
         Button submitButton = (Button)findViewById(R.id.submit_item);
 
-        Animation slideInLeftAnimation = android.view.animation.AnimationUtils.loadAnimation(this, R.anim.fade_in);
-        submitButton.startAnimation(slideInLeftAnimation);
+        Animation fadeInAnimation = android.view.animation.AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        submitButton.startAnimation(fadeInAnimation);
 
         initDetailDateLabels();
         getFragmentManager().beginTransaction()

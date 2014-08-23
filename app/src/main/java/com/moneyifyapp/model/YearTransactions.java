@@ -5,7 +5,6 @@ import com.moneyifyapp.activities.analytics.intrfaces.Sumable;
 import java.util.Calendar;
 
 /**
- * Created by Zonnie_Work on 03/07/2014.
  */
 public class YearTransactions implements Sumable
 {
@@ -24,6 +23,9 @@ public class YearTransactions implements Sumable
      */
     public MonthTransactions get(int month)
     {
+        // Add month if it's null
+        addMonth(month);
+
         if(month >= 0)
             return  mYearTransactions[month];
         else

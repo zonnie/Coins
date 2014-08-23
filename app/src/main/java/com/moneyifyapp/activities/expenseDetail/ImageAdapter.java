@@ -67,9 +67,9 @@ public class ImageAdapter extends BaseAdapter implements Filterable
             {
                 int globalPosition = 0;
                 Images.ImageWithCaption image = mFilteredValues.get(position);
-                for(int i = 0; i < Images.getSortedImages().size(); ++i)
+                for(int i = 0; i < getSortedImages().size(); ++i)
                 {
-                    if (image.getImage().equals(Images.getSortedImages().get(i)))
+                    if (image.getImage().equals(getSortedImages().get(i)))
                         globalPosition = i;
                 }
                 mListner.onItemClick(globalPosition);
@@ -81,6 +81,13 @@ public class ImageAdapter extends BaseAdapter implements Filterable
         imageButton.setImageResource(resourceId);
 
         return mView;
+    }
+
+    /**
+     */
+    public List<Integer> getSortedImages()
+    {
+      return Images.getSortedImages(Images.getSorted());
     }
 
     /**
