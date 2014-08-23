@@ -30,6 +30,7 @@ public class Images
         mWalletIcons.add(new ImageWithCaption(R.drawable.bbq, "Event", R.drawable.bbq_small));
         mWalletIcons.add(new ImageWithCaption(R.drawable.invesments, "Invesments", R.drawable.invesments_small));
         mWalletIcons.add(new ImageWithCaption(R.drawable.biz, "Bisnuess", R.drawable.biz_small));
+        mWalletIcons.add(new ImageWithCaption(R.drawable.spouse, "Love", R.drawable.spouse_small));
 
         for(int i = 0; i < mWalletIcons.size(); i++)
             mWalletSortedIcons.add(mWalletIcons.get(i));
