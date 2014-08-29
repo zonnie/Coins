@@ -7,6 +7,8 @@ import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.model.drawer.DrawerUtils;
 import com.moneyifyapp.utils.Utils;
+import com.moneyifyapp.views.PrettyToast;
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -247,6 +249,12 @@ public class TransactionHandler
     {
         Map<String, YearTransactions> allTransactions = mAllWalletsTransactions.get(mCurrentWalletId);
 
+        if(allTransactions == null)
+        {
+            mAllWalletsTransactions.put(mCurrentWalletId, new HashMap<String, YearTransactions>());
+            allTransactions = mAllWalletsTransactions.get(mCurrentWalletId);
+        }
+
         if(allTransactions.get(year) == null)
             allTransactions.put(year, new YearTransactions(Integer.valueOf(year)));
 
@@ -297,6 +305,61 @@ public class TransactionHandler
         Utils.setCurrentWalletId(mContext, DEFAULT_WALLET_ID);
         setCurrentWalletId(Utils.getCurrentWalletId(mContext));
     }
+
+    /**
+     * Remove an item given it's list position.
+     */
+    public void removeWallet(String id)
+    {
+        ParseQuery<ParseObject> transactionQuery = ParseQuery.getQuery(Transaction.CLASS_NAME);
+        transactionQuery.whereEqualTo(WALLET_ID, id);
+        transactionQuery.findInBackground(new FindCallback<ParseObject>()
+        {
+            @Override
+            public void done(List<ParseObject> list, ParseException e)
+            {
+                deleteWalletTransactions(list, e);
+            }
+        });
+
+        ParseQuery<ParseObject> walletQuery = ParseQuery.getQuery(WALLET_CLASS);
+        walletQuery.whereEqualTo(WALLET_ID, id);
+        walletQuery.findInBackground(new FindCallback<ParseObject>()
+        {
+            @Override
+            public void done(List<ParseObject> list, ParseException e)
+            {
+                if (e == null && list.size() != 0)
+                {
+                    list.get(0).deleteInBackground(new DeleteCallback()
+                    {
+                        @Override
+                        public void done(ParseException e)
+                        {
+                            if (e == null)
+                                Utils.showPrettyToast(mContext, "Wallet deleted successfully", PrettyToast.VERY_LONG);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    /**
+     */
+    private void deleteWalletTransactions(List<ParseObject> list, ParseException e)
+    {
+        if (e == null)
+        {
+            for(ParseObject transaction : list)
+            {
+                transaction.deleteInBackground();
+            }
+        }
+        else
+            Toast.makeText(mContext, "Can't remove the item, couldn't find it..", Toast.LENGTH_LONG).show();
+    }
+
 
     /*********************************************************************************************/
     /**                                     Repeated Tasks                                      **/
@@ -451,8 +514,25 @@ public class TransactionHandler
     }
 
     /**
+     * This encapsulates the saving of date using Parse.
      */
-    private void createWalletInBackground(String id, String title, int drawable, String notes)
+    public void saveWalletInBackground(String id, String title, int drawable, String notes,
+                                     final ParseObject expenseObject)
+    {
+        ParseUser user = ParseUser.getCurrentUser();
+
+        expenseObject.put(WALLET_ID, id);
+        expenseObject.put(WALLET_TITLE, title);
+        expenseObject.put(WALLET_NOTES, notes);
+        expenseObject.put(WALLET_ICON_INDEX, drawable);
+        expenseObject.put(ExpensesActivity.PARSE_USER_KEY, user);
+
+        expenseObject.saveInBackground();
+    }
+
+    /**
+     */
+    private void saveWalletInBackground(String id, String title, int drawable, String notes)
     {
         ParseUser user = ParseUser.getCurrentUser();
         ParseObject expenseObject = new ParseObject(WALLET_CLASS);
@@ -473,10 +553,33 @@ public class TransactionHandler
             mAllWalletsTransactions.put(id,new HashMap<String, YearTransactions>());
     }
 
+    /**
+     */
     public void addWallet(String id, String title, int drawable, String notes)
     {
-        createWalletInBackground(id, title, drawable, notes);
+        saveWalletInBackground(id, title, drawable, notes);
         addWalletToAllTransactions(id);
+    }
+
+    /**
+     */
+    public void updateWallet(final String id, final String title, final int drawable, final String notes)
+    {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(WALLET_CLASS);
+        query.whereEqualTo(WALLET_ID, id);
+        query.findInBackground(new FindCallback<ParseObject>()
+        {
+            @Override
+            public void done(List<ParseObject> list, ParseException e)
+            {
+                if (list.size() != 0)
+                {
+                    ParseObject expenseObjectInDb = list.get(0);
+                    saveWalletInBackground(id, title, drawable, notes, expenseObjectInDb);
+                    Utils.showPrettyToast(mContext, "Updated wallet \"" + title +"\"", Toast.LENGTH_LONG);
+                }
+            }
+        });
     }
 
     /**

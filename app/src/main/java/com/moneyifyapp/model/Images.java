@@ -149,6 +149,21 @@ public class Images
 
     /**
      */
+    public static int getImageIndexByResource(List<ImageWithCaption> imageList, int resource)
+    {
+        int resourceIndex = 0;
+
+        for(int i = 0; i < imageList.size(); i++)
+        {
+            if(imageList.get(i).getImage() == resource)
+                resourceIndex = i;
+        }
+
+        return resourceIndex;
+    }
+
+    /**
+     */
     public static int getWalletImageIndexBySortedPosition(int position)
     {
         int resourceIndex = 0;
@@ -282,10 +297,8 @@ public class Images
         int imageIndex = 0;
 
         for(int i = 0; i < unsorted.size(); ++i)
-        {
             if(unsorted.get(i).mImageResource == R.drawable.shop)
                 imageIndex = i;
-        }
 
         return imageIndex;
     }

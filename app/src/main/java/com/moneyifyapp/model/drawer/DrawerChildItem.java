@@ -5,20 +5,23 @@ package com.moneyifyapp.model.drawer;
 public class DrawerChildItem
 {
     private String mItemTitle;
-    private int mResourceId;
+    private int mResourceIdLarge;
+    private int mResourceIdSmall;
     private String mId;
 
-    public DrawerChildItem(String title, int resource)
+    public DrawerChildItem(String title, int resource, int resourceSmall)
     {
         this.mItemTitle = title;
-        this.mResourceId = resource;
+        this.mResourceIdLarge = resource;
+        this.mResourceIdSmall = resourceSmall;
         this.mId = DrawerUtils.generateId(title);
     }
 
-    public DrawerChildItem(String title, int resource, String id)
+    public DrawerChildItem(String title, int resource, int resourceSmall, String id)
     {
         this.mItemTitle = title;
-        this.mResourceId = resource;
+        this.mResourceIdLarge = resource;
+        this.mResourceIdSmall = resourceSmall;
         this.mId = id;
     }
 
@@ -33,7 +36,14 @@ public class DrawerChildItem
      */
     public int getResourceId()
     {
-        return mResourceId;
+        return mResourceIdLarge;
+    }
+
+    /**
+     */
+    public int getResourceSmallId()
+    {
+        return mResourceIdSmall;
     }
 
     /**
@@ -41,6 +51,27 @@ public class DrawerChildItem
     public String getId()
     {
         return mId;
+    }
+
+    /**
+     */
+    public void setItemTitle(String mItemTitle)
+    {
+        this.mItemTitle = mItemTitle;
+    }
+
+    /**
+     */
+    public void setResourceIdLarge(int mResourceIdLarge)
+    {
+        this.mResourceIdLarge = mResourceIdLarge;
+    }
+
+    /**
+     */
+    public void setResourceIdSmall(int mResourceIdSmall)
+    {
+        this.mResourceIdSmall = mResourceIdSmall;
     }
 
 }

@@ -27,6 +27,7 @@ public class DrawerExpandableAdapter extends BaseExpandableListAdapter
     private int mLayoutResourceId;
     private Map<String, List<DrawerChildItem>> mDrawerItemMap;
     private Context mContext;
+    private boolean mIsWalletAdapter;
 
     /**
      */
@@ -36,6 +37,7 @@ public class DrawerExpandableAdapter extends BaseExpandableListAdapter
         mDrawerGroupItems = DrawerUtils.drawerGroupItems;
         mDrawerItemMap = DrawerUtils.drawerGroupMap;
         mLayoutResourceId = resource;
+        mIsWalletAdapter = false;
     }
 
     /**
@@ -53,12 +55,12 @@ public class DrawerExpandableAdapter extends BaseExpandableListAdapter
             mMyView = viewInflator.inflate(mLayoutResourceId, null);
         }
 
-        return getRegularView(groupPosition);
+        return createGroupView(groupPosition);
     }
 
     /**
      */
-    private View getRegularView(int position)
+    private View createGroupView(int position)
     {
         DrawerGroupItem currentTransactionView = (DrawerGroupItem)getGroup(position);
 
@@ -125,13 +127,26 @@ public class DrawerExpandableAdapter extends BaseExpandableListAdapter
 
         if (convertView == null)
         {
-            LayoutInflater infalInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater infalInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
             convertView = infalInflater.inflate(R.layout.drawer_list_child_item, null);
+            /*
+            if(groupPosition == getGroupCount()-1 && childPosition > 1)
+            {
+                convertView = infalInflater.inflate(R.layout.drawer_list_wallet_item, null);
+                bindRemoveWalletButton(convertView);
+                mIsWalletAdapter = true;
+            }
+            else
+            {
+                convertView = infalInflater.inflate(R.layout.drawer_list_child_item, null);
+                mIsWalletAdapter = false;
+            }*/
         }
 
         TextView childText = (TextView) convertView.findViewById(R.id.drawer_child_item_text);
         childText.setText(child.getItemTitle());
-        updateImage(childText, child.getResourceId());
+        updateImage(childText, child.getResourceSmallId());
 
         return convertView;
     }

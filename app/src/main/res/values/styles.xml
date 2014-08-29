@@ -14,6 +14,7 @@
         <item name="android:checkboxStyle">@style/CustomCheckBox</item>
         <item name="android:homeAsUpIndicator">@drawable/back_2</item>
         <item name="android:radioButtonStyle">@style/RobotoRadioStyle</item>
+        <item name="android:itemBackground">@drawable/button_alternate</item>
     </style>
 
     <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
@@ -83,7 +84,7 @@
 
     <style name="myCustomMenuTextApearance" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
     <!-- This style can be assinged progremattically to a Dialog -->
@@ -91,5 +92,4 @@
         <item name="android:windowEnterAnimation">@anim/appear_in_bounce</item>
         <item name="android:windowExitAnimation">@anim/appear_out_bounce</item>
     </style>
-
 </resources>

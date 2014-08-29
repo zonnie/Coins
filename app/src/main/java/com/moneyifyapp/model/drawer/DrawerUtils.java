@@ -21,6 +21,8 @@ public class DrawerUtils
     public static List<DrawerChildItem> sAppStuff;
     public static List<DrawerChildItem> sGeneral;
 
+    public static final String ADD_WALLET_ID = "new";
+
     public static final String MAIN_NAME = "Main";
     public static final String GENERAL_NAME = "General";
     public static final String WALLETS_NAME = "Wallets";
@@ -39,18 +41,18 @@ public class DrawerUtils
     static
     {
         sWallets = new ArrayList<DrawerChildItem>();
-        sAppStuff = new ArrayList<DrawerChildItem>();
+        sWallets.add(new DrawerChildItem(WALLET_CREATE, R.drawable.add_wallet, R.drawable.add_wallet, ADD_WALLET_ID));
+        sWallets.add(new DrawerChildItem(DEFAULT_WALLET_NAME, R.drawable.wallet, R.drawable.wallet_small, TransactionHandler.DEFAULT_WALLET_ID));
+
         sGeneral = new ArrayList<DrawerChildItem>();
+        sGeneral.add(new DrawerChildItem("Account", R.drawable.account, R.drawable.account));
+        sGeneral.add(new DrawerChildItem("Settings", R.drawable.controls, R.drawable.controls));
 
-        sWallets.add(new DrawerChildItem(WALLET_CREATE, R.drawable.add_wallet, "new"));
-        sWallets.add(new DrawerChildItem(DEFAULT_WALLET_NAME, R.drawable.wallet_small, TransactionHandler.DEFAULT_WALLET_ID));
+        sAppStuff = new ArrayList<DrawerChildItem>();
+        sAppStuff.add(new DrawerChildItem("Favorites", R.drawable.fav_drawer, R.drawable.fav_drawer));
+        sAppStuff.add(new DrawerChildItem("Analytics", R.drawable.dashboard, R.drawable.dashboard_small));
 
-        sGeneral.add(new DrawerChildItem("Account", R.drawable.account));
-        sGeneral.add(new DrawerChildItem("Settings", R.drawable.controls));
-
-        sAppStuff.add(new DrawerChildItem("Favorites", R.drawable.fav_drawer));
-        sAppStuff.add(new DrawerChildItem("Analytics", R.drawable.dashboard));
-
+        // Add to map
         drawerGroupMap = new HashMap<String, List<DrawerChildItem>>();
         drawerGroupMap.put(MAIN_NAME, sAppStuff);
         drawerGroupMap.put(GENERAL_NAME, sGeneral);
@@ -68,9 +70,21 @@ public class DrawerUtils
      */
     public static void addNewWalletItem(String title, int drawableIndex, String id)
     {
-        int icon = Images.getSmallImageByPosition(drawableIndex,  Images.getWalletUnsorted());
-        sWallets.add(new DrawerChildItem(title, icon, id));
+        int icon = Images.getImageByPosition(drawableIndex,  Images.getWalletUnsorted());
+        int iconSmall = Images.getSmallImageByPosition(drawableIndex,  Images.getWalletUnsorted());
+        sWallets.add(new DrawerChildItem(title, icon, iconSmall, id));
     }
+
+    /**
+     */
+    public static void updateWalletItem(String title, int drawableIndex, String id)
+    {
+        DrawerChildItem item = getWalletById(id);
+        item.setItemTitle(title);
+        item.setResourceIdLarge(Images.getImageByPosition(drawableIndex,  Images.getWalletUnsorted()));
+        item.setResourceIdSmall(Images.getSmallImageByPosition(drawableIndex,  Images.getWalletUnsorted()));
+    }
+
 
     /**
      */
@@ -94,22 +108,43 @@ public class DrawerUtils
     {
         String walletTitle = "";
 
-        for(int i = 0; i < sWallets.size(); i++)
+        for (DrawerChildItem sWallet : sWallets)
         {
-            if(sWallets.get(i).getId().equals(id))
-                walletTitle = sWallets.get(i).getItemTitle();
+            if (sWallet.getId().equals(id))
+                walletTitle = sWallet.getItemTitle();
         }
 
         return walletTitle;
     }
 
     /**
-     *
+     */
+    public static DrawerChildItem getWalletById(String id)
+    {
+        DrawerChildItem wallet = null;
+
+        for (DrawerChildItem curWallet : sWallets)
+        {
+            if (curWallet.getId().equals(id))
+                wallet = curWallet;
+        }
+
+        return wallet;
+    }
+
+    /**
      */
     public static void resetWallets()
     {
         sWallets.clear();
-        sWallets.add(new DrawerChildItem(WALLET_CREATE, R.drawable.add_wallet, "new"));
-        sWallets.add(new DrawerChildItem(DEFAULT_WALLET_NAME, R.drawable.wallet_small, TransactionHandler.DEFAULT_WALLET_ID));
+        sWallets.add(new DrawerChildItem(WALLET_CREATE, R.drawable.add_wallet, R.drawable.add_wallet, ADD_WALLET_ID));
+        sWallets.add(new DrawerChildItem(DEFAULT_WALLET_NAME, R.drawable.wallet,  R.drawable.wallet_small, TransactionHandler.DEFAULT_WALLET_ID));
+    }
+
+    /**
+     */
+    public static int getWalletsGroupIndex()
+    {
+        return drawerGroupItems.size()-1;
     }
 }

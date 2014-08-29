@@ -12,7 +12,9 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -25,8 +27,10 @@ import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
 import com.moneyifyapp.activities.favorites.FaviorteActivity;
 import com.moneyifyapp.activities.login.AccountActivity;
 import com.moneyifyapp.activities.login.LoginActivity;
+import com.moneyifyapp.activities.login.dialogs.DeleteDialog;
 import com.moneyifyapp.activities.preferences.PrefActivity;
 import com.moneyifyapp.activities.wallet.WalletActivity;
+import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.model.TransactionHandler;
 import com.moneyifyapp.model.YearTransactions;
@@ -42,7 +46,9 @@ import java.util.Calendar;
  */
 public class ExpensesActivity extends Activity
         implements ExpenseListFragment.OnFragmentInteractionListener,
-        ViewPager.OnPageChangeListener, TransactionHandler.onFetchingCompleteListener
+        ViewPager.OnPageChangeListener,
+        TransactionHandler.onFetchingCompleteListener,
+        DeleteDialog.OnDeleteClicked
 {
     private ViewPager mViewPager;
     private Calendar mCalender;
@@ -70,6 +76,7 @@ public class ExpensesActivity extends Activity
     private ActionBarDrawerToggle mDrawerToggle;
     private YearTransactions mYearTransactions;
     private Activity mActivity;
+    private String mWalletToDeleteId;
 
     /**
      * Called once every life cycle.
@@ -104,7 +111,7 @@ public class ExpensesActivity extends Activity
         TransactionHandler.getInstance(this).setCurrentWalletId(id);
         mYearTransactions = TransactionHandler.getInstance(this).getYearTransactions(String.valueOf(mCalender.get(Calendar.YEAR)));
         updateAllFragmentsOnWalletChange();
-        Utils.setCurrentWalletId(this,id);
+        Utils.setCurrentWalletId(this, id);
 
         String walletId = TransactionHandler.getInstance(this).getCurrentWalletId();
         Utils.initializeActionBar(this, DrawerUtils.getWalletTitleById(walletId));
@@ -157,6 +164,30 @@ public class ExpensesActivity extends Activity
         for(int i = 0; i < groupCount; i++)
         {
             if(i != groupCount-1)
+                mDrawerGroupList.expandGroup(i);
+        }
+
+        expandDesiredGroups();
+        registerWalletsToContextMenu();
+    }
+
+    /**
+     */
+    private void registerWalletsToContextMenu()
+    {
+        registerForContextMenu(mDrawerGroupList);
+    }
+
+    /**
+     */
+    private void expandDesiredGroups()
+    {
+        // Expand all but the wallets
+        int groupCount = mDrawerGroupList.getExpandableListAdapter().getGroupCount();
+
+        for(int i = 0; i < groupCount; i++)
+        {
+            if (i != groupCount - 1)
                 mDrawerGroupList.expandGroup(i);
         }
     }
@@ -217,6 +248,79 @@ public class ExpensesActivity extends Activity
     /**
      */
     @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo)
+    {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        ExpandableListView.ExpandableListContextMenuInfo info = (ExpandableListView.ExpandableListContextMenuInfo) menuInfo;
+        int groupPosition = ExpandableListView.getPackedPositionGroup(info.packedPosition);
+        int childPosition = ExpandableListView.getPackedPositionChild(info.packedPosition);
+
+        // Only for newly created wallets
+        if(groupPosition == DrawerUtils.getWalletsGroupIndex())
+        {
+            if(childPosition > 1)
+            {
+                MenuInflater inflater = getMenuInflater();
+                inflater.inflate(R.menu.wallet_context_menu, menu);
+            }
+        }
+    }
+
+    /**
+     */
+    @Override
+    public boolean onContextItemSelected(MenuItem item)
+    {
+        ExpandableListView.ExpandableListContextMenuInfo info = (ExpandableListView.ExpandableListContextMenuInfo) item.getMenuInfo();
+
+        int childPosition = ExpandableListView.getPackedPositionChild(info.packedPosition);
+
+        switch (item.getItemId())
+        {
+            case R.id.wallet_context_edit:
+                editWallet(childPosition);
+                return true;
+            case R.id.wallet_context_delete:
+                deleteWallet(childPosition);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    /**
+     */
+    private void editWallet(int walletPosition)
+    {
+        Intent intent = new Intent(this, WalletActivity.class);
+
+        DrawerChildItem item = DrawerUtils.sWallets.get(walletPosition);
+
+        intent.putExtra(WalletActivity.WALLET_NAME_KEY, item.getItemTitle());
+        intent.putExtra(WalletActivity.WALLET_NOTE_KEY, "");
+        intent.putExtra(WalletActivity.WALLET_SHARED_KEY, false);
+        intent.putExtra(WalletActivity.WALLET_EDIT_KEY, true);
+        intent.putExtra(WalletActivity.WALLET_ICON_KEY, item.getResourceId());
+        intent.putExtra(WalletActivity.WALLET_ID_KEY, item.getId());
+        startActivityForResult(intent, WalletActivity.WALLET_EDIT);
+    }
+
+    /**
+     */
+    private void deleteWallet(int walletPosition)
+    {
+        mWalletToDeleteId = DrawerUtils.sWallets.get(walletPosition).getId();
+        DeleteDialog deleteDialog = new DeleteDialog(this, this,
+                "Are you sure you want to delete this wallet ?",
+                "This will delete all wallet related data.");
+        deleteDialog.show();
+    }
+
+    /**
+     */
+    @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels){}
 
     /**
@@ -232,10 +336,19 @@ public class ExpensesActivity extends Activity
     @Override
     public void onPageScrollStateChanged(int state){}
 
+    @Override
+    public void deleteClicked()
+    {
+        DrawerUtils.removeWallet(mWalletToDeleteId);
+        TransactionHandler.getInstance(this).removeWallet(mWalletToDeleteId);
+        collapseWallets();
+    }
+
 
     /**
      */
-    private class DrawerItemClickListener implements ExpandableListView.OnChildClickListener
+    private class DrawerItemClickListener
+            implements ExpandableListView.OnChildClickListener
     {
         @Override
         public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
@@ -274,6 +387,8 @@ public class ExpensesActivity extends Activity
 
             return true;
         }
+
+
     }
 
     /**
@@ -380,20 +495,46 @@ public class ExpensesActivity extends Activity
     {
         if(requestCode == ACCOUNT_HANDLE && resultCode == AccountActivity.ACCOUNT_DELETED)
             handleAccountDelete();
-        else if(requestCode == WALLET_HANDLE && resultCode == WalletActivity.WALLET_OK)
+        else if((requestCode == WALLET_HANDLE || requestCode == WalletActivity.WALLET_EDIT)
+                && resultCode == WalletActivity.WALLET_OK)
         {
             // Save to Parse
             String title = data.getExtras().getString(TransactionHandler.WALLET_TITLE);
             int icon = data.getExtras().getInt(TransactionHandler.WALLET_ICON_INDEX);
             String notes = data.getExtras().getString(TransactionHandler.WALLET_NOTES);
-            String id = DrawerUtils.generateId(title);
 
-            TransactionHandler.getInstance(this).addWallet(id, title, icon, notes);
-            DrawerUtils.addNewWalletItem(title, icon, id);
+            if(requestCode == WALLET_HANDLE)
+                startNewWallet(title, icon, notes);
+            else
+                editWallet(title, icon, notes, data);
         }
         super.onActivityResult(requestCode, resultCode, data);
         int position = mViewPager.getCurrentItem();
         updateFragmentOnCurrencyPrefChange(position);
+    }
+
+    /**
+     */
+    private void startNewWallet(String title, int icon, String notes)
+    {
+        String id = DrawerUtils.generateId(title);
+        TransactionHandler.getInstance(this).addWallet(id, title, icon, notes);
+        DrawerUtils.addNewWalletItem(title, icon, id);
+    }
+
+    /**
+     */
+    private void editWallet(String title, int icon, String notes, Intent data)
+    {
+        String id = data.getExtras().getString(WalletActivity.WALLET_ID_KEY);
+        if(icon == WalletActivity.WALLET_ICON_EMPTY)
+        {
+            icon = Images.getImageIndexByResource(Images.getWalletUnsorted(),
+                    DrawerUtils.getWalletById(id).getResourceId());
+        }
+        TransactionHandler.getInstance(this).updateWallet(id, title, icon, notes);
+        DrawerUtils.updateWalletItem(title, icon, id);
+        collapseWallets();
     }
 
     /**
