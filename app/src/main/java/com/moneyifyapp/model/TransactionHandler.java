@@ -103,6 +103,7 @@ public class TransactionHandler
 
     public void fetchWalletsForCurrentUser(final int year)
     {
+        DrawerUtils.resetWallets();
         ParseQuery<ParseObject> list = createParseQueryForWallet();
         list.findInBackground(new FindCallback<ParseObject>()
         {
