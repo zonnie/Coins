@@ -38,6 +38,7 @@ import com.moneyifyapp.model.drawer.DrawerChildItem;
 import com.moneyifyapp.model.drawer.DrawerUtils;
 import com.moneyifyapp.model.enums.Months;
 import com.moneyifyapp.utils.Utils;
+import com.moneyifyapp.views.PrettyToast;
 import com.parse.ParseUser;
 
 import java.util.Calendar;
@@ -312,10 +313,16 @@ public class ExpensesActivity extends Activity
     private void deleteWallet(int walletPosition)
     {
         mWalletToDeleteId = DrawerUtils.sWallets.get(walletPosition).getId();
-        DeleteDialog deleteDialog = new DeleteDialog(this, this,
-                "Are you sure you want to delete this wallet ?",
-                "This will delete all wallet related data.");
-        deleteDialog.show();
+
+        if(!Utils.getCurrentWalletId(this).equals(mWalletToDeleteId))
+        {
+            DeleteDialog deleteDialog = new DeleteDialog(this, this,
+                    "Are you sure you want to delete this wallet ?",
+                    "This will delete all wallet related data.");
+            deleteDialog.show();
+        }
+        else
+            Utils.showPrettyToast(this, "You cannot delete the currently used wallet", PrettyToast.VERY_LONG);
     }
 
     /**
@@ -575,6 +582,7 @@ public class ExpensesActivity extends Activity
     protected void onResume()
     {
         super.onResume();
+        Utils.initializeActionBar(this, DrawerUtils.getWalletTitleById(TransactionHandler.getInstance(this).getCurrentWalletId()));
     }
 
     /**
