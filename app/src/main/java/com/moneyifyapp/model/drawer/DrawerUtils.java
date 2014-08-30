@@ -143,6 +143,19 @@ public class DrawerUtils
 
     /**
      */
+    public static int getDefaultWalletImageIndex()
+    {
+        int walletIconIndex = 0;
+
+        for (int i = 0 ; i < Images.getWalletUnsorted().size(); i++)
+            if (Images.getWalletUnsorted().get(i).getImage() == R.drawable.wallet_small)
+                walletIconIndex = i;
+
+        return walletIconIndex;
+    }
+
+    /**
+     */
     public static int getWalletsGroupIndex()
     {
         return drawerGroupItems.size()-1;

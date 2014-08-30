@@ -525,6 +525,8 @@ public class ExpensesActivity extends Activity
     private void startNewWallet(String title, int icon, String notes)
     {
         String id = DrawerUtils.generateId(title);
+        if(icon == WalletActivity.WALLET_ICON_EMPTY)
+            icon = DrawerUtils.getDefaultWalletImageIndex();
         TransactionHandler.getInstance(this).addWallet(id, title, icon, notes);
         DrawerUtils.addNewWalletItem(title, icon, id);
     }
@@ -535,10 +537,8 @@ public class ExpensesActivity extends Activity
     {
         String id = data.getExtras().getString(WalletActivity.WALLET_ID_KEY);
         if(icon == WalletActivity.WALLET_ICON_EMPTY)
-        {
             icon = Images.getImageIndexByResource(Images.getWalletUnsorted(),
                     DrawerUtils.getWalletById(id).getResourceId());
-        }
         TransactionHandler.getInstance(this).updateWallet(id, title, icon, notes);
         DrawerUtils.updateWalletItem(title, icon, id);
         collapseWallets();
