@@ -48,21 +48,21 @@ public class DrawerUtils
     {
         sWallets = new ArrayList<DrawerChildItem>();
         sWallets.add(new DrawerChildItem(WALLET_CREATE, R.drawable.add_wallet,
-                R.drawable.add_wallet, ADD_WALLET_ID, "Add a new Wallet"));
+                R.drawable.add_wallet, ADD_WALLET_ID, "New wallets start here"));
         sWallets.add(new DrawerChildItem(DEFAULT_WALLET_NAME, R.drawable.wallet,
-                R.drawable.wallet_small, TransactionHandler.DEFAULT_WALLET_ID, "Default Wallet"));
+                R.drawable.wallet_small, TransactionHandler.DEFAULT_WALLET_ID, "Private wallet"));
 
         sGeneral = new ArrayList<DrawerChildItem>();
         sGeneral.add(new DrawerChildItem(GROUP_ACCOUNT_TITLE, R.drawable.account,
                 R.drawable.account, DrawerUtils.generateId(GROUP_ACCOUNT_TITLE) , "Manage your account"));
         sGeneral.add(new DrawerChildItem(GROUP_SETTINGS_TITLE, R.drawable.controls,
-                R.drawable.controls,DrawerUtils.generateId(GROUP_SETTINGS_TITLE), "App Settings"));
+                R.drawable.controls,DrawerUtils.generateId(GROUP_SETTINGS_TITLE), "\"Coins\" Settings"));
 
         sAppStuff = new ArrayList<DrawerChildItem>();
         sAppStuff.add(new DrawerChildItem(GROUP_FAVORITES_TITLE, R.drawable.fav_drawer,
-                R.drawable.fav_drawer, DrawerUtils.generateId(GROUP_FAVORITES_TITLE), "Manage your Favorites"));
+                R.drawable.fav_drawer, DrawerUtils.generateId(GROUP_FAVORITES_TITLE), "Manage your favorites"));
         sAppStuff.add(new DrawerChildItem(GROUP_ANALYTICS_TITLE, R.drawable.dashboard,
-                R.drawable.dashboard_small, DrawerUtils.generateId(GROUP_ANALYTICS_TITLE), "Insights on your wallet"));
+                R.drawable.dashboard_small, DrawerUtils.generateId(GROUP_ANALYTICS_TITLE), "Insights on your expenses"));
 
         // Add to map
         drawerGroupMap = new HashMap<String, List<DrawerChildItem>>();
