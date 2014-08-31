@@ -226,8 +226,9 @@ public class LoginActivity extends LoadingActivity
                         if (user != null)
                         {
                             boolean isVerified = user.getBoolean(EMAIL_VERIFY_KEY);
-                            //TODO we need to check isVerified when in production
-                            if(true)
+
+                            // Check email was verified
+                            if(isVerified)
                             {
                                 // Reset the current wallet to default wallet
                                 TransactionHandler handler = TransactionHandler.getInstance(LoginActivity.this);
@@ -235,7 +236,7 @@ public class LoginActivity extends LoadingActivity
                                 handler.fetchTransactionsForAllWalletsByYear(Calendar.getInstance().get(Calendar.YEAR));
                                 initFromLocalDb();
                             }
-                            else if(isVerified)
+                            else
                             {
                                 Utils.showPrettyToast(LoginActivity.this, "Please check your inbox in \"" +
                                         mEmailView.getText() + "\"\nand validate your email", PrettyToast.VERY_LONG);
