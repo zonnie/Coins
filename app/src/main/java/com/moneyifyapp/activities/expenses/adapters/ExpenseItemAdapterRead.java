@@ -78,6 +78,7 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
     private View getRegularView(final int position)
     {
         Transaction currentTransactionView = mTransactions.getItems().get(position);
+        currentTransactionView.mCurrency = Utils.getDefaultCurrency(getContext());
 
         // Populate the current view according to collection item.
         if (currentTransactionView != null)

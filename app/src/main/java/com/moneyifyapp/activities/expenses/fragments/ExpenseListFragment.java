@@ -590,7 +590,8 @@ public class ExpenseListFragment extends ListFragment
             String desc = data.getExtras().getString(Transaction.KEY_DESCRIPTION);
             String sum = data.getExtras().getString(Transaction.KEY_VALUE);
             int image = data.getExtras().getInt(Transaction.KEY_IMAGE_NAME);
-            String currency = data.getExtras().getString(Transaction.KEY_CURRENCY);
+            //String currency = data.getExtras().getString(Transaction.KEY_CURRENCY);
+            String currency = Utils.getDefaultCurrency(getActivity());
             String note = data.getExtras().getString(Transaction.KEY_NOTES);
             Boolean isExpense = data.getExtras().getBoolean(Transaction.KEY_TYPE);
             Boolean isSaved = data.getExtras().getBoolean(TEMPLATE_KEY);
