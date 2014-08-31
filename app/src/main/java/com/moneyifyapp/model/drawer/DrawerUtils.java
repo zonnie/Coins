@@ -28,7 +28,9 @@ public class DrawerUtils
     public static final String WALLETS_NAME = "Wallets";
 
     public static final String WALLET_CREATE = "Create a Wallet";
+    public static final String WALLET_CREATE_CAPTION = "New wallets start here";
     public static final String DEFAULT_WALLET_NAME = "My Wallet";
+    public static final String DEFAULT_WALLET_CAPTION = "Private wallet";
 
     public static final String GROUP_ACCOUNT_TITLE = "Account";
     public static final String GROUP_SETTINGS_TITLE = "Settings";
@@ -48,9 +50,9 @@ public class DrawerUtils
     {
         sWallets = new ArrayList<DrawerChildItem>();
         sWallets.add(new DrawerChildItem(WALLET_CREATE, R.drawable.add_wallet,
-                R.drawable.add_wallet, ADD_WALLET_ID, "New wallets start here"));
+                R.drawable.add_wallet, ADD_WALLET_ID, WALLET_CREATE_CAPTION));
         sWallets.add(new DrawerChildItem(DEFAULT_WALLET_NAME, R.drawable.wallet,
-                R.drawable.wallet_small, TransactionHandler.DEFAULT_WALLET_ID, "Private wallet"));
+                R.drawable.wallet_small, TransactionHandler.DEFAULT_WALLET_ID, DEFAULT_WALLET_CAPTION));
 
         sGeneral = new ArrayList<DrawerChildItem>();
         sGeneral.add(new DrawerChildItem(GROUP_ACCOUNT_TITLE, R.drawable.account,
@@ -62,7 +64,7 @@ public class DrawerUtils
         sAppStuff.add(new DrawerChildItem(GROUP_FAVORITES_TITLE, R.drawable.fav_drawer,
                 R.drawable.fav_drawer, DrawerUtils.generateId(GROUP_FAVORITES_TITLE), "Manage your favorites"));
         sAppStuff.add(new DrawerChildItem(GROUP_ANALYTICS_TITLE, R.drawable.dashboard,
-                R.drawable.dashboard_small, DrawerUtils.generateId(GROUP_ANALYTICS_TITLE), "Insights on your expenses"));
+                R.drawable.dashboard_small, DrawerUtils.generateId(GROUP_ANALYTICS_TITLE), "Graphs and stuff"));
 
         // Add to map
         drawerGroupMap = new HashMap<String, List<DrawerChildItem>>();
@@ -151,9 +153,9 @@ public class DrawerUtils
     {
         sWallets.clear();
         sWallets.add(new DrawerChildItem(WALLET_CREATE, R.drawable.add_wallet,
-                R.drawable.add_wallet, ADD_WALLET_ID,  "Add a new Wallet"));
+                R.drawable.add_wallet, ADD_WALLET_ID, WALLET_CREATE_CAPTION));
         sWallets.add(new DrawerChildItem(DEFAULT_WALLET_NAME, R.drawable.wallet,
-                R.drawable.wallet_small, TransactionHandler.DEFAULT_WALLET_ID, "Default Wallet"));
+                R.drawable.wallet_small, TransactionHandler.DEFAULT_WALLET_ID, DEFAULT_WALLET_CAPTION));
     }
 
     /**
