@@ -72,6 +72,7 @@
                 android:paddingLeft="@dimen/big_padding"
                 android:paddingRight="@dimen/big_padding"
                 android:paddingTop="@dimen/drawable_left_pad"
+                android:paddingBottom="@dimen/drawable_left_pad"
                 >
 
                 <LinearLayout
@@ -223,6 +224,7 @@
                         android:textOff="@string/checkbox_wallet_share"
                         android:textOn="@string/checkbox_wallet_shared"
                         android:textSize="@dimen/medium_font"
+                        android:visibility="gone"
                         />
 
                 </LinearLayout>

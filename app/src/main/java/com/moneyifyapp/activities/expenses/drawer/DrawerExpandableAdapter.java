@@ -1,11 +1,11 @@
 package com.moneyifyapp.activities.expenses.drawer;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
@@ -90,10 +90,10 @@ public class DrawerExpandableAdapter extends BaseExpandableListAdapter
 
     /**
      */
-    private void updateImage(TextView textView, int resourceIndex)
+    private void updateImage(View view, int resourceIndex)
     {
-        Drawable img = mContext.getResources().getDrawable(resourceIndex);
-        textView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+        ImageView image = (ImageView) view.findViewById(R.id.drawer_child_item_image);
+        image.setImageResource(resourceIndex);
     }
 
     /**
@@ -128,25 +128,14 @@ public class DrawerExpandableAdapter extends BaseExpandableListAdapter
         if (convertView == null)
         {
             LayoutInflater infalInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            convertView = infalInflater.inflate(R.layout.drawer_list_child_item, null);
-            /*
-            if(groupPosition == getGroupCount()-1 && childPosition > 1)
-            {
-                convertView = infalInflater.inflate(R.layout.drawer_list_wallet_item, null);
-                bindRemoveWalletButton(convertView);
-                mIsWalletAdapter = true;
-            }
-            else
-            {
-                convertView = infalInflater.inflate(R.layout.drawer_list_child_item, null);
-                mIsWalletAdapter = false;
-            }*/
+            convertView = infalInflater.inflate(R.layout.drawer_list_child_item_note, null);
         }
 
         TextView childText = (TextView) convertView.findViewById(R.id.drawer_child_item_text);
+        TextView childNote = (TextView) convertView.findViewById(R.id.drawer_child_item_note);
         childText.setText(child.getItemTitle());
-        updateImage(childText, child.getResourceSmallId());
+        childNote.setText(child.getNote());
+        updateImage(convertView, child.getResourceSmallId());
 
         return convertView;
     }

@@ -300,7 +300,7 @@ public class ExpensesActivity extends Activity
         DrawerChildItem item = DrawerUtils.sWallets.get(walletPosition);
 
         intent.putExtra(WalletActivity.WALLET_NAME_KEY, item.getItemTitle());
-        intent.putExtra(WalletActivity.WALLET_NOTE_KEY, "");
+        intent.putExtra(WalletActivity.WALLET_NOTE_KEY, item.getNote());
         intent.putExtra(WalletActivity.WALLET_SHARED_KEY, false);
         intent.putExtra(WalletActivity.WALLET_EDIT_KEY, true);
         intent.putExtra(WalletActivity.WALLET_ICON_KEY, item.getResourceId());
@@ -528,7 +528,7 @@ public class ExpensesActivity extends Activity
         if(icon == WalletActivity.WALLET_ICON_EMPTY)
             icon = DrawerUtils.getDefaultWalletImageIndex();
         TransactionHandler.getInstance(this).addWallet(id, title, icon, notes);
-        DrawerUtils.addNewWalletItem(title, icon, id);
+        DrawerUtils.addNewWalletItem(title, icon, id, notes);
     }
 
     /**
@@ -540,7 +540,7 @@ public class ExpensesActivity extends Activity
             icon = Images.getImageIndexByResource(Images.getWalletUnsorted(),
                     DrawerUtils.getWalletById(id).getResourceId());
         TransactionHandler.getInstance(this).updateWallet(id, title, icon, notes);
-        DrawerUtils.updateWalletItem(title, icon, id);
+        DrawerUtils.updateWalletItem(title, icon, id, notes);
         collapseWallets();
     }
 

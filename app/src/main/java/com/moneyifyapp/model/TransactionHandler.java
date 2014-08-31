@@ -116,7 +116,7 @@ public class TransactionHandler
                     String title = wallet.getString(WALLET_TITLE);
                     int iconIndex = wallet.getInt(WALLET_ICON_INDEX);
                     String notes = wallet.getString(WALLET_NOTES);
-                    DrawerUtils.addNewWalletItem(title, iconIndex, id);
+                    DrawerUtils.addNewWalletItem(title, iconIndex, id, notes);
                     addWalletToAllTransactions(id);
                 }
 
