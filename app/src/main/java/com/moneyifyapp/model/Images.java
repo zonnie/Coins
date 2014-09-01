@@ -26,11 +26,13 @@ public class Images
         mWalletIcons = new ArrayList<ImageWithCaption>();
         mWalletSortedIcons = new ArrayList<ImageWithCaption>();
 
-        mWalletIcons.add(new ImageWithCaption(R.drawable.wallet, "Private", R.drawable.wallet_small));
-        mWalletIcons.add(new ImageWithCaption(R.drawable.bbq, "Event", R.drawable.bbq_small));
+        mWalletIcons.add(new ImageWithCaption(R.drawable.wallet, "Regular", R.drawable.wallet_small));
+        mWalletIcons.add(new ImageWithCaption(R.drawable.bbq, "Fun Event", R.drawable.bbq_small));
         mWalletIcons.add(new ImageWithCaption(R.drawable.invesments, "Invesments", R.drawable.invesments_small));
         mWalletIcons.add(new ImageWithCaption(R.drawable.biz, "Bisnuess", R.drawable.biz_small));
         mWalletIcons.add(new ImageWithCaption(R.drawable.spouse, "Love", R.drawable.spouse_small));
+        mWalletIcons.add(new ImageWithCaption(R.drawable.vacation, "Vacation", R.drawable.vacation_small));
+        mWalletIcons.add(new ImageWithCaption(R.drawable.saving_wallet, "Savings", R.drawable.saving_wallet_small));
 
         for(int i = 0; i < mWalletIcons.size(); i++)
             mWalletSortedIcons.add(mWalletIcons.get(i));
