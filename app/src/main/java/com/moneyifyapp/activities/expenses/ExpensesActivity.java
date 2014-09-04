@@ -582,7 +582,20 @@ public class ExpensesActivity extends Activity
     protected void onResume()
     {
         super.onResume();
-        Utils.initializeActionBar(this, DrawerUtils.getWalletTitleById(TransactionHandler.getInstance(this).getCurrentWalletId()));
+        resumeApp();
+    }
+
+    /**
+     *
+     */
+    private void resumeApp()
+    {
+        String year = "" + mCalender.get(Calendar.YEAR);
+        TransactionHandler handler = TransactionHandler.getInstance(this);
+        if(handler.getYearTransactions(year) == null)
+            logOutUser();
+        else
+            Utils.initializeActionBar(this, DrawerUtils.getWalletTitleById(handler.getCurrentWalletId()));
     }
 
     /**

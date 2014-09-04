@@ -8,8 +8,8 @@ android {
         applicationId "com.moneyifyapp"
         minSdkVersion 16
         targetSdkVersion 20
-        versionCode 41
-        versionName "1.1.18"
+        versionCode 42
+        versionName "1.1.19"
     }
     buildTypes {
         release {
