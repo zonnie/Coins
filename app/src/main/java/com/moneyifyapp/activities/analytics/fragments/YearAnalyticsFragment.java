@@ -39,8 +39,8 @@ public class YearAnalyticsFragment extends MonthAnalyticsFragment
     @Override
     protected void initTotalSums()
     {
-        String totalExepense = Utils.formatDoubleToTextCurrency(mYearTransactions.sum(MonthTransactions.SubsetType.EXPENSE));
-        String totalIncome = Utils.formatDoubleToTextCurrency(mYearTransactions.sum(MonthTransactions.SubsetType.INCOME));
+        String totalExepense = Utils.sumAsCurrency(mYearTransactions.sum(MonthTransactions.SubsetType.EXPENSE));
+        String totalIncome = Utils.sumAsCurrency(mYearTransactions.sum(MonthTransactions.SubsetType.INCOME));
         loadTextViewAndSetText(R.id.analytics_monthly_expense_sum, totalExepense);
         loadTextViewAndSetText(R.id.analytics_monthly_income_sum, totalIncome);
     }
@@ -75,7 +75,7 @@ public class YearAnalyticsFragment extends MonthAnalyticsFragment
             String month = Months.getMonthNameByNumber(busiestMonth);
 
             loadTextViewAndSetText(R.id.analytics_monthly_worst_day_date_label, month);
-            loadTextViewAndSetText(R.id.analytics_monthly_worst_day_sum, Utils.formatDoubleToTextCurrency(maxMonth));
+            loadTextViewAndSetText(R.id.analytics_monthly_worst_day_sum, Utils.sumAsCurrency(maxMonth));
         }
 
     }
@@ -107,7 +107,7 @@ public class YearAnalyticsFragment extends MonthAnalyticsFragment
         } else
             profitLabel.setText(BROKE_EVEN);
 
-        String profitStr = Utils.formatDoubleToTextCurrency(totalProfit);
+        String profitStr = Utils.sumAsCurrency(totalProfit);
         profitTextView.setText(profitStr);
         profitTextView.setTextColor(color);
         profitCurrency.setTextColor(color);

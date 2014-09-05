@@ -19,6 +19,8 @@ import com.parse.Parse;
 
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -300,9 +302,14 @@ public class Utils
      */
     public static String sumAsCurrency(double value)
     {
-        if (value < 1000) return String.valueOf(value);
-        int exp = (int) (Math.log(value) / Math.log(1000));
-        return String.format("%.1f%c", value / Math.pow(1000, exp), "kMGTPE".charAt(exp - 1));
+        return NumberFormat.getNumberInstance(Locale.US).format(value);
+    }
+
+    /**
+     */
+    public static int readSumWithCommas(String string)
+    {
+        return Integer.valueOf(string.replaceAll(",",""));
     }
 
     /**

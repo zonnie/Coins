@@ -759,8 +759,8 @@ public class ExpenseListFragment extends ListFragment
     private void updateTotalsOnAddedTransaction(Transaction newTransaction, boolean isRemoval)
     {
         boolean isExpense = newTransaction.mIsExpense;
-        int initIncome = Integer.valueOf(mTotalIncome.getText().toString());
-        int initExpense = Integer.valueOf(mTotalExpense.getText().toString());
+        int initIncome = Utils.readSumWithCommas(mTotalIncome.getText().toString());
+        int initExpense = Utils.readSumWithCommas(mTotalExpense.getText().toString());
         int curTransValue = Integer.valueOf(newTransaction.mValue);
 
         // Collect info
@@ -783,9 +783,9 @@ public class ExpenseListFragment extends ListFragment
         mTotalSavings.setTextColor(color);
         mTotalSavingsSign.setTextColor(color);
 
-        String incomeStr = "" + initIncome;
-        String expenseStr = "" + initExpense;
-        String savingStr = "" + initTotal;
+        String incomeStr =  Utils.sumAsCurrency(initIncome);
+        String expenseStr = Utils.sumAsCurrency(initExpense);
+        String savingStr = Utils.sumAsCurrency(initTotal);
         mTotalSavings.setText(savingStr);
         mTotalIncome.setText(incomeStr);
         mTotalExpense.setText(expenseStr);

@@ -86,9 +86,11 @@ public class DateTileAdapter extends BaseAdapter
         if(mDaySumList.get(position) != null && mDaySumList.get(position) > 0)
         {
             int curDaySum = mDaySumList.get(position);
+            String valueStr = Utils.sumAsCurrency(curDaySum);
+
             String curDay = mDayList.get(position);
             mDayTextView.setText(curDay + Utils.generateDayInMonthSuffix(curDay));
-            mCategorySum.setText("" + curDaySum);
+            mCategorySum.setText(valueStr);
         }
 
         return mView;

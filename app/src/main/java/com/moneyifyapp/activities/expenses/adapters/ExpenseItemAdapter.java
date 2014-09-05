@@ -193,7 +193,11 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
     private void handleViewValue(Transaction currentTransactionView)
     {
         if (mViewHolder.mExpenseValue != null)
-            mViewHolder.mExpenseValue.setText(currentTransactionView.mValue);
+        {
+            int value = Integer.valueOf(currentTransactionView.mValue);
+            String valueStr = Utils.sumAsCurrency(value);
+            mViewHolder.mExpenseValue.setText(valueStr);
+        }
     }
 
     /**
