@@ -240,6 +240,7 @@ public class LoginActivity extends LoadingActivity
                             {
                                 Utils.showPrettyToast(LoginActivity.this, "Please check your inbox in \"" +
                                         mEmailView.getText() + "\"\nand validate your email", PrettyToast.VERY_LONG);
+                                ParseUser.logOut();
                                 showProgress(false);
                             }
                         }
@@ -284,6 +285,13 @@ public class LoginActivity extends LoadingActivity
             startTutorial();
         else
             goToMainActivity();
+        finish();
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
         finish();
     }
 
