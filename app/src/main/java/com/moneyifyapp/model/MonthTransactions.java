@@ -161,7 +161,7 @@ public class MonthTransactions implements Sumable
      * Sort the transactions according to the transcation value.
      * This sorts in a decending order.
      */
-    public void sort()
+    public void sortTransactionsDecent()
     {
         Collections.sort(this.mTransactions);
         Collections.reverse(this.mTransactions);
@@ -173,7 +173,7 @@ public class MonthTransactions implements Sumable
     public MonthTransactions getTransactionSubsetSorted(SubsetType type)
     {
         MonthTransactions result = getTransactionSubset(type);
-        result.sort();
+        result.sortTransactionsDecent();
 
         return result;
     }

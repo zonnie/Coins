@@ -116,8 +116,6 @@ public class ExpenseListFragment extends ListFragment
         }
 
         mIsFirst = Utils.isFirstRunDetails(getActivity());
-        Utils.setFirstRunDetails(getActivity(), false);
-
 
         if (mRemoveAnimation == null)
             mRemoveAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
@@ -133,7 +131,7 @@ public class ExpenseListFragment extends ListFragment
      */
     private void reFeatchDataIfWeResumed()
     {
-        if (TransactionHandler.getInstance(getActivity()).isFirstFeatch())
+        if (TransactionHandler.getInstance(getActivity()).isFirstFetch())
             TransactionHandler.getInstance(getActivity()).registerListenerAndFetchAll(this, mYear);
     }
 
@@ -228,6 +226,7 @@ public class ExpenseListFragment extends ListFragment
     {
         if(mIsFirst)
         {
+            Utils.setFirstRunDetails(getActivity(), false);
             Intent intent = new Intent(getActivity(), WelcomeActivity.class);
             intent.putExtra(WelcomeActivity.TUTORIAL_TYPE_KEY, TutorialData.TutorialType.EXPENSE.toString());
             startActivityForResult(intent, ExpensesActivity.REQ_NEW_ITEM);

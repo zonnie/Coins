@@ -127,7 +127,7 @@ public class TransactionHandler
 
     /**
      */
-    public boolean isFirstFeatch()
+    public boolean isFirstFetch()
     {
         return mIsFirstFatch;
     }
