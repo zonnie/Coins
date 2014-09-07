@@ -81,7 +81,7 @@
 
                         <ImageButton
                             android:id="@+id/addExpenseImage"
-                            android:layout_width="100dp"
+                            android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:layout_marginBottom="@dimen/padding_start_currency"
                             android:layout_marginTop="@dimen/padding_start_currency"

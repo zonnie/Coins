@@ -35,9 +35,10 @@
             android:layout_weight="0.5"
             android:paddingLeft="@dimen/big_padding"
             android:paddingRight="@dimen/big_padding"
-            android:gravity="center"
+            android:gravity="center|bottom"
             android:text="@string/welcome_sample_text"
             android:textColor="@android:color/white"
+            android:textSize="@dimen/tiny_font"
             />
 
         <TextView
@@ -47,8 +48,9 @@
             android:layout_weight="0.5"
             android:paddingLeft="@dimen/big_padding"
             android:paddingRight="@dimen/big_padding"
-            android:gravity="center"
+            android:gravity="center|top"
             android:text="Just tap the 'Favorite' to save this transaction for future use"
+            android:textSize="@dimen/tiny_font"
             android:textColor="@android:color/white"
             />
 
