@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="4"
+    >
+
+    <TextView
+        android:id="@+id/graph_empty_hint_textview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_below="@id/month_title_layout"
+        android:layout_marginTop="@dimen/padding_start_currency"
+        android:gravity="center|bottom"
+        android:paddingLeft="@dimen/drawable_left_pad"
+        android:paddingRight="@dimen/drawable_left_pad"
+        android:text="@string/analytics_str_top_graph_hint"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/medium_font"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="false"
+        android:layout_margin="@dimen/drawable_left_pad"
+        android:src="@drawable/empty_2"
+        />
+
+</LinearLayout>

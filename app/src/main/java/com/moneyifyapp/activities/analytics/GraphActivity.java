@@ -5,14 +5,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.analytics.dialogs.PickDateDialog;
 import com.moneyifyapp.activities.analytics.fragments.BarGraphFragment;
+import com.moneyifyapp.activities.analytics.fragments.EmptyFragment;
 import com.moneyifyapp.activities.analytics.fragments.YearAnalyticsFragment;
 import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.MonthTransactions;
@@ -28,7 +32,9 @@ import java.util.List;
 /**
  *
  */
-public class GraphActivity extends Activity implements PickDateDialog.DialogClicked
+public class GraphActivity extends Activity
+        implements PickDateDialog.DialogClicked,
+        AdapterView.OnItemSelectedListener
 {
     private YearTransactions mYearTransactions;
     private final String X_AXIS_TITLE = "Month";
@@ -38,16 +44,17 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
     private int MAX_CATEGORY_NUM = 5;
     private String YEARLY_GRAPH_TITLE = "Month-to-Month";
     private String CATEGORY_GRAPH_TITLE = "Top Categories";
-    private FrameLayout mCategoryLayout;
-    private FrameLayout mYearlyLayout;
-    private FrameLayout mMonthlyReport;
+    private FrameLayout mYearlyViewContainer;
     private ImageButton mPickDateButton;
     private TextView mCurrentMonth;
+    private TextView mEmptyHintTextView;
+    private Spinner mPickViewSpinner;
     private TextView mCurrentYear;
     private LinearLayout mTitleLayout;
     private Animation mFadeInAnimation;
     private int YEAR_FONT_SIZE = 8;
     private int CAT_FONT_SIZE = 15;
+    private int mCurrentSelectedViewPosition = 0;
 
     /**
      *
@@ -68,17 +75,16 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         TransactionHandler mTransactionHandler = TransactionHandler.getInstance(this);
         mYearTransactions = mTransactionHandler.getYearTransactions(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 
-        mTitleLayout = (LinearLayout)findViewById(R.id.month_title_layout);
-        mTitleLayout.startAnimation(mFadeInAnimation);
-        mCategoryLayout = (FrameLayout)findViewById(R.id.graphs_category_graph_container);
-        mYearlyLayout = (FrameLayout)findViewById(R.id.graphs_year_graph_container);
-        mMonthlyReport = (FrameLayout) findViewById(R.id.graphs_month_report_container);
-        mPickDateButton = (ImageButton)findViewById(R.id.graph_pick_month_button);
+        storeViews();
 
-        mCurrentMonth = (TextView)findViewById(R.id.graph_activity_month);
+        mTitleLayout.startAnimation(mFadeInAnimation);
         mCurrentMonth.setText(Months.getMonthNameByNumber(mMonth - 1));
-        mCurrentYear = (TextView)findViewById(R.id.graph_activity_day);
         mCurrentYear.setText("" + mYearTransactions.mYear);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.analytics_views, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mPickViewSpinner.setAdapter(adapter);
 
         if (savedInstanceState == null)
         {
@@ -88,7 +94,6 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
                 public void run()
                 {
                     buildFragments();
-                    buildYearlyOverviewAndReplaceFragment();
                 }
             }, 200);
         }
@@ -96,19 +101,27 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
 
     /**
      */
-    private void buildFragments()
+    private void storeViews()
     {
-        TextView hint = (TextView)findViewById(R.id.graph_empty_hint_textview);
-
-        buildCategoryGraphAndReplaceFragment();
-        buildYearGraphAndReplaceFragment();
-
-        if(mNoYearExpense && mNoMonthExpense)
-            hint.setVisibility(View.VISIBLE);
-        else
-            hint.setVisibility(View.GONE);
+        mTitleLayout = (LinearLayout)findViewById(R.id.month_title_layout);
+        mYearlyViewContainer = (FrameLayout) findViewById(R.id.yearly_view_container);
+        mPickDateButton = (ImageButton)findViewById(R.id.graph_pick_month_button);
+        mCurrentMonth = (TextView)findViewById(R.id.graph_activity_month);
+        mCurrentYear = (TextView)findViewById(R.id.graph_activity_day);
+        mPickViewSpinner = (Spinner) findViewById(R.id.graph_pick_view_spinner);
+        mPickViewSpinner.setOnItemSelectedListener(this);
+        mEmptyHintTextView = (TextView)findViewById(R.id.graph_empty_hint_textview);
     }
 
+    /**
+     */
+    private void buildFragments()
+    {
+        buildCorrectViewBySelectedPosition(mCurrentSelectedViewPosition);
+    }
+
+    /**
+     */
     private void buildYearlyOverviewAndReplaceFragment()
     {
         YearAnalyticsFragment monthly = YearAnalyticsFragment.newInstance(mMonth-1, mYearTransactions.mYear, mYearTransactions);
@@ -117,61 +130,55 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
         {
             getFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_in_object, R.anim.slide_out_object)
-                    .replace(R.id.graphs_month_report_container, monthly)
+                    .replace(R.id.yearly_view_container, monthly)
                     .commit();
-            mMonthlyReport.setVisibility(View.VISIBLE);
         }
         else
-            mMonthlyReport.setVisibility(View.GONE);
-    }
-
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
-        finish();
+            buildEmptyAndReplaceFragment();
     }
 
     /**
      */
     private void buildCategoryGraphAndReplaceFragment()
     {
-        int categoryVisibility = mCategoryLayout.getVisibility();
-
         BarGraphFragment.BarGraphParameters categoryParams = buildCategoryGraph();
         if(!mNoMonthExpense)
         {
             categoryParams.mFontSize = CAT_FONT_SIZE;
-            mCategoryLayout.setVisibility((categoryVisibility == View.GONE) ? View.VISIBLE : View.VISIBLE);
-
             getFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_in_object, R.anim.slide_out_object)
-                    .replace(R.id.graphs_category_graph_container, BarGraphFragment.newInstance(categoryParams))
+                    .replace(R.id.yearly_view_container, BarGraphFragment.newInstance(categoryParams))
                     .commit();
         }
         else
-            mCategoryLayout.setVisibility(View.GONE);
+            buildEmptyAndReplaceFragment();
     }
 
     /**
      */
     private void buildYearGraphAndReplaceFragment()
     {
-        int yearlyVisibility = mCategoryLayout.getVisibility();
-
         BarGraphFragment.BarGraphParameters yearParams = buildYearGraph();
         if(!mNoYearExpense)
         {
             yearParams.mFontSize = YEAR_FONT_SIZE;
-            mYearlyLayout.setVisibility((yearlyVisibility == View.GONE) ? View.VISIBLE : View.VISIBLE);
-
             getFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_in_object, R.anim.slide_out_object)
-                    .replace(R.id.graphs_year_graph_container, BarGraphFragment.newInstance(yearParams))
+                    .replace(R.id.yearly_view_container, BarGraphFragment.newInstance(yearParams))
                     .commit();
         }
         else
-            mYearlyLayout.setVisibility(View.GONE);
+            buildEmptyAndReplaceFragment();
+    }
+
+    /**
+     */
+    private void buildEmptyAndReplaceFragment()
+    {
+        getFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_object, R.anim.slide_out_object)
+                .replace(R.id.yearly_view_container, EmptyFragment.newInstance(getResources().getString(R.string.analytics_str_top_graph_hint)))
+                .commit();
     }
 
     /**
@@ -272,7 +279,6 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
                                                                  int resourceId, String xTitle, List<Integer> xIcons,
                                                                  int titleResourceId)
     {
-
         BarGraphFragment.BarGraphParameters expenseParams = new BarGraphFragment.BarGraphParameters(title);
         expenseParams.setValues(createMaxListByType(type));
         expenseParams.setXLabels(x);
@@ -324,5 +330,69 @@ public class GraphActivity extends Activity implements PickDateDialog.DialogClic
     {
         PickDateDialog dialog = new PickDateDialog(this);
         dialog.show();
+    }
+
+    /**
+     */
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id)
+    {
+        mCurrentSelectedViewPosition = pos;
+        buildFragments();
+    }
+
+    /**
+     */
+    @Override
+    public void onNothingSelected(AdapterView<?> parent)
+    {
+
+    }
+
+    /**
+     */
+    private void buildCorrectViewBySelectedPosition(int pos)
+    {
+        switch (pos)
+        {
+            case 0:
+                buildCategoryGraphAndReplaceFragment();
+                break;
+            case 1:
+                buildYearGraphAndReplaceFragment();
+                break;
+            case 2:
+                buildYearlyOverviewAndReplaceFragment();
+                break;
+            default:
+                buildEmptyAndReplaceFragment();
+                break;
+        }
+    }
+
+    /**
+     */
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        finish();
+    }
+
+    /**
+     */
+    private void showHintHideAnalytics(boolean show)
+    {
+        int showHint = (show) ? View.VISIBLE : View.GONE;
+        Animation hintAnimation = (show) ? Utils.createAnimation(this, R.anim.fade_in_long) : Utils.createAnimation(this, R.anim.fade_out);
+        int showAnalytics = (show) ? View.GONE : View.VISIBLE;
+        Animation analyticsAnimation = (show) ? Utils.createAnimation(this, R.anim.fade_out) : Utils.createAnimation(this, R.anim.fade_in_long);
+
+        mYearlyViewContainer.setVisibility(showAnalytics);
+        mYearlyViewContainer.startAnimation(analyticsAnimation);
+        mEmptyHintTextView.setVisibility(showHint);
+        mEmptyHintTextView.startAnimation(hintAnimation);
+
     }
 }

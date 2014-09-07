@@ -15,6 +15,7 @@
         <item name="android:homeAsUpIndicator">@drawable/back_2</item>
         <item name="android:radioButtonStyle">@style/RobotoRadioStyle</item>
         <item name="android:itemBackground">@drawable/button_alternate</item>
+        <item name="android:spinnerItemStyle">@style/spinnerItemStyle</item>
     </style>
 
     <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
@@ -91,5 +92,10 @@
     <style name="PauseDialogAnimation">
         <item name="android:windowEnterAnimation">@anim/appear_in_bounce</item>
         <item name="android:windowExitAnimation">@anim/appear_out_bounce</item>
+    </style>
+
+    <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 </resources>

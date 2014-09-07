@@ -45,10 +45,6 @@ public class PickDateDialog extends Dialog
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         mDialog.setContentView(R.layout.dialog_pick_date);
-        //mLayoutParams = new WindowManager.LayoutParams();
-        //mLayoutParams.copyFrom(mDialog.getWindow().getAttributes());
-        //mLayoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        //mLayoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         mListView = (ListView) mDialog.findViewById(R.id.dialog_listview);
         DropdownAdapter adapter = new DropdownAdapter(mContext, Months.getMonthList());
         mListView.setAdapter(adapter);

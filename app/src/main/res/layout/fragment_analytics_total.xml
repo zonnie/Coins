@@ -8,12 +8,10 @@
     >
 
     <LinearLayout
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
         android:layout_margin="@dimen/drawable_left_pad"
-        tools:context="com.moneyifyapp.activities.analytics.FullAnalyticsActivity.ByDateAnalyticsFragment"
         >
         <!-- Body -->
 

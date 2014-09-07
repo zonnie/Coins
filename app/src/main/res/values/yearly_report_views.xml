@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="analytics_views">
+        <item>Top Category Graph</item>
+        <item>Yearly Expense Graph</item>
+        <item>Yearly Overview</item>
+    </string-array>
+</resources>
