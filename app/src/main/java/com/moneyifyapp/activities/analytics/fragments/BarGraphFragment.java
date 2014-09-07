@@ -36,7 +36,7 @@ public class BarGraphFragment extends Fragment
     private List<String> mXAxisLabels;
     private List<Integer> mXAxisIcons;
     private TextView mXAxisTitleTextView;
-    public int mBarMargin = 255;
+    public int mBarMargin = 120;
     private int mMaxHeight;
     private int mMaxBarHeight = 300;
     public static final int BIG_GRAPH = 300;
@@ -155,7 +155,6 @@ public class BarGraphFragment extends Fragment
     {
         // Default background
         int barBackground;
-        int leftMargin = (barId == 0) ? 0 : mBarMargin;
         if(barId == mParameters.mSpecialBarsId)
             barBackground = R.drawable.graph_bar_back_yellow;
         else
