@@ -8,201 +8,224 @@
     android:showDividers="none"
     android:weightSum="1">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/padding_start_currency"
-        android:layout_marginLeft="@dimen/expense_drawable_left_pad"
-        android:layout_marginRight="@dimen/expense_drawable_left_pad"
-        android:layout_marginTop="@dimen/padding_start_currency"
-        android:orientation="horizontal"
-        >
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/remove_item_button_layout"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.8"
-            android:orientation="vertical"
-            android:background="@drawable/remove_button_drawable"
-            >
-
-            <Button
-                android:id="@+id/expenseRemove"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="top|center_horizontal"
-                android:text="x"
-                android:textColor="@android:color/darker_gray"
-                android:background="@android:color/transparent"
-                android:textSize="@dimen/medium_font"
-                />
-
-            <ImageView
-                android:id="@+id/item_faved_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:adjustViewBounds="true"
-                android:layout_gravity="bottom"
-                android:src="@drawable/faved"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/transaction_data_layout"
-            android:layout_width="0dp"
+        <com.moneyifyapp.views.ThinTextView
+            android:layout_marginTop="@dimen/padding_start_currency"
+            android:id="@+id/item_owner"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="25.2"
-            android:background="@drawable/general_item_card"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/padding_start_currency"
+            android:gravity="center|start"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/tiny_font"
+            android:layout_marginLeft="@dimen/drawable_left_pad"
+            android:text="by Me"
+            android:paddingStart="@dimen/drawable_left_pad"
+            android:paddingEnd="@dimen/drawable_left_pad"
+            android:visibility="gone"
+            />
+
+        <LinearLayout
+            android:id="@+id/item_master_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_owner"
+            android:layout_marginTop="@dimen/padding_start_currency"
+            android:layout_marginBottom="@dimen/padding_start_currency"
+            android:layout_marginLeft="@dimen/expense_drawable_left_pad"
+            android:layout_marginRight="@dimen/expense_drawable_left_pad"
+            android:orientation="horizontal"
             >
 
             <LinearLayout
-                android:id="@+id/transaction_card_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/remove_item_button_layout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.8"
+                android:background="@drawable/remove_button_drawable"
                 android:orientation="vertical"
-                android:showDividers="none"
                 >
 
+                <Button
+                    android:id="@+id/expenseRemove"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="top|center_horizontal"
+                    android:text="x"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/medium_font"
+                    />
+
+                <ImageView
+                    android:id="@+id/item_faved_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="2"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/faved"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/transaction_data_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="25.2"
+                android:background="@drawable/general_item_card"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/padding_start_currency"
+                >
 
                 <LinearLayout
+                    android:id="@+id/transaction_card_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingEnd="@dimen/drawable_left_pad"
+                    android:orientation="vertical"
+                    android:showDividers="none"
                     >
 
-                    <ImageButton
-                        android:id="@+id/expense_item_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/shop_small"
-                        android:adjustViewBounds="true"
-                        />
-
-                    <View
-                        android:id="@+id/seperator"
-                        android:layout_width="0.6px"
-                        android:layout_height="match_parent"
-                        android:layout_toRightOf="@+id/categoryImage"
-                        android:background="@android:color/darker_gray"
-                        android:fadingEdge="vertical"
-                        android:fadingEdgeLength="@dimen/drawable_left_pad"
-                        />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/padding_start_currency"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical"
+                        android:orientation="horizontal"
+                        android:paddingEnd="@dimen/drawable_left_pad"
                         >
+
+                        <ImageButton
+                            android:id="@+id/expense_item_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:adjustViewBounds="true"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/shop_small"
+                            />
+
+                        <View
+                            android:id="@+id/seperator"
+                            android:layout_width="0.6px"
+                            android:layout_height="match_parent"
+                            android:layout_toRightOf="@+id/categoryImage"
+                            android:background="@android:color/darker_gray"
+                            android:fadingEdge="vertical"
+                            android:fadingEdgeLength="@dimen/drawable_left_pad"
+                            />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/padding_start_currency"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical"
                             >
 
-                            <TextView
-                                android:id="@+id/expenseDesc"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:ellipsize="marquee"
-                                android:singleLine="true"
-                                android:text="Stam"
-                                android:textSize="@dimen/medium_font"
-                                android:textStyle="bold"
-                                />
-
-                            <com.moneyifyapp.views.CondensedTextView
-                                android:id="@+id/currency"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="0.4"
-                                android:gravity="center|right"
-                                android:singleLine="true"
-                                android:text="@string/default_currency"
-                                android:textSize="@dimen/medium_font"
-                                android:textStyle="bold"
-                                />
+                                >
 
-                            <com.moneyifyapp.views.CondensedTextView
-                                android:id="@+id/expenseValue"
-                                android:layout_width="wrap_content"
+                                <TextView
+                                    android:id="@+id/expenseDesc"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:ellipsize="marquee"
+                                    android:singleLine="true"
+                                    android:text="Stam"
+                                    android:textSize="@dimen/medium_font"
+                                    android:textStyle="bold"
+                                    />
+
+                                <com.moneyifyapp.views.CondensedTextView
+                                    android:id="@+id/currency"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.4"
+                                    android:gravity="center|right"
+                                    android:singleLine="true"
+                                    android:text="@string/default_currency"
+                                    android:textSize="@dimen/medium_font"
+                                    android:textStyle="bold"
+                                    />
+
+                                <com.moneyifyapp.views.CondensedTextView
+                                    android:id="@+id/expenseValue"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:ellipsize="marquee"
+                                    android:gravity="center|right"
+                                    android:singleLine="true"
+                                    android:text="@string/init_total_value"
+                                    android:textSize="@dimen/medium_font"
+                                    android:textStyle="bold"
+                                    />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/expenseItemNote"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:ellipsize="marquee"
-                                android:gravity="center|right"
-                                android:singleLine="true"
-                                android:text="@string/init_total_value"
-                                android:textSize="@dimen/medium_font"
-                                android:textStyle="bold"
+                                android:layout_weight="27"
+                                android:gravity="left"
+                                android:maxLines="1"
+                                android:paddingBottom="@dimen/padding_start_currency"
+                                android:paddingEnd="@dimen/activity_vertical_margin"
+                                android:text=""
+                                android:textColor="@android:color/darker_gray"
+                                android:textSize="@dimen/tiny_font"
                                 />
+
                         </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/expenseItemNote"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="27"
-                            android:gravity="left"
-                            android:maxLines="1"
-                            android:paddingBottom="@dimen/padding_start_currency"
-                            android:paddingEnd="@dimen/activity_vertical_margin"
-                            android:text=""
-                            android:textColor="@android:color/darker_gray"
-                            android:textSize="@dimen/tiny_font"
-                            />
-
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:layout_weight="3"
+                android:background="@drawable/date_item_card"
+                android:orientation="vertical"
+                android:weightSum="20"
+                >
+
+                <com.moneyifyapp.views.CondensedTextView
+                    android:id="@+id/expense_item_date_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="11"
+                    android:gravity="center|top"
+                    android:text="24"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/huge_font"
+                    android:textStyle="bold"
+                    />
+
+                <com.moneyifyapp.views.CondensedTextView
+                    android:id="@+id/expense_item_date_month"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="9"
+                    android:gravity="center_horizontal|top"
+                    android:text="MAR"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/medium_font"
+                    />
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:layout_weight="3"
-            android:background="@drawable/date_item_card"
-            android:orientation="vertical"
-            android:weightSum="20"
-            >
-            <com.moneyifyapp.views.CondensedTextView
-                android:id="@+id/expense_item_date_text"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_weight="11"
-                android:gravity="center|top"
-                android:text="24"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/huge_font"
-                android:textStyle="bold"
-                />
-            <com.moneyifyapp.views.CondensedTextView
-                android:id="@+id/expense_item_date_month"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="9"
-                android:gravity="center_horizontal|top"
-                android:text="MAR"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/medium_font"
-                />
-        </LinearLayout>
-    </LinearLayout>
-
-
+    </RelativeLayout>
 </FrameLayout>

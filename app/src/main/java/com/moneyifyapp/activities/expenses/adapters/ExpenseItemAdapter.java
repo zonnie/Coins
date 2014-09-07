@@ -19,6 +19,7 @@ import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.utils.Utils;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,8 +102,15 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             handleViewCurrency(currentTransaction);
             handleViewNote(currentTransaction);
             handleFavorite(currentTransaction);
+            handleViewOwner(currentTransaction);
         }
         return mMyView;
+    }
+
+    private void handleViewOwner(Transaction transaction)
+    {
+        if (mViewHolder.mItemOwner != null)
+            mViewHolder.mItemOwner.setText("by " + ParseUser.getCurrentUser().getUsername());
     }
 
     /**
@@ -156,6 +164,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         mViewHolder.mRemoveItemLayout = (LinearLayout) mMyView.findViewById(R.id.remove_item_button_layout);
         mViewHolder.mExpenseImage = (ImageView) mMyView.findViewById(R.id.expense_item_image);
         mViewHolder.mFavIcon = (ImageView) mMyView.findViewById(R.id.item_faved_icon);
+        mViewHolder.mItemOwner = (TextView) mMyView.findViewById(R.id.item_owner);
     }
 
     /**
@@ -351,6 +360,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
         public Button mRemoveItemButton;
         public ImageView mExpenseImage;
         public ImageView mFavIcon;
+        public TextView mItemOwner;
     }
 
     /**

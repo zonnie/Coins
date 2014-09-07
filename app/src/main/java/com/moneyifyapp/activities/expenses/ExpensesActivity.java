@@ -95,6 +95,9 @@ public class ExpensesActivity extends Activity
         setContentView(R.layout.activity_expenses);
 
         // Init Parse for data storing
+        //TODO For Notifications
+        //PushService.setDefaultPushCallback(this, ExpensesActivity.class);
+        //ParseAnalytics.trackAppOpened(getIntent());
         Utils.initializeParse(this);
         Utils.initializeActionBar(this, DrawerUtils.getWalletTitleById(TransactionHandler.getInstance(this).getCurrentWalletId()));
         Utils.setupBackButton(this);

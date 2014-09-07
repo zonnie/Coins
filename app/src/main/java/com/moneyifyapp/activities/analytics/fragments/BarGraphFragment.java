@@ -40,9 +40,6 @@ public class BarGraphFragment extends Fragment
     private int mMaxHeight;
     private int mMaxBarHeight = 500;
     public static final int BIG_GRAPH = 500;
-    public static final int MEDIUM_GRAPH = 200;
-    public static final int SMALL_GRAPH = 150;
-    private int DEFAULT_TEXT_SIZE = 130;
     public static final String GRAPH_ARGS = "graphArgs";
     private Animation mBarAnimation;
     private BarGraphParameters mParameters;
@@ -95,7 +92,6 @@ public class BarGraphFragment extends Fragment
         {
             mMaxHeight = Collections.max(mValues);
             drawBars();
-            //drawXLabels();
         }
 
         return mView;

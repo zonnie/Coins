@@ -15,6 +15,7 @@ import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.MonthTransactions;
 import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.utils.Utils;
+import com.parse.ParseUser;
 
 /**
  * An expense item adapter.
@@ -29,6 +30,7 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
     private TextView mExpenseCurrency;
     private TextView mExpenseDayOfMonth;
     private TextView mExpenseMonth;
+    private TextView mItemOwner;
     private ImageView mExpenseImage;
     private int mLayoutResourceId;
     private MonthTransactions mTransactions;
@@ -105,9 +107,17 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
             handleViewDescription(currentTransactionView);
             handleViewValue(currentTransactionView);
             handleViewCurrency(currentTransactionView);
+            handleViewOwner(currentTransactionView);
         }
         return mMyView;
     }
+
+    private void handleViewOwner(Transaction transaction)
+    {
+        if (mItemOwner != null)
+            mItemOwner.setText("by " + ParseUser.getCurrentUser().getUsername());
+    }
+
 
     /**
      */
@@ -121,6 +131,7 @@ public class ExpenseItemAdapterRead extends ArrayAdapter<Transaction>
         mExpenseDayOfMonth = (TextView) mMyView.findViewById(R.id.expense_item_date_text);
         mExpenseMonth = (TextView) mMyView.findViewById(R.id.expense_item_date_month);
         mExpenseImage = (ImageView) mMyView.findViewById(R.id.expense_item_image);
+        mItemOwner = (TextView) mMyView.findViewById(R.id.item_owner);
     }
 
     /**
