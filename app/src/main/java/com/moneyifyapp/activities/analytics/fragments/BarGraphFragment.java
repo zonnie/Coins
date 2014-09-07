@@ -38,8 +38,8 @@ public class BarGraphFragment extends Fragment
     private TextView mXAxisTitleTextView;
     public int mBarMargin = 120;
     private int mMaxHeight;
-    private int mMaxBarHeight = 300;
-    public static final int BIG_GRAPH = 300;
+    private int mMaxBarHeight = 500;
+    public static final int BIG_GRAPH = 500;
     public static final int MEDIUM_GRAPH = 200;
     public static final int SMALL_GRAPH = 150;
     private int DEFAULT_TEXT_SIZE = 130;
@@ -132,7 +132,7 @@ public class BarGraphFragment extends Fragment
      */
     private boolean shouldDraw()
     {
-        return mValues.size() > 2;
+        return mValues.size() > 0;
     }
 
     /**

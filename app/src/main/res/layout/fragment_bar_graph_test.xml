@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         >
         <!-- Category Bar Graph -->
@@ -29,7 +29,7 @@
         <LinearLayout
             android:id="@+id/category_bar_graph_root"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="@dimen/drawable_left_pad"
             android:orientation="vertical"
             >
@@ -70,7 +70,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="@dimen/padding_start_currency"
                     android:orientation="vertical"
                     android:paddingEnd="@dimen/big_padding"
@@ -100,7 +100,7 @@
 
                                 <TextView
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:layout_above="@+id/kkkk"
                                     android:text="4K"
                                     android:textColor="@android:color/black"
@@ -109,7 +109,7 @@
                                 <LinearLayout
                                     android:id="@+id/kkkk"
                                     android:layout_width="match_parent"
-                                    android:layout_height="60dp"
+                                    android:layout_height="300dp"
                                     android:background="@drawable/graph_bar_back_red"
                                     android:layout_marginLeft="@dimen/drawable_left_pad"
                                     android:layout_marginRight="@dimen/drawable_left_pad"
