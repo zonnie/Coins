@@ -108,6 +108,7 @@ public class SignUpActivity extends LoadingActivity implements View.OnClickListe
 
         if (isSignUpValid())
         {
+            showProgress(true);
             verifyUserNotExist(mUserEditText.getText().toString());
         }
     }
@@ -187,9 +188,10 @@ public class SignUpActivity extends LoadingActivity implements View.OnClickListe
             @Override
             public void done(List<ParseUser> parseUsers, ParseException e)
             {
-                if(parseUsers.isEmpty())
+                if(parseUsers == null)
+                    singUpFailed();
+                else if(parseUsers.isEmpty())
                 {
-                    showProgress(true);
                     signUp();
                 }
                 else
@@ -218,14 +220,12 @@ public class SignUpActivity extends LoadingActivity implements View.OnClickListe
                             mUserEditText.getText().toString() + "\"\nPlease verify your account.", PrettyToast.VERY_LONG);
                     goToLogin();
                     finish();
-                    showProgress(false);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
                 else
-                {
                     singUpFailed();
-                    showProgress(false);
-                }
+
+                showProgress(false);
             }
         });
     }
