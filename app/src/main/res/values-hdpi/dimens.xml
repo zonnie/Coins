@@ -19,8 +19,8 @@
     <dimen name="list_bottom_margin">80dp</dimen>
 
     <dimen name="mongo_font">28sp</dimen>
-    <dimen name="huge_font">18sp</dimen>
-    <dimen name="large_font">14sp</dimen>
+    <dimen name="huge_font">16sp</dimen>
+    <dimen name="large_font">13sp</dimen>
     <dimen name="tiny_font">9sp</dimen>
-    <dimen name="medium_font">11sp</dimen>
+    <dimen name="medium_font">10sp</dimen>
 </resources>
