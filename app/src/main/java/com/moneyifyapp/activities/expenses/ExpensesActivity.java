@@ -94,10 +94,6 @@ public class ExpensesActivity extends Activity
 
         setContentView(R.layout.activity_expenses);
 
-        // Init Parse for data storing
-        //TODO For Notifications
-        //PushService.setDefaultPushCallback(this, ExpensesActivity.class);
-        //ParseAnalytics.trackAppOpened(getIntent());
         Utils.initializeParse(this);
         Utils.initializeActionBar(this, DrawerUtils.getWalletTitleById(TransactionHandler.getInstance(this).getCurrentWalletId()));
         Utils.setupBackButton(this);
@@ -475,6 +471,9 @@ public class ExpensesActivity extends Activity
         ParseUser.logOut();
 
         TransactionHandler.getInstance(this).clearAllWallets();
+        TransactionHandler.getInstance(this).setFirstFetch(true);
+        TransactionHandler.getInstance(this).setWalletsFetched(false);
+
         DrawerUtils.resetWallets();
 
         startLoginActivity();
@@ -531,7 +530,7 @@ public class ExpensesActivity extends Activity
         if(icon == WalletActivity.WALLET_ICON_EMPTY)
             icon = DrawerUtils.getDefaultWalletImageIndex();
         TransactionHandler.getInstance(this).addWallet(id, title, icon, notes);
-        DrawerUtils.addNewWalletItem(title, icon, id, notes);
+        DrawerUtils.addNewWalletItemIfNotExist(title, icon, id, notes);
     }
 
     /**

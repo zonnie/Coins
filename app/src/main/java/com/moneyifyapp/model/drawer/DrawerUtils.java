@@ -82,11 +82,20 @@ public class DrawerUtils
 
     /**
      */
-    public static void addNewWalletItem(String title, int drawableIndex, String id, String notes)
+    public static void addNewWalletItemIfNotExist(String title, int drawableIndex, String id, String notes)
     {
-        int icon = Images.getImageByPosition(drawableIndex,  Images.getWalletUnsorted());
-        int iconSmall = Images.getSmallImageByPosition(drawableIndex,  Images.getWalletUnsorted());
-        sWallets.add(new DrawerChildItem(title, icon, iconSmall, id, notes));
+        boolean exists = false;
+
+        for(DrawerChildItem wallet : sWallets)
+            if(wallet.getId().equals(id))
+                exists = true;
+
+        if(!exists)
+        {
+            int icon = Images.getImageByPosition(drawableIndex, Images.getWalletUnsorted());
+            int iconSmall = Images.getSmallImageByPosition(drawableIndex, Images.getWalletUnsorted());
+            sWallets.add(new DrawerChildItem(title, icon, iconSmall, id, notes));
+        }
     }
 
     /**

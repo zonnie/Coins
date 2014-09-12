@@ -55,6 +55,7 @@ public class LoginActivity extends LoadingActivity
     {
         super.onCreate(savedInstanceState);
 
+        Utils.initializeParse(this);
         Utils.initializeActionBar(this);
         Utils.removeLogo(this);
         Utils.removeActionBar(this);
@@ -69,8 +70,6 @@ public class LoginActivity extends LoadingActivity
 
         mFirstRun = Utils.isFirstRunLogin(this);
         Utils.setFirstRunLogin(this, false);
-
-        TransactionHandler.getInstance(this).registerToFetchComplete(this);
 
         storeViews();
         bindViewsToEventListeners();
@@ -233,6 +232,7 @@ public class LoginActivity extends LoadingActivity
                                 // Reset the current wallet to default wallet
                                 TransactionHandler handler = TransactionHandler.getInstance(LoginActivity.this);
                                 handler.setCurrentWalletId(Utils.getCurrentWalletId(LoginActivity.this));
+                                TransactionHandler.getInstance(LoginActivity.this).registerToFetchComplete(LoginActivity.this);
                                 handler.fetchTransactionsForAllWalletsByYear(Calendar.getInstance().get(Calendar.YEAR));
                                 initFromLocalDb();
                             }

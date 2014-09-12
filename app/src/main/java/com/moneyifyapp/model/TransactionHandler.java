@@ -22,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Handlse the transactions.
@@ -35,6 +36,7 @@ public class TransactionHandler
     private List<String> mReusableTransactions;
     private Queue<onFetchingCompleteListener> mFetchCompleteListeners;
     private boolean mIsFirstFatch;
+    private boolean mWalletsFetched;
     private Activity mContext;
     public static final String WALLET_ID = "walletId";
     public static final String WALLET_NOTES = "walletNotes";
@@ -58,11 +60,12 @@ public class TransactionHandler
     private void initTransactionHandler(Activity context)
     {
         mContext = context;
-        mAllWalletsTransactions = new HashMap<String, Map<String, YearTransactions>>();
+        mAllWalletsTransactions = new ConcurrentHashMap<String, Map<String, YearTransactions>>();
         mFetchCompleteListeners = new LinkedList<onFetchingCompleteListener>();
         mRepeatTransactions = new ArrayList<String>();
         mReusableTransactions = new ArrayList<String>();
-        mIsFirstFatch = true;
+        setFirstFetch(true);
+        setWalletsFetched(false);
         mCurrentWalletId = Utils.getCurrentWalletId(mContext);
     }
 
@@ -77,6 +80,11 @@ public class TransactionHandler
     }
 
     /**
+     *
+     * Note : This is called for EACH listener.
+     * In case of a viewpager this will be called for 3 fragments.
+     * Each registerd fragment calls this -> fetches all wallets and all transactions...
+     *
      */
     public void registerListenerAndFetchAll(onFetchingCompleteListener listener, int year)
     {
@@ -110,19 +118,38 @@ public class TransactionHandler
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e)
             {
+
                 for(ParseObject wallet : parseObjects)
                 {
-                    String id = wallet.getString(WALLET_ID);
+                    String walletId = wallet.getString(WALLET_ID);
                     String title = wallet.getString(WALLET_TITLE);
                     int iconIndex = wallet.getInt(WALLET_ICON_INDEX);
                     String notes = wallet.getString(WALLET_NOTES);
-                    DrawerUtils.addNewWalletItem(title, iconIndex, id, notes);
-                    addWalletToAllTransactions(id);
+                    DrawerUtils.addNewWalletItemIfNotExist(title, iconIndex, walletId, notes);
+                    addWalletToAllTransactions(walletId);
+
+                    queryDatabaseAndBuildTransactions(year, walletId);
                 }
 
-                queryDatabaseAndBuildTransactions(year);
+                // First fetch default wallet, not in DB so this won't be found in parseObjects
+                String walletId = DEFAULT_WALLET_ID;
+                queryDatabaseAndBuildTransactions(year, walletId);
             }
         });
+    }
+
+    /**
+     */
+    public void setFirstFetch(boolean firstFetch)
+    {
+        mIsFirstFatch = firstFetch;
+    }
+
+    /**
+     */
+    public void setWalletsFetched(boolean fetched)
+    {
+        mWalletsFetched = fetched;
     }
 
     /**
@@ -134,19 +161,15 @@ public class TransactionHandler
 
     /**
      */
-    public void queryDatabaseAndBuildTransactions(int year)
+    public void queryDatabaseAndBuildTransactions(int year, final String walletId)
     {
-        ParseQuery<ParseObject> query = createParseQueryByListMonthAndYear(year);
+        ParseQuery<ParseObject> query = createParseQueryByListMonthAndYear(year, walletId);
         query.findInBackground(new FindCallback<ParseObject>()
         {
             public void done(List<ParseObject> expenseList, ParseException e)
             {
                 if (e == null)
-                    buildExpenseListFromParse(expenseList);
-                else
-                {
-
-                }
+                    buildExpenseListFromParse(expenseList, walletId);
             }
         });
     }
@@ -154,12 +177,12 @@ public class TransactionHandler
     /**
      * Initializes the expenses from the remote DB.
      */
-    public void buildExpenseListFromParse(List<ParseObject> list)
+    public void buildExpenseListFromParse(List<ParseObject> list, String walletId)
     {
-        if (list != null)
+        if (list != null && list.size() > 0)
         {
             // Clear wallets interior
-            for(String walletId : mAllWalletsTransactions.keySet())
+            if(mAllWalletsTransactions.get(walletId) != null)
                 clearWalletTransactions(walletId);
 
             for (ParseObject curExpense : list)
@@ -168,10 +191,13 @@ public class TransactionHandler
                 // Normalize all currencies according to default
                 addNewTransaction(transaction, curExpense);
             }
-        }
 
-        mFetchCompleteListeners.remove().onFetchComplete();
-        mIsFirstFatch = false;
+            // Ask the registered objects to do what they do when the fetch is done
+            // Only declare fetch complete after current wallet was processed
+            if(!mFetchCompleteListeners.isEmpty() && mCurrentWalletId.equals(walletId))
+                mFetchCompleteListeners.remove().onFetchComplete();
+            setFirstFetch(false);
+        }
     }
 
     /**
@@ -198,13 +224,14 @@ public class TransactionHandler
 
     /**
      */
-    private ParseQuery<ParseObject> createParseQueryByListMonthAndYear(int year)
+    private ParseQuery<ParseObject> createParseQueryByListMonthAndYear(int year, String walletId)
     {
         ParseUser user = ParseUser.getCurrentUser();
         ParseQuery<ParseObject> query = ParseQuery.getQuery(Transaction.CLASS_NAME);
-        query.whereEqualTo(ExpensesActivity.PARSE_USER_KEY, user);
+        if(walletId.equals(DEFAULT_WALLET_ID))
+            query.whereEqualTo(ExpensesActivity.PARSE_USER_KEY, user);
+        query.whereEqualTo(WALLET_ID, walletId);
         query.whereEqualTo(ExpenseListFragment.YEAR_KEY, year);
-        //query.whereEqualTo(WALLET_ID, mCurrentWalletId);
         query.addDescendingOrder(ExpenseListFragment.PARSE_DATE_KEY);
 
         return query;
