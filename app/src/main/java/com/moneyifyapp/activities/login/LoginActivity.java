@@ -225,7 +225,6 @@ public class LoginActivity extends LoadingActivity
                         if (user != null)
                         {
                             boolean isVerified = user.getBoolean(EMAIL_VERIFY_KEY);
-
                             // Check email was verified
                             if(isVerified)
                             {

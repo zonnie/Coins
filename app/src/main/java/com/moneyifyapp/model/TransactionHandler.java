@@ -179,7 +179,7 @@ public class TransactionHandler
      */
     public void buildExpenseListFromParse(List<ParseObject> list, String walletId)
     {
-        if (list != null && list.size() > 0)
+        if (list != null)
         {
             // Clear wallets interior
             if(mAllWalletsTransactions.get(walletId) != null)
