@@ -26,7 +26,7 @@
 
     <LinearLayout
         android:id="@+id/top_list_layout"
-        android:layout_width="260dp"
+        android:layout_width="@dimen/drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:orientation="vertical"

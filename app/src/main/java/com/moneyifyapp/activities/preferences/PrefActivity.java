@@ -270,4 +270,10 @@ public class PrefActivity extends PreferenceActivity
         super.onBackPressed();
         Utils.animateBack(this);
     }
+
+    @Override
+    protected boolean isValidFragment(String fragmentName)
+    {
+        return true;
+    }
 }

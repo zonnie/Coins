@@ -17,6 +17,8 @@
     <dimen name="giga_padding">80dp</dimen>
     <dimen name="image_dimen">72dp</dimen>
     <dimen name="list_bottom_margin">80dp</dimen>
+    <dimen name="drawer_width">200dp</dimen>
+    <dimen name="category_height">60dp</dimen>
 
     <dimen name="mongo_font">25sp</dimen>
     <dimen name="huge_font">18sp</dimen>

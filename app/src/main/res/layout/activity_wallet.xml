@@ -114,8 +114,8 @@
 
                             <ImageButton
                                 android:id="@+id/walletIcon"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
+                                android:layout_width="@dimen/category_height"
+                                android:layout_height="@dimen/category_height"
                                 android:layout_marginBottom="@dimen/padding_start_currency"
                                 android:layout_marginTop="@dimen/padding_start_currency"
                                 android:background="@android:color/transparent"
