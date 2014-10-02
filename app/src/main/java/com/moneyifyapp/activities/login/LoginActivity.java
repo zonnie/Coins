@@ -94,8 +94,8 @@ public class LoginActivity extends LoadingActivity
     public void onWindowFocusChanged (boolean hasFocus)
     {
         super.onWindowFocusChanged(hasFocus);
-        if(hasFocus)
-            mArt.startAnimation(Utils.createAnimation(this,R.anim.appear_in_bounce_from_bottom));
+        //if(hasFocus)
+        //    mArt.startAnimation(Utils.createAnimation(this,R.anim.appear_in_bounce_from_bottom));
     }
 
     /**
