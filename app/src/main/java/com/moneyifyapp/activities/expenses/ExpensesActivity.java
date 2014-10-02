@@ -638,10 +638,7 @@ public class ExpensesActivity extends Activity
     /**
      */
     @Override
-    public void onBackPressed()
-    {
-        finish();
-    }
+    public void onBackPressed(){}
 
     /**
      * Called from XML

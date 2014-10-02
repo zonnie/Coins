@@ -37,11 +37,11 @@
             android:name=".activities.login.LoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/action_sign_in"
-            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
             >
         </activity>
+        <!--android:noHistory="true"-->
         <activity
             android:name=".activities.login.SignUpActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

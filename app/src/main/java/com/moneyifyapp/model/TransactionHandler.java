@@ -118,19 +118,21 @@ public class TransactionHandler
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e)
             {
-
-                for(ParseObject wallet : parseObjects)
+                // Check if any wallets exist, if none exist it's a new user with private wallet only
+                if(parseObjects != null)
                 {
-                    String walletId = wallet.getString(WALLET_ID);
-                    String title = wallet.getString(WALLET_TITLE);
-                    int iconIndex = wallet.getInt(WALLET_ICON_INDEX);
-                    String notes = wallet.getString(WALLET_NOTES);
-                    DrawerUtils.addNewWalletItemIfNotExist(title, iconIndex, walletId, notes);
-                    addWalletToAllTransactions(walletId);
+                    for (ParseObject wallet : parseObjects)
+                    {
+                        String walletId = wallet.getString(WALLET_ID);
+                        String title = wallet.getString(WALLET_TITLE);
+                        int iconIndex = wallet.getInt(WALLET_ICON_INDEX);
+                        String notes = wallet.getString(WALLET_NOTES);
+                        DrawerUtils.addNewWalletItemIfNotExist(title, iconIndex, walletId, notes);
+                        addWalletToAllTransactions(walletId);
 
-                    queryDatabaseAndBuildTransactions(year, walletId);
+                        queryDatabaseAndBuildTransactions(year, walletId);
+                    }
                 }
-
                 // First fetch default wallet, not in DB so this won't be found in parseObjects
                 String walletId = DEFAULT_WALLET_ID;
                 queryDatabaseAndBuildTransactions(year, walletId);

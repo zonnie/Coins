@@ -287,13 +287,6 @@ public class LoginActivity extends LoadingActivity
         finish();
     }
 
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
-        finish();
-    }
-
     /**
      */
     public void startTutorial()

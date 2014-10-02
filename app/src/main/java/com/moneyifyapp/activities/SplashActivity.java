@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import com.moneyifyapp.R;
@@ -48,7 +47,7 @@ public class SplashActivity extends Activity
         else
         {
             LinearLayout firstTimeLayout = (LinearLayout) findViewById(R.id.first_time_layout);
-            firstTimeLayout.setVisibility(View.VISIBLE);
+            //firstTimeLayout.setVisibility(View.VISIBLE);
             startWithNoQuery();
         }
     }
