@@ -4,6 +4,7 @@
     <string name="app_name">Coins</string>
     <string name="main_title">Coins</string>
     <string name="jump_today_caption">Jump to today</string>
+    <string name="jump_year_caption">Jump to Year</string>
     <string name="logout_caption">Logout</string>
     <string name="list_empty_hint">Tap the "+" button add stuff</string>
     <string name="totals_hint_string">Tap for monthly insights</string>
@@ -31,6 +32,7 @@
     <string name="reset_password_hint">Enter Username</string>
     <string name="reset_password_button">Reset Password</string>
     <string name="account_delete_button_text">Delete</string>
+    <string name="year_picker_ok">Jump to Year</string>
     <string name="change_password_button_text">Change Password</string>
     <string name="new_password_hint">New Password</string>
     <string name="new_password_repeat_hint">Verify Password</string>
@@ -101,6 +103,7 @@
     <string name="repeat_options_text">Repeat Options</string>
     <string name="delete_account_first_text">We don\'t wannna lose you</string>
     <string name="delete_account_second_text">Deleting the account will lose all your info</string>
+    <string name="pick_year_message">Please pick the year to jump to</string>
     <string name="title_activity_faviorte">Favorites</string>
     <string name="title_activity_welcome">Welcome</string>
     <string name="welcome_sample_text">Use your "Favorites" to create new transactions in a pinch</string>

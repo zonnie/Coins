@@ -6,7 +6,14 @@
     <item
         android:id="@+id/jump_today"
         android:title="@string/jump_today_caption"
-        android:showAsAction="withText"/>
+        android:showAsAction="withText"
+        />
+
+    <item
+        android:id="@+id/jump_year"
+        android:title="@string/jump_year_caption"
+        android:showAsAction="withText"
+        />
 
     <item
         android:id="@+id/add_expense"
@@ -14,4 +21,5 @@
         android:showAsAction="always"
         android:icon="@drawable/add_new"
         />
+
 </menu>

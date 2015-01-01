@@ -276,11 +276,11 @@ public class ExpenseListFragment extends ListFragment
     /**
      * Called from the containg activity when a wallet was changed
      */
-    public void updateOnWalletChange()
+    public void updateOnWalletChange(String year)
     {
         clearTotals();
 
-        mYearTransactions = TransactionHandler.getInstance(getActivity()).getYearTransactions(""+mYear);
+        mYearTransactions = TransactionHandler.getInstance(getActivity()).getYearTransactions(year);
         mTransactions = mYearTransactions.get(mPageId);
         mAdapter = new ExpenseItemAdapter(getActivity(), R.layout.adapter_expense_item, mTransactions, this);
         setListAdapter(mAdapter);

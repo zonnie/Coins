@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.LinearLayout;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.expenses.ExpensesActivity;
 import com.moneyifyapp.activities.login.LoginActivity;
-import com.moneyifyapp.database.TransactionSqlHelper;
 import com.moneyifyapp.model.TransactionHandler;
 import com.moneyifyapp.utils.Utils;
 import com.parse.ParseUser;
@@ -23,7 +21,6 @@ public class SplashActivity extends Activity
         implements TransactionHandler.onFetchingCompleteListener
 {
     private int SPLASH_DISPLAY_LENGTH = 1000;
-    private TransactionSqlHelper mLocalDb;
     private boolean mIsFristRun;
 
     /**
@@ -40,23 +37,9 @@ public class SplashActivity extends Activity
         TransactionHandler mTransactionHandler = TransactionHandler.getInstance(this);
 
         if (!mIsFristRun && ParseUser.getCurrentUser() != null)
-        {
             mTransactionHandler.registerListenerAndFetchAll(this, Calendar.getInstance().get(Calendar.YEAR));
-            initFromLocalDb();
-        }
         else
-        {
-            LinearLayout firstTimeLayout = (LinearLayout) findViewById(R.id.first_time_layout);
-            //firstTimeLayout.setVisibility(View.VISIBLE);
             startWithNoQuery();
-        }
-    }
-
-    /**
-     */
-    private void initFromLocalDb()
-    {
-        mLocalDb = new TransactionSqlHelper(this);
     }
 
     /**

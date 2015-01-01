@@ -20,6 +20,7 @@ import com.moneyifyapp.activities.analytics.fragments.EmptyFragment;
 import com.moneyifyapp.activities.analytics.fragments.YearAnalyticsFragment;
 import com.moneyifyapp.model.Images;
 import com.moneyifyapp.model.MonthTransactions;
+import com.moneyifyapp.model.Transaction;
 import com.moneyifyapp.model.TransactionHandler;
 import com.moneyifyapp.model.YearTransactions;
 import com.moneyifyapp.model.enums.Months;
@@ -41,6 +42,7 @@ public class GraphActivity extends Activity
     private boolean mNoMonthExpense = false;
     private boolean mNoYearExpense = false;
     private int mMonth;
+    private int mYear;
     private int MAX_CATEGORY_NUM = 5;
     private String YEARLY_GRAPH_TITLE = "Month-to-Month";
     private String CATEGORY_GRAPH_TITLE = "Top Categories";
@@ -70,10 +72,12 @@ public class GraphActivity extends Activity
         Utils.animateForward(this);
         mFadeInAnimation = Utils.loadFadeInAnimation(this);
 
-        mMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
+        Calendar calendar = Calendar.getInstance();
+        mMonth = calendar.get(Calendar.MONTH)+1;
+        mYear = getIntent().getIntExtra(Transaction.KEY_YEAR, calendar.get(Calendar.YEAR));
 
         TransactionHandler mTransactionHandler = TransactionHandler.getInstance(this);
-        mYearTransactions = mTransactionHandler.getYearTransactions(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+        mYearTransactions = mTransactionHandler.getYearTransactions(String.valueOf(mYear));
 
         storeViews();
 

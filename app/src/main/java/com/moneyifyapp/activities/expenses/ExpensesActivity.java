@@ -2,10 +2,12 @@ package com.moneyifyapp.activities.expenses;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -17,8 +19,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 
 import com.moneyifyapp.R;
 import com.moneyifyapp.activities.analytics.GraphActivity;
@@ -54,6 +60,7 @@ public class ExpensesActivity extends Activity
     private ViewPager mViewPager;
     private Calendar mCalender;
     private TransactionHandler mTransactionHandler;
+    private int mCurrentYear;
 
     public static final int IMAGE_PICK_REQ = 90;
     public static final int IMAGE_PICK_OK = 423;
@@ -90,7 +97,8 @@ public class ExpensesActivity extends Activity
         mActivity = this;
         mTransactionHandler = TransactionHandler.getInstance(mActivity);
         mCalender = Calendar.getInstance();
-        mYearTransactions = mTransactionHandler.getYearTransactions(String.valueOf(mCalender.get(Calendar.YEAR)));
+        mCurrentYear = mCalender.get(Calendar.YEAR);
+        mYearTransactions = mTransactionHandler.getYearTransactions(String.valueOf(mCurrentYear));
 
         setContentView(R.layout.activity_expenses);
 
@@ -106,16 +114,22 @@ public class ExpensesActivity extends Activity
 
     /**
      */
-    private void swapWallet(String id)
+    private void swapWallet(String id, String year)
     {
         TransactionHandler.getInstance(this).setCurrentWalletId(id);
-        mYearTransactions = TransactionHandler.getInstance(this).getYearTransactions(String.valueOf(mCalender.get(Calendar.YEAR)));
+        mYearTransactions = TransactionHandler.getInstance(this).getYearTransactions(year);
         updateAllFragmentsOnWalletChange();
         Utils.setCurrentWalletId(this, id);
 
         String walletId = TransactionHandler.getInstance(this).getCurrentWalletId();
         Utils.initializeActionBar(this, DrawerUtils.getWalletTitleById(walletId));
+    }
 
+    /**
+     */
+    private void swapWallet(String id)
+    {
+        swapWallet(id, String.valueOf(mCurrentYear));
     }
 
     /**
@@ -123,7 +137,8 @@ public class ExpensesActivity extends Activity
     @Override
     public void onFetchComplete()
     {
-
+        swapWallet(TransactionHandler.getInstance(ExpensesActivity.this).getCurrentWalletId()
+                , String.valueOf(mCurrentYear));
     }
 
     /**
@@ -357,7 +372,8 @@ public class ExpensesActivity extends Activity
             implements ExpandableListView.OnChildClickListener
     {
         @Override
-        public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
+        public boolean onChildClick(ExpandableListView parent, View v,
+                                    int groupPosition, int childPosition, long id)
         {
             mDrawerGroupList.setItemChecked(childPosition, true);
             mDrawerLayout.closeDrawer(mDrawerTopListLayout);
@@ -402,6 +418,7 @@ public class ExpensesActivity extends Activity
     private void startAnalyticsActivity()
     {
         Intent intent = new Intent(mActivity, GraphActivity.class);
+        intent.putExtra(Transaction.KEY_YEAR, mCurrentYear);
         startActivity(intent);
     }
 
@@ -458,10 +475,61 @@ public class ExpensesActivity extends Activity
             mViewPager.setCurrentItem(mCalender.get(Calendar.MONTH));
             return true;
         }
+        else if(id == R.id.jump_year)
+        {
+            showYearPickDialog();
+        }
         else if (mDrawerToggle.onOptionsItemSelected(item))
             return true;
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showYearPickDialog()
+    {
+        final Dialog yearPickDialog = new Dialog(ExpensesActivity.this);
+        yearPickDialog.setTitle("Pick a Year");
+        yearPickDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        yearPickDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        yearPickDialog.setContentView(R.layout.dialog_year_pick);
+
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.copyFrom(yearPickDialog.getWindow().getAttributes());
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+
+        Button cancel = (Button) yearPickDialog.findViewById(R.id.cancel_year_pick_button);
+        Button pick = (Button) yearPickDialog.findViewById(R.id.year_pick_ok_button);
+        final NumberPicker yearPicker = (NumberPicker) yearPickDialog.findViewById(R.id.year_picker);
+
+        // Some restraints
+        yearPicker.setMaxValue(10000);
+        yearPicker.setMinValue(1000);
+        yearPicker.setValue(mCurrentYear);
+
+        pick.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                yearPickDialog.dismiss();
+                mCurrentYear = yearPicker.getValue();
+                mTransactionHandler.getInstance(ExpensesActivity.this).registerListenerAndFetchAll(ExpensesActivity.this,
+                        yearPicker.getValue());
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                yearPickDialog.dismiss();
+            }
+        });
+
+        yearPickDialog.show();
+
     }
 
     /**
@@ -576,7 +644,7 @@ public class ExpensesActivity extends Activity
         {
             ExpenseListFragment frag = (ExpenseListFragment) getFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + i);
             if(frag != null)
-                frag.updateOnWalletChange();
+                frag.updateOnWalletChange("" + mCurrentYear);
         }
     }
 
@@ -597,7 +665,8 @@ public class ExpensesActivity extends Activity
         if(handler.getYearTransactions(year) == null)
             logOutUser();
         else
-            Utils.initializeActionBar(this, DrawerUtils.getWalletTitleById(handler.getCurrentWalletId()));
+            Utils.initializeActionBar(this,
+                    DrawerUtils.getWalletTitleById(handler.getCurrentWalletId()));
     }
 
     /**
@@ -634,11 +703,6 @@ public class ExpensesActivity extends Activity
             return Months.getMonthNameByNumber(position).toUpperCase() + " " + mYearTransactions.mYear;
         }
     }
-
-    /**
-     */
-    @Override
-    public void onBackPressed(){}
 
     /**
      * Called from XML

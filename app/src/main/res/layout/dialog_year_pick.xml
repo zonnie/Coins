@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@android:color/transparent"
+    >
+
+    <LinearLayout
+        android:id="@+id/dialog_root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginBottom="@dimen/big_padding"
+        android:layout_marginLeft="@dimen/big_padding"
+        android:layout_marginRight="@dimen/big_padding"
+        android:layout_marginTop="@dimen/mongo_padding"
+        android:background="@drawable/card"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/drawable_left_pad"
+        android:paddingRight="@dimen/drawable_left_pad"
+        >
+
+        <NumberPicker
+            android:id="@+id/year_picker"
+            android:paddingTop="@dimen/drawable_left_pad"
+            android:paddingBottom="@dimen/drawable_left_pad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <com.moneyifyapp.views.ThinTextView
+            android:gravity="center"
+            android:id="@+id/delete_account_second_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pick_year_message"
+            android:textSize="@dimen/medium_font"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            >
+
+            <Button
+                android:id="@+id/cancel_year_pick_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/expense_drawable_left_pad"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:background="@drawable/stanard_button_drawable"
+                android:padding="@dimen/drawable_left_pad"
+                android:text="@string/item_details_cancel"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/medium_font"
+                />
+
+            <Button
+                android:id="@+id/year_pick_ok_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/expense_drawable_left_pad"
+                android:layout_marginLeft="@dimen/drawable_left_pad"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:background="@drawable/stanard_button_drawable"
+                android:padding="@dimen/drawable_left_pad"
+                android:text="@string/year_picker_ok"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/medium_font"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

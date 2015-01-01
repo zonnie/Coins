@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -235,14 +234,6 @@ public class Utils
     }
 
     /**
-     * @param log
-     */
-    public static void writeLog(String log)
-    {
-        Log.d("Yoni", "DEBUG : " + log);
-    }
-
-    /**
      */
     public static void animateForward(Activity activity)
     {
@@ -251,30 +242,9 @@ public class Utils
 
     /**
      */
-    public static void animateUpFromBottom(Activity activity)
-    {
-        activity.overridePendingTransition(R.anim.appear_in_bounce, R.anim.fade_out);
-    }
-
-    /**
-     */
-    public static void animateFadeIn(Activity activity)
-    {
-        activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-    }
-
-    /**
-     */
     public static void animateBack(Activity activity)
     {
         activity.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-    }
-
-    /**
-     */
-    public static void animateTowards(Activity activity)
-    {
-        activity.overridePendingTransition(R.anim.slide_in_left, R.anim.zoom_exit);
     }
 
     /**

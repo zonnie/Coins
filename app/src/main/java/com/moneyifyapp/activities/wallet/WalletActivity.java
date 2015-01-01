@@ -150,6 +150,7 @@ public class WalletActivity extends Activity
         intent.putExtra(TransactionHandler.WALLET_TITLE, mWalletDescEditText.getText().toString());
         intent.putExtra(TransactionHandler.WALLET_ICON_INDEX, mImageIconIndex);
         intent.putExtra(TransactionHandler.WALLET_NOTES, mWalletNotesEditText.getText().toString());
+        intent.putExtra(WALLET_SHARED_KEY, mWalletSharedToggle.isChecked());
         if(mIsEdit)
             intent.putExtra(WALLET_ID_KEY, mWalletId);
         setResult(WALLET_OK, getIntent());

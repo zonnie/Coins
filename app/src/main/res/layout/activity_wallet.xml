@@ -224,7 +224,6 @@
                         android:textOff="@string/checkbox_wallet_share"
                         android:textOn="@string/checkbox_wallet_shared"
                         android:textSize="@dimen/medium_font"
-                        android:visibility="gone"
                         />
 
                 </LinearLayout>
