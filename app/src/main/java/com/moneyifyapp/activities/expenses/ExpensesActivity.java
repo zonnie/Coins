@@ -59,7 +59,6 @@ public class ExpensesActivity extends Activity
 {
     private ViewPager mViewPager;
     private Calendar mCalender;
-    private TransactionHandler mTransactionHandler;
     private int mCurrentYear;
 
     public static final int IMAGE_PICK_REQ = 90;
@@ -95,10 +94,9 @@ public class ExpensesActivity extends Activity
         super.onCreate(savedInstanceState);
 
         mActivity = this;
-        mTransactionHandler = TransactionHandler.getInstance(mActivity);
         mCalender = Calendar.getInstance();
         mCurrentYear = mCalender.get(Calendar.YEAR);
-        mYearTransactions = mTransactionHandler.getYearTransactions(String.valueOf(mCurrentYear));
+        mYearTransactions = TransactionHandler.getInstance(this).getYearTransactions(String.valueOf(mCurrentYear));
 
         setContentView(R.layout.activity_expenses);
 
@@ -498,7 +496,6 @@ public class ExpensesActivity extends Activity
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
 
-        Button cancel = (Button) yearPickDialog.findViewById(R.id.cancel_year_pick_button);
         Button pick = (Button) yearPickDialog.findViewById(R.id.year_pick_ok_button);
         final NumberPicker yearPicker = (NumberPicker) yearPickDialog.findViewById(R.id.year_picker);
 
@@ -514,17 +511,8 @@ public class ExpensesActivity extends Activity
             {
                 yearPickDialog.dismiss();
                 mCurrentYear = yearPicker.getValue();
-                mTransactionHandler.getInstance(ExpensesActivity.this).registerListenerAndFetchAll(ExpensesActivity.this,
+                TransactionHandler.getInstance(ExpensesActivity.this).registerListenerAndFetchAll(ExpensesActivity.this,
                         yearPicker.getValue());
-            }
-        });
-
-        cancel.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                yearPickDialog.dismiss();
             }
         });
 
@@ -683,7 +671,7 @@ public class ExpensesActivity extends Activity
         @Override
         public Fragment getItem(int position)
         {
-            return ExpenseListFragment.newInstance(position, mCalender.get(Calendar.YEAR));
+            return ExpenseListFragment.newInstance(position, mCurrentYear);
         }
 
         /**
@@ -700,7 +688,7 @@ public class ExpensesActivity extends Activity
         @Override
         public CharSequence getPageTitle(int position)
         {
-            return Months.getMonthNameByNumber(position).toUpperCase() + " " + mYearTransactions.mYear;
+            return Months.getMonthNameByNumber(position).toUpperCase() + " " + mCurrentYear;
         }
     }
 
@@ -734,4 +722,10 @@ public class ExpensesActivity extends Activity
         int groupCount = mDrawerGroupList.getExpandableListAdapter().getGroupCount();
         mDrawerGroupList.collapseGroup(groupCount-1);
     }
+
+    /**
+     * Disable the 'back' button on main activity
+     */
+    @Override
+    public void onBackPressed(){}
 }

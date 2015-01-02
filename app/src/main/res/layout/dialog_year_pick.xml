@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:layout_marginBottom="@dimen/big_padding"
-        android:layout_marginLeft="@dimen/big_padding"
-        android:layout_marginRight="@dimen/big_padding"
+        android:layout_marginLeft="@dimen/drawable_left_pad"
+        android:layout_marginRight="@dimen/drawable_left_pad"
         android:layout_marginTop="@dimen/mongo_padding"
         android:background="@drawable/card"
         android:orientation="vertical"
@@ -44,27 +44,12 @@
             >
 
             <Button
-                android:id="@+id/cancel_year_pick_button"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/expense_drawable_left_pad"
-                android:layout_marginTop="16dp"
-                android:layout_weight="1"
-                android:background="@drawable/stanard_button_drawable"
-                android:padding="@dimen/drawable_left_pad"
-                android:text="@string/item_details_cancel"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/medium_font"
-                />
-
-            <Button
                 android:id="@+id/year_pick_ok_button"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/expense_drawable_left_pad"
                 android:layout_marginLeft="@dimen/drawable_left_pad"
                 android:layout_marginTop="16dp"
-                android:layout_weight="1"
                 android:background="@drawable/stanard_button_drawable"
                 android:padding="@dimen/drawable_left_pad"
                 android:text="@string/year_picker_ok"

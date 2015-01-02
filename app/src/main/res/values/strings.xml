@@ -67,7 +67,7 @@
     <string name="init_total_value">"0"</string>
     <string name="add_item_description_hint">"What\'s this ?"</string>
     <string name="wallet_description_hint">"What\'s in this ?"</string>
-    <string name="item_value_hint">"What it\'s worth ?"</string>
+    <string name="item_value_hint">"How much ?"</string>
     <string name="enter_note_hint">"Please enter a note"</string>
     <string name="drawer_top_title_text">"Coins</string>
     <string name="title_activity_analytics">Analytics</string>

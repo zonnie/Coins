@@ -107,7 +107,6 @@
                                     android:singleLine="true"
                                     android:text="Stam"
                                     android:textSize="@dimen/medium_font"
-                                    android:textStyle="bold"
                                     />
 
                                 <com.moneyifyapp.views.CondensedTextView

@@ -102,12 +102,12 @@ public class ExpenseItemAdapter extends ArrayAdapter<Transaction>
             handleViewCurrency(currentTransaction);
             handleViewNote(currentTransaction);
             handleFavorite(currentTransaction);
-            handleViewOwner(currentTransaction);
+            handleViewOwner();
         }
         return mMyView;
     }
 
-    private void handleViewOwner(Transaction transaction)
+    private void handleViewOwner()
     {
         if (mViewHolder.mItemOwner != null)
             mViewHolder.mItemOwner.setText("by " + ParseUser.getCurrentUser().getUsername());

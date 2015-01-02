@@ -55,7 +55,7 @@
                     android:fontFamily="sans-serif-condensed"
                     android:text="@string/default_currency"
                     android:textColor="@color/income_color"
-                    android:textSize="@dimen/huge_font"/>
+                    android:textSize="@dimen/large_font"/>
 
                 <TextView
                     android:id="@+id/plusAmount"
@@ -64,7 +64,7 @@
                     android:fontFamily="sans-serif-condensed"
                     android:text="@string/init_total_value"
                     android:textColor="@color/income_color"
-                    android:textSize="@dimen/huge_font"/>
+                    android:textSize="@dimen/large_font"/>
 
                 <TextView
                     android:id="@+id/minusSign"
@@ -83,7 +83,7 @@
                     android:fontFamily="sans-serif-condensed"
                     android:text="@string/default_currency"
                     android:textColor="@color/expense_color"
-                    android:textSize="@dimen/huge_font"/>
+                    android:textSize="@dimen/large_font"/>
 
                 <TextView
                     android:id="@+id/minusAmount"
@@ -92,7 +92,7 @@
                     android:fontFamily="sans-serif-condensed"
                     android:text="@string/init_total_value"
                     android:textColor="@color/expense_color"
-                    android:textSize="@dimen/huge_font"/>
+                    android:textSize="@dimen/large_font"/>
 
                 <TextView
                     android:id="@+id/outComeSign"
@@ -110,7 +110,7 @@
                     android:fontFamily="sans-serif-condensed"
                     android:text="@string/default_currency"
                     android:textColor="@color/income_color"
-                    android:textSize="@dimen/huge_font"
+                    android:textSize="@dimen/large_font"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -120,7 +120,7 @@
                     android:fontFamily="sans-serif-condensed"
                     android:text="@string/init_total_value"
                     android:textColor="@color/income_color"
-                    android:textSize="@dimen/huge_font"
+                    android:textSize="@dimen/large_font"
                     android:textStyle="bold"/>
             </LinearLayout>
         </LinearLayout>
