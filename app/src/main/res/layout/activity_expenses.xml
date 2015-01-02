@@ -1,82 +1,136 @@
-<android.support.v4.widget.DrawerLayout
-    android:id="@+id/drawer_layout"
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ExpensesActivity">
-
-        <android.support.v4.view.PagerTitleStrip
-            android:id="@+id/pager_title_strip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:background="@drawable/back_regualr"
-            android:textColor="#fff"/>
-
-    </android.support.v4.view.ViewPager>
+    >
+    <!-- Animation -->
 
     <LinearLayout
-        android:id="@+id/top_list_layout"
-        android:layout_width="@dimen/drawer_width"
+        android:id="@+id/animation_form"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
+        android:background="@color/background"
+        android:gravity="center"
         android:orientation="vertical"
-        android:background="@drawable/back_regular_drawable"
+        android:visibility="gone"
         >
 
-        <com.moneyifyapp.views.CondensedTextView
-            android:id="@+id/top_drawer_title"
+        <com.moneyifyapp.views.ThinTextView
+            android:id="@+id/animation_text"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@drawable/drawer_item_card"
-            android:gravity="center_vertical"
-            android:paddingStart="@dimen/drawable_left_pad"
-            android:text="@string/drawer_top_title_text"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/mongo_font"
-            android:textStyle="bold"
-            />
-
-        <ExpandableListView
-            android:id="@+id/left_drawer"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="9"
-            android:background="@drawable/back_regualr"
-            android:choiceMode="singleChoice"
-            android:divider="@android:color/darker_gray"
-            android:dividerHeight="0dp"
-            android:groupIndicator="@null"
-            android:scrollbars="none"
-            />
-
-        <Button
-            android:id="@+id/drawer_logout_item"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_margin="@dimen/padding_start_currency"
-            android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/logout"
-            android:layout_gravity="center"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/logout_caption"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/medium_font"
-            android:onClick="logoutClicked"
-            android:fontFamily="sans-serif-condensed"
-            android:paddingEnd="@dimen/drawable_left_pad"
+            android:text="Wait for it..."
+            android:paddingBottom="@dimen/drawable_left_pad"
+            android:textSize="@dimen/large_font"
             />
+
+        <ProgressBar
+            android:id="@+id/progress_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+
+        <!--<ImageView
+            android:id="@+id/progress_view"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/coin_animate"
+            />-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/body_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.DrawerLayout
+            android:id="@+id/drawer_layout"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".MainActivity">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".ExpensesActivity">
+
+                <android.support.v4.view.PagerTitleStrip
+                    android:id="@+id/pager_title_strip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:background="@drawable/back_regualr"
+                    android:textColor="#fff"/>
+
+            </android.support.v4.view.ViewPager>
+
+            <LinearLayout
+                android:id="@+id/top_list_layout"
+                android:layout_width="@dimen/drawer_width"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:orientation="vertical"
+                android:background="@drawable/back_regular_drawable"
+                >
+
+                <com.moneyifyapp.views.CondensedTextView
+                    android:id="@+id/top_drawer_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/drawer_item_card"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/drawable_left_pad"
+                    android:text="@string/drawer_top_title_text"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/mongo_font"
+                    android:textStyle="bold"
+                    />
+
+                <ExpandableListView
+                    android:id="@+id/left_drawer"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="9"
+                    android:background="@drawable/back_regualr"
+                    android:choiceMode="singleChoice"
+                    android:divider="@android:color/darker_gray"
+                    android:dividerHeight="0dp"
+                    android:groupIndicator="@null"
+                    android:scrollbars="none"
+                    />
+
+                <Button
+                    android:id="@+id/drawer_logout_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/padding_start_currency"
+                    android:background="@android:color/transparent"
+                    android:drawableLeft="@drawable/logout"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/logout_caption"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/medium_font"
+                    android:onClick="logoutClicked"
+                    android:fontFamily="sans-serif-condensed"
+                    android:paddingEnd="@dimen/drawable_left_pad"
+                    />
+            </LinearLayout>
+
+        </android.support.v4.widget.DrawerLayout>
+
+
     </LinearLayout>
     <!-- Fragments are created on run-time -->
-</android.support.v4.widget.DrawerLayout>
+
+</LinearLayout>

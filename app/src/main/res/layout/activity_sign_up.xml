@@ -39,13 +39,19 @@
             android:textSize="@dimen/large_font"
             />
 
-        <ImageView
+        <ProgressBar
+            android:id="@+id/progress_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+
+        <!--<ImageView
             android:id="@+id/progress_view"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:scaleType="fitCenter"
             android:src="@drawable/coin_animate"
-            />
+            />-->
     </LinearLayout>
 
 

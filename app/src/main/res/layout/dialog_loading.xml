@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@android:color/transparent"
+    >
+
+    <LinearLayout
+        android:id="@+id/dialog_root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginBottom="@dimen/big_padding"
+        android:layout_marginLeft="@dimen/big_padding"
+        android:layout_marginRight="@dimen/big_padding"
+        android:layout_marginTop="@dimen/mongo_padding"
+        android:background="@drawable/card"
+        android:orientation="vertical"
+        android:padding="@dimen/drawable_left_pad"
+        >
+
+        <ImageView
+            android:id="@+id/delete_dialog_imageview"
+            android:paddingTop="@dimen/drawable_left_pad"
+            android:paddingBottom="@dimen/drawable_left_pad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon"
+            />
+
+        <com.moneyifyapp.views.ThinTextView
+            android:gravity="center"
+            android:id="@+id/delete_account_second_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_account_second_text"
+            android:textSize="@dimen/medium_font"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

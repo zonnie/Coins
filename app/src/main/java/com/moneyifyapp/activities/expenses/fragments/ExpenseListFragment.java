@@ -446,12 +446,9 @@ public class ExpenseListFragment extends ListFragment
             {
                 public void run()
                 {
-
-                    int itemId = mRemoveQueue.peek();
+                    int itemId = mRemoveQueue.remove();
                     updateTotalsOnAddedTransaction(mAdapter.getItem(itemId), true);
                     mAdapter.remove(itemId);
-                    //hideTotalsIfTransactionListEmpty();
-
                 }
 
             }, mRemoveAnimation.getDuration());
@@ -491,11 +488,7 @@ public class ExpenseListFragment extends ListFragment
                     @Override
                     public void done(ParseException e)
                     {
-                        if (e == null)
-                        {
-                            mRemoveQueue.remove();
-                        }
-                        else
+                        if (e != null)
                         {
                             // Remove the id from queue w/o removing the item
                             Toast.makeText(getActivity(), "Unable to delete item.." + e.toString(), Toast.LENGTH_LONG).show();

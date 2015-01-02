@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 
 import com.moneyifyapp.R;
+import com.moneyifyapp.activities.LoadingActivity;
 import com.moneyifyapp.activities.analytics.GraphActivity;
 import com.moneyifyapp.activities.expenses.drawer.DrawerExpandableAdapter;
 import com.moneyifyapp.activities.expenses.fragments.ExpenseListFragment;
@@ -51,13 +52,14 @@ import java.util.Calendar;
 
 /**
  */
-public class ExpensesActivity extends Activity
+public class ExpensesActivity extends LoadingActivity
         implements ExpenseListFragment.OnFragmentInteractionListener,
         ViewPager.OnPageChangeListener,
         TransactionHandler.onFetchingCompleteListener,
         DeleteDialog.OnDeleteClicked
 {
     private ViewPager mViewPager;
+    private SectionsPagerAdapter mSectionsPagerAdapter;
     private Calendar mCalender;
     private int mCurrentYear;
 
@@ -100,6 +102,7 @@ public class ExpensesActivity extends Activity
 
         setContentView(R.layout.activity_expenses);
 
+        super.storeViews();
         Utils.initializeParse(this);
         Utils.initializeActionBar(this, DrawerUtils.getWalletTitleById(TransactionHandler.getInstance(this).getCurrentWalletId()));
         Utils.setupBackButton(this);
@@ -137,6 +140,7 @@ public class ExpensesActivity extends Activity
     {
         swapWallet(TransactionHandler.getInstance(ExpensesActivity.this).getCurrentWalletId()
                 , String.valueOf(mCurrentYear));
+        showProgress(false);
     }
 
     /**
@@ -151,9 +155,9 @@ public class ExpensesActivity extends Activity
      */
     private void initViewPager()
     {
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(sectionsPagerAdapter);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setCurrentItem(mCalender.get(Calendar.MONTH));
         mViewPager.setOnPageChangeListener(this);
     }
@@ -407,8 +411,6 @@ public class ExpensesActivity extends Activity
 
             return true;
         }
-
-
     }
 
     /**
@@ -483,6 +485,10 @@ public class ExpensesActivity extends Activity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Need to convert thit to a class and pass the calling activity
+     * as a listener.
+     */
     private void showYearPickDialog()
     {
         final Dialog yearPickDialog = new Dialog(ExpensesActivity.this);
@@ -511,6 +517,8 @@ public class ExpensesActivity extends Activity
             {
                 yearPickDialog.dismiss();
                 mCurrentYear = yearPicker.getValue();
+                showProgress(true);
+                mSectionsPagerAdapter.notifyDataSetChanged();
                 TransactionHandler.getInstance(ExpensesActivity.this).registerListenerAndFetchAll(ExpensesActivity.this,
                         yearPicker.getValue());
             }
@@ -648,7 +656,7 @@ public class ExpensesActivity extends Activity
      */
     private void resumeApp()
     {
-        String year = "" + mCalender.get(Calendar.YEAR);
+        String year = "" + mCurrentYear;
         TransactionHandler handler = TransactionHandler.getInstance(this);
         if(handler.getYearTransactions(year) == null)
             logOutUser();
@@ -688,7 +696,8 @@ public class ExpensesActivity extends Activity
         @Override
         public CharSequence getPageTitle(int position)
         {
-            return Months.getMonthNameByNumber(position).toUpperCase() + " " + mCurrentYear;
+            return Months.getMonthNameByNumber(position).toUpperCase() +
+                    " " + mCurrentYear;
         }
     }
 
